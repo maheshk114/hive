@@ -52,6 +52,12 @@ class DummyTxnManager extends HiveTxnManagerImpl {
     // No-op
     return 0L;
   }
+
+  @Override
+  public long openTxn(Context ctx, String user, long delay, String db) throws LockException {
+    return 0L;
+  }
+
   @Override
   public boolean isTxnOpen() {
     return false;
@@ -355,6 +361,16 @@ class DummyTxnManager extends HiveTxnManagerImpl {
       locks.add(new HiveLockObj(new HiveLockObject(p.getTable().getDbName(), lockData), mode));
     }
     return locks;
+  }
+
+  @Override
+  public void updateTxnMap(long sourceTxnId, long targetTxnId) {
+
+  }
+
+  @Override
+  public long getTargetTxnId(long sourceTxnId) {
+    return 0L;
   }
 
 

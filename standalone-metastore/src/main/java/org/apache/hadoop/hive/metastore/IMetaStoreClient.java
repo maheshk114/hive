@@ -1361,7 +1361,7 @@ public interface IMetaStoreClient {
    * @return transaction identifier
    * @throws TException
    */
-  long openTxn(String user) throws TException;
+  long openTxn(String user, String db) throws TException;
 
   /**
    * Initiate a batch of transactions.  It is not guaranteed that the
@@ -1389,6 +1389,8 @@ public interface IMetaStoreClient {
    * @throws TException
    */
   OpenTxnsResponse openTxns(String user, int numTxns) throws TException;
+
+  OpenTxnsResponse openTxns(String user, String db, int numTxns) throws TException;
 
   /**
    * Rollback a transaction.  This will also unlock any locks associated with

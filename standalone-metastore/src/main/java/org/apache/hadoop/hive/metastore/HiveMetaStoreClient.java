@@ -2224,13 +2224,18 @@ public class HiveMetaStoreClient implements IMetaStoreClient, AutoCloseable {
   }
 
   @Override
-  public long openTxn(String user) throws TException {
-    OpenTxnsResponse txns = openTxns(user, 1);
+  public long openTxn(String user, String db) throws TException {
+    OpenTxnsResponse txns = openTxns(user, db, 1);
     return txns.getTxn_ids().get(0);
   }
 
   @Override
   public OpenTxnsResponse openTxns(String user, int numTxns) throws TException {
+    return openTxns(user, "", numTxns);
+  }
+
+  @Override
+  public OpenTxnsResponse openTxns(String user, String db, int numTxns) throws TException {
     String hostname = null;
     try {
       hostname = InetAddress.getLocalHost().getHostName();
@@ -2238,7 +2243,7 @@ public class HiveMetaStoreClient implements IMetaStoreClient, AutoCloseable {
       LOG.error("Unable to resolve my host name " + e.getMessage());
       throw new RuntimeException(e);
     }
-    return client.open_txns(new OpenTxnRequest(numTxns, user, hostname));
+    return client.open_txns(new OpenTxnRequest(numTxns, user, hostname, db));
   }
 
   @Override

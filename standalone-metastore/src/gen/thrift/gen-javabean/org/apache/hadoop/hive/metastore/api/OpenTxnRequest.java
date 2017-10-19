@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
   private String user; // required
   private String hostname; // required
   private String agentInfo; // optional
+  private String db; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -144,17 +145,31 @@ import org.slf4j.LoggerFactory;
     this.agentInfo = "Unknown";
 
   }
-
   public OpenTxnRequest(
-    int num_txns,
-    String user,
-    String hostname)
+          int num_txns,
+          String user,
+          String hostname)
   {
     this();
     this.num_txns = num_txns;
     setNum_txnsIsSet(true);
     this.user = user;
     this.hostname = hostname;
+    this.db = "defAult";
+  }
+
+  public OpenTxnRequest(
+    int num_txns,
+    String user,
+    String hostname,
+    String db)
+  {
+    this();
+    this.num_txns = num_txns;
+    setNum_txnsIsSet(true);
+    this.user = user;
+    this.hostname = hostname;
+    this.db = db;
   }
 
   /**
@@ -254,6 +269,10 @@ import org.slf4j.LoggerFactory;
     if (!value) {
       this.hostname = null;
     }
+  }
+
+  public String getDb() {
+    return this.db;
   }
 
   public String getAgentInfo() {

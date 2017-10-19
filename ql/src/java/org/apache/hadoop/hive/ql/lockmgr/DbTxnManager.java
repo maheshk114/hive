@@ -26,6 +26,7 @@ import org.apache.hadoop.hive.ql.plan.LockDatabaseDesc;
 import org.apache.hadoop.hive.ql.plan.LockTableDesc;
 import org.apache.hadoop.hive.ql.plan.UnlockDatabaseDesc;
 import org.apache.hadoop.hive.ql.plan.UnlockTableDesc;
+import org.apache.hadoop.hive.ql.session.SessionState;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hive.common.util.ShutdownHookManager;
 import org.slf4j.Logger;
@@ -58,6 +59,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
 /**
  * An implementation of HiveTxnManager that stores the transactions in the metastore database.
@@ -141,6 +143,10 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
   private ScheduledFuture<?> heartbeatTask = null;
   private Runnable shutdownRunner = null;
   private static final int SHUTDOWN_HOOK_PRIORITY = 0;
+
+  // map to link the source and target transaction id in DR scenario
+  private Map<Long,Long > txnIdMap;
+
   /**
    * We do this on every call to make sure TM uses same MS connection as is used by the caller (Driver,
    * SemanticAnalyzer, etc).  {@code Hive} instances are cached using ThreadLocal and
@@ -191,11 +197,16 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
 
   @Override
   public long openTxn(Context ctx, String user) throws LockException {
-    return openTxn(ctx, user, 0);
+    return openTxn(ctx, user, 0, SessionState.get().getCurrentDatabase());
   }
 
   @VisibleForTesting
-  long openTxn(Context ctx, String user, long delay) throws LockException {
+  public long openTxn(Context ctx, String user, long delay) throws LockException {
+    return openTxn(ctx, user, delay, SessionState.get().getCurrentDatabase());
+  }
+
+  @Override
+  public long openTxn(Context ctx, String user, long delay, String db) throws LockException {
     /*Q: why don't we lock the snapshot here???  Instead of having client make an explicit call
     whenever it chooses
     A: If we want to rely on locks for transaction scheduling we must get the snapshot after lock
@@ -207,7 +218,7 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
       throw new LockException("Transaction already opened. " + JavaUtils.txnIdToString(txnId));
     }
     try {
-      txnId = getMS().openTxn(user);
+      txnId = getMS().openTxn(user, db);
       writeId = 0;
       numStatements = 0;
       isExplicitTransaction = false;
@@ -901,6 +912,16 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
           " heartbeats won't be sent");
     }
     return interval;
+  }
+
+  @Override
+  public void updateTxnMap(long sourceTxnId, long targetTxnId) {
+    txnIdMap.put(sourceTxnId, targetTxnId);
+  }
+
+  @Override
+  public long getTargetTxnId(long sourceTxnId) {
+    return txnIdMap.get(sourceTxnId);
   }
 
   /**

@@ -88,7 +88,7 @@ public class TestMutatorClient {
     when(mockSd.getOutputFormat()).thenReturn(OrcOutputFormat.class.getName());
     when(mockParameters.get("transactional")).thenReturn(Boolean.TRUE.toString());
 
-    when(mockMetaStoreClient.openTxn(USER)).thenReturn(TRANSACTION_ID);
+    when(mockMetaStoreClient.openTxn(USER, "default")).thenReturn(TRANSACTION_ID);
 
     client = new MutatorClient(mockMetaStoreClient, mockConfiguration, mockLockFailureListener, USER,
         Collections.singletonList(TABLE_1));

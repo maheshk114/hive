@@ -119,7 +119,7 @@ public class Transaction {
   private long open(String user) throws TransactionException {
     long transactionId = -1;
     try {
-      transactionId = metaStoreClient.openTxn(user);
+      transactionId = metaStoreClient.openTxn(user, "");
       state = TxnState.INACTIVE;
     } catch (TException e) {
       throw new TransactionException("Unable to open transaction for user: " + user, e);

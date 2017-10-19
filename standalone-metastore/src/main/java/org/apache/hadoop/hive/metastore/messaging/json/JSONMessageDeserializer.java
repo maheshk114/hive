@@ -19,6 +19,7 @@
 
 package org.apache.hadoop.hive.metastore.messaging.json;
 
+<<<<<<< HEAD
 import org.apache.hadoop.hive.metastore.messaging.AddForeignKeyMessage;
 import org.apache.hadoop.hive.metastore.messaging.AddNotNullConstraintMessage;
 import org.apache.hadoop.hive.metastore.messaging.AddPartitionMessage;
@@ -40,6 +41,10 @@ import org.apache.hadoop.hive.metastore.messaging.DropPartitionMessage;
 import org.apache.hadoop.hive.metastore.messaging.DropTableMessage;
 import org.apache.hadoop.hive.metastore.messaging.InsertMessage;
 import org.apache.hadoop.hive.metastore.messaging.MessageDeserializer;
+import org.apache.hadoop.hive.metastore.messaging.OpenTxnMessage;
+=======
+import org.apache.hadoop.hive.metastore.messaging.*;
+>>>>>>> f1fee33350... BUG-95520 : create/replicate open transaction event
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
@@ -249,6 +254,15 @@ public class JSONMessageDeserializer extends MessageDeserializer {
   public DropConstraintMessage getDropConstraintMessage(String messageBody) {
     try {
       return mapper.readValue(messageBody, JSONDropConstraintMessage.class);
+    } catch (Exception e) {
+      throw new IllegalArgumentException("Could not construct DropConstraintMessage", e);
+    }
+  }
+
+  @Override
+  public OpenTxnMessage getOpenTxnMessage(String messageBody) {
+    try {
+      return mapper.readValue(messageBody, JSONOpenTxnMessage.class);
     } catch (Exception e) {
       throw new IllegalArgumentException("Could not construct DropConstraintMessage", e);
     }

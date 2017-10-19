@@ -52,7 +52,7 @@ public class TestHiveMetaStoreTxns {
 
   @Test
   public void testTxns() throws Exception {
-    List<Long> tids = client.openTxns("me", 3).getTxn_ids();
+    List<Long> tids = client.openTxns("me", "default", 3).getTxn_ids();
     Assert.assertEquals(1L, (long) tids.get(0));
     Assert.assertEquals(2L, (long) tids.get(1));
     Assert.assertEquals(3L, (long) tids.get(2));
@@ -67,7 +67,7 @@ public class TestHiveMetaStoreTxns {
 
   @Test
   public void testOpenTxnNotExcluded() throws Exception {
-    List<Long> tids = client.openTxns("me", 3).getTxn_ids();
+    List<Long> tids = client.openTxns("me", "default", 3).getTxn_ids();
     Assert.assertEquals(1L, (long) tids.get(0));
     Assert.assertEquals(2L, (long) tids.get(1));
     Assert.assertEquals(3L, (long) tids.get(2));
@@ -85,7 +85,7 @@ public class TestHiveMetaStoreTxns {
     ValidTxnList validTxns = client.getValidTxns();
     Assert.assertEquals(ValidTxnList.RangeResponse.NONE,
         validTxns.isTxnRangeValid(1L, 3L));
-    List<Long> tids = client.openTxns("me", 5).getTxn_ids();
+    List<Long> tids = client.openTxns("me", "default",5).getTxn_ids();
 
     HeartbeatTxnRangeResponse rsp = client.heartbeatTxnRange(1, 5);
     Assert.assertEquals(0, rsp.getNosuch().size());
@@ -175,7 +175,7 @@ public class TestHiveMetaStoreTxns {
 
   @Test
   public void testLocksWithTxn() throws Exception {
-    long txnid = client.openTxn("me");
+    long txnid = client.openTxn("me", "default");
 
     LockRequestBuilder rqstBuilder = new LockRequestBuilder();
     rqstBuilder.setTransactionId(txnid)

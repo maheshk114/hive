@@ -46,6 +46,8 @@ public interface HiveTxnManager {
    */
   long openTxn(Context ctx, String user) throws LockException;
 
+  long openTxn(Context ctx, String user, long delay, String db) throws LockException;
+
   /**
    * Get the lock manager.  This must be used rather than instantiating an
    * instance of the lock manager directly as the transaction manager will
@@ -227,4 +229,8 @@ public interface HiveTxnManager {
    * Even a single statement, (e.g. Merge, multi-insert may generates several writes).
    */
   int getWriteIdAndIncrement();
+
+  public void updateTxnMap(long sourceTxnId, long targetTxnId);
+
+  public long getTargetTxnId(long sourceTxnId);
 }

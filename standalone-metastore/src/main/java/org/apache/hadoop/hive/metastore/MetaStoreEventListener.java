@@ -23,6 +23,7 @@ import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.metastore.api.MetaException;
+<<<<<<< HEAD
 import org.apache.hadoop.hive.metastore.events.AddForeignKeyEvent;
 import org.apache.hadoop.hive.metastore.events.AddIndexEvent;
 import org.apache.hadoop.hive.metastore.events.AddNotNullConstraintEvent;
@@ -45,6 +46,10 @@ import org.apache.hadoop.hive.metastore.events.DropPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.DropTableEvent;
 import org.apache.hadoop.hive.metastore.events.InsertEvent;
 import org.apache.hadoop.hive.metastore.events.LoadPartitionDoneEvent;
+import org.apache.hadoop.hive.metastore.events.OpenTxnEvent;
+=======
+import org.apache.hadoop.hive.metastore.events.*;
+>>>>>>> f1fee33350... BUG-95520 : create/replicate open transaction event
 
 /**
  * This abstract class needs to be extended to  provide implementation of actions that needs
@@ -218,6 +223,15 @@ public abstract class MetaStoreEventListener implements Configurable {
    * @throws MetaException
    */
   public void onDropConstraint(DropConstraintEvent dropConstraintEvent) throws MetaException {
+  }
+
+  /**
+   * This will be called when a new transaction is started.
+   * @param openTxnEvent
+   * @throws MetaException
+   */
+  public void onOpenTxn(OpenTxnEvent openTxnEvent) throws MetaException {
+
   }
 
   @Override

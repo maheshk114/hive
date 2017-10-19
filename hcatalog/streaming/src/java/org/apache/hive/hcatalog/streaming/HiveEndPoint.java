@@ -625,7 +625,7 @@ public class HiveEndPoint {
     private List<Long> openTxnImpl(final IMetaStoreClient msClient, final String user, final int numTxns, UserGroupInformation ugi)
             throws IOException, TException,  InterruptedException {
       if(ugi==null) {
-        return  msClient.openTxns(user, numTxns).getTxn_ids();
+        return  msClient.openTxns(user, SessionState.get().getCurrentDatabase(), numTxns).getTxn_ids();
       }
       return (List<Long>) ugi.doAs(new PrivilegedExceptionAction<Object>() {
         @Override

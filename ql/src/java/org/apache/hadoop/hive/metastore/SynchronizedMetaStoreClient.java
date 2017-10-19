@@ -49,7 +49,7 @@ public final class SynchronizedMetaStoreClient {
   }
 
   public synchronized long openTxn(String user) throws TException {
-    return client.openTxn(user);
+    return client.openTxn(user, "");
   }
 
   public synchronized void commitTxn(long txnid) throws TException {

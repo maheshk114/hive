@@ -27,6 +27,7 @@ import org.apache.hadoop.hive.metastore.IMetaStoreClient;
 import org.apache.hive.hcatalog.streaming.TransactionBatch;
 import org.apache.hive.hcatalog.streaming.mutate.client.lock.Lock;
 import org.apache.hive.hcatalog.streaming.mutate.client.lock.LockException;
+import org.iq80.leveldb.DB;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,7 +50,7 @@ public class TestTransaction {
   @Before
   public void createTransaction() throws Exception {
     when(mockLock.getUser()).thenReturn(USER);
-    when(mockMetaStoreClient.openTxn(USER)).thenReturn(TRANSACTION_ID);
+    when(mockMetaStoreClient.openTxn(USER, "default")).thenReturn(TRANSACTION_ID);
     transaction = new Transaction(mockMetaStoreClient, mockLock);
   }
 
