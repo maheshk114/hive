@@ -459,19 +459,19 @@ public class HiveInputFormat<K extends WritableComparable, V extends Writable>
       InputFormat inputFormat, Class<? extends InputFormat> inputFormatClass, int splits,
       TableDesc table, List<InputSplit> result)
           throws IOException {
-    ValidWriteIdList validTxnList = AcidUtils.getTableValidWriteIdList(conf, table.getTableName());
-    ValidWriteIdList validMmTxnList;
+    ValidWriteIdList validWriteIdList = AcidUtils.getTableValidWriteIdList(conf, table.getTableName());
+    ValidWriteIdList validMmWriteIdList;
     if (AcidUtils.isInsertOnlyTable(table.getProperties())) {
-      validMmTxnList = validTxnList;
+      validMmWriteIdList = validWriteIdList;
     } else {
-      validMmTxnList = null;  // for non-MM case
+      validMmWriteIdList = null;  // for non-MM case
     }
 
     try {
       Utilities.copyTablePropertiesToConf(table, conf);
       if(tableScan != null) {
         AcidUtils.setAcidTableScan(conf, tableScan.getConf().isAcidTable());
-        AcidUtils.setValidWriteIdList(conf, validTxnList);
+        AcidUtils.setValidWriteIdList(conf, validWriteIdList);
       }
     } catch (HiveException e) {
       throw new IOException(e);
@@ -481,7 +481,7 @@ public class HiveInputFormat<K extends WritableComparable, V extends Writable>
       pushFilters(conf, tableScan, this.mrwork);
     }
 
-    Path[] finalDirs = processPathsForMmRead(dirs, conf, validMmTxnList);
+    Path[] finalDirs = processPathsForMmRead(dirs, conf, validMmWriteIdList);
     if (finalDirs == null) {
       return; // No valid inputs.
     }
@@ -871,6 +871,8 @@ public class HiveInputFormat<K extends WritableComparable, V extends Writable>
 
         AcidUtils.setAcidTableScan(job, ts.getConf().isAcidTable());
         AcidUtils.setAcidOperationalProperties(job, ts.getConf().getAcidOperationalProperties());
+        AcidUtils.setValidWriteIdList(job, ts.getConf());
+
       }
     }
   }

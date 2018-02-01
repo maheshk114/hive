@@ -42,7 +42,6 @@ import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.hive.common.JavaUtils;
-import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
 import org.apache.hadoop.hive.common.ValidWriteIdList;
 import org.apache.hadoop.hive.common.metrics.common.Metrics;
@@ -63,6 +62,7 @@ import org.apache.hadoop.hive.ql.exec.ConditionalTask;
 import org.apache.hadoop.hive.ql.exec.DagUtils;
 import org.apache.hadoop.hive.ql.exec.ExplainTask;
 import org.apache.hadoop.hive.ql.exec.FetchTask;
+import org.apache.hadoop.hive.ql.exec.Operator;
 import org.apache.hadoop.hive.ql.exec.TableScanOperator;
 import org.apache.hadoop.hive.ql.exec.Task;
 import org.apache.hadoop.hive.ql.exec.TaskFactory;
@@ -1239,14 +1239,21 @@ public class Driver implements IDriver {
     }
     String writeIdStr = txnWriteIds.toString();
     conf.set(ValidTxnWriteIdList.VALID_TABLES_WRITEIDS_KEY, writeIdStr);
-    if ((plan.getFetchTask() != null) && (txnWriteIds.getNumOfTables() <= 1)) {
+    conf.set(ValidWriteIdList.VALID_WRITEIDS_KEY, writeIdStr);
+    if (plan.getFetchTask() != null) {
       /**
        * This is needed for {@link HiveConf.ConfVars.HIVEFETCHTASKCONVERSION} optimization which
        * initializes JobConf in FetchOperator before recordValidTxns() but this has to be done
        * after locks are acquired to avoid race conditions in ACID.
        * This case is supported only for single source query.
        */
-      plan.getFetchTask().setValidWriteIdList(writeIdStr);
+      Operator<?> source = plan.getFetchTask().getWork().getSource();
+      if (source instanceof TableScanOperator) {
+        TableScanOperator tsOp = (TableScanOperator)source;
+        ValidWriteIdList writeIdList = txnWriteIds.getTableWriteIdList(
+                AcidUtils.getFullTableName(tsOp.getConf().getDatabaseName(), tsOp.getConf().getTableName()));
+        plan.getFetchTask().setValidWriteIdList(writeIdList.toString());
+      }
     }
     LOG.debug("Encoding valid write ids info " + writeIdStr + " txnid:" + txnMgr.getCurrentTxnId());
   }
