@@ -41,7 +41,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.hive.common.*;
+import org.apache.hadoop.hive.common.JavaUtils;
+import org.apache.hadoop.hive.common.ValidTxnList;
+import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
+import org.apache.hadoop.hive.common.ValidWriteIdList;
 import org.apache.hadoop.hive.common.metrics.common.Metrics;
 import org.apache.hadoop.hive.common.metrics.common.MetricsConstant;
 import org.apache.hadoop.hive.common.metrics.common.MetricsFactory;
@@ -1539,8 +1542,6 @@ public class Driver implements IDriver {
   private static final ReentrantLock globalCompileLock = new ReentrantLock();
 
   private void compileInternal(String command, boolean deferClose) throws CommandProcessorResponse {
-    int ret;
-
     Metrics metrics = MetricsFactory.getInstance();
     if (metrics != null) {
       metrics.incrementCounter(MetricsConstant.WAITING_COMPILE_OPS, 1);
@@ -1712,7 +1713,6 @@ public class Driver implements IDriver {
         rollback(cpr);
         throw cpr;
       }
-
 
       //if needRequireLock is false, the release here will do nothing because there is no lock
       try {
