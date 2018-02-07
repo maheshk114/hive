@@ -211,6 +211,7 @@ public class SMBMapJoinOperator extends AbstractMapJoinOperator<SMBJoinDesc> imp
 
       AcidUtils.setAcidTableScan(jobClone, ts.getConf().isAcidTable());
       AcidUtils.setAcidOperationalProperties(jobClone, ts.getConf().getAcidOperationalProperties());
+      AcidUtils.setValidWriteIdList(jobClone, ts.getConf());
 
       ts.passExecContext(getExecContext());
 

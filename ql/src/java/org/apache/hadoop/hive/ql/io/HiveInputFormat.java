@@ -871,7 +871,6 @@ public class HiveInputFormat<K extends WritableComparable, V extends Writable>
         AcidUtils.setAcidTableScan(job, ts.getConf().isAcidTable());
         AcidUtils.setAcidOperationalProperties(job, ts.getConf().getAcidOperationalProperties());
         AcidUtils.setValidWriteIdList(job, ts.getConf());
-
       }
     }
   }
