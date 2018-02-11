@@ -1502,7 +1502,7 @@ public class AcidUtils {
     ValidTxnWriteIdList validTxnList = new ValidTxnWriteIdList(txnString);
     LOG.debug("getTableValidWriteIdList trying to get ValidWriteIdList for table: "
             + fullTableName + " from ValidTxnWriteIdList: " + txnString);
-    return validTxnList.getTableWriteIdList(fullTableName);
+    return validTxnList.getTableValidWriteIdList(fullTableName);
   }
 
   /**
@@ -1522,7 +1522,7 @@ public class AcidUtils {
     String dbName = tsDesc.getDatabaseName();
     String tableName = tsDesc.getTableName();
     if ((dbName != null) && (tableName != null)) {
-      ValidWriteIdList validWriteIdList = AcidUtils.getTableValidWriteIdList(conf,
+      ValidWriteIdList validWriteIdList = getTableValidWriteIdList(conf,
                                                     AcidUtils.getFullTableName(dbName, tableName));
       if (validWriteIdList.getTableName() != null) {
         setValidWriteIdList(conf, validWriteIdList);
@@ -1530,11 +1530,9 @@ public class AcidUtils {
         LOG.debug("setValidWriteIdList on table: " + AcidUtils.getFullTableName(dbName, tableName)
                 + " isAcidTable: " + HiveConf.getBoolVar(conf, ConfVars.HIVE_ACID_TABLE_SCAN, false)
                 + " acidProperty: " + getAcidOperationalProperties(conf)
-                + " doesn't find the ValidWriteId list from ValidTxnWriteIdList: "
-                + ValidTxnWriteIdList.VALID_TABLES_WRITEIDS_KEY);
+                + " couldn't find the ValidWriteId list from ValidTxnWriteIdList: "
+                + conf.get(ValidTxnWriteIdList.VALID_TABLES_WRITEIDS_KEY));
       }
-
-
     }
   }
 

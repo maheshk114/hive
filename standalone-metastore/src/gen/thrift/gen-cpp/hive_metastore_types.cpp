@@ -14308,19 +14308,19 @@ void CommitTxnRequest::printTo(std::ostream& out) const {
 }
 
 
-GetOpenWriteIdsRequest::~GetOpenWriteIdsRequest() throw() {
+GetValidWriteIdsRequest::~GetValidWriteIdsRequest() throw() {
 }
 
 
-void GetOpenWriteIdsRequest::__set_tableNames(const std::vector<std::string> & val) {
-  this->tableNames = val;
+void GetValidWriteIdsRequest::__set_fullTableNames(const std::vector<std::string> & val) {
+  this->fullTableNames = val;
 }
 
-void GetOpenWriteIdsRequest::__set_validTxnStr(const std::string& val) {
-  this->validTxnStr = val;
+void GetValidWriteIdsRequest::__set_validTxnList(const std::string& val) {
+  this->validTxnList = val;
 }
 
-uint32_t GetOpenWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t GetValidWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -14332,8 +14332,8 @@ uint32_t GetOpenWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* ipr
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  bool isset_tableNames = false;
-  bool isset_validTxnStr = false;
+  bool isset_fullTableNames = false;
+  bool isset_validTxnList = false;
 
   while (true)
   {
@@ -14346,27 +14346,27 @@ uint32_t GetOpenWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* ipr
       case 1:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
-            this->tableNames.clear();
+            this->fullTableNames.clear();
             uint32_t _size617;
             ::apache::thrift::protocol::TType _etype620;
             xfer += iprot->readListBegin(_etype620, _size617);
-            this->tableNames.resize(_size617);
+            this->fullTableNames.resize(_size617);
             uint32_t _i621;
             for (_i621 = 0; _i621 < _size617; ++_i621)
             {
-              xfer += iprot->readString(this->tableNames[_i621]);
+              xfer += iprot->readString(this->fullTableNames[_i621]);
             }
             xfer += iprot->readListEnd();
           }
-          isset_tableNames = true;
+          isset_fullTableNames = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->validTxnStr);
-          isset_validTxnStr = true;
+          xfer += iprot->readString(this->validTxnList);
+          isset_validTxnList = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -14380,23 +14380,23 @@ uint32_t GetOpenWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* ipr
 
   xfer += iprot->readStructEnd();
 
-  if (!isset_tableNames)
+  if (!isset_fullTableNames)
     throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_validTxnStr)
+  if (!isset_validTxnList)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t GetOpenWriteIdsRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t GetValidWriteIdsRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("GetOpenWriteIdsRequest");
+  xfer += oprot->writeStructBegin("GetValidWriteIdsRequest");
 
-  xfer += oprot->writeFieldBegin("tableNames", ::apache::thrift::protocol::T_LIST, 1);
+  xfer += oprot->writeFieldBegin("fullTableNames", ::apache::thrift::protocol::T_LIST, 1);
   {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->tableNames.size()));
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->fullTableNames.size()));
     std::vector<std::string> ::const_iterator _iter622;
-    for (_iter622 = this->tableNames.begin(); _iter622 != this->tableNames.end(); ++_iter622)
+    for (_iter622 = this->fullTableNames.begin(); _iter622 != this->fullTableNames.end(); ++_iter622)
     {
       xfer += oprot->writeString((*_iter622));
     }
@@ -14404,8 +14404,8 @@ uint32_t GetOpenWriteIdsRequest::write(::apache::thrift::protocol::TProtocol* op
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("validTxnStr", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->validTxnStr);
+  xfer += oprot->writeFieldBegin("validTxnList", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->validTxnList);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -14413,56 +14413,56 @@ uint32_t GetOpenWriteIdsRequest::write(::apache::thrift::protocol::TProtocol* op
   return xfer;
 }
 
-void swap(GetOpenWriteIdsRequest &a, GetOpenWriteIdsRequest &b) {
+void swap(GetValidWriteIdsRequest &a, GetValidWriteIdsRequest &b) {
   using ::std::swap;
-  swap(a.tableNames, b.tableNames);
-  swap(a.validTxnStr, b.validTxnStr);
+  swap(a.fullTableNames, b.fullTableNames);
+  swap(a.validTxnList, b.validTxnList);
 }
 
-GetOpenWriteIdsRequest::GetOpenWriteIdsRequest(const GetOpenWriteIdsRequest& other623) {
-  tableNames = other623.tableNames;
-  validTxnStr = other623.validTxnStr;
+GetValidWriteIdsRequest::GetValidWriteIdsRequest(const GetValidWriteIdsRequest& other623) {
+  fullTableNames = other623.fullTableNames;
+  validTxnList = other623.validTxnList;
 }
-GetOpenWriteIdsRequest& GetOpenWriteIdsRequest::operator=(const GetOpenWriteIdsRequest& other624) {
-  tableNames = other624.tableNames;
-  validTxnStr = other624.validTxnStr;
+GetValidWriteIdsRequest& GetValidWriteIdsRequest::operator=(const GetValidWriteIdsRequest& other624) {
+  fullTableNames = other624.fullTableNames;
+  validTxnList = other624.validTxnList;
   return *this;
 }
-void GetOpenWriteIdsRequest::printTo(std::ostream& out) const {
+void GetValidWriteIdsRequest::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "GetOpenWriteIdsRequest(";
-  out << "tableNames=" << to_string(tableNames);
-  out << ", " << "validTxnStr=" << to_string(validTxnStr);
+  out << "GetValidWriteIdsRequest(";
+  out << "fullTableNames=" << to_string(fullTableNames);
+  out << ", " << "validTxnList=" << to_string(validTxnList);
   out << ")";
 }
 
 
-OpenWriteIds::~OpenWriteIds() throw() {
+TableValidWriteIds::~TableValidWriteIds() throw() {
 }
 
 
-void OpenWriteIds::__set_tableName(const std::string& val) {
-  this->tableName = val;
+void TableValidWriteIds::__set_fullTableName(const std::string& val) {
+  this->fullTableName = val;
 }
 
-void OpenWriteIds::__set_writeIdHighWaterMark(const int64_t val) {
+void TableValidWriteIds::__set_writeIdHighWaterMark(const int64_t val) {
   this->writeIdHighWaterMark = val;
 }
 
-void OpenWriteIds::__set_openWriteIds(const std::vector<int64_t> & val) {
-  this->openWriteIds = val;
+void TableValidWriteIds::__set_invalidWriteIds(const std::vector<int64_t> & val) {
+  this->invalidWriteIds = val;
 }
 
-void OpenWriteIds::__set_minWriteId(const int64_t val) {
-  this->minWriteId = val;
-__isset.minWriteId = true;
+void TableValidWriteIds::__set_minOpenWriteId(const int64_t val) {
+  this->minOpenWriteId = val;
+__isset.minOpenWriteId = true;
 }
 
-void OpenWriteIds::__set_abortedBits(const std::string& val) {
+void TableValidWriteIds::__set_abortedBits(const std::string& val) {
   this->abortedBits = val;
 }
 
-uint32_t OpenWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t TableValidWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -14474,9 +14474,9 @@ uint32_t OpenWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  bool isset_tableName = false;
+  bool isset_fullTableName = false;
   bool isset_writeIdHighWaterMark = false;
-  bool isset_openWriteIds = false;
+  bool isset_invalidWriteIds = false;
   bool isset_abortedBits = false;
 
   while (true)
@@ -14489,8 +14489,8 @@ uint32_t OpenWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->tableName);
-          isset_tableName = true;
+          xfer += iprot->readString(this->fullTableName);
+          isset_fullTableName = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -14506,27 +14506,27 @@ uint32_t OpenWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) {
       case 3:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
-            this->openWriteIds.clear();
+            this->invalidWriteIds.clear();
             uint32_t _size625;
             ::apache::thrift::protocol::TType _etype628;
             xfer += iprot->readListBegin(_etype628, _size625);
-            this->openWriteIds.resize(_size625);
+            this->invalidWriteIds.resize(_size625);
             uint32_t _i629;
             for (_i629 = 0; _i629 < _size625; ++_i629)
             {
-              xfer += iprot->readI64(this->openWriteIds[_i629]);
+              xfer += iprot->readI64(this->invalidWriteIds[_i629]);
             }
             xfer += iprot->readListEnd();
           }
-          isset_openWriteIds = true;
+          isset_invalidWriteIds = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->minWriteId);
-          this->__isset.minWriteId = true;
+          xfer += iprot->readI64(this->minOpenWriteId);
+          this->__isset.minOpenWriteId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -14548,35 +14548,35 @@ uint32_t OpenWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   xfer += iprot->readStructEnd();
 
-  if (!isset_tableName)
+  if (!isset_fullTableName)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_writeIdHighWaterMark)
     throw TProtocolException(TProtocolException::INVALID_DATA);
-  if (!isset_openWriteIds)
+  if (!isset_invalidWriteIds)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   if (!isset_abortedBits)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t OpenWriteIds::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t TableValidWriteIds::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("OpenWriteIds");
+  xfer += oprot->writeStructBegin("TableValidWriteIds");
 
-  xfer += oprot->writeFieldBegin("tableName", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->tableName);
+  xfer += oprot->writeFieldBegin("fullTableName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->fullTableName);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("writeIdHighWaterMark", ::apache::thrift::protocol::T_I64, 2);
   xfer += oprot->writeI64(this->writeIdHighWaterMark);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("openWriteIds", ::apache::thrift::protocol::T_LIST, 3);
+  xfer += oprot->writeFieldBegin("invalidWriteIds", ::apache::thrift::protocol::T_LIST, 3);
   {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->openWriteIds.size()));
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->invalidWriteIds.size()));
     std::vector<int64_t> ::const_iterator _iter630;
-    for (_iter630 = this->openWriteIds.begin(); _iter630 != this->openWriteIds.end(); ++_iter630)
+    for (_iter630 = this->invalidWriteIds.begin(); _iter630 != this->invalidWriteIds.end(); ++_iter630)
     {
       xfer += oprot->writeI64((*_iter630));
     }
@@ -14584,9 +14584,9 @@ uint32_t OpenWriteIds::write(::apache::thrift::protocol::TProtocol* oprot) const
   }
   xfer += oprot->writeFieldEnd();
 
-  if (this->__isset.minWriteId) {
-    xfer += oprot->writeFieldBegin("minWriteId", ::apache::thrift::protocol::T_I64, 4);
-    xfer += oprot->writeI64(this->minWriteId);
+  if (this->__isset.minOpenWriteId) {
+    xfer += oprot->writeFieldBegin("minOpenWriteId", ::apache::thrift::protocol::T_I64, 4);
+    xfer += oprot->writeI64(this->minOpenWriteId);
     xfer += oprot->writeFieldEnd();
   }
   xfer += oprot->writeFieldBegin("abortedBits", ::apache::thrift::protocol::T_STRING, 5);
@@ -14598,54 +14598,54 @@ uint32_t OpenWriteIds::write(::apache::thrift::protocol::TProtocol* oprot) const
   return xfer;
 }
 
-void swap(OpenWriteIds &a, OpenWriteIds &b) {
+void swap(TableValidWriteIds &a, TableValidWriteIds &b) {
   using ::std::swap;
-  swap(a.tableName, b.tableName);
+  swap(a.fullTableName, b.fullTableName);
   swap(a.writeIdHighWaterMark, b.writeIdHighWaterMark);
-  swap(a.openWriteIds, b.openWriteIds);
-  swap(a.minWriteId, b.minWriteId);
+  swap(a.invalidWriteIds, b.invalidWriteIds);
+  swap(a.minOpenWriteId, b.minOpenWriteId);
   swap(a.abortedBits, b.abortedBits);
   swap(a.__isset, b.__isset);
 }
 
-OpenWriteIds::OpenWriteIds(const OpenWriteIds& other631) {
-  tableName = other631.tableName;
+TableValidWriteIds::TableValidWriteIds(const TableValidWriteIds& other631) {
+  fullTableName = other631.fullTableName;
   writeIdHighWaterMark = other631.writeIdHighWaterMark;
-  openWriteIds = other631.openWriteIds;
-  minWriteId = other631.minWriteId;
+  invalidWriteIds = other631.invalidWriteIds;
+  minOpenWriteId = other631.minOpenWriteId;
   abortedBits = other631.abortedBits;
   __isset = other631.__isset;
 }
-OpenWriteIds& OpenWriteIds::operator=(const OpenWriteIds& other632) {
-  tableName = other632.tableName;
+TableValidWriteIds& TableValidWriteIds::operator=(const TableValidWriteIds& other632) {
+  fullTableName = other632.fullTableName;
   writeIdHighWaterMark = other632.writeIdHighWaterMark;
-  openWriteIds = other632.openWriteIds;
-  minWriteId = other632.minWriteId;
+  invalidWriteIds = other632.invalidWriteIds;
+  minOpenWriteId = other632.minOpenWriteId;
   abortedBits = other632.abortedBits;
   __isset = other632.__isset;
   return *this;
 }
-void OpenWriteIds::printTo(std::ostream& out) const {
+void TableValidWriteIds::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "OpenWriteIds(";
-  out << "tableName=" << to_string(tableName);
+  out << "TableValidWriteIds(";
+  out << "fullTableName=" << to_string(fullTableName);
   out << ", " << "writeIdHighWaterMark=" << to_string(writeIdHighWaterMark);
-  out << ", " << "openWriteIds=" << to_string(openWriteIds);
-  out << ", " << "minWriteId="; (__isset.minWriteId ? (out << to_string(minWriteId)) : (out << "<null>"));
+  out << ", " << "invalidWriteIds=" << to_string(invalidWriteIds);
+  out << ", " << "minOpenWriteId="; (__isset.minOpenWriteId ? (out << to_string(minOpenWriteId)) : (out << "<null>"));
   out << ", " << "abortedBits=" << to_string(abortedBits);
   out << ")";
 }
 
 
-GetOpenWriteIdsResponse::~GetOpenWriteIdsResponse() throw() {
+GetValidWriteIdsResponse::~GetValidWriteIdsResponse() throw() {
 }
 
 
-void GetOpenWriteIdsResponse::__set_openWriteIds(const std::vector<OpenWriteIds> & val) {
-  this->openWriteIds = val;
+void GetValidWriteIdsResponse::__set_tblValidWriteIds(const std::vector<TableValidWriteIds> & val) {
+  this->tblValidWriteIds = val;
 }
 
-uint32_t GetOpenWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t GetValidWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -14657,7 +14657,7 @@ uint32_t GetOpenWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* ip
 
   using ::apache::thrift::protocol::TProtocolException;
 
-  bool isset_openWriteIds = false;
+  bool isset_tblValidWriteIds = false;
 
   while (true)
   {
@@ -14670,19 +14670,19 @@ uint32_t GetOpenWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* ip
       case 1:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
-            this->openWriteIds.clear();
+            this->tblValidWriteIds.clear();
             uint32_t _size633;
             ::apache::thrift::protocol::TType _etype636;
             xfer += iprot->readListBegin(_etype636, _size633);
-            this->openWriteIds.resize(_size633);
+            this->tblValidWriteIds.resize(_size633);
             uint32_t _i637;
             for (_i637 = 0; _i637 < _size633; ++_i637)
             {
-              xfer += this->openWriteIds[_i637].read(iprot);
+              xfer += this->tblValidWriteIds[_i637].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
-          isset_openWriteIds = true;
+          isset_tblValidWriteIds = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -14696,21 +14696,21 @@ uint32_t GetOpenWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* ip
 
   xfer += iprot->readStructEnd();
 
-  if (!isset_openWriteIds)
+  if (!isset_tblValidWriteIds)
     throw TProtocolException(TProtocolException::INVALID_DATA);
   return xfer;
 }
 
-uint32_t GetOpenWriteIdsResponse::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t GetValidWriteIdsResponse::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("GetOpenWriteIdsResponse");
+  xfer += oprot->writeStructBegin("GetValidWriteIdsResponse");
 
-  xfer += oprot->writeFieldBegin("openWriteIds", ::apache::thrift::protocol::T_LIST, 1);
+  xfer += oprot->writeFieldBegin("tblValidWriteIds", ::apache::thrift::protocol::T_LIST, 1);
   {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->openWriteIds.size()));
-    std::vector<OpenWriteIds> ::const_iterator _iter638;
-    for (_iter638 = this->openWriteIds.begin(); _iter638 != this->openWriteIds.end(); ++_iter638)
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->tblValidWriteIds.size()));
+    std::vector<TableValidWriteIds> ::const_iterator _iter638;
+    for (_iter638 = this->tblValidWriteIds.begin(); _iter638 != this->tblValidWriteIds.end(); ++_iter638)
     {
       xfer += (*_iter638).write(oprot);
     }
@@ -14723,43 +14723,43 @@ uint32_t GetOpenWriteIdsResponse::write(::apache::thrift::protocol::TProtocol* o
   return xfer;
 }
 
-void swap(GetOpenWriteIdsResponse &a, GetOpenWriteIdsResponse &b) {
+void swap(GetValidWriteIdsResponse &a, GetValidWriteIdsResponse &b) {
   using ::std::swap;
-  swap(a.openWriteIds, b.openWriteIds);
+  swap(a.tblValidWriteIds, b.tblValidWriteIds);
 }
 
-GetOpenWriteIdsResponse::GetOpenWriteIdsResponse(const GetOpenWriteIdsResponse& other639) {
-  openWriteIds = other639.openWriteIds;
+GetValidWriteIdsResponse::GetValidWriteIdsResponse(const GetValidWriteIdsResponse& other639) {
+  tblValidWriteIds = other639.tblValidWriteIds;
 }
-GetOpenWriteIdsResponse& GetOpenWriteIdsResponse::operator=(const GetOpenWriteIdsResponse& other640) {
-  openWriteIds = other640.openWriteIds;
+GetValidWriteIdsResponse& GetValidWriteIdsResponse::operator=(const GetValidWriteIdsResponse& other640) {
+  tblValidWriteIds = other640.tblValidWriteIds;
   return *this;
 }
-void GetOpenWriteIdsResponse::printTo(std::ostream& out) const {
+void GetValidWriteIdsResponse::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "GetOpenWriteIdsResponse(";
-  out << "openWriteIds=" << to_string(openWriteIds);
+  out << "GetValidWriteIdsResponse(";
+  out << "tblValidWriteIds=" << to_string(tblValidWriteIds);
   out << ")";
 }
 
 
-AllocateTableWriteIdRequest::~AllocateTableWriteIdRequest() throw() {
+AllocateTableWriteIdsRequest::~AllocateTableWriteIdsRequest() throw() {
 }
 
 
-void AllocateTableWriteIdRequest::__set_txnIds(const std::vector<int64_t> & val) {
+void AllocateTableWriteIdsRequest::__set_txnIds(const std::vector<int64_t> & val) {
   this->txnIds = val;
 }
 
-void AllocateTableWriteIdRequest::__set_dbName(const std::string& val) {
+void AllocateTableWriteIdsRequest::__set_dbName(const std::string& val) {
   this->dbName = val;
 }
 
-void AllocateTableWriteIdRequest::__set_tableName(const std::string& val) {
+void AllocateTableWriteIdsRequest::__set_tableName(const std::string& val) {
   this->tableName = val;
 }
 
-uint32_t AllocateTableWriteIdRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AllocateTableWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -14837,10 +14837,10 @@ uint32_t AllocateTableWriteIdRequest::read(::apache::thrift::protocol::TProtocol
   return xfer;
 }
 
-uint32_t AllocateTableWriteIdRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AllocateTableWriteIdsRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("AllocateTableWriteIdRequest");
+  xfer += oprot->writeStructBegin("AllocateTableWriteIdsRequest");
 
   xfer += oprot->writeFieldBegin("txnIds", ::apache::thrift::protocol::T_LIST, 1);
   {
@@ -14867,27 +14867,27 @@ uint32_t AllocateTableWriteIdRequest::write(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-void swap(AllocateTableWriteIdRequest &a, AllocateTableWriteIdRequest &b) {
+void swap(AllocateTableWriteIdsRequest &a, AllocateTableWriteIdsRequest &b) {
   using ::std::swap;
   swap(a.txnIds, b.txnIds);
   swap(a.dbName, b.dbName);
   swap(a.tableName, b.tableName);
 }
 
-AllocateTableWriteIdRequest::AllocateTableWriteIdRequest(const AllocateTableWriteIdRequest& other647) {
+AllocateTableWriteIdsRequest::AllocateTableWriteIdsRequest(const AllocateTableWriteIdsRequest& other647) {
   txnIds = other647.txnIds;
   dbName = other647.dbName;
   tableName = other647.tableName;
 }
-AllocateTableWriteIdRequest& AllocateTableWriteIdRequest::operator=(const AllocateTableWriteIdRequest& other648) {
+AllocateTableWriteIdsRequest& AllocateTableWriteIdsRequest::operator=(const AllocateTableWriteIdsRequest& other648) {
   txnIds = other648.txnIds;
   dbName = other648.dbName;
   tableName = other648.tableName;
   return *this;
 }
-void AllocateTableWriteIdRequest::printTo(std::ostream& out) const {
+void AllocateTableWriteIdsRequest::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "AllocateTableWriteIdRequest(";
+  out << "AllocateTableWriteIdsRequest(";
   out << "txnIds=" << to_string(txnIds);
   out << ", " << "dbName=" << to_string(dbName);
   out << ", " << "tableName=" << to_string(tableName);
@@ -15004,15 +15004,15 @@ void TxnToWriteId::printTo(std::ostream& out) const {
 }
 
 
-AllocateTableWriteIdResponse::~AllocateTableWriteIdResponse() throw() {
+AllocateTableWriteIdsResponse::~AllocateTableWriteIdsResponse() throw() {
 }
 
 
-void AllocateTableWriteIdResponse::__set_txnToWriteIds(const std::vector<TxnToWriteId> & val) {
+void AllocateTableWriteIdsResponse::__set_txnToWriteIds(const std::vector<TxnToWriteId> & val) {
   this->txnToWriteIds = val;
 }
 
-uint32_t AllocateTableWriteIdResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AllocateTableWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -15068,10 +15068,10 @@ uint32_t AllocateTableWriteIdResponse::read(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t AllocateTableWriteIdResponse::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AllocateTableWriteIdsResponse::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("AllocateTableWriteIdResponse");
+  xfer += oprot->writeStructBegin("AllocateTableWriteIdsResponse");
 
   xfer += oprot->writeFieldBegin("txnToWriteIds", ::apache::thrift::protocol::T_LIST, 1);
   {
@@ -15090,21 +15090,21 @@ uint32_t AllocateTableWriteIdResponse::write(::apache::thrift::protocol::TProtoc
   return xfer;
 }
 
-void swap(AllocateTableWriteIdResponse &a, AllocateTableWriteIdResponse &b) {
+void swap(AllocateTableWriteIdsResponse &a, AllocateTableWriteIdsResponse &b) {
   using ::std::swap;
   swap(a.txnToWriteIds, b.txnToWriteIds);
 }
 
-AllocateTableWriteIdResponse::AllocateTableWriteIdResponse(const AllocateTableWriteIdResponse& other657) {
+AllocateTableWriteIdsResponse::AllocateTableWriteIdsResponse(const AllocateTableWriteIdsResponse& other657) {
   txnToWriteIds = other657.txnToWriteIds;
 }
-AllocateTableWriteIdResponse& AllocateTableWriteIdResponse::operator=(const AllocateTableWriteIdResponse& other658) {
+AllocateTableWriteIdsResponse& AllocateTableWriteIdsResponse::operator=(const AllocateTableWriteIdsResponse& other658) {
   txnToWriteIds = other658.txnToWriteIds;
   return *this;
 }
-void AllocateTableWriteIdResponse::printTo(std::ostream& out) const {
+void AllocateTableWriteIdsResponse::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "AllocateTableWriteIdResponse(";
+  out << "AllocateTableWriteIdsResponse(";
   out << "txnToWriteIds=" << to_string(txnToWriteIds);
   out << ")";
 }

@@ -1166,14 +1166,14 @@ class Iface(fb303.FacebookService.Iface):
     """
     pass
 
-  def get_open_write_ids(self, rqst):
+  def get_valid_write_ids(self, rqst):
     """
     Parameters:
      - rqst
     """
     pass
 
-  def allocate_table_write_id(self, rqst):
+  def allocate_table_write_ids(self, rqst):
     """
     Parameters:
      - rqst
@@ -6662,23 +6662,23 @@ class Client(fb303.FacebookService.Client, Iface):
       raise result.o2
     return
 
-  def get_open_write_ids(self, rqst):
+  def get_valid_write_ids(self, rqst):
     """
     Parameters:
      - rqst
     """
-    self.send_get_open_write_ids(rqst)
-    return self.recv_get_open_write_ids()
+    self.send_get_valid_write_ids(rqst)
+    return self.recv_get_valid_write_ids()
 
-  def send_get_open_write_ids(self, rqst):
-    self._oprot.writeMessageBegin('get_open_write_ids', TMessageType.CALL, self._seqid)
-    args = get_open_write_ids_args()
+  def send_get_valid_write_ids(self, rqst):
+    self._oprot.writeMessageBegin('get_valid_write_ids', TMessageType.CALL, self._seqid)
+    args = get_valid_write_ids_args()
     args.rqst = rqst
     args.write(self._oprot)
     self._oprot.writeMessageEnd()
     self._oprot.trans.flush()
 
-  def recv_get_open_write_ids(self):
+  def recv_get_valid_write_ids(self):
     iprot = self._iprot
     (fname, mtype, rseqid) = iprot.readMessageBegin()
     if mtype == TMessageType.EXCEPTION:
@@ -6686,7 +6686,7 @@ class Client(fb303.FacebookService.Client, Iface):
       x.read(iprot)
       iprot.readMessageEnd()
       raise x
-    result = get_open_write_ids_result()
+    result = get_valid_write_ids_result()
     result.read(iprot)
     iprot.readMessageEnd()
     if result.success is not None:
@@ -6695,25 +6695,25 @@ class Client(fb303.FacebookService.Client, Iface):
       raise result.o1
     if result.o2 is not None:
       raise result.o2
-    raise TApplicationException(TApplicationException.MISSING_RESULT, "get_open_write_ids failed: unknown result")
+    raise TApplicationException(TApplicationException.MISSING_RESULT, "get_valid_write_ids failed: unknown result")
 
-  def allocate_table_write_id(self, rqst):
+  def allocate_table_write_ids(self, rqst):
     """
     Parameters:
      - rqst
     """
-    self.send_allocate_table_write_id(rqst)
-    return self.recv_allocate_table_write_id()
+    self.send_allocate_table_write_ids(rqst)
+    return self.recv_allocate_table_write_ids()
 
-  def send_allocate_table_write_id(self, rqst):
-    self._oprot.writeMessageBegin('allocate_table_write_id', TMessageType.CALL, self._seqid)
-    args = allocate_table_write_id_args()
+  def send_allocate_table_write_ids(self, rqst):
+    self._oprot.writeMessageBegin('allocate_table_write_ids', TMessageType.CALL, self._seqid)
+    args = allocate_table_write_ids_args()
     args.rqst = rqst
     args.write(self._oprot)
     self._oprot.writeMessageEnd()
     self._oprot.trans.flush()
 
-  def recv_allocate_table_write_id(self):
+  def recv_allocate_table_write_ids(self):
     iprot = self._iprot
     (fname, mtype, rseqid) = iprot.readMessageBegin()
     if mtype == TMessageType.EXCEPTION:
@@ -6721,7 +6721,7 @@ class Client(fb303.FacebookService.Client, Iface):
       x.read(iprot)
       iprot.readMessageEnd()
       raise x
-    result = allocate_table_write_id_result()
+    result = allocate_table_write_ids_result()
     result.read(iprot)
     iprot.readMessageEnd()
     if result.success is not None:
@@ -6732,7 +6732,7 @@ class Client(fb303.FacebookService.Client, Iface):
       raise result.o2
     if result.o3 is not None:
       raise result.o3
-    raise TApplicationException(TApplicationException.MISSING_RESULT, "allocate_table_write_id failed: unknown result")
+    raise TApplicationException(TApplicationException.MISSING_RESULT, "allocate_table_write_ids failed: unknown result")
 
   def lock(self, rqst):
     """
@@ -8190,8 +8190,8 @@ class Processor(fb303.FacebookService.Processor, Iface, TProcessor):
     self._processMap["abort_txn"] = Processor.process_abort_txn
     self._processMap["abort_txns"] = Processor.process_abort_txns
     self._processMap["commit_txn"] = Processor.process_commit_txn
-    self._processMap["get_open_write_ids"] = Processor.process_get_open_write_ids
-    self._processMap["allocate_table_write_id"] = Processor.process_allocate_table_write_id
+    self._processMap["get_valid_write_ids"] = Processor.process_get_valid_write_ids
+    self._processMap["allocate_table_write_ids"] = Processor.process_allocate_table_write_ids
     self._processMap["lock"] = Processor.process_lock
     self._processMap["check_lock"] = Processor.process_check_lock
     self._processMap["unlock"] = Processor.process_unlock
@@ -11782,13 +11782,13 @@ class Processor(fb303.FacebookService.Processor, Iface, TProcessor):
     oprot.writeMessageEnd()
     oprot.trans.flush()
 
-  def process_get_open_write_ids(self, seqid, iprot, oprot):
-    args = get_open_write_ids_args()
+  def process_get_valid_write_ids(self, seqid, iprot, oprot):
+    args = get_valid_write_ids_args()
     args.read(iprot)
     iprot.readMessageEnd()
-    result = get_open_write_ids_result()
+    result = get_valid_write_ids_result()
     try:
-      result.success = self._handler.get_open_write_ids(args.rqst)
+      result.success = self._handler.get_valid_write_ids(args.rqst)
       msg_type = TMessageType.REPLY
     except (TTransport.TTransportException, KeyboardInterrupt, SystemExit):
       raise
@@ -11802,18 +11802,18 @@ class Processor(fb303.FacebookService.Processor, Iface, TProcessor):
       msg_type = TMessageType.EXCEPTION
       logging.exception(ex)
       result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
-    oprot.writeMessageBegin("get_open_write_ids", msg_type, seqid)
+    oprot.writeMessageBegin("get_valid_write_ids", msg_type, seqid)
     result.write(oprot)
     oprot.writeMessageEnd()
     oprot.trans.flush()
 
-  def process_allocate_table_write_id(self, seqid, iprot, oprot):
-    args = allocate_table_write_id_args()
+  def process_allocate_table_write_ids(self, seqid, iprot, oprot):
+    args = allocate_table_write_ids_args()
     args.read(iprot)
     iprot.readMessageEnd()
-    result = allocate_table_write_id_result()
+    result = allocate_table_write_ids_result()
     try:
-      result.success = self._handler.allocate_table_write_id(args.rqst)
+      result.success = self._handler.allocate_table_write_ids(args.rqst)
       msg_type = TMessageType.REPLY
     except (TTransport.TTransportException, KeyboardInterrupt, SystemExit):
       raise
@@ -11830,7 +11830,7 @@ class Processor(fb303.FacebookService.Processor, Iface, TProcessor):
       msg_type = TMessageType.EXCEPTION
       logging.exception(ex)
       result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
-    oprot.writeMessageBegin("allocate_table_write_id", msg_type, seqid)
+    oprot.writeMessageBegin("allocate_table_write_ids", msg_type, seqid)
     result.write(oprot)
     oprot.writeMessageEnd()
     oprot.trans.flush()
@@ -37471,7 +37471,7 @@ class commit_txn_result:
   def __ne__(self, other):
     return not (self == other)
 
-class get_open_write_ids_args:
+class get_valid_write_ids_args:
   """
   Attributes:
    - rqst
@@ -37479,7 +37479,7 @@ class get_open_write_ids_args:
 
   thrift_spec = (
     None, # 0
-    (1, TType.STRUCT, 'rqst', (GetOpenWriteIdsRequest, GetOpenWriteIdsRequest.thrift_spec), None, ), # 1
+    (1, TType.STRUCT, 'rqst', (GetValidWriteIdsRequest, GetValidWriteIdsRequest.thrift_spec), None, ), # 1
   )
 
   def __init__(self, rqst=None,):
@@ -37496,7 +37496,7 @@ class get_open_write_ids_args:
         break
       if fid == 1:
         if ftype == TType.STRUCT:
-          self.rqst = GetOpenWriteIdsRequest()
+          self.rqst = GetValidWriteIdsRequest()
           self.rqst.read(iprot)
         else:
           iprot.skip(ftype)
@@ -37509,7 +37509,7 @@ class get_open_write_ids_args:
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
-    oprot.writeStructBegin('get_open_write_ids_args')
+    oprot.writeStructBegin('get_valid_write_ids_args')
     if self.rqst is not None:
       oprot.writeFieldBegin('rqst', TType.STRUCT, 1)
       self.rqst.write(oprot)
@@ -37537,7 +37537,7 @@ class get_open_write_ids_args:
   def __ne__(self, other):
     return not (self == other)
 
-class get_open_write_ids_result:
+class get_valid_write_ids_result:
   """
   Attributes:
    - success
@@ -37546,7 +37546,7 @@ class get_open_write_ids_result:
   """
 
   thrift_spec = (
-    (0, TType.STRUCT, 'success', (GetOpenWriteIdsResponse, GetOpenWriteIdsResponse.thrift_spec), None, ), # 0
+    (0, TType.STRUCT, 'success', (GetValidWriteIdsResponse, GetValidWriteIdsResponse.thrift_spec), None, ), # 0
     (1, TType.STRUCT, 'o1', (NoSuchTxnException, NoSuchTxnException.thrift_spec), None, ), # 1
     (2, TType.STRUCT, 'o2', (MetaException, MetaException.thrift_spec), None, ), # 2
   )
@@ -37567,7 +37567,7 @@ class get_open_write_ids_result:
         break
       if fid == 0:
         if ftype == TType.STRUCT:
-          self.success = GetOpenWriteIdsResponse()
+          self.success = GetValidWriteIdsResponse()
           self.success.read(iprot)
         else:
           iprot.skip(ftype)
@@ -37592,7 +37592,7 @@ class get_open_write_ids_result:
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
-    oprot.writeStructBegin('get_open_write_ids_result')
+    oprot.writeStructBegin('get_valid_write_ids_result')
     if self.success is not None:
       oprot.writeFieldBegin('success', TType.STRUCT, 0)
       self.success.write(oprot)
@@ -37630,7 +37630,7 @@ class get_open_write_ids_result:
   def __ne__(self, other):
     return not (self == other)
 
-class allocate_table_write_id_args:
+class allocate_table_write_ids_args:
   """
   Attributes:
    - rqst
@@ -37638,7 +37638,7 @@ class allocate_table_write_id_args:
 
   thrift_spec = (
     None, # 0
-    (1, TType.STRUCT, 'rqst', (AllocateTableWriteIdRequest, AllocateTableWriteIdRequest.thrift_spec), None, ), # 1
+    (1, TType.STRUCT, 'rqst', (AllocateTableWriteIdsRequest, AllocateTableWriteIdsRequest.thrift_spec), None, ), # 1
   )
 
   def __init__(self, rqst=None,):
@@ -37655,7 +37655,7 @@ class allocate_table_write_id_args:
         break
       if fid == 1:
         if ftype == TType.STRUCT:
-          self.rqst = AllocateTableWriteIdRequest()
+          self.rqst = AllocateTableWriteIdsRequest()
           self.rqst.read(iprot)
         else:
           iprot.skip(ftype)
@@ -37668,7 +37668,7 @@ class allocate_table_write_id_args:
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
-    oprot.writeStructBegin('allocate_table_write_id_args')
+    oprot.writeStructBegin('allocate_table_write_ids_args')
     if self.rqst is not None:
       oprot.writeFieldBegin('rqst', TType.STRUCT, 1)
       self.rqst.write(oprot)
@@ -37696,7 +37696,7 @@ class allocate_table_write_id_args:
   def __ne__(self, other):
     return not (self == other)
 
-class allocate_table_write_id_result:
+class allocate_table_write_ids_result:
   """
   Attributes:
    - success
@@ -37706,7 +37706,7 @@ class allocate_table_write_id_result:
   """
 
   thrift_spec = (
-    (0, TType.STRUCT, 'success', (AllocateTableWriteIdResponse, AllocateTableWriteIdResponse.thrift_spec), None, ), # 0
+    (0, TType.STRUCT, 'success', (AllocateTableWriteIdsResponse, AllocateTableWriteIdsResponse.thrift_spec), None, ), # 0
     (1, TType.STRUCT, 'o1', (NoSuchTxnException, NoSuchTxnException.thrift_spec), None, ), # 1
     (2, TType.STRUCT, 'o2', (TxnAbortedException, TxnAbortedException.thrift_spec), None, ), # 2
     (3, TType.STRUCT, 'o3', (MetaException, MetaException.thrift_spec), None, ), # 3
@@ -37729,7 +37729,7 @@ class allocate_table_write_id_result:
         break
       if fid == 0:
         if ftype == TType.STRUCT:
-          self.success = AllocateTableWriteIdResponse()
+          self.success = AllocateTableWriteIdsResponse()
           self.success.read(iprot)
         else:
           iprot.skip(ftype)
@@ -37760,7 +37760,7 @@ class allocate_table_write_id_result:
     if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
-    oprot.writeStructBegin('allocate_table_write_id_result')
+    oprot.writeStructBegin('allocate_table_write_ids_result')
     if self.success is not None:
       oprot.writeFieldBegin('success', TType.STRUCT, 0)
       self.success.write(oprot)
