@@ -29,6 +29,8 @@ import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.common.ValidTxnList;
+import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
+import org.apache.hadoop.hive.common.ValidWriteIdList;
 import org.apache.hadoop.hive.common.classification.RetrySemantics;
 import org.apache.hadoop.hive.metastore.annotation.NoReconnect;
 import org.apache.hadoop.hive.metastore.api.AggrStats;
@@ -99,6 +101,7 @@ import org.apache.hadoop.hive.metastore.api.Table;
 import org.apache.hadoop.hive.metastore.api.TableMeta;
 import org.apache.hadoop.hive.metastore.api.TxnAbortedException;
 import org.apache.hadoop.hive.metastore.api.TxnOpenException;
+import org.apache.hadoop.hive.metastore.api.TxnToWriteId;
 import org.apache.hadoop.hive.metastore.api.UniqueConstraintsRequest;
 import org.apache.hadoop.hive.metastore.api.UnknownDBException;
 import org.apache.hadoop.hive.metastore.api.UnknownPartitionException;
@@ -1346,12 +1349,31 @@ public interface IMetaStoreClient {
 
   /**
    * Get a structure that details valid transactions.
-   * @param currentTxn The current transaction of the caller.  This will be removed from the
+   * @param currentTxn The current transaction of the caller. This will be removed from the
    *                   exceptions list so that the caller sees records from his own transaction.
-   * @return list of valid transactions
+   * @return list of valid transactions and also valid write IDs for each input table.
    * @throws TException
    */
   ValidTxnList getValidTxns(long currentTxn) throws TException;
+
+  /**
+   * Get a structure that details valid transactions.
+   * @param fullTableName full table name of format <db_name>.<table_name>
+   * @return list of valid write ids for the given table
+   * @throws TException
+   */
+  ValidWriteIdList getValidWriteIds(String fullTableName) throws TException;
+
+  /**
+   * Get a structure that details valid write ids list for all tables read by current txn.
+   * @param currentTxnId current txn ID for which we try to get valid write ids list
+   * @param tablesList list of tables (format: <db_name>.<table_name>) read from the current transaction
+   *                   for which needs to populate the valid write ids
+   * @param validTxnList snapshot of valid txns for the current txn
+   * @return list of valid write ids for the given list of tables.
+   * @throws TException
+   */
+  ValidTxnWriteIdList getValidWriteIds(Long currentTxnId, List<String> tablesList, String validTxnList) throws TException;
 
   /**
    * Initiate a transaction.
@@ -1420,6 +1442,24 @@ public interface IMetaStoreClient {
    * @throws TException
    */
   void abortTxns(List<Long> txnids) throws TException;
+
+  /**
+   * Allocate a per table write ID and associate it with the given transaction
+   * @param txnId id of transaction to which the allocated write ID to be associated.
+   * @param dbName name of DB in which the table belongs.
+   * @param tableName table to which the write ID to be allocated
+   * @throws TException
+   */
+  long allocateTableWriteId(long txnId, String dbName, String tableName) throws TException;
+
+  /**
+   * Allocate a per table write ID and associate it with the given transaction
+   * @param txnIds ids of transaction batchto which the allocated write ID to be associated.
+   * @param dbName name of DB in which the table belongs.
+   * @param tableName table to which the write ID to be allocated
+   * @throws TException
+   */
+  List<TxnToWriteId> allocateTableWriteIdsBatch(List<Long> txnIds, String dbName, String tableName) throws TException;
 
   /**
    * Show the list of currently open transactions.  This is for use by "show transactions" in the

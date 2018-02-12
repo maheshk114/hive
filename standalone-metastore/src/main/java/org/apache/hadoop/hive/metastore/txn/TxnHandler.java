@@ -61,6 +61,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hive.common.ValidReadTxnList;
 import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.classification.RetrySemantics;
 import org.apache.hadoop.hive.metastore.DatabaseProduct;
@@ -69,6 +70,8 @@ import org.apache.hadoop.hive.metastore.Warehouse;
 import org.apache.hadoop.hive.metastore.api.AbortTxnRequest;
 import org.apache.hadoop.hive.metastore.api.AbortTxnsRequest;
 import org.apache.hadoop.hive.metastore.api.AddDynamicPartitions;
+import org.apache.hadoop.hive.metastore.api.AllocateTableWriteIdsRequest;
+import org.apache.hadoop.hive.metastore.api.AllocateTableWriteIdsResponse;
 import org.apache.hadoop.hive.metastore.api.BasicTxnInfo;
 import org.apache.hadoop.hive.metastore.api.CheckLockRequest;
 import org.apache.hadoop.hive.metastore.api.CommitTxnRequest;
@@ -80,6 +83,8 @@ import org.apache.hadoop.hive.metastore.api.Database;
 import org.apache.hadoop.hive.metastore.api.FieldSchema;
 import org.apache.hadoop.hive.metastore.api.GetOpenTxnsInfoResponse;
 import org.apache.hadoop.hive.metastore.api.GetOpenTxnsResponse;
+import org.apache.hadoop.hive.metastore.api.GetValidWriteIdsRequest;
+import org.apache.hadoop.hive.metastore.api.GetValidWriteIdsResponse;
 import org.apache.hadoop.hive.metastore.api.HeartbeatRequest;
 import org.apache.hadoop.hive.metastore.api.HeartbeatTxnRangeRequest;
 import org.apache.hadoop.hive.metastore.api.HeartbeatTxnRangeResponse;
@@ -102,10 +107,12 @@ import org.apache.hadoop.hive.metastore.api.ShowLocksRequest;
 import org.apache.hadoop.hive.metastore.api.ShowLocksResponse;
 import org.apache.hadoop.hive.metastore.api.ShowLocksResponseElement;
 import org.apache.hadoop.hive.metastore.api.Table;
+import org.apache.hadoop.hive.metastore.api.TableValidWriteIds;
 import org.apache.hadoop.hive.metastore.api.TxnAbortedException;
 import org.apache.hadoop.hive.metastore.api.TxnInfo;
 import org.apache.hadoop.hive.metastore.api.TxnOpenException;
 import org.apache.hadoop.hive.metastore.api.TxnState;
+import org.apache.hadoop.hive.metastore.api.TxnToWriteId;
 import org.apache.hadoop.hive.metastore.api.UnlockRequest;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf.ConfVars;
@@ -865,6 +872,239 @@ abstract class TxnHandler implements TxnStore, TxnStore.MutexAPI {
       }
     } catch (RetryException e) {
       commitTxn(rqst);
+    }
+  }
+
+  @Override
+  @RetrySemantics.ReadOnly
+  public GetValidWriteIdsResponse getValidWriteIds(GetValidWriteIdsRequest rqst)
+          throws NoSuchTxnException, MetaException {
+    try {
+      Connection dbConn = null;
+      Statement stmt = null;
+      ValidTxnList validTxnList;
+
+      // We should prepare the valid write ids list based on validTxnList of current txn.
+      // If no txn exists in the caller, then they would pass null for validTxnList and so it is
+      // required to get the current state of txns to make validTxnList
+      if (rqst.isSetValidTxnList()) {
+        validTxnList = new ValidReadTxnList(rqst.getValidTxnList());
+      } else {
+        // Passing 0 for currentTxn means, this validTxnList is not wrt to any txn
+        validTxnList = TxnUtils.createValidReadTxnList(getOpenTxns(), 0);
+      }
+      try {
+        /**
+         * This runs at READ_COMMITTED for exactly the same reason as {@link #getOpenTxnsInfo()}
+         */
+        dbConn = getDbConn(Connection.TRANSACTION_READ_COMMITTED);
+        stmt = dbConn.createStatement();
+
+        // Get the valid write id list for all the tables read by the current txn
+        List<TableValidWriteIds> tblValidWriteIdsList = new ArrayList<>();
+        for (String fullTableName : rqst.getFullTableNames()) {
+          tblValidWriteIdsList.add(getValidWriteIdsForTable(stmt, fullTableName, validTxnList));
+        }
+
+        LOG.debug("Going to rollback");
+        dbConn.rollback();
+        GetValidWriteIdsResponse owr = new GetValidWriteIdsResponse(tblValidWriteIdsList);
+        return owr;
+      } catch (SQLException e) {
+        LOG.debug("Going to rollback");
+        rollbackDBConn(dbConn);
+        checkRetryable(dbConn, e, "getValidWriteIds");
+        throw new MetaException("Unable to select from transaction database, "
+                + StringUtils.stringifyException(e));
+      } finally {
+        close(null, stmt, dbConn);
+      }
+    } catch (RetryException e) {
+      return getValidWriteIds(rqst);
+    }
+  }
+
+  // Method to get the Valid write ids list for the given table
+  // Input fullTableName is expected to be of format <db_name>.<table_name>
+  private TableValidWriteIds getValidWriteIdsForTable(Statement stmt, String fullTableName,
+                                               ValidTxnList validTxnList) throws SQLException {
+    ResultSet rs = null;
+    String[] names = TxnUtils.getDbTableName(fullTableName);
+    try {
+      // Need to initialize to 0 to make sure if nobody modified this table, then current txn
+      // shouldn't read any data
+      long writeIdHwm = 0;
+      List<Long> invalidWriteIdList = new ArrayList<>();
+      long txnHwm = validTxnList.getHighWatermark();
+
+      // The output includes all the txns which are under the high water mark. It includes
+      // the committed transactions as well.
+      String s = "select t2w_txnid, t2w_writeid from TXN_TO_WRITE_ID where t2w_txnid <= " + txnHwm
+              + " and t2w_database = " + quoteString(names[0])
+              + " and t2w_table = " + quoteString(names[1])
+              + " order by t2w_writeid";
+      LOG.debug("Going to execute query<" + s + ">");
+      rs = stmt.executeQuery(s);
+      long minOpenWriteId = Long.MAX_VALUE;
+      BitSet abortedBits = new BitSet();
+      while (rs.next()) {
+        long txnId = rs.getLong(1);
+        long writeId = rs.getLong(2);
+        writeIdHwm = Math.max(writeIdHwm, writeId);
+        if (validTxnList.isTxnValid(txnId)) {
+          // Skip if the transaction under evaluation is already committed.
+          continue;
+        }
+
+        // The current txn is either in open or aborted state.
+        // Mark the write ids state as per the txn state.
+        if (validTxnList.isTxnAborted(txnId)) {
+          invalidWriteIdList.add(writeId);
+          abortedBits.set(invalidWriteIdList.size() - 1);
+        } else {
+          invalidWriteIdList.add(writeId);
+          minOpenWriteId = Math.min(minOpenWriteId, writeId);
+        }
+      }
+
+      ByteBuffer byteBuffer = ByteBuffer.wrap(abortedBits.toByteArray());
+      TableValidWriteIds owi = new TableValidWriteIds(fullTableName, writeIdHwm, invalidWriteIdList, byteBuffer);
+      if (minOpenWriteId < Long.MAX_VALUE) {
+        owi.setMinOpenWriteId(minOpenWriteId);
+      }
+      return owi;
+    } finally {
+      close(rs);
+    }
+  }
+
+  @Override
+  public AllocateTableWriteIdsResponse allocateTableWriteIds(AllocateTableWriteIdsRequest rqst)
+          throws NoSuchTxnException, TxnAbortedException, MetaException {
+    List<Long> txnIds = rqst.getTxnIds();
+    String dbName = rqst.getDbName().toLowerCase();
+    String tblName = rqst.getTableName().toLowerCase();
+    try {
+      Connection dbConn = null;
+      Statement stmt = null;
+      ResultSet rs = null;
+      TxnStore.MutexAPI.LockHandle handle = null;
+      try {
+        lockInternal();
+        dbConn = getDbConn(Connection.TRANSACTION_READ_COMMITTED);
+        stmt = dbConn.createStatement();
+
+        Collections.sort(txnIds); //easier to read logs
+
+        // Check if all the input txns are in open state. Write ID should be allocated only for open transactions.
+        if (!isTxnsInOpenState(txnIds, stmt)) {
+          throw new IllegalStateException("Not all input txns " + txnIds + " are in open state.");
+        }
+
+        List<TxnToWriteId> txnToWriteIds = new ArrayList<>();
+        List<Long> allocatedTxns = new ArrayList<>();
+        long txnId;
+        long writeId;
+        List<String> queries = new ArrayList<>();
+        StringBuilder prefix = new StringBuilder();
+        StringBuilder suffix = new StringBuilder();
+
+        // Traverse the TXN_TO_WRITE_ID to see if any of the input txns already have allocated a
+        // write id for the same db.table. If yes, then need to reuse it else have to allocate new one
+        prefix.append("select t2w_txnid, t2w_writeid from TXN_TO_WRITE_ID where"
+                        + " t2w_database = " + quoteString(dbName)
+                        + " and t2w_table = " + quoteString(tblName) + " and ");
+        suffix.append("");
+        TxnUtils.buildQueryWithINClause(conf, queries, prefix, suffix,
+                txnIds, "t2w_txnid", false, false);
+        for (String query : queries) {
+          LOG.debug("Going to execute query <" + query + ">");
+          rs = stmt.executeQuery(query);
+          while (rs.next()) {
+            // If table write ID is already allocated for the given transaction, then just use it
+            txnId = rs.getLong(1);
+            writeId = rs.getLong(2);
+            txnToWriteIds.add(new TxnToWriteId(txnId, writeId));
+            allocatedTxns.add(txnId);
+            LOG.info("Reused already allocated writeID: " + writeId + " for txnId: " + txnId);
+          }
+        }
+
+        // If all the txns in the list have already allocated write ids, then just skip new allocations
+        long numOfWriteIds = txnIds.size() - allocatedTxns.size();
+        assert(numOfWriteIds >= 0);
+        if (0 == numOfWriteIds) {
+          // If all the txns in the list have pre-allocated write ids for the given table, then just return
+          return new AllocateTableWriteIdsResponse(txnToWriteIds);
+        }
+
+        handle = getMutexAPI().acquireLock(MUTEX_KEY.WriteIdAllocator.name());
+
+        // There are some txns in the list which has no write id allocated and hence go ahead and do it.
+        // Get the next write id for the given table and update it with new next write id.
+        // This is select for update query which takes a lock if the table entry is already there in NEXT_WRITE_ID
+        String s = sqlGenerator.addForUpdateClause(
+                "select nwi_next from NEXT_WRITE_ID where nwi_database = " + quoteString(dbName)
+                        + " and nwi_table = " + quoteString(tblName));
+        LOG.debug("Going to execute query <" + s + ">");
+        rs = stmt.executeQuery(s);
+        if (!rs.next()) {
+          // First allocation of write id should add the table to the next_write_id meta table
+          // The initial value for write id should be 1 and hence we add 1 with number of write ids allocated here
+          s = "insert into NEXT_WRITE_ID (nwi_database, nwi_table, nwi_next) values ("
+                  + quoteString(dbName) + "," + quoteString(tblName) + "," + String.valueOf(numOfWriteIds + 1) + ")";
+          LOG.debug("Going to execute insert <" + s + ">");
+          stmt.execute(s);
+          writeId = 1;
+        } else {
+          // Update the NEXT_WRITE_ID for the given table after incrementing by number of write ids allocated
+          writeId = rs.getLong(1);
+          s = "update NEXT_WRITE_ID set nwi_next = " + (writeId + numOfWriteIds)
+                  + " where nwi_database = " + quoteString(dbName)
+                  + " and nwi_table = " + quoteString(tblName);
+          LOG.debug("Going to execute update <" + s + ">");
+          stmt.executeUpdate(s);
+        }
+
+        // Map the newly allocated write ids against the list of txns which doesn't have pre-allocated
+        // write ids
+        List<String> rows = new ArrayList<>();
+        for (long txn : txnIds) {
+          if (allocatedTxns.contains(txn)) {
+            continue;
+          }
+          rows.add(txn + ", " + quoteString(dbName) + ", " + quoteString(tblName) + ", " + writeId);
+          txnToWriteIds.add(new TxnToWriteId(txn, writeId));
+          LOG.info("Allocated writeID: " + writeId + " for txnId: " + txn);
+          writeId++;
+        }
+
+        // Insert entries to TXN_TO_WRITE_ID for newly allocated write ids
+        List<String> inserts = sqlGenerator.createInsertValuesStmt(
+                "TXN_TO_WRITE_ID (t2w_txnid, t2w_database, t2w_table, t2w_writeid)", rows);
+        for (String insert : inserts) {
+          LOG.debug("Going to execute insert <" + insert + ">");
+          stmt.execute(insert);
+        }
+
+        LOG.debug("Going to commit");
+        dbConn.commit();
+        return new AllocateTableWriteIdsResponse(txnToWriteIds);
+      } catch (SQLException e) {
+        LOG.debug("Going to rollback");
+        rollbackDBConn(dbConn);
+        checkRetryable(dbConn, e, "allocateTableWriteIds(" + rqst + ")");
+        throw new MetaException("Unable to update transaction database "
+                + StringUtils.stringifyException(e));
+      } finally {
+        close(rs, stmt, dbConn);
+        if(handle != null) {
+          handle.releaseLocks();
+        }
+        unlockInternal();
+      }
+    } catch (RetryException e) {
+      return allocateTableWriteIds(rqst);
     }
   }
 
@@ -1906,6 +2146,18 @@ abstract class TxnHandler implements TxnStore, TxnStore.MutexAPI {
             buff.append("'");
             queries.add(buff.toString());
 
+            buff.setLength(0);
+            buff.append("delete from TXN_TO_WRITE_ID where t2w_database='");
+            buff.append(dbName.toLowerCase());
+            buff.append("'");
+            queries.add(buff.toString());
+
+            buff.setLength(0);
+            buff.append("delete from NEXT_WRITE_ID where nwi_database='");
+            buff.append(dbName.toLowerCase());
+            buff.append("'");
+            queries.add(buff.toString());
+
             break;
           case TABLE:
             dbName = table.getDbName();
@@ -1939,6 +2191,22 @@ abstract class TxnHandler implements TxnStore, TxnStore.MutexAPI {
             buff.append(dbName);
             buff.append("' and cc_table='");
             buff.append(tblName);
+            buff.append("'");
+            queries.add(buff.toString());
+
+            buff.setLength(0);
+            buff.append("delete from TXN_TO_WRITE_ID where t2w_database='");
+            buff.append(dbName.toLowerCase());
+            buff.append("' and t2w_table='");
+            buff.append(tblName.toLowerCase());
+            buff.append("'");
+            queries.add(buff.toString());
+
+            buff.setLength(0);
+            buff.append("delete from NEXT_WRITE_ID where nwi_database='");
+            buff.append(dbName.toLowerCase());
+            buff.append("' and nwi_table='");
+            buff.append(tblName.toLowerCase());
             buff.append("'");
             queries.add(buff.toString());
 
@@ -3000,6 +3268,35 @@ abstract class TxnHandler implements TxnStore, TxnStore.MutexAPI {
       assert txnState == TXN_OPEN : "we found it in TXNS but it's not ABORTED, so must be OPEN";
     }
     return TxnStatus.OPEN;
+  }
+
+  /**
+   * Checks if all the txns in the list are in open state.
+   * @param txnIds list of txns to be evaluated for open state
+   * @param stmt db statement
+   * @return If all txns in open state, then return true else false
+   */
+  private boolean isTxnsInOpenState(List<Long> txnIds, Statement stmt) throws SQLException, MetaException {
+    List<String> queries = new ArrayList<>();
+    StringBuilder prefix = new StringBuilder();
+    StringBuilder suffix = new StringBuilder();
+
+    // Get the count of txns from the given list are in open state. If the returned count is same as
+    // the input number of txns, then it means, all are in open state.
+    prefix.append("select count(*) from TXNS where txn_state = '" + TXN_OPEN + "' and ");
+    suffix.append("");
+    TxnUtils.buildQueryWithINClause(conf, queries, prefix, suffix,
+            txnIds, "txn_id", false, false);
+
+    long count = 0;
+    for (String query : queries) {
+      LOG.debug("Going to execute query <" + query + ">");
+      ResultSet rs = stmt.executeQuery(query);
+      if (rs.next()) {
+        count += rs.getLong(1);
+      }
+    }
+    return count == txnIds.size();
   }
 
   /**

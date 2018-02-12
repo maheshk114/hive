@@ -51,7 +51,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 
 import com.google.common.collect.ImmutableSet;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
@@ -61,8 +60,8 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.FileUtils;
 import org.apache.hadoop.hive.common.JavaUtils;
 import org.apache.hadoop.hive.common.StatsSetupConst;
-import org.apache.hadoop.hive.common.ValidReadTxnList;
 import org.apache.hadoop.hive.common.ValidTxnList;
+import org.apache.hadoop.hive.common.ValidWriteIdList;
 import org.apache.hadoop.hive.common.type.HiveDecimal;
 import org.apache.hadoop.hive.conf.Constants;
 import org.apache.hadoop.hive.conf.HiveConf;
@@ -76,7 +75,6 @@ import org.apache.hadoop.hive.metastore.TableType;
 import org.apache.hadoop.hive.metastore.Warehouse;
 import org.apache.hadoop.hive.metastore.api.AggrStats;
 import org.apache.hadoop.hive.metastore.api.AlreadyExistsException;
-import org.apache.hadoop.hive.metastore.api.BasicTxnInfo;
 import org.apache.hadoop.hive.metastore.api.ColumnStatisticsData;
 import org.apache.hadoop.hive.metastore.api.ColumnStatisticsObj;
 import org.apache.hadoop.hive.metastore.api.CompactionResponse;
@@ -108,7 +106,6 @@ import org.apache.hadoop.hive.metastore.api.StorageDescriptor;
 import org.apache.hadoop.hive.metastore.api.TxnInfo;
 import org.apache.hadoop.hive.metastore.api.WMFullResourcePlan;
 import org.apache.hadoop.hive.metastore.api.WMNullableResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMResourcePlan;
 import org.apache.hadoop.hive.metastore.api.WMResourcePlanStatus;
 import org.apache.hadoop.hive.metastore.api.WMTrigger;
 import org.apache.hadoop.hive.metastore.api.WMValidateResourcePlanResponse;
@@ -4419,7 +4416,7 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
   }
 
   private void handleRemoveMm(
-      Path path, ValidTxnList validTxnList, List<Path> result) throws HiveException {
+      Path path, ValidWriteIdList validWriteIdList, List<Path> result) throws HiveException {
     // Note: doesn't take LB into account; that is not presently supported here (throws above).
     try {
       FileSystem fs = path.getFileSystem(conf);
@@ -4429,10 +4426,10 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
           ensureDelete(fs, childPath, "a non-directory file");
           continue;
         }
-        Long writeId = JavaUtils.extractTxnId(childPath);
+        Long writeId = JavaUtils.extractWriteId(childPath);
         if (writeId == null) {
           ensureDelete(fs, childPath, "an unknown directory");
-        } else if (!validTxnList.isTxnValid(writeId)) {
+        } else if (!validWriteIdList.isWriteIdValid(writeId)) {
           // Assume no concurrent active writes - we rely on locks here. We could check and fail.
           ensureDelete(fs, childPath, "an uncommitted directory");
         } else {
@@ -4467,9 +4464,10 @@ public class DDLTask extends Task<DDLWork> implements Serializable {
     try {
       HiveTxnManager txnManager = SessionState.get().getTxnMgr();
       if (txnManager.isTxnOpen()) {
-        mmWriteId = txnManager.getCurrentTxnId();
+        mmWriteId = txnManager.getTableWriteId(tbl.getDbName(), tbl.getTableName());
       } else {
-        mmWriteId = txnManager.openTxn(new Context(conf), conf.getUser());
+        txnManager.openTxn(new Context(conf), conf.getUser());
+        mmWriteId = txnManager.getTableWriteId(tbl.getDbName(), tbl.getTableName());
         txnManager.commitTxn();
       }
     } catch (Exception e) {

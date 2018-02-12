@@ -56,8 +56,8 @@ public class FetchTask extends Task<FetchWork> implements Serializable {
     super();
   }
 
-  public void setValidTxnList(String txnStr) {
-    fetch.setValidTxnList(txnStr);
+  public void setValidWriteIdList(String writeIdStr) {
+    fetch.setValidWriteIdList(writeIdStr);
   }
   @Override
   public void initialize(QueryState queryState, QueryPlan queryPlan, DriverContext ctx,
@@ -80,6 +80,7 @@ public class FetchTask extends Task<FetchWork> implements Serializable {
 
         AcidUtils.setAcidTableScan(job, ts.getConf().isAcidTable());
         AcidUtils.setAcidOperationalProperties(job, ts.getConf().getAcidOperationalProperties());
+        AcidUtils.setValidWriteIdList(job, ts.getConf());
       }
       sink = work.getSink();
       fetch = new FetchOperator(work, job, source, getVirtualColumns(source));
