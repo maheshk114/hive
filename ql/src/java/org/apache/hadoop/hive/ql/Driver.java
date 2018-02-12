@@ -1256,9 +1256,16 @@ public class Driver implements IDriver {
       Operator<?> source = plan.getFetchTask().getWork().getSource();
       if (source instanceof TableScanOperator) {
         TableScanOperator tsOp = (TableScanOperator)source;
-        ValidWriteIdList writeIdList = txnWriteIds.getTableValidWriteIdList(
-                AcidUtils.getFullTableName(tsOp.getConf().getDatabaseName(), tsOp.getConf().getTableName()));
-        plan.getFetchTask().setValidWriteIdList(writeIdList.toString());
+        String fullTableName = AcidUtils.getFullTableName(tsOp.getConf().getDatabaseName(),
+                                                          tsOp.getConf().getTableName());
+        ValidWriteIdList writeIdList = txnWriteIds.getTableValidWriteIdList(fullTableName);
+        if (HiveConf.getBoolVar(conf, ConfVars.HIVE_ACID_TABLE_SCAN, false) && (writeIdList == null)) {
+          throw new IllegalStateException("ACID table: " + fullTableName
+                  + " is missing from the ValidWriteIdList config: " + writeIdStr);
+        }
+        if (writeIdList != null) {
+          plan.getFetchTask().setValidWriteIdList(writeIdList.toString());
+        }
       }
     }
     LOG.debug("Encoding valid txn write ids info " + writeIdStr + " txnid:" + txnMgr.getCurrentTxnId());

@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 import org.apache.hadoop.hive.common.FileUtils;
 import org.apache.hadoop.hive.common.JavaUtils;
 import org.apache.hadoop.hive.common.StringInternUtils;
+import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
 import org.apache.hadoop.hive.common.ValidWriteIdList;
 import org.apache.hadoop.hive.ql.exec.SerializationUtilities;
 import org.apache.hive.common.util.Ref;
@@ -461,6 +462,11 @@ public class HiveInputFormat<K extends WritableComparable, V extends Writable>
     ValidWriteIdList validWriteIdList = AcidUtils.getTableValidWriteIdList(conf, table.getTableName());
     ValidWriteIdList validMmWriteIdList;
     if (AcidUtils.isInsertOnlyTable(table.getProperties())) {
+      if (validWriteIdList == null) {
+        throw new IOException("Insert-Only table: " + table.getTableName()
+                + " is missing from the ValidWriteIdList config: "
+                + conf.get(ValidTxnWriteIdList.VALID_TABLES_WRITEIDS_KEY));
+      }
       validMmWriteIdList = validWriteIdList;
     } else {
       validMmWriteIdList = null;  // for non-MM case
@@ -470,7 +476,15 @@ public class HiveInputFormat<K extends WritableComparable, V extends Writable>
       Utilities.copyTablePropertiesToConf(table, conf);
       if(tableScan != null) {
         AcidUtils.setAcidTableScan(conf, tableScan.getConf().isAcidTable());
-        AcidUtils.setValidWriteIdList(conf, validWriteIdList);
+
+        if (tableScan.getConf().isAcidTable() && (validWriteIdList == null)) {
+          throw new IOException("Acid table: " + table.getTableName()
+                  + " is missing from the ValidWriteIdList config: "
+                  + conf.get(ValidTxnWriteIdList.VALID_TABLES_WRITEIDS_KEY));
+        }
+        if (validWriteIdList != null) {
+          AcidUtils.setValidWriteIdList(conf, validWriteIdList);
+        }
       }
     } catch (HiveException e) {
       throw new IOException(e);

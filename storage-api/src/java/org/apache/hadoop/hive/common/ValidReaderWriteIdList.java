@@ -62,7 +62,7 @@ public class ValidReaderWriteIdList implements ValidWriteIdList {
 
   @Override
   public boolean isWriteIdValid(long writeId) {
-    if (highWatermark < writeId) {
+    if (writeId < highWatermark) {
       return false;
     }
     return Arrays.binarySearch(exceptions, writeId) < 0;

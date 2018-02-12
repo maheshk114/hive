@@ -58,9 +58,8 @@ public class ValidTxnWriteIdList {
   public ValidWriteIdList getTableValidWriteIdList(String fullTableName) {
     if (tablesValidWriteIdList.containsKey(fullTableName)) {
       return tablesValidWriteIdList.get(fullTableName);
-    } else {
-      return new ValidReaderWriteIdList();
     }
+    return null;
   }
 
   // Each ValidWriteIdList is separated with "$" and each one maps to one table
