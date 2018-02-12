@@ -83,7 +83,7 @@ public class ReplCopyTask extends Task<ReplCopyWork> implements Serializable {
       if (ReplChangeManager.isCMFileUri(fromPath, srcFs)) {
         String[] result = ReplChangeManager.getFileWithChksumFromURI(fromPath.toString());
         ReplChangeManager.FileInfo sourceInfo = ReplChangeManager
-            .getFileInfo(new Path(result[0]), result[1], conf);
+            .getFileInfo(new Path(result[0]), result[1], result[2], conf);
         if (FileUtils.copy(
             sourceInfo.getSrcFs(), sourceInfo.getSourcePath(),
             dstFs, toPath, false, false, conf)) {
@@ -130,7 +130,7 @@ public class ReplCopyTask extends Task<ReplCopyWork> implements Serializable {
           console.printInfo("Copying file: " + oneSrc.getPath().toString());
           LOG.debug("ReplCopyTask :cp:{}=>{}", oneSrc.getPath(), toPath);
           srcFiles.add(new ReplChangeManager.FileInfo(oneSrc.getPath().getFileSystem(conf),
-                                                      oneSrc.getPath()));
+                                                      oneSrc.getPath(), null));
         }
       }
 
@@ -190,7 +190,7 @@ public class ReplCopyTask extends Task<ReplCopyWork> implements Serializable {
         String[] fileWithChksum = ReplChangeManager.getFileWithChksumFromURI(line);
         try {
           ReplChangeManager.FileInfo f = ReplChangeManager
-              .getFileInfo(new Path(fileWithChksum[0]), fileWithChksum[1], conf);
+              .getFileInfo(new Path(fileWithChksum[0]), fileWithChksum[1],  fileWithChksum[2], conf);
           filePaths.add(f);
         } catch (MetaException e) {
           // issue warning for missing file and throw exception

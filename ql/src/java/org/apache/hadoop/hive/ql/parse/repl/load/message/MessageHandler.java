@@ -53,6 +53,7 @@ public interface MessageHandler {
     final Hive db;
     final org.apache.hadoop.hive.ql.Context nestedContext;
     final Logger log;
+    private long writeId;
 
     public Context(String dbName, String tableName, String location,
         Task<? extends Serializable> precursor, DumpMetaData dmd, HiveConf hiveConf,
@@ -66,6 +67,7 @@ public interface MessageHandler {
       this.db = db;
       this.nestedContext = nestedContext;
       this.log = log;
+      this.writeId = 0;
     }
 
     public Context(Context other, String dbName, String tableName) {
@@ -78,6 +80,7 @@ public interface MessageHandler {
       this.db = other.db;
       this.nestedContext = other.nestedContext;
       this.log = other.log;
+      this.writeId = 0;
     }
 
     boolean isTableNameEmpty() {
@@ -91,6 +94,14 @@ public interface MessageHandler {
     ReplicationSpec eventOnlyReplicationSpec() throws SemanticException {
       String eventId = dmd.getEventTo().toString();
       return new ReplicationSpec(eventId, eventId);
+    }
+
+    public long getWriteId() {
+      return writeId;
+    }
+
+    public void setWriteId(long writeId) {
+      this.writeId = writeId;
     }
   }
 }

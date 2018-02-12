@@ -426,6 +426,8 @@ CREATE TABLE IF NOT EXISTS `SEQUENCE_TABLE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `SEQUENCE_TABLE` (`SEQUENCE_NAME`, `NEXT_VAL`) SELECT * from (select 'org.apache.hadoop.hive.metastore.model.MNotificationLog' as `SEQUENCE_NAME`, 1 as `NEXT_VAL`) a WHERE (SELECT COUNT(*) FROM `SEQUENCE_TABLE` where SEQUENCE_NAME = 'org.apache.hadoop.hive.metastore.model.MNotificationLog') = 0;
+
 --
 -- Table structure for table `SERDES`
 --
@@ -1083,6 +1085,29 @@ CREATE TABLE NEXT_WRITE_ID (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE UNIQUE INDEX NEXT_WRITE_ID_IDX ON NEXT_WRITE_ID (NWI_DATABASE, NWI_TABLE);
+
+CREATE TABLE REPL_TXN_MAP (
+  RTM_REPL_POLICY varchar(256) NOT NULL,
+  RTM_SRC_TXN_ID bigint NOT NULL,
+  RTM_TARGET_TXN_ID bigint NOT NULL,
+  PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE WRITE_NOTIFICATION_LOG (
+  WNL_ID bigint NOT NULL,
+  WNL_TXNID bigint NOT NULL,
+  WNL_WRITEID bigint NOT NULL,
+  WNL_DATABASE varchar(128) NOT NULL,
+  WNL_TABLE varchar(128) NOT NULL,
+  WNL_PARTITION varchar(1024),
+  WNL_TABLE_OBJ longtext NOT NULL,
+  WNL_PARTITION_OBJ longtext,
+  WNL_FILES longtext,
+  WNL_EVENT_TIME INT(11) NOT NULL,
+  PRIMARY KEY (WNL_TXNID, WNL_DATABASE, WNL_TABLE, WNL_PARTITION)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `SEQUENCE_TABLE` (`SEQUENCE_NAME`, `NEXT_VAL`) SELECT * from (select 'org.apache.hadoop.hive.metastore.model.MWriteNotificationLog' as `SEQUENCE_NAME`, 1 as `NEXT_VAL`) a WHERE (SELECT COUNT(*) FROM `SEQUENCE_TABLE` where SEQUENCE_NAME = 'org.apache.hadoop.hive.metastore.model.MWriteNotificationLog') = 0;
 
 -- -----------------------------------------------------------------
 -- Record schema version. Should be the last step in the init script

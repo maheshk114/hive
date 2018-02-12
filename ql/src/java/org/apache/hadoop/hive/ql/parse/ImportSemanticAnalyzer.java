@@ -152,7 +152,7 @@ public class ImportSemanticAnalyzer extends BaseSemanticAnalyzer {
           isLocationSet, isExternalSet, isPartSpecSet, waitOnPrecursor,
           parsedLocation, parsedTableName, parsedDbName, parsedPartSpec, fromTree.getText(),
           new EximUtil.SemanticAnalyzerWrapperContext(conf, db, inputs, outputs, rootTasks, LOG, ctx),
-          null);
+          null, 0L);
 
     } catch (SemanticException e) {
       throw e;
@@ -194,12 +194,12 @@ public class ImportSemanticAnalyzer extends BaseSemanticAnalyzer {
    * parsedDbName parameter
    */
   public static boolean prepareImport(boolean isImportCmd,
-      boolean isLocationSet, boolean isExternalSet, boolean isPartSpecSet, boolean waitOnPrecursor,
-      String parsedLocation, String parsedTableName, String overrideDBName,
-      LinkedHashMap<String, String> parsedPartSpec,
-      String fromLocn, EximUtil.SemanticAnalyzerWrapperContext x,
-      UpdatedMetaDataTracker updatedMetadata
-  ) throws IOException, MetaException, HiveException, URISyntaxException {
+                                      boolean isLocationSet, boolean isExternalSet, boolean isPartSpecSet, boolean waitOnPrecursor,
+                                      String parsedLocation, String parsedTableName, String overrideDBName,
+                                      LinkedHashMap<String, String> parsedPartSpec,
+                                      String fromLocn, EximUtil.SemanticAnalyzerWrapperContext x,
+                                      UpdatedMetaDataTracker updatedMetadata,
+                                      Long writeId) throws IOException, MetaException, HiveException, URISyntaxException {
 
     // initialize load path
     URI fromURI = EximUtil.getValidatedURI(x.getConf(), stripQuotes(fromLocn));
@@ -324,12 +324,15 @@ public class ImportSemanticAnalyzer extends BaseSemanticAnalyzer {
       tableExists = true;
     }
 
-    Long writeId = 0L; // Initialize with 0 for non-ACID and non-MM tables.
-    if (((table != null) && AcidUtils.isTransactionalTable(table))
-            || AcidUtils.isTablePropertyTransactional(tblDesc.getTblProps())) {
-      // Explain plan doesn't open a txn and hence no need to allocate write id.
-      if (x.getCtx().getExplainConfig() == null) {
-        writeId = SessionState.get().getTxnMgr().getTableWriteId(tblDesc.getDatabaseName(), tblDesc.getTableName());
+    // for ACID table replication, valid write id is passed. We should not allocate it here.
+    if (writeId == 0) {
+      // Initialize with 0 for non-ACID and non-MM tables.
+      if (((table != null) && AcidUtils.isTransactionalTable(table))
+              || AcidUtils.isTablePropertyTransactional(tblDesc.getTblProps())) {
+        // Explain plan doesn't open a txn and hence no need to allocate write id.
+        if (x.getCtx().getExplainConfig() == null) {
+          writeId = SessionState.get().getTxnMgr().getTableWriteId(tblDesc.getDatabaseName(), tblDesc.getTableName());
+        }
       }
     }
     int stmtId = 0;
@@ -409,10 +412,6 @@ public class ImportSemanticAnalyzer extends BaseSemanticAnalyzer {
 
     Task<?> copyTask = null;
     if (replicationSpec.isInReplicationScope()) {
-      if (isSourceMm || isAcid(writeId)) {
-        // Note: this is replication gap, not MM gap... Repl V2 is not ready yet.
-        throw new RuntimeException("Replicating MM and ACID tables is not supported");
-      }
       copyTask = ReplCopyTask.getLoadCopyTask(replicationSpec, dataPath, destPath, x.getConf());
     } else {
       CopyWork cw = new CopyWork(dataPath, destPath, false);
@@ -506,10 +505,6 @@ public class ImportSemanticAnalyzer extends BaseSemanticAnalyzer {
 
       Task<?> copyTask = null;
       if (replicationSpec.isInReplicationScope()) {
-        if (isSourceMm || isAcid(writeId)) {
-          // Note: this is replication gap, not MM gap... Repl V2 is not ready yet.
-          throw new RuntimeException("Replicating MM and ACID tables is not supported");
-        }
         copyTask = ReplCopyTask.getLoadCopyTask(
             replicationSpec, new Path(srcLocation), destPath, x.getConf());
       } else {

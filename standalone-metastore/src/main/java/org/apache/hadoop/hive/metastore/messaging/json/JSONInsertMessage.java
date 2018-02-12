@@ -84,6 +84,36 @@ public class JSONInsertMessage extends InsertMessage {
     checkValid();
   }
 
+  public JSONInsertMessage(String server, String servicePrincipal, Table tableObj, Partition ptnObj,
+                            Long timestamp) {
+    this.server = server;
+    this.servicePrincipal = servicePrincipal;
+
+    if (null == tableObj) {
+      throw new IllegalArgumentException("Table not valid.");
+    }
+
+    this.db = tableObj.getDbName();
+    this.table = tableObj.getTableName();
+    this.tableType = tableObj.getTableType();
+
+    try {
+      this.tableObjJson = JSONMessageFactory.createTableObjJson(tableObj);
+      if (null != ptnObj) {
+        this.ptnObjJson = JSONMessageFactory.createPartitionObjJson(ptnObj);
+      } else {
+        this.ptnObjJson = null;
+      }
+    } catch (TException e) {
+      throw new IllegalArgumentException("Could not serialize: ", e);
+    }
+
+    this.timestamp = timestamp;
+    this.replace = Boolean.toString(true);
+    this.files = Lists.newArrayList();
+
+    checkValid();
+  }
   @Override
   public String getTable() {
     return table;
@@ -130,6 +160,16 @@ public class JSONInsertMessage extends InsertMessage {
   @Override
   public Partition getPtnObj() throws Exception {
     return ((null == ptnObjJson) ? null : (Partition) JSONMessageFactory.getTObj(ptnObjJson, Partition.class));
+  }
+
+  @Override
+  public String getTableString() {
+    return tableObjJson;
+  }
+
+  @Override
+  public String getPartitionString() {
+    return ptnObjJson;
   }
 
   @Override

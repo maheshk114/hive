@@ -69,20 +69,24 @@ public class ReplChangeManager {
     Path cmPath;
     String checkSum;
     boolean useSourcePath;
+    private String subDir;
 
-    public FileInfo(FileSystem srcFs, Path sourcePath) {
+    public FileInfo(FileSystem srcFs, Path sourcePath, String subDir) {
       this.srcFs = srcFs;
       this.sourcePath = sourcePath;
       this.cmPath = null;
       this.checkSum = null;
       this.useSourcePath = true;
+      this.subDir = subDir;
     }
-    public FileInfo(FileSystem srcFs, Path sourcePath, Path cmPath, String checkSum, boolean useSourcePath) {
+    public FileInfo(FileSystem srcFs, Path sourcePath, Path cmPath,
+                    String checkSum, boolean useSourcePath, String subDir) {
       this.srcFs = srcFs;
       this.sourcePath = sourcePath;
       this.cmPath = cmPath;
       this.checkSum = checkSum;
       this.useSourcePath = useSourcePath;
+      this.subDir = subDir;
     }
     public FileSystem getSrcFs() {
       return srcFs;
@@ -101,6 +105,9 @@ public class ReplChangeManager {
     }
     public void setIsUseSourcePath(boolean useSourcePath) {
       this.useSourcePath = useSourcePath;
+    }
+    public String getSubDir() {
+      return subDir;
     }
     public Path getEffectivePath() {
       if (useSourcePath) {
@@ -309,17 +316,17 @@ public class ReplChangeManager {
    * @param conf
    * @return Corresponding FileInfo object
    */
-  public static FileInfo getFileInfo(Path src, String checksumString, Configuration conf)
+  public static FileInfo getFileInfo(Path src, String checksumString, String subDir, Configuration conf)
           throws MetaException {
     try {
       FileSystem srcFs = src.getFileSystem(conf);
       if (checksumString == null) {
-        return new FileInfo(srcFs, src);
+        return new FileInfo(srcFs, src, subDir);
       }
 
       Path cmPath = getCMPath(conf, src.getName(), checksumString);
       if (!srcFs.exists(src)) {
-        return new FileInfo(srcFs, src, cmPath, checksumString, false);
+        return new FileInfo(srcFs, src, cmPath, checksumString, false, subDir);
       }
 
       String currentChecksumString;
@@ -327,12 +334,12 @@ public class ReplChangeManager {
         currentChecksumString = checksumFor(src, srcFs);
       } catch (IOException ex) {
         // If the file is missing or getting modified, then refer CM path
-        return new FileInfo(srcFs, src, cmPath, checksumString, false);
+        return new FileInfo(srcFs, src, cmPath, checksumString, false, subDir);
       }
       if ((currentChecksumString == null) || checksumString.equals(currentChecksumString)) {
-        return new FileInfo(srcFs, src, cmPath, checksumString, true);
+        return new FileInfo(srcFs, src, cmPath, checksumString, true, subDir);
       } else {
-        return new FileInfo(srcFs, src, cmPath, checksumString, false);
+        return new FileInfo(srcFs, src, cmPath, checksumString, false, subDir);
       }
     } catch (IOException e) {
       throw new MetaException(StringUtils.stringifyException(e));
@@ -347,12 +354,19 @@ public class ReplChangeManager {
    */
   // TODO: this needs to be enhanced once change management based filesystem is implemented
   // Currently using fileuri#checksum as the format
-  static public String encodeFileUri(String fileUriStr, String fileChecksum) {
+  static public String encodeFileUri(String fileUriStr, String fileChecksum, String encodedSubDir) {
+    String encodedUri;
     if (fileChecksum != null) {
-      return fileUriStr + URI_FRAGMENT_SEPARATOR + fileChecksum;
+      encodedUri = fileUriStr + URI_FRAGMENT_SEPARATOR + fileChecksum;
     } else {
-      return fileUriStr;
+      encodedUri =  fileUriStr;
     }
+
+    if (encodedSubDir != null) {
+      encodedUri = encodedUri + URI_FRAGMENT_SEPARATOR + encodedSubDir;
+    }
+
+    return encodedUri;
   }
 
   /***
@@ -362,10 +376,13 @@ public class ReplChangeManager {
    */
   static public String[] getFileWithChksumFromURI(String fileURIStr) {
     String[] uriAndFragment = fileURIStr.split(URI_FRAGMENT_SEPARATOR);
-    String[] result = new String[2];
+    String[] result = new String[3];
     result[0] = uriAndFragment[0];
     if (uriAndFragment.length>1) {
       result[1] = uriAndFragment[1];
+    }
+    if (uriAndFragment.length>2) {
+      result[2] = uriAndFragment[2];
     }
     return result;
   }

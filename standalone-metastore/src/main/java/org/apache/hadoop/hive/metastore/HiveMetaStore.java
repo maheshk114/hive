@@ -74,15 +74,18 @@ import org.apache.hadoop.hive.metastore.events.AddForeignKeyEvent;
 import org.apache.hadoop.hive.metastore.cache.CachedStore;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf.ConfVars;
+import org.apache.hadoop.hive.metastore.events.AbortTxnEvent;
 import org.apache.hadoop.hive.metastore.events.AddIndexEvent;
 import org.apache.hadoop.hive.metastore.events.AddNotNullConstraintEvent;
 import org.apache.hadoop.hive.metastore.events.AddPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.AddPrimaryKeyEvent;
 import org.apache.hadoop.hive.metastore.events.AddUniqueConstraintEvent;
+import org.apache.hadoop.hive.metastore.events.AllocWriteIdEvent;
 import org.apache.hadoop.hive.metastore.events.AlterDatabaseEvent;
 import org.apache.hadoop.hive.metastore.events.AlterIndexEvent;
 import org.apache.hadoop.hive.metastore.events.AlterPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.AlterTableEvent;
+import org.apache.hadoop.hive.metastore.events.CommitTxnEvent;
 import org.apache.hadoop.hive.metastore.events.ConfigChangeEvent;
 import org.apache.hadoop.hive.metastore.events.CreateDatabaseEvent;
 import org.apache.hadoop.hive.metastore.events.CreateFunctionEvent;
@@ -95,6 +98,7 @@ import org.apache.hadoop.hive.metastore.events.DropPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.DropTableEvent;
 import org.apache.hadoop.hive.metastore.events.InsertEvent;
 import org.apache.hadoop.hive.metastore.events.LoadPartitionDoneEvent;
+import org.apache.hadoop.hive.metastore.events.OpenTxnEvent;
 import org.apache.hadoop.hive.metastore.events.PreAddIndexEvent;
 import org.apache.hadoop.hive.metastore.events.PreAddPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.PreAlterDatabaseEvent;
@@ -113,6 +117,8 @@ import org.apache.hadoop.hive.metastore.events.PreLoadPartitionDoneEvent;
 import org.apache.hadoop.hive.metastore.events.PreReadDatabaseEvent;
 import org.apache.hadoop.hive.metastore.events.PreReadTableEvent;
 import org.apache.hadoop.hive.metastore.messaging.EventMessage.EventType;
+import org.apache.hadoop.hive.metastore.messaging.InsertMessage;
+import org.apache.hadoop.hive.metastore.messaging.MessageFactory;
 import org.apache.hadoop.hive.metastore.metrics.JvmPauseMonitor;
 import org.apache.hadoop.hive.metastore.metrics.Metrics;
 import org.apache.hadoop.hive.metastore.metrics.MetricsConstants;
@@ -154,7 +160,6 @@ import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import com.facebook.fb303.FacebookBase;
 import com.facebook.fb303.fb_status;
@@ -6739,22 +6744,45 @@ public class HiveMetaStore extends ThriftHiveMetastore {
 
     @Override
     public OpenTxnsResponse open_txns(OpenTxnRequest rqst) throws TException {
-      return getTxnHandler().openTxns(rqst);
+      OpenTxnsResponse response = getTxnHandler().openTxns(rqst);
+      List<Long> txnIds = response.getTxn_ids();
+      if (txnIds == null) {
+        return response;
+      }
+      if (listeners != null && !listeners.isEmpty()) {
+        MetaStoreListenerNotifier.notifyEvent(listeners, EventType.OPEN_TXN,
+            new OpenTxnEvent(txnIds, this));
+      }
+      return response;
     }
 
     @Override
     public void abort_txn(AbortTxnRequest rqst) throws TException {
       getTxnHandler().abortTxn(rqst);
+      if (listeners != null && !listeners.isEmpty()) {
+        MetaStoreListenerNotifier.notifyEvent(listeners, EventType.ABORT_TXN,
+                new AbortTxnEvent(rqst.getTxnid(), this));
+      }
     }
 
     @Override
     public void abort_txns(AbortTxnsRequest rqst) throws TException {
       getTxnHandler().abortTxns(rqst);
+      if (listeners != null && !listeners.isEmpty()) {
+        for (Long txnId : rqst.getTxn_ids()) {
+          MetaStoreListenerNotifier.notifyEvent(listeners, EventType.ABORT_TXN,
+                  new AbortTxnEvent(txnId, this));
+        }
+      }
     }
 
     @Override
     public void commit_txn(CommitTxnRequest rqst) throws TException {
       getTxnHandler().commitTxn(rqst);
+      if (listeners != null && !listeners.isEmpty()) {
+        MetaStoreListenerNotifier.notifyEvent(listeners, EventType.COMMIT_TXN,
+                new CommitTxnEvent(rqst.getTxnid(), this));
+      }
     }
 
     @Override
@@ -6765,7 +6793,17 @@ public class HiveMetaStore extends ThriftHiveMetastore {
     @Override
     public AllocateTableWriteIdsResponse allocate_table_write_ids(
             AllocateTableWriteIdsRequest rqst) throws TException {
-      return getTxnHandler().allocateTableWriteIds(rqst);
+      AllocateTableWriteIdsResponse response = getTxnHandler().allocateTableWriteIds(rqst);
+      if (listeners != null && !listeners.isEmpty()) {
+        MetaStoreListenerNotifier.notifyEvent(listeners, EventType.ALLOC_WRITE_ID,
+                new AllocWriteIdEvent(rqst.getTxnIds(), rqst.getTableName(), this));
+      }
+      return response;
+    }
+
+    @Override
+    public GetTargetTxnIdsResponse repl_get_target_txn_ids(GetTargetTxnIdsRequest rqst) throws TException {
+      return getTxnHandler().replGetTargetTxnIds(rqst);
     }
 
     @Override
@@ -7069,6 +7107,22 @@ public class HiveMetaStore extends ThriftHiveMetastore {
       if (!MetaStoreUtils.checkUserHasHostProxyPrivileges(user, conf, getIPAddress())) {
         throw new MetaException("User " + user + " is not allowed to perform this API call");
       }
+    }
+
+    @Override
+    public WriteNotificationLogResponse add_write_notification_log(WriteNotificationLogRequest rqst)
+            throws MetaException, NoSuchObjectException {
+      Partition ptnObj;
+      GetTableRequest req = new GetTableRequest(rqst.getDb(), rqst.getTable());
+      req.setCapabilities(new ClientCapabilities(Lists.newArrayList(ClientCapability.TEST_CAPABILITY)));
+      Table tableObj = get_table_req(req).getTable();
+      if (rqst.getPartitionVals() != null) {
+        ptnObj = get_partition(rqst.getDb(), rqst.getTable(), rqst.getPartitionVals());
+      } else {
+        ptnObj = null;
+      }
+      getTxnHandler().addWriteNotificationLog(rqst, tableObj, ptnObj);
+      return new WriteNotificationLogResponse();
     }
 
     @Override

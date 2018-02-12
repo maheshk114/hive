@@ -63,6 +63,11 @@ public abstract class MessageFactory {
   public static final String ADD_UNIQUECONSTRAINT_EVENT = "ADD_UNIQUECONSTRAINT";
   public static final String ADD_NOTNULLCONSTRAINT_EVENT = "ADD_NOTNULLCONSTRAINT";
   public static final String DROP_CONSTRAINT_EVENT = "DROP_CONSTRAINT";
+  public static final String OPEN_TXN_EVENT = "OPEN_TXN";
+  public static final String COMMIT_TXN_EVENT = "COMMIT_TXN";
+  public static final String ABORT_TXN_EVENT = "ABORT_TXN";
+  public static final String ALLOC_WRITE_ID_EVENT = "ALLOC_WRITE_ID_EVENT";
+  public static final String ACID_WRITE_ID_EVENT = "ACID_WRITE_ID_EVENT";
 
   private static MessageFactory instance = null;
 
@@ -254,6 +259,45 @@ public abstract class MessageFactory {
   public abstract InsertMessage buildInsertMessage(Table tableObj, Partition ptnObj,
                                                    boolean replace, Iterator<String> files);
 
+  /**
+   * Factory method for building open txn message
+   *
+   * @param txnIds List of ids of the newly opened transactions
+   * @return instance of OpenTxnMessage
+   */
+  public abstract OpenTxnMessage buildOpenTxnMessage(List<Long> txnIds);
+
+  /**
+   * Factory method for building commit txn message
+   *
+   * @param txnId Id of the transaction to be committed
+   * @return instance of CommitTxnMessage
+   */
+  public abstract CommitTxnMessage buildCommitTxnMessage(Long txnId);
+
+  /**
+   * Factory method for building abort txn message
+   *
+   * @param txnId Id of the transaction to be aborted
+   * @return instance of AbortTxnMessage
+   */
+  public abstract AbortTxnMessage buildAbortTxnMessage(Long txnId);
+
+  /**
+   * Factory method for building acid write message
+   *
+   * @param txnId Id of the transaction to be committed
+   * @return instance of CommitTxnMessage
+   */
+  public abstract AcidWriteMessage buildAcidWriteMessage(Long txnId,
+                                                         String database,
+                                                         String table,
+                                                         Long writeId,
+                                                         String partition,
+                                                         Table tableObj,
+                                                         Partition partitionObj,
+                                                         Iterator<String> files);
+
   /***
    * Factory method for building add primary key message
    *
@@ -295,4 +339,12 @@ public abstract class MessageFactory {
    */
   public abstract DropConstraintMessage buildDropConstraintMessage(String dbName, String tableName,
       String constraintName);
+
+  /***
+   * Factory method for building alloc write id message
+   * @param txnIds list of transaction ids
+   * @param tableName name of the table. write ids are allocated per table.
+   * @return
+   */
+  public abstract AllocWriteIdMessage buildAllocWriteIdMessage(List<Long> txnIds, String tableName);
 }

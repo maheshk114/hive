@@ -372,6 +372,12 @@ class AbortTxnsRequest;
 
 class CommitTxnRequest;
 
+class WriteEventInfo;
+
+class GetTargetTxnIdsRequest;
+
+class GetTargetTxnIdsResponse;
+
 class GetValidWriteIdsRequest;
 
 class TableValidWriteIds;
@@ -441,6 +447,10 @@ class FireEventRequestData;
 class FireEventRequest;
 
 class FireEventResponse;
+
+class WriteNotificationLogRequest;
+
+class WriteNotificationLogResponse;
 
 class MetadataPpdResult;
 
@@ -5965,8 +5975,10 @@ inline std::ostream& operator<<(std::ostream& out, const GetOpenTxnsResponse& ob
 }
 
 typedef struct _OpenTxnRequest__isset {
-  _OpenTxnRequest__isset() : agentInfo(true) {}
+  _OpenTxnRequest__isset() : agentInfo(true), replPolicy(false), replSrcTxnIds(false) {}
   bool agentInfo :1;
+  bool replPolicy :1;
+  bool replSrcTxnIds :1;
 } _OpenTxnRequest__isset;
 
 class OpenTxnRequest {
@@ -5974,7 +5986,7 @@ class OpenTxnRequest {
 
   OpenTxnRequest(const OpenTxnRequest&);
   OpenTxnRequest& operator=(const OpenTxnRequest&);
-  OpenTxnRequest() : num_txns(0), user(), hostname(), agentInfo("Unknown") {
+  OpenTxnRequest() : num_txns(0), user(), hostname(), agentInfo("Unknown"), replPolicy() {
   }
 
   virtual ~OpenTxnRequest() throw();
@@ -5982,6 +5994,8 @@ class OpenTxnRequest {
   std::string user;
   std::string hostname;
   std::string agentInfo;
+  std::string replPolicy;
+  std::vector<int64_t>  replSrcTxnIds;
 
   _OpenTxnRequest__isset __isset;
 
@@ -5992,6 +6006,10 @@ class OpenTxnRequest {
   void __set_hostname(const std::string& val);
 
   void __set_agentInfo(const std::string& val);
+
+  void __set_replPolicy(const std::string& val);
+
+  void __set_replSrcTxnIds(const std::vector<int64_t> & val);
 
   bool operator == (const OpenTxnRequest & rhs) const
   {
@@ -6004,6 +6022,14 @@ class OpenTxnRequest {
     if (__isset.agentInfo != rhs.__isset.agentInfo)
       return false;
     else if (__isset.agentInfo && !(agentInfo == rhs.agentInfo))
+      return false;
+    if (__isset.replPolicy != rhs.__isset.replPolicy)
+      return false;
+    else if (__isset.replPolicy && !(replPolicy == rhs.replPolicy))
+      return false;
+    if (__isset.replSrcTxnIds != rhs.__isset.replSrcTxnIds)
+      return false;
+    else if (__isset.replSrcTxnIds && !(replSrcTxnIds == rhs.replSrcTxnIds))
       return false;
     return true;
   }
@@ -6067,23 +6093,36 @@ inline std::ostream& operator<<(std::ostream& out, const OpenTxnsResponse& obj)
   return out;
 }
 
+typedef struct _AbortTxnRequest__isset {
+  _AbortTxnRequest__isset() : replPolicy(false) {}
+  bool replPolicy :1;
+} _AbortTxnRequest__isset;
 
 class AbortTxnRequest {
  public:
 
   AbortTxnRequest(const AbortTxnRequest&);
   AbortTxnRequest& operator=(const AbortTxnRequest&);
-  AbortTxnRequest() : txnid(0) {
+  AbortTxnRequest() : txnid(0), replPolicy() {
   }
 
   virtual ~AbortTxnRequest() throw();
   int64_t txnid;
+  std::string replPolicy;
+
+  _AbortTxnRequest__isset __isset;
 
   void __set_txnid(const int64_t val);
+
+  void __set_replPolicy(const std::string& val);
 
   bool operator == (const AbortTxnRequest & rhs) const
   {
     if (!(txnid == rhs.txnid))
+      return false;
+    if (__isset.replPolicy != rhs.__isset.replPolicy)
+      return false;
+    else if (__isset.replPolicy && !(replPolicy == rhs.replPolicy))
       return false;
     return true;
   }
@@ -6147,23 +6186,68 @@ inline std::ostream& operator<<(std::ostream& out, const AbortTxnsRequest& obj)
   return out;
 }
 
+typedef struct _CommitTxnRequest__isset {
+  _CommitTxnRequest__isset() : replPolicy(false), databases(false), tables(false), partitions(false), writeIds(false) {}
+  bool replPolicy :1;
+  bool databases :1;
+  bool tables :1;
+  bool partitions :1;
+  bool writeIds :1;
+} _CommitTxnRequest__isset;
 
 class CommitTxnRequest {
  public:
 
   CommitTxnRequest(const CommitTxnRequest&);
   CommitTxnRequest& operator=(const CommitTxnRequest&);
-  CommitTxnRequest() : txnid(0) {
+  CommitTxnRequest() : txnid(0), replPolicy() {
   }
 
   virtual ~CommitTxnRequest() throw();
   int64_t txnid;
+  std::string replPolicy;
+  std::vector<std::string>  databases;
+  std::vector<std::string>  tables;
+  std::vector<std::string>  partitions;
+  std::vector<int64_t>  writeIds;
+
+  _CommitTxnRequest__isset __isset;
 
   void __set_txnid(const int64_t val);
+
+  void __set_replPolicy(const std::string& val);
+
+  void __set_databases(const std::vector<std::string> & val);
+
+  void __set_tables(const std::vector<std::string> & val);
+
+  void __set_partitions(const std::vector<std::string> & val);
+
+  void __set_writeIds(const std::vector<int64_t> & val);
 
   bool operator == (const CommitTxnRequest & rhs) const
   {
     if (!(txnid == rhs.txnid))
+      return false;
+    if (__isset.replPolicy != rhs.__isset.replPolicy)
+      return false;
+    else if (__isset.replPolicy && !(replPolicy == rhs.replPolicy))
+      return false;
+    if (__isset.databases != rhs.__isset.databases)
+      return false;
+    else if (__isset.databases && !(databases == rhs.databases))
+      return false;
+    if (__isset.tables != rhs.__isset.tables)
+      return false;
+    else if (__isset.tables && !(tables == rhs.tables))
+      return false;
+    if (__isset.partitions != rhs.__isset.partitions)
+      return false;
+    else if (__isset.partitions && !(partitions == rhs.partitions))
+      return false;
+    if (__isset.writeIds != rhs.__isset.writeIds)
+      return false;
+    else if (__isset.writeIds && !(writeIds == rhs.writeIds))
       return false;
     return true;
   }
@@ -6182,6 +6266,192 @@ class CommitTxnRequest {
 void swap(CommitTxnRequest &a, CommitTxnRequest &b);
 
 inline std::ostream& operator<<(std::ostream& out, const CommitTxnRequest& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _WriteEventInfo__isset {
+  _WriteEventInfo__isset() : databases(false), tables(false), partitions(false), writeIds(false), tableObjs(false), files(false), partitionObjs(false) {}
+  bool databases :1;
+  bool tables :1;
+  bool partitions :1;
+  bool writeIds :1;
+  bool tableObjs :1;
+  bool files :1;
+  bool partitionObjs :1;
+} _WriteEventInfo__isset;
+
+class WriteEventInfo {
+ public:
+
+  WriteEventInfo(const WriteEventInfo&);
+  WriteEventInfo& operator=(const WriteEventInfo&);
+  WriteEventInfo() : txnid(0) {
+  }
+
+  virtual ~WriteEventInfo() throw();
+  int64_t txnid;
+  std::vector<std::string>  databases;
+  std::vector<std::string>  tables;
+  std::vector<std::string>  partitions;
+  std::vector<int64_t>  writeIds;
+  std::vector<std::string>  tableObjs;
+  std::vector<std::string>  files;
+  std::vector<std::string>  partitionObjs;
+
+  _WriteEventInfo__isset __isset;
+
+  void __set_txnid(const int64_t val);
+
+  void __set_databases(const std::vector<std::string> & val);
+
+  void __set_tables(const std::vector<std::string> & val);
+
+  void __set_partitions(const std::vector<std::string> & val);
+
+  void __set_writeIds(const std::vector<int64_t> & val);
+
+  void __set_tableObjs(const std::vector<std::string> & val);
+
+  void __set_files(const std::vector<std::string> & val);
+
+  void __set_partitionObjs(const std::vector<std::string> & val);
+
+  bool operator == (const WriteEventInfo & rhs) const
+  {
+    if (!(txnid == rhs.txnid))
+      return false;
+    if (__isset.databases != rhs.__isset.databases)
+      return false;
+    else if (__isset.databases && !(databases == rhs.databases))
+      return false;
+    if (__isset.tables != rhs.__isset.tables)
+      return false;
+    else if (__isset.tables && !(tables == rhs.tables))
+      return false;
+    if (__isset.partitions != rhs.__isset.partitions)
+      return false;
+    else if (__isset.partitions && !(partitions == rhs.partitions))
+      return false;
+    if (__isset.writeIds != rhs.__isset.writeIds)
+      return false;
+    else if (__isset.writeIds && !(writeIds == rhs.writeIds))
+      return false;
+    if (__isset.tableObjs != rhs.__isset.tableObjs)
+      return false;
+    else if (__isset.tableObjs && !(tableObjs == rhs.tableObjs))
+      return false;
+    if (__isset.files != rhs.__isset.files)
+      return false;
+    else if (__isset.files && !(files == rhs.files))
+      return false;
+    if (__isset.partitionObjs != rhs.__isset.partitionObjs)
+      return false;
+    else if (__isset.partitionObjs && !(partitionObjs == rhs.partitionObjs))
+      return false;
+    return true;
+  }
+  bool operator != (const WriteEventInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const WriteEventInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(WriteEventInfo &a, WriteEventInfo &b);
+
+inline std::ostream& operator<<(std::ostream& out, const WriteEventInfo& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+class GetTargetTxnIdsRequest {
+ public:
+
+  GetTargetTxnIdsRequest(const GetTargetTxnIdsRequest&);
+  GetTargetTxnIdsRequest& operator=(const GetTargetTxnIdsRequest&);
+  GetTargetTxnIdsRequest() : replPolicy() {
+  }
+
+  virtual ~GetTargetTxnIdsRequest() throw();
+  std::vector<int64_t>  srcTxnIds;
+  std::string replPolicy;
+
+  void __set_srcTxnIds(const std::vector<int64_t> & val);
+
+  void __set_replPolicy(const std::string& val);
+
+  bool operator == (const GetTargetTxnIdsRequest & rhs) const
+  {
+    if (!(srcTxnIds == rhs.srcTxnIds))
+      return false;
+    if (!(replPolicy == rhs.replPolicy))
+      return false;
+    return true;
+  }
+  bool operator != (const GetTargetTxnIdsRequest &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GetTargetTxnIdsRequest & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(GetTargetTxnIdsRequest &a, GetTargetTxnIdsRequest &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdsRequest& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+class GetTargetTxnIdsResponse {
+ public:
+
+  GetTargetTxnIdsResponse(const GetTargetTxnIdsResponse&);
+  GetTargetTxnIdsResponse& operator=(const GetTargetTxnIdsResponse&);
+  GetTargetTxnIdsResponse() {
+  }
+
+  virtual ~GetTargetTxnIdsResponse() throw();
+  std::vector<int64_t>  targetTxnIds;
+
+  void __set_targetTxnIds(const std::vector<int64_t> & val);
+
+  bool operator == (const GetTargetTxnIdsResponse & rhs) const
+  {
+    if (!(targetTxnIds == rhs.targetTxnIds))
+      return false;
+    return true;
+  }
+  bool operator != (const GetTargetTxnIdsResponse &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GetTargetTxnIdsResponse & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(GetTargetTxnIdsResponse &a, GetTargetTxnIdsResponse &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdsResponse& obj)
 {
   obj.printTo(out);
   return out;
@@ -8062,9 +8332,10 @@ inline std::ostream& operator<<(std::ostream& out, const NotificationEventsCount
 }
 
 typedef struct _InsertEventRequestData__isset {
-  _InsertEventRequestData__isset() : replace(false), filesAddedChecksum(false) {}
+  _InsertEventRequestData__isset() : replace(false), filesAddedChecksum(false), subDirectoryList(false) {}
   bool replace :1;
   bool filesAddedChecksum :1;
+  bool subDirectoryList :1;
 } _InsertEventRequestData__isset;
 
 class InsertEventRequestData {
@@ -8079,6 +8350,7 @@ class InsertEventRequestData {
   bool replace;
   std::vector<std::string>  filesAdded;
   std::vector<std::string>  filesAddedChecksum;
+  std::vector<std::string>  subDirectoryList;
 
   _InsertEventRequestData__isset __isset;
 
@@ -8087,6 +8359,8 @@ class InsertEventRequestData {
   void __set_filesAdded(const std::vector<std::string> & val);
 
   void __set_filesAddedChecksum(const std::vector<std::string> & val);
+
+  void __set_subDirectoryList(const std::vector<std::string> & val);
 
   bool operator == (const InsertEventRequestData & rhs) const
   {
@@ -8099,6 +8373,10 @@ class InsertEventRequestData {
     if (__isset.filesAddedChecksum != rhs.__isset.filesAddedChecksum)
       return false;
     else if (__isset.filesAddedChecksum && !(filesAddedChecksum == rhs.filesAddedChecksum))
+      return false;
+    if (__isset.subDirectoryList != rhs.__isset.subDirectoryList)
+      return false;
+    else if (__isset.subDirectoryList && !(subDirectoryList == rhs.subDirectoryList))
       return false;
     return true;
   }
@@ -8272,6 +8550,114 @@ class FireEventResponse {
 void swap(FireEventResponse &a, FireEventResponse &b);
 
 inline std::ostream& operator<<(std::ostream& out, const FireEventResponse& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _WriteNotificationLogRequest__isset {
+  _WriteNotificationLogRequest__isset() : partitionVals(false) {}
+  bool partitionVals :1;
+} _WriteNotificationLogRequest__isset;
+
+class WriteNotificationLogRequest {
+ public:
+
+  WriteNotificationLogRequest(const WriteNotificationLogRequest&);
+  WriteNotificationLogRequest& operator=(const WriteNotificationLogRequest&);
+  WriteNotificationLogRequest() : txnId(0), writeId(0), db(), table() {
+  }
+
+  virtual ~WriteNotificationLogRequest() throw();
+  int64_t txnId;
+  int64_t writeId;
+  std::string db;
+  std::string table;
+  InsertEventRequestData fileInfo;
+  std::vector<std::string>  partitionVals;
+
+  _WriteNotificationLogRequest__isset __isset;
+
+  void __set_txnId(const int64_t val);
+
+  void __set_writeId(const int64_t val);
+
+  void __set_db(const std::string& val);
+
+  void __set_table(const std::string& val);
+
+  void __set_fileInfo(const InsertEventRequestData& val);
+
+  void __set_partitionVals(const std::vector<std::string> & val);
+
+  bool operator == (const WriteNotificationLogRequest & rhs) const
+  {
+    if (!(txnId == rhs.txnId))
+      return false;
+    if (!(writeId == rhs.writeId))
+      return false;
+    if (!(db == rhs.db))
+      return false;
+    if (!(table == rhs.table))
+      return false;
+    if (!(fileInfo == rhs.fileInfo))
+      return false;
+    if (__isset.partitionVals != rhs.__isset.partitionVals)
+      return false;
+    else if (__isset.partitionVals && !(partitionVals == rhs.partitionVals))
+      return false;
+    return true;
+  }
+  bool operator != (const WriteNotificationLogRequest &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const WriteNotificationLogRequest & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(WriteNotificationLogRequest &a, WriteNotificationLogRequest &b);
+
+inline std::ostream& operator<<(std::ostream& out, const WriteNotificationLogRequest& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+class WriteNotificationLogResponse {
+ public:
+
+  WriteNotificationLogResponse(const WriteNotificationLogResponse&);
+  WriteNotificationLogResponse& operator=(const WriteNotificationLogResponse&);
+  WriteNotificationLogResponse() {
+  }
+
+  virtual ~WriteNotificationLogResponse() throw();
+
+  bool operator == (const WriteNotificationLogResponse & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const WriteNotificationLogResponse &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const WriteNotificationLogResponse & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(WriteNotificationLogResponse &a, WriteNotificationLogResponse &b);
+
+inline std::ostream& operator<<(std::ostream& out, const WriteNotificationLogResponse& obj)
 {
   obj.printTo(out);
   return out;

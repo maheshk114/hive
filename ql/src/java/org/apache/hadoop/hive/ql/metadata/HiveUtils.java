@@ -428,4 +428,9 @@ public final class HiveUtils {
 
     return null;
   }
+
+  public static String getDumpPath(String dbName, String tableName) {
+    return dbName + "." + tableName;
+  }
+
 }

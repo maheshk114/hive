@@ -39,6 +39,11 @@ import org.slf4j.LoggerFactory;
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("CommitTxnRequest");
 
   private static final org.apache.thrift.protocol.TField TXNID_FIELD_DESC = new org.apache.thrift.protocol.TField("txnid", org.apache.thrift.protocol.TType.I64, (short)1);
+  private static final org.apache.thrift.protocol.TField REPL_POLICY_FIELD_DESC = new org.apache.thrift.protocol.TField("replPolicy", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField DATABASES_FIELD_DESC = new org.apache.thrift.protocol.TField("databases", org.apache.thrift.protocol.TType.LIST, (short)3);
+  private static final org.apache.thrift.protocol.TField TABLES_FIELD_DESC = new org.apache.thrift.protocol.TField("tables", org.apache.thrift.protocol.TType.LIST, (short)4);
+  private static final org.apache.thrift.protocol.TField PARTITIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("partitions", org.apache.thrift.protocol.TType.LIST, (short)5);
+  private static final org.apache.thrift.protocol.TField WRITE_IDS_FIELD_DESC = new org.apache.thrift.protocol.TField("writeIds", org.apache.thrift.protocol.TType.LIST, (short)6);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -47,10 +52,20 @@ import org.slf4j.LoggerFactory;
   }
 
   private long txnid; // required
+  private String replPolicy; // optional
+  private List<String> databases; // optional
+  private List<String> tables; // optional
+  private List<String> partitions; // optional
+  private List<Long> writeIds; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    TXNID((short)1, "txnid");
+    TXNID((short)1, "txnid"),
+    REPL_POLICY((short)2, "replPolicy"),
+    DATABASES((short)3, "databases"),
+    TABLES((short)4, "tables"),
+    PARTITIONS((short)5, "partitions"),
+    WRITE_IDS((short)6, "writeIds");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -67,6 +82,16 @@ import org.slf4j.LoggerFactory;
       switch(fieldId) {
         case 1: // TXNID
           return TXNID;
+        case 2: // REPL_POLICY
+          return REPL_POLICY;
+        case 3: // DATABASES
+          return DATABASES;
+        case 4: // TABLES
+          return TABLES;
+        case 5: // PARTITIONS
+          return PARTITIONS;
+        case 6: // WRITE_IDS
+          return WRITE_IDS;
         default:
           return null;
       }
@@ -109,11 +134,26 @@ import org.slf4j.LoggerFactory;
   // isset id assignments
   private static final int __TXNID_ISSET_ID = 0;
   private byte __isset_bitfield = 0;
+  private static final _Fields optionals[] = {_Fields.REPL_POLICY,_Fields.DATABASES,_Fields.TABLES,_Fields.PARTITIONS,_Fields.WRITE_IDS};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.TXNID, new org.apache.thrift.meta_data.FieldMetaData("txnid", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+    tmpMap.put(_Fields.REPL_POLICY, new org.apache.thrift.meta_data.FieldMetaData("replPolicy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.DATABASES, new org.apache.thrift.meta_data.FieldMetaData("databases", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
+    tmpMap.put(_Fields.TABLES, new org.apache.thrift.meta_data.FieldMetaData("tables", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
+    tmpMap.put(_Fields.PARTITIONS, new org.apache.thrift.meta_data.FieldMetaData("partitions", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
+    tmpMap.put(_Fields.WRITE_IDS, new org.apache.thrift.meta_data.FieldMetaData("writeIds", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(CommitTxnRequest.class, metaDataMap);
   }
@@ -135,6 +175,25 @@ import org.slf4j.LoggerFactory;
   public CommitTxnRequest(CommitTxnRequest other) {
     __isset_bitfield = other.__isset_bitfield;
     this.txnid = other.txnid;
+    if (other.isSetReplPolicy()) {
+      this.replPolicy = other.replPolicy;
+    }
+    if (other.isSetDatabases()) {
+      List<String> __this__databases = new ArrayList<String>(other.databases);
+      this.databases = __this__databases;
+    }
+    if (other.isSetTables()) {
+      List<String> __this__tables = new ArrayList<String>(other.tables);
+      this.tables = __this__tables;
+    }
+    if (other.isSetPartitions()) {
+      List<String> __this__partitions = new ArrayList<String>(other.partitions);
+      this.partitions = __this__partitions;
+    }
+    if (other.isSetWriteIds()) {
+      List<Long> __this__writeIds = new ArrayList<Long>(other.writeIds);
+      this.writeIds = __this__writeIds;
+    }
   }
 
   public CommitTxnRequest deepCopy() {
@@ -145,6 +204,11 @@ import org.slf4j.LoggerFactory;
   public void clear() {
     setTxnidIsSet(false);
     this.txnid = 0;
+    this.replPolicy = null;
+    this.databases = null;
+    this.tables = null;
+    this.partitions = null;
+    this.writeIds = null;
   }
 
   public long getTxnid() {
@@ -169,6 +233,181 @@ import org.slf4j.LoggerFactory;
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TXNID_ISSET_ID, value);
   }
 
+  public String getReplPolicy() {
+    return this.replPolicy;
+  }
+
+  public void setReplPolicy(String replPolicy) {
+    this.replPolicy = replPolicy;
+  }
+
+  public void unsetReplPolicy() {
+    this.replPolicy = null;
+  }
+
+  /** Returns true if field replPolicy is set (has been assigned a value) and false otherwise */
+  public boolean isSetReplPolicy() {
+    return this.replPolicy != null;
+  }
+
+  public void setReplPolicyIsSet(boolean value) {
+    if (!value) {
+      this.replPolicy = null;
+    }
+  }
+
+  public int getDatabasesSize() {
+    return (this.databases == null) ? 0 : this.databases.size();
+  }
+
+  public java.util.Iterator<String> getDatabasesIterator() {
+    return (this.databases == null) ? null : this.databases.iterator();
+  }
+
+  public void addToDatabases(String elem) {
+    if (this.databases == null) {
+      this.databases = new ArrayList<String>();
+    }
+    this.databases.add(elem);
+  }
+
+  public List<String> getDatabases() {
+    return this.databases;
+  }
+
+  public void setDatabases(List<String> databases) {
+    this.databases = databases;
+  }
+
+  public void unsetDatabases() {
+    this.databases = null;
+  }
+
+  /** Returns true if field databases is set (has been assigned a value) and false otherwise */
+  public boolean isSetDatabases() {
+    return this.databases != null;
+  }
+
+  public void setDatabasesIsSet(boolean value) {
+    if (!value) {
+      this.databases = null;
+    }
+  }
+
+  public int getTablesSize() {
+    return (this.tables == null) ? 0 : this.tables.size();
+  }
+
+  public java.util.Iterator<String> getTablesIterator() {
+    return (this.tables == null) ? null : this.tables.iterator();
+  }
+
+  public void addToTables(String elem) {
+    if (this.tables == null) {
+      this.tables = new ArrayList<String>();
+    }
+    this.tables.add(elem);
+  }
+
+  public List<String> getTables() {
+    return this.tables;
+  }
+
+  public void setTables(List<String> tables) {
+    this.tables = tables;
+  }
+
+  public void unsetTables() {
+    this.tables = null;
+  }
+
+  /** Returns true if field tables is set (has been assigned a value) and false otherwise */
+  public boolean isSetTables() {
+    return this.tables != null;
+  }
+
+  public void setTablesIsSet(boolean value) {
+    if (!value) {
+      this.tables = null;
+    }
+  }
+
+  public int getPartitionsSize() {
+    return (this.partitions == null) ? 0 : this.partitions.size();
+  }
+
+  public java.util.Iterator<String> getPartitionsIterator() {
+    return (this.partitions == null) ? null : this.partitions.iterator();
+  }
+
+  public void addToPartitions(String elem) {
+    if (this.partitions == null) {
+      this.partitions = new ArrayList<String>();
+    }
+    this.partitions.add(elem);
+  }
+
+  public List<String> getPartitions() {
+    return this.partitions;
+  }
+
+  public void setPartitions(List<String> partitions) {
+    this.partitions = partitions;
+  }
+
+  public void unsetPartitions() {
+    this.partitions = null;
+  }
+
+  /** Returns true if field partitions is set (has been assigned a value) and false otherwise */
+  public boolean isSetPartitions() {
+    return this.partitions != null;
+  }
+
+  public void setPartitionsIsSet(boolean value) {
+    if (!value) {
+      this.partitions = null;
+    }
+  }
+
+  public int getWriteIdsSize() {
+    return (this.writeIds == null) ? 0 : this.writeIds.size();
+  }
+
+  public java.util.Iterator<Long> getWriteIdsIterator() {
+    return (this.writeIds == null) ? null : this.writeIds.iterator();
+  }
+
+  public void addToWriteIds(long elem) {
+    if (this.writeIds == null) {
+      this.writeIds = new ArrayList<Long>();
+    }
+    this.writeIds.add(elem);
+  }
+
+  public List<Long> getWriteIds() {
+    return this.writeIds;
+  }
+
+  public void setWriteIds(List<Long> writeIds) {
+    this.writeIds = writeIds;
+  }
+
+  public void unsetWriteIds() {
+    this.writeIds = null;
+  }
+
+  /** Returns true if field writeIds is set (has been assigned a value) and false otherwise */
+  public boolean isSetWriteIds() {
+    return this.writeIds != null;
+  }
+
+  public void setWriteIdsIsSet(boolean value) {
+    if (!value) {
+      this.writeIds = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case TXNID:
@@ -179,6 +418,46 @@ import org.slf4j.LoggerFactory;
       }
       break;
 
+    case REPL_POLICY:
+      if (value == null) {
+        unsetReplPolicy();
+      } else {
+        setReplPolicy((String)value);
+      }
+      break;
+
+    case DATABASES:
+      if (value == null) {
+        unsetDatabases();
+      } else {
+        setDatabases((List<String>)value);
+      }
+      break;
+
+    case TABLES:
+      if (value == null) {
+        unsetTables();
+      } else {
+        setTables((List<String>)value);
+      }
+      break;
+
+    case PARTITIONS:
+      if (value == null) {
+        unsetPartitions();
+      } else {
+        setPartitions((List<String>)value);
+      }
+      break;
+
+    case WRITE_IDS:
+      if (value == null) {
+        unsetWriteIds();
+      } else {
+        setWriteIds((List<Long>)value);
+      }
+      break;
+
     }
   }
 
@@ -186,6 +465,21 @@ import org.slf4j.LoggerFactory;
     switch (field) {
     case TXNID:
       return getTxnid();
+
+    case REPL_POLICY:
+      return getReplPolicy();
+
+    case DATABASES:
+      return getDatabases();
+
+    case TABLES:
+      return getTables();
+
+    case PARTITIONS:
+      return getPartitions();
+
+    case WRITE_IDS:
+      return getWriteIds();
 
     }
     throw new IllegalStateException();
@@ -200,6 +494,16 @@ import org.slf4j.LoggerFactory;
     switch (field) {
     case TXNID:
       return isSetTxnid();
+    case REPL_POLICY:
+      return isSetReplPolicy();
+    case DATABASES:
+      return isSetDatabases();
+    case TABLES:
+      return isSetTables();
+    case PARTITIONS:
+      return isSetPartitions();
+    case WRITE_IDS:
+      return isSetWriteIds();
     }
     throw new IllegalStateException();
   }
@@ -226,6 +530,51 @@ import org.slf4j.LoggerFactory;
         return false;
     }
 
+    boolean this_present_replPolicy = true && this.isSetReplPolicy();
+    boolean that_present_replPolicy = true && that.isSetReplPolicy();
+    if (this_present_replPolicy || that_present_replPolicy) {
+      if (!(this_present_replPolicy && that_present_replPolicy))
+        return false;
+      if (!this.replPolicy.equals(that.replPolicy))
+        return false;
+    }
+
+    boolean this_present_databases = true && this.isSetDatabases();
+    boolean that_present_databases = true && that.isSetDatabases();
+    if (this_present_databases || that_present_databases) {
+      if (!(this_present_databases && that_present_databases))
+        return false;
+      if (!this.databases.equals(that.databases))
+        return false;
+    }
+
+    boolean this_present_tables = true && this.isSetTables();
+    boolean that_present_tables = true && that.isSetTables();
+    if (this_present_tables || that_present_tables) {
+      if (!(this_present_tables && that_present_tables))
+        return false;
+      if (!this.tables.equals(that.tables))
+        return false;
+    }
+
+    boolean this_present_partitions = true && this.isSetPartitions();
+    boolean that_present_partitions = true && that.isSetPartitions();
+    if (this_present_partitions || that_present_partitions) {
+      if (!(this_present_partitions && that_present_partitions))
+        return false;
+      if (!this.partitions.equals(that.partitions))
+        return false;
+    }
+
+    boolean this_present_writeIds = true && this.isSetWriteIds();
+    boolean that_present_writeIds = true && that.isSetWriteIds();
+    if (this_present_writeIds || that_present_writeIds) {
+      if (!(this_present_writeIds && that_present_writeIds))
+        return false;
+      if (!this.writeIds.equals(that.writeIds))
+        return false;
+    }
+
     return true;
   }
 
@@ -237,6 +586,31 @@ import org.slf4j.LoggerFactory;
     list.add(present_txnid);
     if (present_txnid)
       list.add(txnid);
+
+    boolean present_replPolicy = true && (isSetReplPolicy());
+    list.add(present_replPolicy);
+    if (present_replPolicy)
+      list.add(replPolicy);
+
+    boolean present_databases = true && (isSetDatabases());
+    list.add(present_databases);
+    if (present_databases)
+      list.add(databases);
+
+    boolean present_tables = true && (isSetTables());
+    list.add(present_tables);
+    if (present_tables)
+      list.add(tables);
+
+    boolean present_partitions = true && (isSetPartitions());
+    list.add(present_partitions);
+    if (present_partitions)
+      list.add(partitions);
+
+    boolean present_writeIds = true && (isSetWriteIds());
+    list.add(present_writeIds);
+    if (present_writeIds)
+      list.add(writeIds);
 
     return list.hashCode();
   }
@@ -255,6 +629,56 @@ import org.slf4j.LoggerFactory;
     }
     if (isSetTxnid()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.txnid, other.txnid);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetReplPolicy()).compareTo(other.isSetReplPolicy());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetReplPolicy()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.replPolicy, other.replPolicy);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetDatabases()).compareTo(other.isSetDatabases());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetDatabases()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.databases, other.databases);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetTables()).compareTo(other.isSetTables());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetTables()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.tables, other.tables);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetPartitions()).compareTo(other.isSetPartitions());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPartitions()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.partitions, other.partitions);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetWriteIds()).compareTo(other.isSetWriteIds());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetWriteIds()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.writeIds, other.writeIds);
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -282,6 +706,56 @@ import org.slf4j.LoggerFactory;
     sb.append("txnid:");
     sb.append(this.txnid);
     first = false;
+    if (isSetReplPolicy()) {
+      if (!first) sb.append(", ");
+      sb.append("replPolicy:");
+      if (this.replPolicy == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.replPolicy);
+      }
+      first = false;
+    }
+    if (isSetDatabases()) {
+      if (!first) sb.append(", ");
+      sb.append("databases:");
+      if (this.databases == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.databases);
+      }
+      first = false;
+    }
+    if (isSetTables()) {
+      if (!first) sb.append(", ");
+      sb.append("tables:");
+      if (this.tables == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.tables);
+      }
+      first = false;
+    }
+    if (isSetPartitions()) {
+      if (!first) sb.append(", ");
+      sb.append("partitions:");
+      if (this.partitions == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.partitions);
+      }
+      first = false;
+    }
+    if (isSetWriteIds()) {
+      if (!first) sb.append(", ");
+      sb.append("writeIds:");
+      if (this.writeIds == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.writeIds);
+      }
+      first = false;
+    }
     sb.append(")");
     return sb.toString();
   }
@@ -339,6 +813,86 @@ import org.slf4j.LoggerFactory;
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 2: // REPL_POLICY
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.replPolicy = iprot.readString();
+              struct.setReplPolicyIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 3: // DATABASES
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list580 = iprot.readListBegin();
+                struct.databases = new ArrayList<String>(_list580.size);
+                String _elem581;
+                for (int _i582 = 0; _i582 < _list580.size; ++_i582)
+                {
+                  _elem581 = iprot.readString();
+                  struct.databases.add(_elem581);
+                }
+                iprot.readListEnd();
+              }
+              struct.setDatabasesIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 4: // TABLES
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list583 = iprot.readListBegin();
+                struct.tables = new ArrayList<String>(_list583.size);
+                String _elem584;
+                for (int _i585 = 0; _i585 < _list583.size; ++_i585)
+                {
+                  _elem584 = iprot.readString();
+                  struct.tables.add(_elem584);
+                }
+                iprot.readListEnd();
+              }
+              struct.setTablesIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 5: // PARTITIONS
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list586 = iprot.readListBegin();
+                struct.partitions = new ArrayList<String>(_list586.size);
+                String _elem587;
+                for (int _i588 = 0; _i588 < _list586.size; ++_i588)
+                {
+                  _elem587 = iprot.readString();
+                  struct.partitions.add(_elem587);
+                }
+                iprot.readListEnd();
+              }
+              struct.setPartitionsIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 6: // WRITE_IDS
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list589 = iprot.readListBegin();
+                struct.writeIds = new ArrayList<Long>(_list589.size);
+                long _elem590;
+                for (int _i591 = 0; _i591 < _list589.size; ++_i591)
+                {
+                  _elem590 = iprot.readI64();
+                  struct.writeIds.add(_elem590);
+                }
+                iprot.readListEnd();
+              }
+              struct.setWriteIdsIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -355,6 +909,69 @@ import org.slf4j.LoggerFactory;
       oprot.writeFieldBegin(TXNID_FIELD_DESC);
       oprot.writeI64(struct.txnid);
       oprot.writeFieldEnd();
+      if (struct.replPolicy != null) {
+        if (struct.isSetReplPolicy()) {
+          oprot.writeFieldBegin(REPL_POLICY_FIELD_DESC);
+          oprot.writeString(struct.replPolicy);
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.databases != null) {
+        if (struct.isSetDatabases()) {
+          oprot.writeFieldBegin(DATABASES_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.databases.size()));
+            for (String _iter592 : struct.databases)
+            {
+              oprot.writeString(_iter592);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.tables != null) {
+        if (struct.isSetTables()) {
+          oprot.writeFieldBegin(TABLES_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.tables.size()));
+            for (String _iter593 : struct.tables)
+            {
+              oprot.writeString(_iter593);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.partitions != null) {
+        if (struct.isSetPartitions()) {
+          oprot.writeFieldBegin(PARTITIONS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.partitions.size()));
+            for (String _iter594 : struct.partitions)
+            {
+              oprot.writeString(_iter594);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+      }
+      if (struct.writeIds != null) {
+        if (struct.isSetWriteIds()) {
+          oprot.writeFieldBegin(WRITE_IDS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.writeIds.size()));
+            for (long _iter595 : struct.writeIds)
+            {
+              oprot.writeI64(_iter595);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -373,6 +990,62 @@ import org.slf4j.LoggerFactory;
     public void write(org.apache.thrift.protocol.TProtocol prot, CommitTxnRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeI64(struct.txnid);
+      BitSet optionals = new BitSet();
+      if (struct.isSetReplPolicy()) {
+        optionals.set(0);
+      }
+      if (struct.isSetDatabases()) {
+        optionals.set(1);
+      }
+      if (struct.isSetTables()) {
+        optionals.set(2);
+      }
+      if (struct.isSetPartitions()) {
+        optionals.set(3);
+      }
+      if (struct.isSetWriteIds()) {
+        optionals.set(4);
+      }
+      oprot.writeBitSet(optionals, 5);
+      if (struct.isSetReplPolicy()) {
+        oprot.writeString(struct.replPolicy);
+      }
+      if (struct.isSetDatabases()) {
+        {
+          oprot.writeI32(struct.databases.size());
+          for (String _iter596 : struct.databases)
+          {
+            oprot.writeString(_iter596);
+          }
+        }
+      }
+      if (struct.isSetTables()) {
+        {
+          oprot.writeI32(struct.tables.size());
+          for (String _iter597 : struct.tables)
+          {
+            oprot.writeString(_iter597);
+          }
+        }
+      }
+      if (struct.isSetPartitions()) {
+        {
+          oprot.writeI32(struct.partitions.size());
+          for (String _iter598 : struct.partitions)
+          {
+            oprot.writeString(_iter598);
+          }
+        }
+      }
+      if (struct.isSetWriteIds()) {
+        {
+          oprot.writeI32(struct.writeIds.size());
+          for (long _iter599 : struct.writeIds)
+          {
+            oprot.writeI64(_iter599);
+          }
+        }
+      }
     }
 
     @Override
@@ -380,6 +1053,63 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol iprot = (TTupleProtocol) prot;
       struct.txnid = iprot.readI64();
       struct.setTxnidIsSet(true);
+      BitSet incoming = iprot.readBitSet(5);
+      if (incoming.get(0)) {
+        struct.replPolicy = iprot.readString();
+        struct.setReplPolicyIsSet(true);
+      }
+      if (incoming.get(1)) {
+        {
+          org.apache.thrift.protocol.TList _list600 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.databases = new ArrayList<String>(_list600.size);
+          String _elem601;
+          for (int _i602 = 0; _i602 < _list600.size; ++_i602)
+          {
+            _elem601 = iprot.readString();
+            struct.databases.add(_elem601);
+          }
+        }
+        struct.setDatabasesIsSet(true);
+      }
+      if (incoming.get(2)) {
+        {
+          org.apache.thrift.protocol.TList _list603 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.tables = new ArrayList<String>(_list603.size);
+          String _elem604;
+          for (int _i605 = 0; _i605 < _list603.size; ++_i605)
+          {
+            _elem604 = iprot.readString();
+            struct.tables.add(_elem604);
+          }
+        }
+        struct.setTablesIsSet(true);
+      }
+      if (incoming.get(3)) {
+        {
+          org.apache.thrift.protocol.TList _list606 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.partitions = new ArrayList<String>(_list606.size);
+          String _elem607;
+          for (int _i608 = 0; _i608 < _list606.size; ++_i608)
+          {
+            _elem607 = iprot.readString();
+            struct.partitions.add(_elem607);
+          }
+        }
+        struct.setPartitionsIsSet(true);
+      }
+      if (incoming.get(4)) {
+        {
+          org.apache.thrift.protocol.TList _list609 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+          struct.writeIds = new ArrayList<Long>(_list609.size);
+          long _elem610;
+          for (int _i611 = 0; _i611 < _list609.size; ++_i611)
+          {
+            _elem610 = iprot.readI64();
+            struct.writeIds.add(_elem610);
+          }
+        }
+        struct.setWriteIdsIsSet(true);
+      }
     }
   }
 

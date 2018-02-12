@@ -18,8 +18,10 @@
 package org.apache.hadoop.hive.ql.parse.repl.dump.events;
 
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.api.NotificationEvent;
 import org.apache.hadoop.hive.metastore.messaging.AlterPartitionMessage;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.metadata.Partition;
 import org.apache.hadoop.hive.ql.metadata.Table;
 import org.apache.hadoop.hive.ql.parse.EximUtil;
@@ -91,6 +93,12 @@ class AlterPartitionHandler extends AbstractEventHandler {
     Table qlMdTable = new Table(tableObject);
     if (!Utils.shouldReplicate(withinContext.replicationSpec, qlMdTable, withinContext.hiveConf)) {
       return;
+    }
+
+    boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTable);
+    if (isAcidTable) {
+      LOG.info("Ignoring alter partition for acid tables");
+      withinContext.replicationSpec.setIsMetadataOnly(true);
     }
 
     if (Scenario.ALTER == scenario) {

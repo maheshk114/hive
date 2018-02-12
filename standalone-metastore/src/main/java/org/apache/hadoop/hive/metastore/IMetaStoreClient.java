@@ -33,90 +33,7 @@ import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
 import org.apache.hadoop.hive.common.ValidWriteIdList;
 import org.apache.hadoop.hive.common.classification.RetrySemantics;
 import org.apache.hadoop.hive.metastore.annotation.NoReconnect;
-import org.apache.hadoop.hive.metastore.api.AggrStats;
-import org.apache.hadoop.hive.metastore.api.AlreadyExistsException;
-import org.apache.hadoop.hive.metastore.api.BasicTxnInfo;
-import org.apache.hadoop.hive.metastore.api.CmRecycleRequest;
-import org.apache.hadoop.hive.metastore.api.CmRecycleResponse;
-import org.apache.hadoop.hive.metastore.api.ColumnStatistics;
-import org.apache.hadoop.hive.metastore.api.ColumnStatisticsObj;
-import org.apache.hadoop.hive.metastore.api.CompactionResponse;
-import org.apache.hadoop.hive.metastore.api.CompactionType;
-import org.apache.hadoop.hive.metastore.api.ConfigValSecurityException;
-import org.apache.hadoop.hive.metastore.api.CreationMetadata;
-import org.apache.hadoop.hive.metastore.api.CurrentNotificationEventId;
-import org.apache.hadoop.hive.metastore.api.DataOperationType;
-import org.apache.hadoop.hive.metastore.api.DefaultConstraintsRequest;
-import org.apache.hadoop.hive.metastore.api.Database;
-import org.apache.hadoop.hive.metastore.api.EnvironmentContext;
-import org.apache.hadoop.hive.metastore.api.FieldSchema;
-import org.apache.hadoop.hive.metastore.api.FireEventRequest;
-import org.apache.hadoop.hive.metastore.api.FireEventResponse;
-import org.apache.hadoop.hive.metastore.api.ForeignKeysRequest;
-import org.apache.hadoop.hive.metastore.api.Function;
-import org.apache.hadoop.hive.metastore.api.GetAllFunctionsResponse;
-import org.apache.hadoop.hive.metastore.api.GetOpenTxnsInfoResponse;
-import org.apache.hadoop.hive.metastore.api.GetPrincipalsInRoleRequest;
-import org.apache.hadoop.hive.metastore.api.GetPrincipalsInRoleResponse;
-import org.apache.hadoop.hive.metastore.api.GetRoleGrantsForPrincipalRequest;
-import org.apache.hadoop.hive.metastore.api.GetRoleGrantsForPrincipalResponse;
-import org.apache.hadoop.hive.metastore.api.HeartbeatTxnRangeResponse;
-import org.apache.hadoop.hive.metastore.api.HiveObjectPrivilege;
-import org.apache.hadoop.hive.metastore.api.HiveObjectRef;
-import org.apache.hadoop.hive.metastore.api.Index;
-import org.apache.hadoop.hive.metastore.api.InvalidInputException;
-import org.apache.hadoop.hive.metastore.api.InvalidObjectException;
-import org.apache.hadoop.hive.metastore.api.InvalidOperationException;
-import org.apache.hadoop.hive.metastore.api.InvalidPartitionException;
-import org.apache.hadoop.hive.metastore.api.LockRequest;
-import org.apache.hadoop.hive.metastore.api.LockResponse;
-import org.apache.hadoop.hive.metastore.api.Materialization;
-import org.apache.hadoop.hive.metastore.api.MetaException;
-import org.apache.hadoop.hive.metastore.api.MetadataPpdResult;
-import org.apache.hadoop.hive.metastore.api.NoSuchLockException;
-import org.apache.hadoop.hive.metastore.api.NoSuchObjectException;
-import org.apache.hadoop.hive.metastore.api.NoSuchTxnException;
-import org.apache.hadoop.hive.metastore.api.NotNullConstraintsRequest;
-import org.apache.hadoop.hive.metastore.api.NotificationEvent;
-import org.apache.hadoop.hive.metastore.api.NotificationEventResponse;
-import org.apache.hadoop.hive.metastore.api.NotificationEventsCountRequest;
-import org.apache.hadoop.hive.metastore.api.NotificationEventsCountResponse;
-import org.apache.hadoop.hive.metastore.api.OpenTxnsResponse;
-import org.apache.hadoop.hive.metastore.api.Partition;
-import org.apache.hadoop.hive.metastore.api.PartitionEventType;
-import org.apache.hadoop.hive.metastore.api.PartitionValuesRequest;
-import org.apache.hadoop.hive.metastore.api.PartitionValuesResponse;
-import org.apache.hadoop.hive.metastore.api.PrimaryKeysRequest;
-import org.apache.hadoop.hive.metastore.api.PrincipalPrivilegeSet;
-import org.apache.hadoop.hive.metastore.api.PrincipalType;
-import org.apache.hadoop.hive.metastore.api.PrivilegeBag;
-import org.apache.hadoop.hive.metastore.api.Role;
-import org.apache.hadoop.hive.metastore.api.SQLDefaultConstraint;
-import org.apache.hadoop.hive.metastore.api.SQLForeignKey;
-import org.apache.hadoop.hive.metastore.api.SQLNotNullConstraint;
-import org.apache.hadoop.hive.metastore.api.SQLPrimaryKey;
-import org.apache.hadoop.hive.metastore.api.SQLUniqueConstraint;
-import org.apache.hadoop.hive.metastore.api.SetPartitionsStatsRequest;
-import org.apache.hadoop.hive.metastore.api.ShowCompactResponse;
-import org.apache.hadoop.hive.metastore.api.ShowLocksRequest;
-import org.apache.hadoop.hive.metastore.api.ShowLocksResponse;
-import org.apache.hadoop.hive.metastore.api.Table;
-import org.apache.hadoop.hive.metastore.api.TableMeta;
-import org.apache.hadoop.hive.metastore.api.TxnAbortedException;
-import org.apache.hadoop.hive.metastore.api.TxnOpenException;
-import org.apache.hadoop.hive.metastore.api.TxnToWriteId;
-import org.apache.hadoop.hive.metastore.api.UniqueConstraintsRequest;
-import org.apache.hadoop.hive.metastore.api.UnknownDBException;
-import org.apache.hadoop.hive.metastore.api.UnknownPartitionException;
-import org.apache.hadoop.hive.metastore.api.UnknownTableException;
-import org.apache.hadoop.hive.metastore.api.WMFullResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMMapping;
-import org.apache.hadoop.hive.metastore.api.WMNullablePool;
-import org.apache.hadoop.hive.metastore.api.WMNullableResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMPool;
-import org.apache.hadoop.hive.metastore.api.WMResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMTrigger;
-import org.apache.hadoop.hive.metastore.api.WMValidateResourcePlanResponse;
+import org.apache.hadoop.hive.metastore.api.*;
 import org.apache.hadoop.hive.metastore.partition.spec.PartitionSpecProxy;
 import org.apache.hadoop.hive.metastore.utils.ObjectPair;
 import org.apache.thrift.TException;
@@ -1396,6 +1313,16 @@ public interface IMetaStoreClient {
   long openTxn(String user) throws TException;
 
   /**
+   * Initiate a transaction at the target cluster.
+   * @param replPolicy The replication policy to uniquely identify the source cluster.
+   * @param srcTxnIds The list of transaction ids at the source cluster
+   * @param user The user who has fired the repl oad command.
+   * @return transaction identifiers
+   * @throws TException
+   */
+  List<Long> replOpenTxn(String replPolicy, List<Long> srcTxnIds, String user) throws TException;
+
+  /**
    * Initiate a batch of transactions.  It is not guaranteed that the
    * requested number of transactions will be instantiated.  The system has a
    * maximum number instantiated per request, controlled by hive.txn.max
@@ -1434,6 +1361,25 @@ public interface IMetaStoreClient {
   void rollbackTxn(long txnid) throws NoSuchTxnException, TException;
 
   /**
+   * Rollback a transaction.  This will also unlock any locks associated with
+   * this transaction.
+   * @param txnid id of transaction to be rolled back.
+   * @param replPolicy the replication policy to identify the source cluster
+   * @throws NoSuchTxnException if the requested transaction does not exist.
+   * Note that this can result from the transaction having timed out and been
+   * deleted.
+   * @throws TException
+   */
+  void rollbackTxn(long txnid, String replPolicy) throws NoSuchTxnException, TException;
+
+  /**
+   * replGetTargetTxnIds - Get the set of target txn ids from txn map table
+   * @param rqst request with list of source txn ids.
+   * @throws TException if not able to get the txn ids from metastore.
+   */
+  GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws TException;
+
+  /**
    * Commit a transaction.  This will also unlock any locks associated with
    * this transaction.
    * @param txnid id of transaction to be committed.
@@ -1446,6 +1392,20 @@ public interface IMetaStoreClient {
    */
   void commitTxn(long txnid)
       throws NoSuchTxnException, TxnAbortedException, TException;
+
+  /**
+   * Commit a transaction.  This will also unlock any locks associated with
+   * this transaction.
+   * @param rqst Commit transaction request having information related to operations done in this transaction.
+   * @throws NoSuchTxnException if the requested transaction does not exist.
+   * This can result fro the transaction having timed out and been deleted by
+   * the compactor.
+   * @throws TxnAbortedException if the requested transaction has been
+   * aborted.  This can result from the transaction timing out.
+   * @throws TException
+   */
+  void replCommitTxn(CommitTxnRequest rqst)
+          throws NoSuchTxnException, TxnAbortedException, TException;
 
   /**
    * Abort a list of transactions. This is for use by "ABORT TRANSACTIONS" in the grammar.
@@ -1732,9 +1692,16 @@ public interface IMetaStoreClient {
    * @return response, type depends on type of request
    * @throws TException
    */
-
   @InterfaceAudience.LimitedPrivate({"Apache Hive, HCatalog"})
   FireEventResponse fireListenerEvent(FireEventRequest request) throws TException;
+
+  /**
+   * Add a event related to write operations in an ACID table.
+   * @param rqst
+   * @throws TException
+   */
+  @InterfaceAudience.LimitedPrivate({"Apache Hive, HCatalog"})
+  void addWriteNotificationLog(WriteNotificationLogRequest rqst) throws TException ;
 
   class IncompatibleMetastoreException extends MetaException {
     IncompatibleMetastoreException(String message) {

@@ -738,6 +738,8 @@ struct OpenTxnRequest {
     2: required string user,
     3: required string hostname,
     4: optional string agentInfo = "Unknown",
+    5: optional string replPolicy,
+    6: optional list<i64> replSrcTxnIds,
 }
 
 struct OpenTxnsResponse {
@@ -746,6 +748,7 @@ struct OpenTxnsResponse {
 
 struct AbortTxnRequest {
     1: required i64 txnid,
+    2: optional string replPolicy,
 }
 
 struct AbortTxnsRequest {
@@ -754,6 +757,31 @@ struct AbortTxnsRequest {
 
 struct CommitTxnRequest {
     1: required i64 txnid,
+    2: optional string replPolicy,
+    3: optional list<string> databases,
+    4: optional list<string> tables,
+    5: optional list<string> partitions,
+    6: optional list<i64>    writeIds,
+}
+
+struct WriteEventInfo {
+    1: required i64 txnid,
+    2: optional list<string> databases,
+    3: optional list<string> tables,
+    4: optional list<string> partitions,
+    5: optional list<i64>    writeIds,
+    6: optional list<string> tableObjs,
+    7: optional list<string> files,
+    8: optional list<string> partitionObjs,
+}
+
+struct GetTargetTxnIdsRequest {
+    1: required list<i64> srcTxnIds,
+    2: required string replPolicy;
+}
+
+struct GetTargetTxnIdsResponse {
+    1: required list<i64> targetTxnIds,
 }
 
 // Request msg to get the valid write ids list for the given list of tables wrt to input validTxnList
@@ -972,6 +1000,8 @@ struct InsertEventRequestData {
     2: required list<string> filesAdded,
     // Checksum of files (hex string of checksum byte payload)
     3: optional list<string> filesAddedChecksum,
+    // Used by acid operation to create the sub directory
+    4: optional list<string> subDirectoryList,
 }
 
 union FireEventRequestData {
@@ -991,7 +1021,20 @@ struct FireEventRequest {
 struct FireEventResponse {
     // NOP for now, this is just a place holder for future responses
 }
-    
+
+struct WriteNotificationLogRequest {
+    1: required i64 txnId,
+    2: required i64 writeId,
+    3: required string db,
+    4: required string table,
+    5: required InsertEventRequestData fileInfo,
+    6: optional list<string> partitionVals,
+}
+
+struct WriteNotificationLogResponse {
+    // NOP for now, this is just a place holder for future responses
+}
+
 struct MetadataPpdResult {
   1: optional binary metadata,
   2: optional binary includeBitset
@@ -1879,6 +1922,8 @@ service ThriftHiveMetastore extends fb303.FacebookService
       throws (1:NoSuchTxnException o1, 2:MetaException o2)
   AllocateTableWriteIdsResponse allocate_table_write_ids(1:AllocateTableWriteIdsRequest rqst)
     throws (1:NoSuchTxnException o1, 2:TxnAbortedException o2, 3:MetaException o3)
+  GetTargetTxnIdsResponse repl_get_target_txn_ids(1:GetTargetTxnIdsRequest rqst)
+   throws (1:NoSuchTxnException o1, 2:MetaException o2)
   LockResponse lock(1:LockRequest rqst) throws (1:NoSuchTxnException o1, 2:TxnAbortedException o2)
   LockResponse check_lock(1:CheckLockRequest rqst)
     throws (1:NoSuchTxnException o1, 2:TxnAbortedException o2, 3:NoSuchLockException o3)
@@ -1896,6 +1941,7 @@ service ThriftHiveMetastore extends fb303.FacebookService
   CurrentNotificationEventId get_current_notificationEventId()
   NotificationEventsCountResponse get_notification_events_count(1:NotificationEventsCountRequest rqst)
   FireEventResponse fire_listener_event(1:FireEventRequest rqst)
+  WriteNotificationLogResponse add_write_notification_log(WriteNotificationLogRequest rqst)
   void flushCache()
 
   // Repl Change Management api

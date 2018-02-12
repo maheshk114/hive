@@ -34,6 +34,8 @@ import org.apache.hadoop.hive.ql.exec.repl.bootstrap.load.TaskTracker;
 import org.apache.hadoop.hive.ql.exec.repl.bootstrap.load.util.Context;
 import org.apache.hadoop.hive.ql.exec.repl.bootstrap.load.util.PathUtils;
 import org.apache.hadoop.hive.ql.exec.util.DAGTraversal;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
+import org.apache.hadoop.hive.ql.lockmgr.LockException;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.metadata.Partition;
 import org.apache.hadoop.hive.ql.metadata.Table;
@@ -239,11 +241,15 @@ public class LoadPartitions {
    * This will create the move of partition data from temp path to actual path
    */
   private Task<?> movePartitionTask(Table table, AddPartitionDesc.OnePartitionDesc partSpec,
-      Path tmpPath) {
+      Path tmpPath) throws LockException {
+    Long writeId = 0L; // Initialize with 0 for non-ACID and non-MM tables.
+    if (((table != null) && AcidUtils.isTransactionalTable(table))) {
+      writeId = SessionState.get().getTxnMgr().getTableWriteId(table.getDbName(), table.getTableName());
+    }
     LoadTableDesc loadTableWork = new LoadTableDesc(
         tmpPath, Utilities.getTableDesc(table), partSpec.getPartSpec(),
         event.replicationSpec().isReplace() ? LoadFileType.REPLACE_ALL : LoadFileType.OVERWRITE_EXISTING,
-        SessionState.get().getTxnMgr().getCurrentTxnId()
+            writeId
     );
     loadTableWork.setInheritTableSpecs(false);
     MoveWork work = new MoveWork(new HashSet<>(), new HashSet<>(), loadTableWork, null, false);

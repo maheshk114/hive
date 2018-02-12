@@ -72,4 +72,8 @@ public abstract class InsertMessage extends EventMessage {
       throw new IllegalStateException("Table name unset.");
     return super.checkValid();
   }
+
+  public abstract String getTableString();
+
+  public abstract String getPartitionString();
 }

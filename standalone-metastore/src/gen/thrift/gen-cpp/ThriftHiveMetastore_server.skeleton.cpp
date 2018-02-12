@@ -757,6 +757,11 @@ class ThriftHiveMetastoreHandler : virtual public ThriftHiveMetastoreIf {
     printf("allocate_table_write_ids\n");
   }
 
+  void repl_get_target_txn_ids(GetTargetTxnIdsResponse& _return, const GetTargetTxnIdsRequest& rqst) {
+    // Your implementation goes here
+    printf("repl_get_target_txn_ids\n");
+  }
+
   void lock(LockResponse& _return, const LockRequest& rqst) {
     // Your implementation goes here
     printf("lock\n");
@@ -825,6 +830,11 @@ class ThriftHiveMetastoreHandler : virtual public ThriftHiveMetastoreIf {
   void fire_listener_event(FireEventResponse& _return, const FireEventRequest& rqst) {
     // Your implementation goes here
     printf("fire_listener_event\n");
+  }
+
+  void add_write_notification_log(WriteNotificationLogResponse& _return, const WriteNotificationLogRequest& rqst) {
+    // Your implementation goes here
+    printf("add_write_notification_log\n");
   }
 
   void flushCache() {

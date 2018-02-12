@@ -19,9 +19,11 @@ package org.apache.hadoop.hive.ql.parse.repl.dump.events;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.api.NotificationEvent;
 import org.apache.hadoop.hive.metastore.messaging.AddPartitionMessage;
 import org.apache.hadoop.hive.metastore.messaging.PartitionFiles;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.metadata.Partition;
 import org.apache.hadoop.hive.ql.metadata.Table;
@@ -55,6 +57,12 @@ class AddPartitionHandler extends AbstractEventHandler {
     final Table qlMdTable = new Table(tobj);
     if (!Utils.shouldReplicate(withinContext.replicationSpec, qlMdTable, withinContext.hiveConf)) {
       return;
+    }
+
+    boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTable);
+    if (isAcidTable) {
+      LOG.info("Ignoring alter partition for acid tables");
+      withinContext.replicationSpec.setIsMetadataOnly(true);
     }
 
     Iterable<org.apache.hadoop.hive.metastore.api.Partition> ptns = apm.getPartitionObjs();

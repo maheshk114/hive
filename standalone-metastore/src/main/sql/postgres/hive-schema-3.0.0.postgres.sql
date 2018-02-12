@@ -311,6 +311,7 @@ CREATE TABLE "SEQUENCE_TABLE" (
     "NEXT_VAL" bigint NOT NULL
 );
 
+INSERT INTO "SEQUENCE_TABLE" ("SEQUENCE_NAME", "NEXT_VAL") SELECT 'org.apache.hadoop.hive.metastore.model.MNotificationLog',1 WHERE NOT EXISTS ( SELECT "NEXT_VAL" FROM "SEQUENCE_TABLE" WHERE "SEQUENCE_NAME" = 'org.apache.hadoop.hive.metastore.model.MNotificationLog');
 
 --
 -- Name: SERDES; Type: TABLE; Schema: public; Owner: hiveuser; Tablespace:
@@ -1748,6 +1749,13 @@ CREATE TABLE NEXT_WRITE_ID (
 );
 
 CREATE UNIQUE INDEX NEXT_WRITE_ID_IDX ON NEXT_WRITE_ID (NWI_DATABASE, NWI_TABLE);
+
+CREATE TABLE REPL_TXN_MAP (
+  RTM_REPL_POLICY varchar(256) NOT NULL,
+  RTM_SRC_TXN_ID bigint NOT NULL,
+  RTM_TARGET_TXN_ID bigint NOT NULL,
+  PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID)
+);
 
 -- -----------------------------------------------------------------
 -- Record schema version. Should be the last step in the init script

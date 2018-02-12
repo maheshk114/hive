@@ -23,6 +23,7 @@ import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.classification.RetrySemantics;
+import org.apache.hadoop.hive.metastore.IHMSHandler;
 import org.apache.hadoop.hive.metastore.api.*;
 
 import java.sql.SQLException;
@@ -142,9 +143,19 @@ public interface TxnStore extends Configurable {
    * @throws TxnAbortedException
    * @throws MetaException
    */
-  AllocateTableWriteIdsResponse allocateTableWriteIds(AllocateTableWriteIdsRequest rqst)
+  AllocateTableWriteIdsResponse
+  allocateTableWriteIds(AllocateTableWriteIdsRequest rqst)
     throws NoSuchTxnException, TxnAbortedException, MetaException;
 
+  /**
+   * Gets the list of mapping target transaction id.
+   * @param rqst info on transaction and table to get txn ids
+   * @throws NoSuchTxnException
+   * @throws TxnAbortedException
+   * @throws MetaException
+   */
+  GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst)
+          throws TxnAbortedException, MetaException;
   /**
    * Obtain a lock.
    * @param rqst information on the lock to obtain.  If the requester is part of a transaction
@@ -450,4 +461,10 @@ public interface TxnStore extends Configurable {
    */
   @RetrySemantics.Idempotent
   void setHadoopJobId(String hadoopJobId, long id);
+
+  /**
+   * Add the ACID write event information to writeNotificationLog table.
+   */
+  @RetrySemantics.Idempotent
+  void addWriteNotificationLog(WriteNotificationLogRequest rqst, Table tableObj, Partition ptnObj) throws MetaException;
 }

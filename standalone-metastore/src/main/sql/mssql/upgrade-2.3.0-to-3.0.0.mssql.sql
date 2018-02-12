@@ -176,5 +176,26 @@ ALTER TABLE TXN_COMPONENTS ADD TC_WRITEID bigint;
 ALTER TABLE COMPLETED_TXN_COMPONENTS ADD CTC_WRITEID bigint;
   
 -- HIVE-18726
-  -- add a new column to support default value for DEFAULT constraint
- ALTER TABLE KEY_CONSTRAINTS ADD DEFAULT_VALUE VARCHAR(400);
+-- add a new column to support default value for DEFAULT constraint
+ALTER TABLE KEY_CONSTRAINTS ADD DEFAULT_VALUE VARCHAR(400);
+
+CREATE TABLE REPL_TXN_MAP (
+  RTM_REPL_POLICY nvarchar(256) NOT NULL,
+  RTM_SRC_TXN_ID bigint NOT NULL,
+  RTM_TARGET_TXN_ID bigint NOT NULL
+);
+
+ALTER TABLE REPL_TXN_MAP ADD CONSTRAINT REPL_TXN_MAP_PK PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID);
+
+-- Table SEQUENCE_TABLE is an internal table required by DataNucleus.
+-- NOTE: Some versions of SchemaTool do not automatically generate this table.
+-- See http://www.datanucleus.org/servlet/jira/browse/NUCRDBMS-416
+CREATE TABLE SEQUENCE_TABLE
+(
+   SEQUENCE_NAME nvarchar(256) NOT NULL,
+   NEXT_VAL bigint NOT NULL
+);
+
+CREATE UNIQUE INDEX PART_TABLE_PK ON SEQUENCE_TABLE (SEQUENCE_NAME);
+
+INSERT INTO SEQUENCE_TABLE (SEQUENCE_NAME, NEXT_VAL) SELECT 'org.apache.hadoop.hive.metastore.model.MNotificationLog', 1 WHERE NOT EXISTS (SELECT NEXT_VAL FROM SEQUENCE_TABLE where SEQUENCE_NAME = 'org.apache.hadoop.hive.metastore.model.MNotificationLog');

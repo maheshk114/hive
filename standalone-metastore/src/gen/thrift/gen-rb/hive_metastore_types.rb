@@ -2217,12 +2217,16 @@ class OpenTxnRequest
   USER = 2
   HOSTNAME = 3
   AGENTINFO = 4
+  REPLPOLICY = 5
+  REPLSRCTXNIDS = 6
 
   FIELDS = {
     NUM_TXNS => {:type => ::Thrift::Types::I32, :name => 'num_txns'},
     USER => {:type => ::Thrift::Types::STRING, :name => 'user'},
     HOSTNAME => {:type => ::Thrift::Types::STRING, :name => 'hostname'},
-    AGENTINFO => {:type => ::Thrift::Types::STRING, :name => 'agentInfo', :default => %q"Unknown", :optional => true}
+    AGENTINFO => {:type => ::Thrift::Types::STRING, :name => 'agentInfo', :default => %q"Unknown", :optional => true},
+    REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy', :optional => true},
+    REPLSRCTXNIDS => {:type => ::Thrift::Types::LIST, :name => 'replSrcTxnIds', :element => {:type => ::Thrift::Types::I64}, :optional => true}
   }
 
   def struct_fields; FIELDS; end
@@ -2256,9 +2260,11 @@ end
 class AbortTxnRequest
   include ::Thrift::Struct, ::Thrift::Struct_Union
   TXNID = 1
+  REPLPOLICY = 2
 
   FIELDS = {
-    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'}
+    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'},
+    REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy', :optional => true}
   }
 
   def struct_fields; FIELDS; end
@@ -2290,15 +2296,93 @@ end
 class CommitTxnRequest
   include ::Thrift::Struct, ::Thrift::Struct_Union
   TXNID = 1
+  REPLPOLICY = 2
+  DATABASES = 3
+  TABLES = 4
+  PARTITIONS = 5
+  WRITEIDS = 6
 
   FIELDS = {
-    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'}
+    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'},
+    REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy', :optional => true},
+    DATABASES => {:type => ::Thrift::Types::LIST, :name => 'databases', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    TABLES => {:type => ::Thrift::Types::LIST, :name => 'tables', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    PARTITIONS => {:type => ::Thrift::Types::LIST, :name => 'partitions', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    WRITEIDS => {:type => ::Thrift::Types::LIST, :name => 'writeIds', :element => {:type => ::Thrift::Types::I64}, :optional => true}
   }
 
   def struct_fields; FIELDS; end
 
   def validate
     raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field txnid is unset!') unless @txnid
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class WriteEventInfo
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+  TXNID = 1
+  DATABASES = 2
+  TABLES = 3
+  PARTITIONS = 4
+  WRITEIDS = 5
+  TABLEOBJS = 6
+  FILES = 7
+  PARTITIONOBJS = 8
+
+  FIELDS = {
+    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'},
+    DATABASES => {:type => ::Thrift::Types::LIST, :name => 'databases', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    TABLES => {:type => ::Thrift::Types::LIST, :name => 'tables', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    PARTITIONS => {:type => ::Thrift::Types::LIST, :name => 'partitions', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    WRITEIDS => {:type => ::Thrift::Types::LIST, :name => 'writeIds', :element => {:type => ::Thrift::Types::I64}, :optional => true},
+    TABLEOBJS => {:type => ::Thrift::Types::LIST, :name => 'tableObjs', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    FILES => {:type => ::Thrift::Types::LIST, :name => 'files', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    PARTITIONOBJS => {:type => ::Thrift::Types::LIST, :name => 'partitionObjs', :element => {:type => ::Thrift::Types::STRING}, :optional => true}
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field txnid is unset!') unless @txnid
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class GetTargetTxnIdsRequest
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+  SRCTXNIDS = 1
+  REPLPOLICY = 2
+
+  FIELDS = {
+    SRCTXNIDS => {:type => ::Thrift::Types::LIST, :name => 'srcTxnIds', :element => {:type => ::Thrift::Types::I64}},
+    REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy'}
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field srcTxnIds is unset!') unless @srcTxnIds
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field replPolicy is unset!') unless @replPolicy
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class GetTargetTxnIdsResponse
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+  TARGETTXNIDS = 1
+
+  FIELDS = {
+    TARGETTXNIDS => {:type => ::Thrift::Types::LIST, :name => 'targetTxnIds', :element => {:type => ::Thrift::Types::I64}}
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field targetTxnIds is unset!') unless @targetTxnIds
   end
 
   ::Thrift::Struct.generate_accessors self
@@ -3061,11 +3145,13 @@ class InsertEventRequestData
   REPLACE = 1
   FILESADDED = 2
   FILESADDEDCHECKSUM = 3
+  SUBDIRECTORYLIST = 4
 
   FIELDS = {
     REPLACE => {:type => ::Thrift::Types::BOOL, :name => 'replace', :optional => true},
     FILESADDED => {:type => ::Thrift::Types::LIST, :name => 'filesAdded', :element => {:type => ::Thrift::Types::STRING}},
-    FILESADDEDCHECKSUM => {:type => ::Thrift::Types::LIST, :name => 'filesAddedChecksum', :element => {:type => ::Thrift::Types::STRING}, :optional => true}
+    FILESADDEDCHECKSUM => {:type => ::Thrift::Types::LIST, :name => 'filesAddedChecksum', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+    SUBDIRECTORYLIST => {:type => ::Thrift::Types::LIST, :name => 'subDirectoryList', :element => {:type => ::Thrift::Types::STRING}, :optional => true}
   }
 
   def struct_fields; FIELDS; end
@@ -3127,6 +3213,52 @@ class FireEventRequest
 end
 
 class FireEventResponse
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+
+  FIELDS = {
+
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class WriteNotificationLogRequest
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+  TXNID = 1
+  WRITEID = 2
+  DB = 3
+  TABLE = 4
+  FILEINFO = 5
+  PARTITIONVALS = 6
+
+  FIELDS = {
+    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnId'},
+    WRITEID => {:type => ::Thrift::Types::I64, :name => 'writeId'},
+    DB => {:type => ::Thrift::Types::STRING, :name => 'db'},
+    TABLE => {:type => ::Thrift::Types::STRING, :name => 'table'},
+    FILEINFO => {:type => ::Thrift::Types::STRUCT, :name => 'fileInfo', :class => ::InsertEventRequestData},
+    PARTITIONVALS => {:type => ::Thrift::Types::LIST, :name => 'partitionVals', :element => {:type => ::Thrift::Types::STRING}, :optional => true}
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field txnId is unset!') unless @txnId
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field writeId is unset!') unless @writeId
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field db is unset!') unless @db
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field table is unset!') unless @table
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field fileInfo is unset!') unless @fileInfo
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class WriteNotificationLogResponse
   include ::Thrift::Struct, ::Thrift::Struct_Union
 
   FIELDS = {

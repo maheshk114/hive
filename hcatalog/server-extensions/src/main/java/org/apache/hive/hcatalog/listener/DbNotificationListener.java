@@ -18,10 +18,12 @@
 package org.apache.hive.hcatalog.listener;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
@@ -47,35 +49,14 @@ import org.apache.hadoop.hive.metastore.api.SQLUniqueConstraint;
 import org.apache.hadoop.hive.metastore.api.Table;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf.ConfVars;
-import org.apache.hadoop.hive.metastore.events.AddForeignKeyEvent;
-import org.apache.hadoop.hive.metastore.events.AddIndexEvent;
-import org.apache.hadoop.hive.metastore.events.AddNotNullConstraintEvent;
-import org.apache.hadoop.hive.metastore.events.AddPartitionEvent;
-import org.apache.hadoop.hive.metastore.events.AddPrimaryKeyEvent;
-import org.apache.hadoop.hive.metastore.events.AddUniqueConstraintEvent;
-import org.apache.hadoop.hive.metastore.events.AlterDatabaseEvent;
-import org.apache.hadoop.hive.metastore.events.AlterIndexEvent;
-import org.apache.hadoop.hive.metastore.events.AlterPartitionEvent;
-import org.apache.hadoop.hive.metastore.events.AlterTableEvent;
-import org.apache.hadoop.hive.metastore.events.ConfigChangeEvent;
-import org.apache.hadoop.hive.metastore.events.CreateDatabaseEvent;
-import org.apache.hadoop.hive.metastore.events.CreateFunctionEvent;
-import org.apache.hadoop.hive.metastore.events.CreateTableEvent;
-import org.apache.hadoop.hive.metastore.events.DropConstraintEvent;
-import org.apache.hadoop.hive.metastore.events.DropDatabaseEvent;
-import org.apache.hadoop.hive.metastore.events.DropFunctionEvent;
-import org.apache.hadoop.hive.metastore.events.DropIndexEvent;
-import org.apache.hadoop.hive.metastore.events.DropPartitionEvent;
-import org.apache.hadoop.hive.metastore.events.DropTableEvent;
-import org.apache.hadoop.hive.metastore.events.InsertEvent;
-import org.apache.hadoop.hive.metastore.events.LoadPartitionDoneEvent;
-import org.apache.hadoop.hive.metastore.events.ListenerEvent;
+import org.apache.hadoop.hive.metastore.events.*;
+import org.apache.hadoop.hive.metastore.messaging.AcidWriteMessage;
 import org.apache.hadoop.hive.metastore.messaging.EventMessage.EventType;
 import org.apache.hadoop.hive.metastore.messaging.MessageFactory;
 import org.apache.hadoop.hive.metastore.messaging.PartitionFiles;
+import org.apache.hadoop.hive.metastore.tools.SQLGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.google.common.collect.Lists;
 
 /**
@@ -227,7 +208,7 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
         FileStatus file = files[i];
         i++;
         return ReplChangeManager.encodeFileUri(file.getPath().toString(),
-            ReplChangeManager.checksumFor(file.getPath(), fs));
+            ReplChangeManager.checksumFor(file.getPath(), fs), null);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
@@ -436,10 +417,17 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
   class FileChksumIterator implements Iterator<String> {
     private List<String> files;
     private List<String> chksums;
+    private List<String> subDirs;
     int i = 0;
     FileChksumIterator(List<String> files, List<String> chksums) {
       this.files = files;
       this.chksums = chksums;
+      this.subDirs = subDirs;
+    }
+    FileChksumIterator(List<String> files, List<String> chksums, List<String> subDirs) {
+      this.files = files;
+      this.chksums = chksums;
+      this.subDirs = subDirs;
     }
     @Override
     public boolean hasNext() {
@@ -448,7 +436,8 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
 
     @Override
     public String next() {
-      String result = encodeFileUri(files.get(i), chksums != null? chksums.get(i) : null);
+      String result = encodeFileUri(files.get(i), chksums != null? chksums.get(i) : null,
+              subDirs != null ? subDirs.get(i) : null);
       i++;
       return result;
     }
@@ -469,6 +458,126 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
     event.setDbName(tableObj.getDbName());
     event.setTableName(tableObj.getTableName());
     process(event, insertEvent);
+  }
+
+  @Override
+  public void onOpenTxn(OpenTxnEvent openTxnEvent) throws MetaException {
+    NotificationEvent event =
+            new NotificationEvent(0, now(), EventType.OPEN_TXN.toString(), msgFactory.buildOpenTxnMessage(
+                    openTxnEvent.getTxnIds())
+                    .toString());
+    process(event, openTxnEvent);
+  }
+
+  @Override
+  public void onCommitTxn(CommitTxnEvent commitTxnEvent) throws MetaException {
+    NotificationEvent event =
+            new NotificationEvent(0, now(), EventType.COMMIT_TXN.toString(), msgFactory.buildCommitTxnMessage(
+                    commitTxnEvent.getTxnId())
+                    .toString());
+    process(event, commitTxnEvent);
+  }
+
+  @Override
+  public void onAbortTxn(AbortTxnEvent abortTxnEvent) throws MetaException {
+    NotificationEvent event =
+        new NotificationEvent(0, now(), EventType.ABORT_TXN.toString(), msgFactory.buildAbortTxnMessage(
+            abortTxnEvent.getTxnId())
+            .toString());
+
+    process(event, abortTxnEvent);
+  }
+
+  static String quoteString(String input) {
+    return "'" + input + "'";
+  }
+
+  private long getNextSequenceVal(ResultSet rs, Statement stmt, SQLGenerator sqlGenerator)
+          throws SQLException, MetaException {
+    String s = sqlGenerator.addForUpdateClause("select \"NEXT_VAL\" from " +
+            "\"SEQUENCE_TABLE\" where \"SEQUENCE_NAME\" = " +
+            " 'org.apache.hadoop.hive.metastore.model.MWriteNotificationLog'");
+    LOG.debug("Going to execute query <" + s + ">");
+    rs = stmt.executeQuery(s);
+    if (!rs.next()) {
+      throw new MetaException("Transaction database not properly " +
+              "configured, can't find next event id.");
+    }
+
+    long nextNLId = rs.getLong(1);
+    long updatedNLId = nextNLId + 1;
+    s = "update \"SEQUENCE_TABLE\" set \"NEXT_VAL\" = " + updatedNLId + " where \"SEQUENCE_NAME\" = " +
+            " 'org.apache.hadoop.hive.metastore.model.MWriteNotificationLog'";
+    LOG.debug("Going to execute update <" + s + ">");
+    stmt.executeUpdate(s);
+    return nextNLId;
+  }
+
+  @Override
+  public void onAcidWrite(AcidWriteEvent acidWriteEvent) throws MetaException {
+    AcidWriteMessage msg = msgFactory.buildAcidWriteMessage(acidWriteEvent.getTxnId(), acidWriteEvent.getDatabase(),
+            acidWriteEvent.getTable(), acidWriteEvent.getWriteId(), acidWriteEvent.getPartition(), acidWriteEvent.getTableObj(),
+            acidWriteEvent.getPartitionObj(),
+            new FileChksumIterator(acidWriteEvent.getFiles(), acidWriteEvent.getChecksums(), acidWriteEvent.getSubDirs()));
+    NotificationEvent event = new NotificationEvent(0, now(), EventType.ACID_WRITE_ID_EVENT.toString(),
+            msg.toString());
+    try {
+      Statement stmt = acidWriteEvent.getDbConn().createStatement();
+      StringBuilder sb = new StringBuilder();
+      for (String file : msg.getFiles()) {
+        sb.append(file).append(",");
+      }
+      sb.deleteCharAt(sb.length() -1);
+
+      String dbName = acidWriteEvent.getDatabase();
+      String tblName = acidWriteEvent.getTable();
+      String partition = acidWriteEvent.getPartition();
+      String s = acidWriteEvent.getSqlGenerator().addForUpdateClause(
+              "select WNL_FILES, WNL_ID from WRITE_NOTIFICATION_LOG where WNL_DATABASE = " + quoteString(dbName) +
+                      "and WNL_TABLE = " + quoteString(tblName) +  " and WNL_PARTITION = " + quoteString(partition) +
+                      " and WNL_TXNID = " + Long.toString(acidWriteEvent.getTxnId()));
+      LOG.debug("Going to execute query <" + s + ">");
+      ResultSet rs = stmt.executeQuery(s);
+      if (!rs.next()) {
+        // if rs is empty then no lock is taken and thus it can not cause deadlock.
+        long nextNLId = getNextSequenceVal(rs, stmt, acidWriteEvent.getSqlGenerator());
+        s = "insert into WRITE_NOTIFICATION_LOG (WNL_ID, WNL_TXNID, WNL_WRITEID, WNL_DATABASE, WNL_TABLE," +
+                " WNL_PARTITION, WNL_TABLE_OBJ, WNL_PARTITION_OBJ, WNL_FILES, WNL_EVENT_TIME) values (" + nextNLId
+                + "," + acidWriteEvent.getTxnId() +  "," + acidWriteEvent.getWriteId()+  "," +
+                quoteString(acidWriteEvent.getDatabase())+  "," +  quoteString(acidWriteEvent.getTable())+  "," +
+                quoteString(acidWriteEvent.getPartition())+  "," +  quoteString(msg.getTableObjStr())+  "," +
+                quoteString(msg.getPartitionObjStr()) +  "," +  quoteString(sb.toString())+
+                "," +  Integer.toString(now()) + ")";
+        LOG.info("Going to execute insert <" + s + ">");
+        stmt.execute(s.replaceAll("\\\\", "\\\\\\\\"));
+      } else {
+        String existingFiles = rs.getString(1);
+        if (existingFiles.contains(sb.toString().replaceAll("\\\\", "\\\\\\\\"))) {
+          //if list of files are already present then no need to update it again.
+          LOG.info("file list " + sb.toString() + " already present");
+          return;
+        }
+        long nlId = rs.getLong(2);
+        sb.append(",").append(existingFiles);
+        s = "update WRITE_NOTIFICATION_LOG set WNL_TABLE_OBJ = " +  quoteString(msg.getTableObjStr()) + "," +
+                " WNL_PARTITION_OBJ = " + quoteString(msg.getPartitionObjStr()) + "," +
+                " WNL_FILES = " + quoteString(sb.toString()) + "," +
+                " WNL_EVENT_TIME = " + Integer.toString(now()) +
+                " where WNL_ID = " + nlId;
+        LOG.info("Going to execute update <" + s + ">");
+        stmt.executeUpdate(s.replaceAll("\\\\", "\\\\\\\\"));
+      }
+    }
+    catch (Exception e) {
+      throw new MetaException("Unable to process acid write event " + e.getMessage());
+    } finally {
+      // Set the DB_NOTIFICATION_EVENT_ID for future reference by other listeners.
+      if (event.isSetEventId()) {
+        acidWriteEvent.putParameter(
+                MetaStoreEventListenerConstants.DB_NOTIFICATION_EVENT_ID_KEY_NAME,
+                Long.toString(event.getEventId()));
+      }
+    }
   }
 
   /**
@@ -566,6 +675,20 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
     process(event, dropConstraintEvent);
   }
 
+  /***
+   * @param allocWriteIdEvent Alloc write id event
+   * @throws MetaException
+   */
+  @Override
+  public void onAllocWriteId(AllocWriteIdEvent allocWriteIdEvent) throws MetaException {
+    String tableName = allocWriteIdEvent.getTableName();
+    NotificationEvent event =
+            new NotificationEvent(0, now(), EventType.ALLOC_WRITE_ID.toString(), msgFactory
+                    .buildAllocWriteIdMessage(allocWriteIdEvent.getTxnIds(), tableName).toString());
+    event.setTableName(tableName);
+    process(event, allocWriteIdEvent);
+  }
+
   private int now() {
     long millis = System.currentTimeMillis();
     millis /= 1000;
@@ -615,6 +738,7 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
     public void run() {
       while (true) {
         rs.cleanNotificationEvents(ttl);
+        rs.cleanWriteNotificationEvents(ttl);
         LOG.debug("Cleaner thread done");
         try {
           Thread.sleep(sleepTime);
@@ -633,11 +757,17 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
 
   // TODO: this needs to be enhanced once change management based filesystem is implemented
   // Currently using fileuri#checksum as the format
-  private String encodeFileUri(String fileUriStr, String fileChecksum) {
+  private String encodeFileUri(String fileUriStr, String fileChecksum, String subDir) {
+    String result;
     if (fileChecksum != null) {
-      return fileUriStr + "#" + fileChecksum;
+      result = fileUriStr + "#" + fileChecksum;
     } else {
-      return fileUriStr;
+      result = fileUriStr;
     }
+
+    if (subDir != null) {
+      result = result + "#" + subDir;
+    }
+    return result;
   }
 }

@@ -91,58 +91,8 @@ import org.apache.hadoop.hive.metastore.RetryingMetaStoreClient;
 import org.apache.hadoop.hive.metastore.SynchronizedMetaStoreClient;
 import org.apache.hadoop.hive.metastore.TableType;
 import org.apache.hadoop.hive.metastore.Warehouse;
-import org.apache.hadoop.hive.metastore.api.AggrStats;
-import org.apache.hadoop.hive.metastore.api.AlreadyExistsException;
-import org.apache.hadoop.hive.metastore.api.CmRecycleRequest;
-import org.apache.hadoop.hive.metastore.api.ColumnStatisticsObj;
-import org.apache.hadoop.hive.metastore.api.CompactionResponse;
-import org.apache.hadoop.hive.metastore.api.CompactionType;
-import org.apache.hadoop.hive.metastore.api.CreationMetadata;
-import org.apache.hadoop.hive.metastore.api.Database;
-import org.apache.hadoop.hive.metastore.api.DefaultConstraintsRequest;
-import org.apache.hadoop.hive.metastore.api.EnvironmentContext;
-import org.apache.hadoop.hive.metastore.api.FieldSchema;
-import org.apache.hadoop.hive.metastore.api.FireEventRequest;
-import org.apache.hadoop.hive.metastore.api.FireEventRequestData;
-import org.apache.hadoop.hive.metastore.api.ForeignKeysRequest;
-import org.apache.hadoop.hive.metastore.api.Function;
-import org.apache.hadoop.hive.metastore.api.GetOpenTxnsInfoResponse;
-import org.apache.hadoop.hive.metastore.api.GetRoleGrantsForPrincipalRequest;
-import org.apache.hadoop.hive.metastore.api.GetRoleGrantsForPrincipalResponse;
-import org.apache.hadoop.hive.metastore.api.HiveObjectPrivilege;
-import org.apache.hadoop.hive.metastore.api.HiveObjectRef;
-import org.apache.hadoop.hive.metastore.api.HiveObjectType;
-import org.apache.hadoop.hive.metastore.api.InsertEventRequestData;
-import org.apache.hadoop.hive.metastore.api.InvalidOperationException;
-import org.apache.hadoop.hive.metastore.api.Materialization;
-import org.apache.hadoop.hive.metastore.api.MetaException;
-import org.apache.hadoop.hive.metastore.api.MetadataPpdResult;
-import org.apache.hadoop.hive.metastore.api.NoSuchObjectException;
-import org.apache.hadoop.hive.metastore.api.NotNullConstraintsRequest;
-import org.apache.hadoop.hive.metastore.api.PrimaryKeysRequest;
-import org.apache.hadoop.hive.metastore.api.PrincipalPrivilegeSet;
-import org.apache.hadoop.hive.metastore.api.PrincipalType;
-import org.apache.hadoop.hive.metastore.api.PrivilegeBag;
-import org.apache.hadoop.hive.metastore.api.Role;
-import org.apache.hadoop.hive.metastore.api.RolePrincipalGrant;
-import org.apache.hadoop.hive.metastore.api.SQLDefaultConstraint;
-import org.apache.hadoop.hive.metastore.api.SQLForeignKey;
-import org.apache.hadoop.hive.metastore.api.SQLNotNullConstraint;
-import org.apache.hadoop.hive.metastore.api.SQLPrimaryKey;
-import org.apache.hadoop.hive.metastore.api.SQLUniqueConstraint;
-import org.apache.hadoop.hive.metastore.api.SetPartitionsStatsRequest;
-import org.apache.hadoop.hive.metastore.api.ShowCompactResponse;
-import org.apache.hadoop.hive.metastore.api.SkewedInfo;
-import org.apache.hadoop.hive.metastore.api.UniqueConstraintsRequest;
-import org.apache.hadoop.hive.metastore.api.WMFullResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMMapping;
-import org.apache.hadoop.hive.metastore.api.WMNullablePool;
-import org.apache.hadoop.hive.metastore.api.WMNullableResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMPool;
-import org.apache.hadoop.hive.metastore.api.WMResourcePlan;
-import org.apache.hadoop.hive.metastore.api.WMTrigger;
-import org.apache.hadoop.hive.metastore.api.WMValidateResourcePlanResponse;
-import org.apache.hadoop.hive.metastore.api.hive_metastoreConstants;
+import org.apache.hadoop.hive.metastore.api.*;
+import org.apache.hadoop.hive.metastore.messaging.MessageFactory;
 import org.apache.hadoop.hive.metastore.utils.MetaStoreUtils;
 import org.apache.hadoop.hive.ql.ErrorMsg;
 import org.apache.hadoop.hive.ql.exec.AbstractFileMergeOperator;
@@ -156,6 +106,7 @@ import org.apache.hadoop.hive.ql.lockmgr.DbTxnManager;
 import org.apache.hadoop.hive.ql.log.PerfLogger;
 import org.apache.hadoop.hive.ql.optimizer.calcite.RelOptHiveTable;
 import org.apache.hadoop.hive.ql.optimizer.listbucketingpruner.ListBucketingPrunerUtils;
+import org.apache.hadoop.hive.ql.parse.repl.dump.io.FileOperations;
 import org.apache.hadoop.hive.ql.plan.AddPartitionDesc;
 import org.apache.hadoop.hive.ql.plan.DropTableDesc;
 import org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc;
@@ -1603,8 +1554,12 @@ public class Hive {
       // If config is set, table is not temporary and partition being inserted exists, capture
       // the list of files added. For not yet existing partitions (insert overwrite to new partition
       // or dynamic partition inserts), the add partition event will capture the list of files added.
-      if (conf.getBoolVar(ConfVars.FIRE_EVENTS_FOR_DML) && !tbl.isTemporary() && (null != oldPart)) {
-        newFiles = Collections.synchronizedList(new ArrayList<Path>());
+      if (conf.getBoolVar(ConfVars.FIRE_EVENTS_FOR_DML) && !tbl.isTemporary()) {
+        // For Acid IUD, add partition is a meta data only operation. So need to add the new files added
+        // information into the write_notification_log table.
+        if ((null != oldPart) || isFullAcidTable) {
+          newFiles = Collections.synchronizedList(new ArrayList<Path>());
+        }
       }
       // Note: this assumes both paths are qualified; which they are, currently.
       if (isMmTableWrite && loadPath.equals(newPartPath)) {
@@ -1658,7 +1613,11 @@ public class Hive {
       // Generate an insert event only if inserting into an existing partition
       // When inserting into a new partition, the add partition event takes care of insert event
       if ((null != oldPart) && (null != newFiles)) {
-        fireInsertEvent(tbl, partSpec, (loadFileType == LoadFileType.REPLACE_ALL), newFiles);
+        if (isFullAcidTable) {
+          addWriteNotificationLog(tbl, partSpec, newFiles, writeId);
+        } else {
+          fireInsertEvent(tbl, partSpec, (loadFileType == LoadFileType.REPLACE_ALL), newFiles);
+        }
       } else {
         LOG.debug("No new files were created, and is not a replace, or we're inserting into a "
                 + "partition that does not exist yet. Skipping generating INSERT event.");
@@ -1717,6 +1676,12 @@ public class Hive {
           }
           throw e;
         }
+
+        // For acid table, add the acid_write event with file list at the time of load itself. But
+        // it should be done after partition is created.
+        if (isAcidIUDoperation && (null != newFiles)) {
+          addWriteNotificationLog(tbl, partSpec, newFiles, writeId);
+        }
       } else {
         setStatsPropAndAlterPartition(hasFollowingStatsTask, tbl, newTPart);
       }
@@ -1753,6 +1718,8 @@ public class Hive {
         destPath = new Path(destPath, AcidUtils.deltaSubdir(writeId, writeId, stmtId));
         break;
       case OVERWRITE_EXISTING:
+        //noting to do for acid write events from replication task
+        break;
         //should not happen here - this is for replication
       default:
         throw new IllegalArgumentException("Unexpected " + LoadFileType.class.getName() + " " + loadFileType);
@@ -2237,7 +2204,11 @@ private void constructOneLBLocationMap(FileStatus fSta,
 
     alterTable(tbl, environmentContext);
 
-    fireInsertEvent(tbl, null, (loadFileType == LoadFileType.REPLACE_ALL), newFiles);
+    if (isFullAcidTable) {
+      addWriteNotificationLog(tbl, null, newFiles, writeId);
+    } else {
+      fireInsertEvent(tbl, null, (loadFileType == LoadFileType.REPLACE_ALL), newFiles);
+    }
   }
 
   /**
@@ -2440,7 +2411,11 @@ private void constructOneLBLocationMap(FileStatus fSta,
         }
         else {
           alterPartitionSpec(tbl, partSpec, tpart, inheritTableSpecs, partPath);
-          fireInsertEvent(tbl, partSpec, true, null);
+          if (AcidUtils.isFullAcidTable(tbl)) {
+            addWriteNotificationLog(tbl, partSpec, null, -1L);
+          } else {
+            fireInsertEvent(tbl, partSpec, true, null);
+          }
         }
       }
       if (tpart == null) {
@@ -2490,6 +2465,48 @@ private void constructOneLBLocationMap(FileStatus fSta,
     tpart.getSd().setLocation(partPath);
   }
 
+  private void addWriteNotificationLog(Table tbl, Map<String, String> partitionSpec,
+                                       List<Path> newFiles, Long writeId) throws HiveException {
+    if (conf.getBoolVar(ConfVars.FIRE_EVENTS_FOR_DML)) {
+      LOG.debug("adding write notification log for operation " + writeId);
+      if (tbl.isTemporary()) {
+        LOG.debug("write notification log ignored as " + tbl.getTableName() + " is temporary");
+        return;
+      }
+
+      if (newFiles == null || newFiles.size() == 0) {
+        // This can happen during adding static partition.
+        LOG.debug("write notification log ignored as  file list is empty");
+        return;
+      }
+      try {
+        FileSystem fileSystem = tbl.getDataLocation().getFileSystem(conf);
+        Long txnId = SessionState.get().getTxnMgr().getCurrentTxnId();
+
+        InsertEventRequestData insertData = new InsertEventRequestData();
+        insertData.setReplace(true);
+
+        WriteNotificationLogRequest rqst = new WriteNotificationLogRequest(txnId, writeId,
+                tbl.getDbName(), tbl.getTableName(),insertData);
+
+        if (newFiles != null && !newFiles.isEmpty()) {
+          addInsertFileInformation(newFiles, fileSystem, insertData);
+        } else {
+          insertData.setFilesAdded(new ArrayList<>());
+        }
+
+        if (partitionSpec != null && partitionSpec.size() > 0) {
+          for (FieldSchema fs : tbl.getPartitionKeys()) {
+            rqst.addToPartitionVals(partitionSpec.get(fs.getName()));
+          }
+        }
+        getSynchronizedMSC().addWriteNotificationLog(rqst);
+      } catch (IOException | TException e) {
+        throw new HiveException(e);
+      }
+    }
+  }
+
   private void fireInsertEvent(Table tbl, Map<String, String> partitionSpec, boolean replace, List<Path> newFiles)
       throws HiveException {
     if (conf.getBoolVar(ConfVars.FIRE_EVENTS_FOR_DML)) {
@@ -2525,7 +2542,6 @@ private void constructOneLBLocationMap(FileStatus fSta,
       }
     }
   }
-
 
   private static void addInsertFileInformation(List<Path> newFiles, FileSystem fileSystem,
       InsertEventRequestData insertData) throws IOException {
@@ -2566,6 +2582,7 @@ private void constructOneLBLocationMap(FileStatus fSta,
       InsertEventRequestData insertData) throws IOException {
     insertData.addToFilesAdded(p.toString());
     FileChecksum cksum = fileSystem.getFileChecksum(p);
+    String acidDir = FileOperations.getAcidSubDir(p.getParent());
     // File checksum is not implemented for local filesystem (RawLocalFileSystem)
     if (cksum != null) {
       String checksumString =
@@ -2574,6 +2591,9 @@ private void constructOneLBLocationMap(FileStatus fSta,
     } else {
       // Add an empty checksum string for filesystems that don't generate one
       insertData.addToFilesAddedChecksum("");
+    }
+    if (acidDir != null) {
+      insertData.addToSubDirectoryList(acidDir);
     }
   }
 

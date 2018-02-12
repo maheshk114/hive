@@ -9,6 +9,8 @@ CREATE TABLE SEQUENCE_TABLE
 
 ALTER TABLE SEQUENCE_TABLE ADD CONSTRAINT PART_TABLE_PK PRIMARY KEY (SEQUENCE_NAME);
 
+INSERT INTO SEQUENCE_TABLE (SEQUENCE_NAME, NEXT_VAL) SELECT 'org.apache.hadoop.hive.metastore.model.MNotificationLog',1 FROM DUAL WHERE NOT EXISTS ( SELECT NEXT_VAL FROM SEQUENCE_TABLE WHERE SEQUENCE_NAME = 'org.apache.hadoop.hive.metastore.model.MNotificationLog');
+
 -- Table NUCLEUS_TABLES is an internal table required by DataNucleus.
 -- This table is required if datanucleus.autoStartMechanism=SchemaTable
 -- NOTE: Some versions of SchemaTool do not automatically generate this table.
@@ -596,6 +598,8 @@ CREATE TABLE NOTIFICATION_SEQUENCE
 
 ALTER TABLE NOTIFICATION_SEQUENCE ADD CONSTRAINT NOTIFICATION_SEQUENCE_PK PRIMARY KEY (NNI_ID);
 
+INSERT INTO NOTIFICATION_SEQUENCE (NNI_ID, NEXT_EVENT_ID) SELECT 1,1 FROM DUAL WHERE NOT EXISTS ( SELECT NEXT_EVENT_ID FROM NOTIFICATION_SEQUENCE);
+
 -- Tables to manage resource plans.
 
 CREATE TABLE WM_RESOURCEPLAN
@@ -1056,6 +1060,13 @@ CREATE TABLE NEXT_WRITE_ID (
 );
 
 CREATE UNIQUE INDEX NEXT_WRITE_ID_IDX ON NEXT_WRITE_ID (NWI_DATABASE, NWI_TABLE);
+
+CREATE TABLE REPL_TXN_MAP (
+  RTM_REPL_POLICY varchar(256) NOT NULL,
+  RTM_SRC_TXN_ID number(19) NOT NULL,
+  RTM_TARGET_TXN_ID number(19) NOT NULL,
+  PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID)
+);
 
 -- -----------------------------------------------------------------
 -- Record schema version. Should be the last step in the init script

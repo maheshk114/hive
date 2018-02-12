@@ -163,3 +163,12 @@ ALTER TABLE COMPLETED_TXN_COMPONENTS ADD CTC_WRITEID bigint;
 -- HIVE-18726
 -- add a new column to support default value for DEFAULT constraint
 ALTER TABLE `KEY_CONSTRAINTS` ADD COLUMN `DEFAULT_VALUE` VARCHAR(400);
+
+CREATE TABLE REPL_TXN_MAP (
+  RTM_REPL_POLICY varchar(256) NOT NULL,
+  RTM_SRC_TXN_ID bigint NOT NULL,
+  RTM_TARGET_TXN_ID bigint NOT NULL,
+  PRIMARY KEY (RTM_REPL_POLICY, RTM_SRC_TXN_ID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `SEQUENCE_TABLE` (`SEQUENCE_NAME`, `NEXT_VAL`) SELECT * from (select 'org.apache.hadoop.hive.metastore.model.MNotificationLog' as `SEQUENCE_NAME`, 1 as `NEXT_VAL`) a WHERE (SELECT COUNT(*) FROM `SEQUENCE_TABLE` where SEQUENCE_NAME = 'org.apache.hadoop.hive.metastore.model.MNotificationLog') = 0;

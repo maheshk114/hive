@@ -61,6 +61,9 @@ import org.apache.hadoop.mapred.InputFormat;
 
 import com.google.common.collect.Lists;
 
+import static org.apache.hadoop.hive.ql.io.AcidUtils.Operation.INSERT;
+import static org.apache.hadoop.hive.ql.io.AcidUtils.Operation.NOT_ACID;
+
 /**
  * LoadSemanticAnalyzer.
  *
@@ -319,6 +322,7 @@ public class LoadSemanticAnalyzer extends BaseSemanticAnalyzer {
 
     Long writeId = null;
     int stmtId = -1;
+    AcidUtils.Operation writeType = NOT_ACID;
     if (AcidUtils.isTransactionalTable(ts.tableHandle)) {
       try {
         writeId = SessionState.get().getTxnMgr().getTableWriteId(ts.tableHandle.getDbName(),
@@ -327,12 +331,13 @@ public class LoadSemanticAnalyzer extends BaseSemanticAnalyzer {
         throw new SemanticException("Failed to allocate the write id", ex);
       }
       stmtId = SessionState.get().getTxnMgr().getStmtIdAndIncrement();
+      writeType = INSERT;
     }
 
     LoadTableDesc loadTableWork;
     loadTableWork = new LoadTableDesc(new Path(fromURI),
       Utilities.getTableDesc(ts.tableHandle), partSpec,
-      isOverWrite ? LoadFileType.REPLACE_ALL : LoadFileType.KEEP_EXISTING, writeId);
+      isOverWrite ? LoadFileType.REPLACE_ALL : LoadFileType.KEEP_EXISTING, writeType, writeId);
     loadTableWork.setStmtId(stmtId);
     if (preservePartitionSpecs){
       // Note : preservePartitionSpecs=true implies inheritTableSpecs=false but

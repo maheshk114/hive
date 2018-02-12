@@ -171,8 +171,63 @@ public final class SQLGenerator {
     }
   }
 
+  /**
+   * Generate a statement to insert record if the record does not exist else updates the record with given information.
+   * @param tblColumns e.g. "T(a,b,c)"
+   * @param values       e.g. list of Strings like 3,4,'d'
+   * @param updateField The fields to be updated if the record is found
+   * @param updateVal The update value for the filed to be updated.
+   * @return fully formed INSERT INTO ... statements
+   */
+  public String createInsertIfNotExistStmt(String tbl, List<String> tblColumns,
+                                           List<String> values, String updateField, String updateVal) {
+    String insertStmts = null;
+    StringBuilder sb = new StringBuilder();
+    sb.setLength(0);
+    switch (dbProduct) {
+      case ORACLE:
+      case DERBY:
+        break;
+      case MYSQL:
+        String updateString = updateField + " = CONCAT (" + updateField + updateVal + " ) ";
+        sb.append("insert into ").append(tbl).append(" ( ");
+        for (int colIdx = 0; colIdx < tblColumns.size(); colIdx++) {
+          sb.append(tblColumns.get(colIdx));
+          if (colIdx != tblColumns.size() - 1) {
+            sb.append(" , ");
+          }
+        }
+        sb.append(" ) values ( ");
+        for (int colIdx = 0; colIdx < values.size(); colIdx++) {
+          sb.append(values.get(colIdx));
+          if (colIdx != values.size() - 1) {
+            sb.append(" , ");
+          }
+        }
+        sb.append(" ) on duplicate key update " + updateString);
+        return sb.toString();
+      case POSTGRES:
+      case SQLSERVER:
+        /*for (int numRows = 0; numRows < rows.size(); numRows++) {
+          if (numRows % MetastoreConf.getIntVar(conf, ConfVars.DIRECT_SQL_MAX_ELEMENTS_VALUES_CLAUSE) == 0) {
+            if (numRows > 0) {
+              insertStmts.add(sb.substring(0, sb.length() - 1));//exclude trailing comma
+            }
+            sb.setLength(0);
+            sb.append("insert into ").append(tblColumns).append(" values");
+          }
+          sb.append('(').append(rows.get(numRows)).append("),");
+        }
+        insertStmts.add(sb.substring(0, sb.length() - 1));//exclude trailing comma
+        return insertStmts;*/
+      default:
+        String msg = "Unrecognized database product name <" + dbProduct + ">";
+        LOG.error(msg);
+        throw new IllegalStateException(msg);
+    }
+    return insertStmts;
+  }
   public DatabaseProduct getDbProduct() {
     return dbProduct;
   }
-
 }

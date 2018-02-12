@@ -17,13 +17,19 @@
  */
 package org.apache.hadoop.hive.ql.parse.repl.dump.events;
 
+import com.google.common.collect.Lists;
+import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
 import org.apache.hadoop.hive.metastore.api.NotificationEvent;
 import org.apache.hadoop.hive.metastore.messaging.InsertMessage;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
+import org.apache.hadoop.hive.ql.metadata.HiveUtils;
 import org.apache.hadoop.hive.ql.metadata.Partition;
 import org.apache.hadoop.hive.ql.parse.EximUtil;
+import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.parse.repl.DumpType;
 import org.apache.hadoop.hive.ql.parse.repl.dump.Utils;
 import org.apache.hadoop.hive.ql.parse.repl.load.DumpMetaData;
@@ -31,6 +37,8 @@ import org.apache.hadoop.hive.ql.parse.repl.load.DumpMetaData;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,9 +49,47 @@ class InsertHandler extends AbstractEventHandler {
     super(event);
   }
 
+  public static void createDumpFile(Context withinContext, org.apache.hadoop.hive.ql.metadata.Table qlMdTable,
+                             List<Partition> qlPtns, boolean isReplace, List<List<String>> fileListArray)
+          throws IOException, SemanticException {
+    Path metaDataPath = new Path(withinContext.eventRoot, EximUtil.METADATA_NAME);
+
+    // Mark the replace type based on INSERT-INTO or INSERT_OVERWRITE operation
+    withinContext.replicationSpec.setIsReplace(isReplace);
+    EximUtil.createExportDump(metaDataPath.getFileSystem(withinContext.hiveConf), metaDataPath,
+            qlMdTable, qlPtns,
+            withinContext.replicationSpec,
+            withinContext.hiveConf);
+
+    if (fileListArray != null && fileListArray.size() > 0) {
+      Path dataPath;
+      if ((null == qlPtns) || qlPtns.isEmpty()) {
+        dataPath = new Path(withinContext.eventRoot, EximUtil.DATA_PATH_NAME);
+        Iterable<String> files = fileListArray.get(0);
+        // encoded filename/checksum of files, write into _files
+        try (BufferedWriter fileListWriter = writer(withinContext, dataPath)) {
+          for (String file : files) {
+            fileListWriter.write(file + "\n");
+          }
+        }
+      } else {
+        for (int idx = 0; idx < qlPtns.size(); idx++) {
+          dataPath = new Path(withinContext.eventRoot, qlPtns.get(idx).getName());
+          Iterable<String> files = fileListArray.get(idx);
+          // encoded filename/checksum of files, write into _files
+          try (BufferedWriter fileListWriter = writer(withinContext, dataPath)) {
+            for (String file : files) {
+              fileListWriter.write(file + "\n");
+            }
+          }
+        }
+      }
+    }
+  }
+
   @Override
   public void handle(Context withinContext) throws Exception {
-    if (withinContext.hiveConf.getBoolVar(HiveConf.ConfVars.REPL_DUMP_METADATA_ONLY)) {
+    if (withinContext.hiveConf.getBoolVar(ConfVars.REPL_DUMP_METADATA_ONLY)) {
       return;
     }
     InsertMessage insertMsg = deserializer.getInsertMessage(event.getMessage());
@@ -53,41 +99,19 @@ class InsertHandler extends AbstractEventHandler {
       return;
     }
 
+    boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTable);
+    if (isAcidTable && !withinContext.hiveConf.getBoolVar(ConfVars.REPL_DUMP_INCLUDE_ACID_TABLES)) {
+      LOG.info("Ignoring insert event for ACID tables");
+      return;
+    }
+
     List<Partition> qlPtns = null;
     if (qlMdTable.isPartitioned() && (null != insertMsg.getPtnObj())) {
       qlPtns = Collections.singletonList(partitionObject(qlMdTable, insertMsg));
     }
-    Path metaDataPath = new Path(withinContext.eventRoot, EximUtil.METADATA_NAME);
 
-    // Mark the replace type based on INSERT-INTO or INSERT_OVERWRITE operation
-    withinContext.replicationSpec.setIsReplace(insertMsg.isReplace());
-    EximUtil.createExportDump(metaDataPath.getFileSystem(withinContext.hiveConf), metaDataPath,
-        qlMdTable, qlPtns,
-        withinContext.replicationSpec,
-        withinContext.hiveConf);
-    Iterable<String> files = insertMsg.getFiles();
-
-    if (files != null) {
-      Path dataPath;
-      if ((null == qlPtns) || qlPtns.isEmpty()) {
-        dataPath = new Path(withinContext.eventRoot, EximUtil.DATA_PATH_NAME);
-      } else {
-        /*
-         * Insert into/overwrite operation shall operate on one or more partitions or even partitions from multiple
-         * tables. But, Insert event is generated for each partition to which the data is inserted. So, qlPtns list
-         * will have only one entry.
-         */
-        assert(1 == qlPtns.size());
-        dataPath = new Path(withinContext.eventRoot, qlPtns.get(0).getName());
-      }
-
-      // encoded filename/checksum of files, write into _files
-      try (BufferedWriter fileListWriter = writer(withinContext, dataPath)) {
-        for (String file : files) {
-          fileListWriter.write(file + "\n");
-        }
-      }
-    }
+    createDumpFile(withinContext, qlMdTable, qlPtns, insertMsg.isReplace(),
+            Collections.singletonList(Lists.newArrayList(insertMsg.getFiles())));
 
     LOG.info("Processing#{} INSERT message : {}", fromEventId(), event.getMessage());
     DumpMetaData dmd = withinContext.createDmd(this);
@@ -104,7 +128,7 @@ class InsertHandler extends AbstractEventHandler {
     return new org.apache.hadoop.hive.ql.metadata.Partition(qlMdTable, insertMsg.getPtnObj());
   }
 
-  private BufferedWriter writer(Context withinContext, Path dataPath) throws IOException {
+  private static BufferedWriter writer(Context withinContext, Path dataPath) throws IOException {
     Path filesPath = new Path(dataPath, EximUtil.FILES_NAME);
     FileSystem fs = dataPath.getFileSystem(withinContext.hiveConf);
     return new BufferedWriter(new OutputStreamWriter(fs.create(filesPath)));

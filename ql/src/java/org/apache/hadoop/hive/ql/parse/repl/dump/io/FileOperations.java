@@ -22,6 +22,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.ReplChangeManager;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.parse.EximUtil;
 import org.apache.hadoop.hive.ql.parse.LoadSemanticAnalyzer;
 import org.apache.hadoop.hive.ql.parse.ReplicationSpec;
@@ -92,6 +93,16 @@ public class FileOperations {
     }
   }
 
+  public static String getAcidSubDir(Path dataPath) {
+      String dataDir = dataPath.getName();
+      if (dataDir.startsWith(AcidUtils.BASE_PREFIX)
+        || dataDir.startsWith(AcidUtils.DELTA_PREFIX)
+        || dataDir.startsWith(AcidUtils.DELETE_DELTA_PREFIX)) {
+      return dataDir;
+    }
+    return null;
+  }
+
   private BufferedWriter writer() throws IOException {
     Path exportToFile = new Path(exportRootDataDir, EximUtil.FILES_NAME);
     if (exportFileSystem.exists(exportToFile)) {
@@ -108,6 +119,6 @@ public class FileOperations {
   private String encodedUri(FileStatus fileStatus) throws IOException {
     Path currentDataFilePath = fileStatus.getPath();
     String checkSum = ReplChangeManager.checksumFor(currentDataFilePath, dataFileSystem);
-    return ReplChangeManager.encodeFileUri(currentDataFilePath.toString(), checkSum);
+    return ReplChangeManager.encodeFileUri(currentDataFilePath.toString(), checkSum, null);
   }
 }

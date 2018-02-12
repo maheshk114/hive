@@ -62,6 +62,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import java.util.Iterator;
+
 /**
  * An implementation of HiveTxnManager that stores the transactions in the metastore database.
  * There should be 1 instance o {@link DbTxnManager} per {@link org.apache.hadoop.hive.ql.session.SessionState}
@@ -199,6 +201,15 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
     super.setHiveConf(conf);
     if (!conf.getBoolVar(HiveConf.ConfVars.HIVE_SUPPORT_CONCURRENCY)) {
       throw new RuntimeException(ErrorMsg.DBTXNMGR_REQUIRES_CONCURRENCY.getMsg());
+    }
+  }
+
+  @Override
+  public List<Long> replOpenTxn(String replPolicy, List<Long> srcTxnIds, String user)  throws LockException {
+    try {
+      return getMS().replOpenTxn(replPolicy, srcTxnIds, user);
+    } catch (TException e) {
+      throw new LockException(e, ErrorMsg.METASTORE_COMMUNICATION_FAILED);
     }
   }
 
@@ -591,6 +602,22 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
   }
 
   @Override
+  public void replCommitTxn(CommitTxnRequest rqst) throws LockException {
+    try {
+      getMS().replCommitTxn(rqst);
+    } catch (NoSuchTxnException e) {
+      LOG.error("Metastore could not find " + JavaUtils.txnIdToString(rqst.getTxnid()));
+      throw new LockException(e, ErrorMsg.TXN_NO_SUCH_TRANSACTION, JavaUtils.txnIdToString(rqst.getTxnid()));
+    } catch (TxnAbortedException e) {
+      LockException le = new LockException(e, ErrorMsg.TXN_ABORTED, JavaUtils.txnIdToString(rqst.getTxnid()), e.getMessage());
+      LOG.error(le.getMessage());
+      throw le;
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
+    }
+  }
+
+  @Override
   public void commitTxn() throws LockException {
     if (!isTxnOpen()) {
       throw new RuntimeException("Attempt to commit before opening a transaction");
@@ -615,6 +642,35 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
       stmtId = -1;
       numStatements = 0;
       tableWriteIds.clear();
+    }
+  }
+  @Override
+  public void replRollbackTxn(String replPolicy, long srcTxnId) throws LockException {
+    try {
+      getMS().rollbackTxn(srcTxnId, replPolicy);
+    } catch (NoSuchTxnException e) {
+      LOG.error("Metastore could not find " + JavaUtils.txnIdToString(srcTxnId));
+      throw new LockException(e, ErrorMsg.TXN_NO_SUCH_TRANSACTION, JavaUtils.txnIdToString(srcTxnId));
+    } catch (TxnAbortedException e) {
+      LockException le = new LockException(e, ErrorMsg.TXN_ABORTED, JavaUtils.txnIdToString(srcTxnId), e.getMessage());
+      LOG.error(le.getMessage());
+      throw le;
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
+    }
+  }
+
+  @Override
+  public GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws LockException {
+    try {
+      return getMS().replGetTargetTxnIds(rqst);
+    } catch (NoSuchTxnException e) {
+      LOG.error("Metastore could not find " + JavaUtils.txnIdToString(txnId));
+      throw new LockException(e, ErrorMsg.TXN_NO_SUCH_TRANSACTION, JavaUtils.txnIdToString(txnId));
+    } catch(TxnAbortedException e) {
+      throw new LockException(e, ErrorMsg.TXN_ABORTED, JavaUtils.txnIdToString(txnId));
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
     }
   }
 
@@ -931,6 +987,16 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
       long writeId = getMS().allocateTableWriteId(txnId, dbName, tableName);
       tableWriteIds.put(fullTableName, writeId);
       return writeId;
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
+    }
+  }
+
+  @Override
+  public void allocateTableWriteIdsBatch(List<Long> txnIds, String dbName, String tableName)
+          throws LockException {
+    try {
+      getMS().allocateTableWriteIdsBatch(txnIds, dbName, tableName);
     } catch (TException e) {
       throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
     }

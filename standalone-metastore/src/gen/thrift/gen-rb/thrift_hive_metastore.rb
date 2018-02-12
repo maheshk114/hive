@@ -2473,6 +2473,23 @@ module ThriftHiveMetastore
       raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'allocate_table_write_ids failed: unknown result')
     end
 
+    def repl_get_target_txn_ids(rqst)
+      send_repl_get_target_txn_ids(rqst)
+      return recv_repl_get_target_txn_ids()
+    end
+
+    def send_repl_get_target_txn_ids(rqst)
+      send_message('repl_get_target_txn_ids', Repl_get_target_txn_ids_args, :rqst => rqst)
+    end
+
+    def recv_repl_get_target_txn_ids()
+      result = receive_message(Repl_get_target_txn_ids_result)
+      return result.success unless result.success.nil?
+      raise result.o1 unless result.o1.nil?
+      raise result.o2 unless result.o2.nil?
+      raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'repl_get_target_txn_ids failed: unknown result')
+    end
+
     def lock(rqst)
       send_lock(rqst)
       return recv_lock()
@@ -2689,6 +2706,21 @@ module ThriftHiveMetastore
       result = receive_message(Fire_listener_event_result)
       return result.success unless result.success.nil?
       raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'fire_listener_event failed: unknown result')
+    end
+
+    def add_write_notification_log(rqst)
+      send_add_write_notification_log(rqst)
+      return recv_add_write_notification_log()
+    end
+
+    def send_add_write_notification_log(rqst)
+      send_message('add_write_notification_log', Add_write_notification_log_args, :rqst => rqst)
+    end
+
+    def recv_add_write_notification_log()
+      result = receive_message(Add_write_notification_log_result)
+      return result.success unless result.success.nil?
+      raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'add_write_notification_log failed: unknown result')
     end
 
     def flushCache()
@@ -5006,6 +5038,19 @@ module ThriftHiveMetastore
       write_result(result, oprot, 'allocate_table_write_ids', seqid)
     end
 
+    def process_repl_get_target_txn_ids(seqid, iprot, oprot)
+      args = read_args(iprot, Repl_get_target_txn_ids_args)
+      result = Repl_get_target_txn_ids_result.new()
+      begin
+        result.success = @handler.repl_get_target_txn_ids(args.rqst)
+      rescue ::NoSuchTxnException => o1
+        result.o1 = o1
+      rescue ::MetaException => o2
+        result.o2 = o2
+      end
+      write_result(result, oprot, 'repl_get_target_txn_ids', seqid)
+    end
+
     def process_lock(seqid, iprot, oprot)
       args = read_args(iprot, Lock_args)
       result = Lock_result.new()
@@ -5136,6 +5181,13 @@ module ThriftHiveMetastore
       result = Fire_listener_event_result.new()
       result.success = @handler.fire_listener_event(args.rqst)
       write_result(result, oprot, 'fire_listener_event', seqid)
+    end
+
+    def process_add_write_notification_log(seqid, iprot, oprot)
+      args = read_args(iprot, Add_write_notification_log_args)
+      result = Add_write_notification_log_result.new()
+      result.success = @handler.add_write_notification_log(args.rqst)
+      write_result(result, oprot, 'add_write_notification_log', seqid)
     end
 
     def process_flushCache(seqid, iprot, oprot)
@@ -11047,6 +11099,42 @@ module ThriftHiveMetastore
     ::Thrift::Struct.generate_accessors self
   end
 
+  class Repl_get_target_txn_ids_args
+    include ::Thrift::Struct, ::Thrift::Struct_Union
+    RQST = 1
+
+    FIELDS = {
+      RQST => {:type => ::Thrift::Types::STRUCT, :name => 'rqst', :class => ::GetTargetTxnIdsRequest}
+    }
+
+    def struct_fields; FIELDS; end
+
+    def validate
+    end
+
+    ::Thrift::Struct.generate_accessors self
+  end
+
+  class Repl_get_target_txn_ids_result
+    include ::Thrift::Struct, ::Thrift::Struct_Union
+    SUCCESS = 0
+    O1 = 1
+    O2 = 2
+
+    FIELDS = {
+      SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::GetTargetTxnIdsResponse},
+      O1 => {:type => ::Thrift::Types::STRUCT, :name => 'o1', :class => ::NoSuchTxnException},
+      O2 => {:type => ::Thrift::Types::STRUCT, :name => 'o2', :class => ::MetaException}
+    }
+
+    def struct_fields; FIELDS; end
+
+    def validate
+    end
+
+    ::Thrift::Struct.generate_accessors self
+  end
+
   class Lock_args
     include ::Thrift::Struct, ::Thrift::Struct_Union
     RQST = 1
@@ -11501,6 +11589,38 @@ module ThriftHiveMetastore
 
     FIELDS = {
       SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::FireEventResponse}
+    }
+
+    def struct_fields; FIELDS; end
+
+    def validate
+    end
+
+    ::Thrift::Struct.generate_accessors self
+  end
+
+  class Add_write_notification_log_args
+    include ::Thrift::Struct, ::Thrift::Struct_Union
+    RQST = -1
+
+    FIELDS = {
+      RQST => {:type => ::Thrift::Types::STRUCT, :name => 'rqst', :class => ::WriteNotificationLogRequest}
+    }
+
+    def struct_fields; FIELDS; end
+
+    def validate
+    end
+
+    ::Thrift::Struct.generate_accessors self
+  end
+
+  class Add_write_notification_log_result
+    include ::Thrift::Struct, ::Thrift::Struct_Union
+    SUCCESS = 0
+
+    FIELDS = {
+      SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::WriteNotificationLogResponse}
     }
 
     def struct_fields; FIELDS; end
