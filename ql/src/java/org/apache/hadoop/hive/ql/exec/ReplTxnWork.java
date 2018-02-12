@@ -20,6 +20,7 @@ package org.apache.hadoop.hive.ql.exec;
 import java.io.Serializable;
 
 import com.google.common.collect.Lists;
+import org.apache.hadoop.hive.common.classification.InterfaceAudience;
 import org.apache.hadoop.hive.ql.plan.Explain;
 import org.apache.hadoop.hive.ql.plan.Explain.Level;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ReplTxnWork implements Serializable {
   private static final long serialVersionUID = 1L;
   private String dbName;
   private String tableName;
+  private String replPolicy;
   private List<Long> txnIds;
 
   /**
@@ -40,7 +42,7 @@ public class ReplTxnWork implements Serializable {
    * Different kind of events supported for replaying.
    */
   public enum OperationType {
-    REPL_OPEN_TXN, REPL_ABORT_TXN, REPL_COMMIT_TXN
+    REPL_OPEN_TXN, REPL_ABORT_TXN, REPL_COMMIT_TXN, REPL_ALLOC_WRITE_ID
   }
 
   OperationType operation;
@@ -50,6 +52,15 @@ public class ReplTxnWork implements Serializable {
     this.dbName = dbName;
     this.tableName = tableName;
     this.operation = type;
+    this.replPolicy = setReplPolicy();
+  }
+
+  public ReplTxnWork(String dbName, String tableName, List<Long> txnIds, OperationType type) {
+    this.txnIds = txnIds;
+    this.dbName = dbName;
+    this.tableName = tableName;
+    this.operation = type;
+    this.replPolicy = setReplPolicy();
   }
 
   public ReplTxnWork(String dbName, String tableName, Long txnId, OperationType type) {
@@ -57,9 +68,14 @@ public class ReplTxnWork implements Serializable {
     this.dbName = dbName;
     this.tableName = tableName;
     this.operation = type;
+    this.replPolicy = setReplPolicy();
   }
 
   public List<Long> getTxnIds() {
+    return txnIds;
+  }
+
+  public List<Long> getTxnIdsList() {
     return txnIds;
   }
 
@@ -75,7 +91,15 @@ public class ReplTxnWork implements Serializable {
     return tableName;
   }
 
-  public String getReplPolicy() {
+  public void setTableName(String tableName) {
+    this.tableName = tableName;
+  }
+
+  public String getReplPolicy()  {
+    return replPolicy;
+  }
+
+  public String setReplPolicy() {
     if ((dbName == null) || (dbName.isEmpty())) {
       return null;
     } else if ((tableName == null) || (tableName.isEmpty())) {

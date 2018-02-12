@@ -816,13 +816,58 @@ import org.slf4j.LoggerFactory;
           case 5: // PARTITIONNAMES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list670 = iprot.readListBegin();
                 struct.partitionnames = new ArrayList<String>(_list670.size);
                 String _elem671;
                 for (int _i672 = 0; _i672 < _list670.size; ++_i672)
+<<<<<<< HEAD
                 {
                   _elem671 = iprot.readString();
                   struct.partitionnames.add(_elem671);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TList _list654 = iprot.readListBegin();
+                struct.partitionnames = new ArrayList<String>(_list654.size);
+                String _elem655;
+                for (int _i656 = 0; _i656 < _list654.size; ++_i656)
+                {
+                  _elem655 = iprot.readString();
+                  struct.partitionnames.add(_elem655);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TList _list614 = iprot.readListBegin();
+                struct.partitionnames = new ArrayList<String>(_list614.size);
+                String _elem615;
+                for (int _i616 = 0; _i616 < _list614.size; ++_i616)
+                {
+                  _elem615 = iprot.readString();
+                  struct.partitionnames.add(_elem615);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+                org.apache.thrift.protocol.TList _list614 = iprot.readListBegin();
+                struct.partitionnames = new ArrayList<String>(_list614.size);
+                String _elem615;
+                for (int _i616 = 0; _i616 < _list614.size; ++_i616)
+                {
+                  _elem615 = iprot.readString();
+                  struct.partitionnames.add(_elem615);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem671 = iprot.readString();
+                  struct.partitionnames.add(_elem671);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -872,9 +917,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(PARTITIONNAMES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.partitionnames.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (String _iter673 : struct.partitionnames)
           {
             oprot.writeString(_iter673);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (String _iter657 : struct.partitionnames)
+          {
+            oprot.writeString(_iter657);
+=======
+          for (String _iter617 : struct.partitionnames)
+          {
+            oprot.writeString(_iter617);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (String _iter617 : struct.partitionnames)
+          {
+            oprot.writeString(_iter617);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (String _iter657 : struct.partitionnames)
+          {
+            oprot.writeString(_iter657);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (String _iter673 : struct.partitionnames)
+          {
+            oprot.writeString(_iter673);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -910,9 +985,39 @@ import org.slf4j.LoggerFactory;
       oprot.writeString(struct.tablename);
       {
         oprot.writeI32(struct.partitionnames.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (String _iter674 : struct.partitionnames)
         {
           oprot.writeString(_iter674);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for (String _iter658 : struct.partitionnames)
+        {
+          oprot.writeString(_iter658);
+=======
+        for (String _iter618 : struct.partitionnames)
+        {
+          oprot.writeString(_iter618);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (String _iter618 : struct.partitionnames)
+        {
+          oprot.writeString(_iter618);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (String _iter658 : struct.partitionnames)
+        {
+          oprot.writeString(_iter658);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (String _iter674 : struct.partitionnames)
+        {
+          oprot.writeString(_iter674);
+>>>>>>> alloc write id event changes
         }
       }
       BitSet optionals = new BitSet();
@@ -937,13 +1042,54 @@ import org.slf4j.LoggerFactory;
       struct.tablename = iprot.readString();
       struct.setTablenameIsSet(true);
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list675 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
         struct.partitionnames = new ArrayList<String>(_list675.size);
         String _elem676;
         for (int _i677 = 0; _i677 < _list675.size; ++_i677)
+<<<<<<< HEAD
         {
           _elem676 = iprot.readString();
           struct.partitionnames.add(_elem676);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TList _list659 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.partitionnames = new ArrayList<String>(_list659.size);
+        String _elem660;
+        for (int _i661 = 0; _i661 < _list659.size; ++_i661)
+        {
+          _elem660 = iprot.readString();
+          struct.partitionnames.add(_elem660);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        org.apache.thrift.protocol.TList _list619 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.partitionnames = new ArrayList<String>(_list619.size);
+        String _elem620;
+        for (int _i621 = 0; _i621 < _list619.size; ++_i621)
+        {
+          _elem620 = iprot.readString();
+          struct.partitionnames.add(_elem620);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _elem676 = iprot.readString();
+          struct.partitionnames.add(_elem676);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setPartitionnamesIsSet(true);

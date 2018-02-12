@@ -354,14 +354,35 @@ import org.slf4j.LoggerFactory;
           case 1: // TBL_VALID_WRITE_IDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list596 = iprot.readListBegin();
                 struct.tblValidWriteIds = new ArrayList<TableValidWriteIds>(_list596.size);
                 TableValidWriteIds _elem597;
                 for (int _i598 = 0; _i598 < _list596.size; ++_i598)
+<<<<<<< HEAD
                 {
                   _elem597 = new TableValidWriteIds();
                   _elem597.read(iprot);
                   struct.tblValidWriteIds.add(_elem597);
+=======
+                org.apache.thrift.protocol.TList _list580 = iprot.readListBegin();
+                struct.tblValidWriteIds = new ArrayList<TableValidWriteIds>(_list580.size);
+                TableValidWriteIds _elem581;
+                for (int _i582 = 0; _i582 < _list580.size; ++_i582)
+                {
+                  _elem581 = new TableValidWriteIds();
+                  _elem581.read(iprot);
+                  struct.tblValidWriteIds.add(_elem581);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+                {
+                  _elem597 = new TableValidWriteIds();
+                  _elem597.read(iprot);
+                  struct.tblValidWriteIds.add(_elem597);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -387,9 +408,21 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(TBL_VALID_WRITE_IDS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.tblValidWriteIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (TableValidWriteIds _iter599 : struct.tblValidWriteIds)
           {
             _iter599.write(oprot);
+=======
+          for (TableValidWriteIds _iter583 : struct.tblValidWriteIds)
+          {
+            _iter583.write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (TableValidWriteIds _iter599 : struct.tblValidWriteIds)
+          {
+            _iter599.write(oprot);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -414,9 +447,21 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.tblValidWriteIds.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (TableValidWriteIds _iter600 : struct.tblValidWriteIds)
         {
           _iter600.write(oprot);
+=======
+        for (TableValidWriteIds _iter584 : struct.tblValidWriteIds)
+        {
+          _iter584.write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (TableValidWriteIds _iter600 : struct.tblValidWriteIds)
+        {
+          _iter600.write(oprot);
+>>>>>>> alloc write id event changes
         }
       }
     }
@@ -425,14 +470,35 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, GetValidWriteIdsResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list601 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
         struct.tblValidWriteIds = new ArrayList<TableValidWriteIds>(_list601.size);
         TableValidWriteIds _elem602;
         for (int _i603 = 0; _i603 < _list601.size; ++_i603)
+<<<<<<< HEAD
         {
           _elem602 = new TableValidWriteIds();
           _elem602.read(iprot);
           struct.tblValidWriteIds.add(_elem602);
+=======
+        org.apache.thrift.protocol.TList _list585 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.tblValidWriteIds = new ArrayList<TableValidWriteIds>(_list585.size);
+        TableValidWriteIds _elem586;
+        for (int _i587 = 0; _i587 < _list585.size; ++_i587)
+        {
+          _elem586 = new TableValidWriteIds();
+          _elem586.read(iprot);
+          struct.tblValidWriteIds.add(_elem586);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        {
+          _elem602 = new TableValidWriteIds();
+          _elem602.read(iprot);
+          struct.tblValidWriteIds.add(_elem602);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setTblValidWriteIdsIsSet(true);

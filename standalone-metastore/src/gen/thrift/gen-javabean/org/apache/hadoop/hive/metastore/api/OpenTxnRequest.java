@@ -43,7 +43,31 @@ import org.slf4j.LoggerFactory;
   private static final org.apache.thrift.protocol.TField HOSTNAME_FIELD_DESC = new org.apache.thrift.protocol.TField("hostname", org.apache.thrift.protocol.TType.STRING, (short)3);
   private static final org.apache.thrift.protocol.TField AGENT_INFO_FIELD_DESC = new org.apache.thrift.protocol.TField("agentInfo", org.apache.thrift.protocol.TType.STRING, (short)4);
   private static final org.apache.thrift.protocol.TField REPL_POLICY_FIELD_DESC = new org.apache.thrift.protocol.TField("replPolicy", org.apache.thrift.protocol.TType.STRING, (short)5);
+<<<<<<< HEAD
+<<<<<<< HEAD
   private static final org.apache.thrift.protocol.TField REPL_SRC_TXN_IDS_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnIds", org.apache.thrift.protocol.TType.LIST, (short)6);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  private static final org.apache.thrift.protocol.TField REPL_SRC_TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnId", org.apache.thrift.protocol.TType.LIST, (short)6);
+=======
+  private static final org.apache.thrift.protocol.TField REPL_SOURCE_TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnId", org.apache.thrift.protocol.TType.I64, (short)6);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+  private static final org.apache.thrift.protocol.TField REPL_SRC_TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnId", org.apache.thrift.protocol.TType.LIST, (short)6);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+  private static final org.apache.thrift.protocol.TField REPL_SOURCE_TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnId", org.apache.thrift.protocol.TType.I64, (short)6);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+  private static final org.apache.thrift.protocol.TField REPL_SRC_TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnId", org.apache.thrift.protocol.TType.LIST, (short)6);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+  private static final org.apache.thrift.protocol.TField REPL_SRC_TXN_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("replSrcTxnId", org.apache.thrift.protocol.TType.LIST, (short)6);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -56,7 +80,31 @@ import org.slf4j.LoggerFactory;
   private String hostname; // required
   private String agentInfo; // optional
   private String replPolicy; // optional
+<<<<<<< HEAD
+<<<<<<< HEAD
   private List<Long> replSrcTxnIds; // optional
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  private List<Long> replSrcTxnId; // optional
+=======
+  private long replSrcTxnId;//optional
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+  private List<Long> replSrcTxnId; // optional
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+  private long replSrcTxnId;//optional
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+  private List<Long> replSrcTxnId; // optional
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+  private List<Long> replSrcTxnId; // optional
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -65,7 +113,31 @@ import org.slf4j.LoggerFactory;
     HOSTNAME((short)3, "hostname"),
     AGENT_INFO((short)4, "agentInfo"),
     REPL_POLICY((short)5, "replPolicy"),
+<<<<<<< HEAD
+<<<<<<< HEAD
     REPL_SRC_TXN_IDS((short)6, "replSrcTxnIds");
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    REPL_SRC_TXN_ID((short)6, "replSrcTxnId");
+=======
+    REPL_SOURCE_TXN_ID((short)6, "replSrcTxnId");
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    REPL_SRC_TXN_ID((short)6, "replSrcTxnId");
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    REPL_SOURCE_TXN_ID((short)6, "replSrcTxnId");
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    REPL_SRC_TXN_ID((short)6, "replSrcTxnId");
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    REPL_SRC_TXN_ID((short)6, "replSrcTxnId");
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -88,10 +160,50 @@ import org.slf4j.LoggerFactory;
           return HOSTNAME;
         case 4: // AGENT_INFO
           return AGENT_INFO;
+<<<<<<< HEAD
+<<<<<<< HEAD
         case 5: // REPL_POLICY
           return REPL_POLICY;
         case 6: // REPL_SRC_TXN_IDS
           return REPL_SRC_TXN_IDS;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        case 5: // REPL_POLICY
+          return REPL_POLICY;
+        case 6: // REPL_SRC_TXN_ID
+          return REPL_SRC_TXN_ID;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+        case 5: //REPL_POLICY
+          return REPL_POLICY;
+        case 6: //REPL_SOURCE_TXN_ID
+          return REPL_SOURCE_TXN_ID;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        case 5: // REPL_POLICY
+          return REPL_POLICY;
+        case 6: // REPL_SRC_TXN_ID
+          return REPL_SRC_TXN_ID;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        case 5: // REPL_POLICY
+          return REPL_POLICY;
+        case 6: // REPL_SRC_TXN_ID
+          return REPL_SRC_TXN_ID;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
         default:
           return null;
       }
@@ -134,7 +246,11 @@ import org.slf4j.LoggerFactory;
   // isset id assignments
   private static final int __NUM_TXNS_ISSET_ID = 0;
   private byte __isset_bitfield = 0;
+<<<<<<< HEAD
   private static final _Fields optionals[] = {_Fields.AGENT_INFO,_Fields.REPL_POLICY,_Fields.REPL_SRC_TXN_IDS};
+=======
+  private static final _Fields optionals[] = {_Fields.AGENT_INFO,_Fields.REPL_POLICY,_Fields.REPL_SRC_TXN_ID};
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -146,11 +262,50 @@ import org.slf4j.LoggerFactory;
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.AGENT_INFO, new org.apache.thrift.meta_data.FieldMetaData("agentInfo", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+<<<<<<< HEAD
+<<<<<<< HEAD
     tmpMap.put(_Fields.REPL_POLICY, new org.apache.thrift.meta_data.FieldMetaData("replPolicy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.REPL_SRC_TXN_IDS, new org.apache.thrift.meta_data.FieldMetaData("replSrcTxnIds", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64))));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    tmpMap.put(_Fields.REPL_POLICY, new org.apache.thrift.meta_data.FieldMetaData("replPolicy", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.REPL_SRC_TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("replSrcTxnId", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64))));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+    tmpMap.put(_Fields.REPL_POLICY, new org.apache.thrift.meta_data.FieldMetaData("replPolicy", org.apache.thrift.TFieldRequirementType.OPTIONAL,
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.REPL_SOURCE_TXN_ID, new org.apache.thrift.meta_data.FieldMetaData("replSrcTxnId", org.apache.thrift.TFieldRequirementType.OPTIONAL,
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(OpenTxnRequest.class, metaDataMap);
   }
@@ -190,9 +345,26 @@ import org.slf4j.LoggerFactory;
     if (other.isSetReplPolicy()) {
       this.replPolicy = other.replPolicy;
     }
+<<<<<<< HEAD
     if (other.isSetReplSrcTxnIds()) {
       List<Long> __this__replSrcTxnIds = new ArrayList<Long>(other.replSrcTxnIds);
       this.replSrcTxnIds = __this__replSrcTxnIds;
+=======
+    if (other.isSetReplSrcTxnId()) {
+      List<Long> __this__replSrcTxnId = new ArrayList<Long>(other.replSrcTxnId);
+      this.replSrcTxnId = __this__replSrcTxnId;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      this.replSrcTxnId = other.replSrcTxnId;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+      List<Long> __this__replSrcTxnId = new ArrayList<Long>(other.replSrcTxnId);
+      this.replSrcTxnId = __this__replSrcTxnId;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     }
   }
 
@@ -207,9 +379,43 @@ import org.slf4j.LoggerFactory;
     this.user = null;
     this.hostname = null;
     this.agentInfo = "Unknown";
+<<<<<<< HEAD
+<<<<<<< HEAD
 
     this.replPolicy = null;
     this.replSrcTxnIds = null;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+    this.replPolicy = null;
+    this.replSrcTxnId = null;
+=======
+    this.replPolicy = null;
+    this.replSrcTxnId = -1;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+    this.replPolicy = null;
+    this.replSrcTxnId = null;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    this.replPolicy = null;
+    this.replSrcTxnId = -1;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+    this.replPolicy = null;
+    this.replSrcTxnId = null;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+    this.replPolicy = null;
+    this.replSrcTxnId = null;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
   }
 
   public int getNum_txns() {
@@ -307,6 +513,16 @@ import org.slf4j.LoggerFactory;
     return this.replPolicy;
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
   public void setReplPolicy(String replPolicy) {
     this.replPolicy = replPolicy;
   }
@@ -320,12 +536,64 @@ import org.slf4j.LoggerFactory;
     return this.replPolicy != null;
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+  public void setReplPolicy(String db) {
+    this.replPolicy = db;
+=======
+  public void setReplPolicy(String replPolicy) {
+    this.replPolicy = replPolicy;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+  }
+
+  public void unsetReplPolicy() {
+    this.replPolicy = null;
+  }
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+  /** Returns true if field replPolicy is set (has been assigned a value) and false otherwise */
+  public boolean isSetReplPolicy() {
+    return this.replPolicy != null;
+  }
+
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+  public void setReplPolicy(String db) {
+    this.replPolicy = db;
+=======
+  public void setReplPolicy(String replPolicy) {
+    this.replPolicy = replPolicy;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+  }
+
+  public void unsetReplPolicy() {
+    this.replPolicy = null;
+  }
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+  /** Returns true if field replPolicy is set (has been assigned a value) and false otherwise */
+  public boolean isSetReplPolicy() {
+    return this.replPolicy != null;
+  }
+
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
   public void setReplPolicyIsSet(boolean value) {
     if (!value) {
       this.replPolicy = null;
     }
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
   public int getReplSrcTxnIdsSize() {
     return (this.replSrcTxnIds == null) ? 0 : this.replSrcTxnIds.size();
   }
@@ -361,6 +629,112 @@ import org.slf4j.LoggerFactory;
   public void setReplSrcTxnIdsIsSet(boolean value) {
     if (!value) {
       this.replSrcTxnIds = null;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+  public int getReplSrcTxnIdSize() {
+    return (this.replSrcTxnId == null) ? 0 : this.replSrcTxnId.size();
+  }
+
+  public java.util.Iterator<Long> getReplSrcTxnIdIterator() {
+    return (this.replSrcTxnId == null) ? null : this.replSrcTxnId.iterator();
+  }
+
+  public void addToReplSrcTxnId(long elem) {
+    if (this.replSrcTxnId == null) {
+      this.replSrcTxnId = new ArrayList<Long>();
+    }
+    this.replSrcTxnId.add(elem);
+  }
+
+  public List<Long> getReplSrcTxnId() {
+    return this.replSrcTxnId;
+  }
+
+  public void setReplSrcTxnId(List<Long> replSrcTxnId) {
+    this.replSrcTxnId = replSrcTxnId;
+  }
+
+  public void unsetReplSrcTxnId() {
+    this.replSrcTxnId = null;
+  }
+
+  /** Returns true if field replSrcTxnId is set (has been assigned a value) and false otherwise */
+  public boolean isSetReplSrcTxnId() {
+    return this.replSrcTxnId != null;
+  }
+
+  public void setReplSrcTxnIdIsSet(boolean value) {
+    if (!value) {
+      this.replSrcTxnId = null;
+<<<<<<< HEAD
+=======
+  public long getReplSrcTxnId() {
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    return this.replSrcTxnId;
+  }
+
+  public void setReplSrcTxnId(List<Long> replSrcTxnId) {
+    this.replSrcTxnId = replSrcTxnId;
+  }
+
+  public void unsetReplSrcTxnId() {
+    this.replSrcTxnId = null;
+  }
+
+  /** Returns true if field replSrcTxnId is set (has been assigned a value) and false otherwise */
+  public boolean isSetReplSrcTxnId() {
+    return this.replSrcTxnId != null;
+  }
+
+  public void setReplSrcTxnIdIsSet(boolean value) {
+    if (!value) {
+<<<<<<< HEAD
+      this.replSrcTxnId = -1;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+      this.replSrcTxnId = null;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+  public long getReplSrcTxnId() {
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    return this.replSrcTxnId;
+  }
+
+  public void setReplSrcTxnId(List<Long> replSrcTxnId) {
+    this.replSrcTxnId = replSrcTxnId;
+  }
+
+  public void unsetReplSrcTxnId() {
+    this.replSrcTxnId = null;
+  }
+
+  /** Returns true if field replSrcTxnId is set (has been assigned a value) and false otherwise */
+  public boolean isSetReplSrcTxnId() {
+    return this.replSrcTxnId != null;
+  }
+
+  public void setReplSrcTxnIdIsSet(boolean value) {
+    if (!value) {
+<<<<<<< HEAD
+      this.replSrcTxnId = -1;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+      this.replSrcTxnId = null;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     }
   }
 
@@ -398,6 +772,20 @@ import org.slf4j.LoggerFactory;
       }
       break;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     case REPL_POLICY:
       if (value == null) {
         unsetReplPolicy();
@@ -406,6 +794,7 @@ import org.slf4j.LoggerFactory;
       }
       break;
 
+<<<<<<< HEAD
     case REPL_SRC_TXN_IDS:
       if (value == null) {
         unsetReplSrcTxnIds();
@@ -414,6 +803,36 @@ import org.slf4j.LoggerFactory;
       }
       break;
 
+=======
+    case REPL_SRC_TXN_ID:
+      if (value == null) {
+        unsetReplSrcTxnId();
+      } else {
+        setReplSrcTxnId((List<Long>)value);
+      }
+      break;
+
+<<<<<<< HEAD
+      case REPL_SOURCE_TXN_ID:
+        if (value == null) {
+          unsetReplSrcTxnId();
+        } else {
+          setReplSrcTxnId((Long)value);
+        }
+        break;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     }
   }
 
@@ -431,11 +850,48 @@ import org.slf4j.LoggerFactory;
     case AGENT_INFO:
       return getAgentInfo();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
     case REPL_POLICY:
       return getReplPolicy();
 
     case REPL_SRC_TXN_IDS:
       return getReplSrcTxnIds();
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    case REPL_POLICY:
+      return getReplPolicy();
+
+    case REPL_SRC_TXN_ID:
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+      case REPL_POLICY:
+      return getReplPolicy();
+
+    case REPL_SOURCE_TXN_ID:
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    case REPL_POLICY:
+      return getReplPolicy();
+
+    case REPL_SRC_TXN_ID:
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    case REPL_POLICY:
+      return getReplPolicy();
+
+    case REPL_SRC_TXN_ID:
+      return getReplSrcTxnId();
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 
     }
     throw new IllegalStateException();
@@ -456,10 +912,33 @@ import org.slf4j.LoggerFactory;
       return isSetHostname();
     case AGENT_INFO:
       return isSetAgentInfo();
+<<<<<<< HEAD
+<<<<<<< HEAD
     case REPL_POLICY:
       return isSetReplPolicy();
     case REPL_SRC_TXN_IDS:
       return isSetReplSrcTxnIds();
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    case REPL_POLICY:
+      return isSetReplPolicy();
+    case REPL_SRC_TXN_ID:
+=======
+      case REPL_POLICY:
+      return isSetReplPolicy();
+    case REPL_SOURCE_TXN_ID:
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    case REPL_POLICY:
+      return isSetReplPolicy();
+    case REPL_SRC_TXN_ID:
+      return isSetReplSrcTxnId();
+>>>>>>> HIVE-18679 : create/replicate open transaction event
     }
     throw new IllegalStateException();
   }
@@ -513,15 +992,54 @@ import org.slf4j.LoggerFactory;
         return false;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     boolean this_present_replPolicy = true && this.isSetReplPolicy();
     boolean that_present_replPolicy = true && that.isSetReplPolicy();
     if (this_present_replPolicy || that_present_replPolicy) {
       if (!(this_present_replPolicy && that_present_replPolicy))
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+    boolean this_present_dbname = true && this.isSetReplPolicy();
+    boolean that_present_dbname = true && that.isSetReplPolicy();
+    if (this_present_agentInfo || that_present_agentInfo) {
+      if (!(this_present_agentInfo && that_present_agentInfo))
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
         return false;
       if (!this.replPolicy.equals(that.replPolicy))
         return false;
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
     boolean this_present_replSrcTxnIds = true && this.isSetReplSrcTxnIds();
     boolean that_present_replSrcTxnIds = true && that.isSetReplSrcTxnIds();
     if (this_present_replSrcTxnIds || that_present_replSrcTxnIds) {
@@ -531,6 +1049,61 @@ import org.slf4j.LoggerFactory;
         return false;
     }
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    boolean this_present_replSrcTxnId = true && this.isSetReplSrcTxnId();
+    boolean that_present_replSrcTxnId = true && that.isSetReplSrcTxnId();
+    if (this_present_replSrcTxnId || that_present_replSrcTxnId) {
+      if (!(this_present_replSrcTxnId && that_present_replSrcTxnId))
+        return false;
+      if (!this.replSrcTxnId.equals(that.replSrcTxnId))
+        return false;
+    }
+
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+    boolean this_present_repltxnid = true && this.isSetReplSrcTxnId();
+    boolean that_present_repltxnid = true && that.isSetReplSrcTxnId();
+    if (this_present_agentInfo || that_present_agentInfo) {
+      if (!(this_present_agentInfo && that_present_agentInfo))
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        return false;
+      if (!this.replSrcTxnId.equals(that.replSrcTxnId))
+        return false;
+    }
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        return false;
+      if (!this.replSrcTxnId.equals(that.replSrcTxnId))
+        return false;
+    }
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     return true;
   }
 
@@ -558,15 +1131,54 @@ import org.slf4j.LoggerFactory;
     if (present_agentInfo)
       list.add(agentInfo);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
     boolean present_replPolicy = true && (isSetReplPolicy());
     list.add(present_replPolicy);
     if (present_replPolicy)
       list.add(replPolicy);
 
+<<<<<<< HEAD
     boolean present_replSrcTxnIds = true && (isSetReplSrcTxnIds());
     list.add(present_replSrcTxnIds);
     if (present_replSrcTxnIds)
       list.add(replSrcTxnIds);
+=======
+    boolean present_replSrcTxnId = true && (isSetReplSrcTxnId());
+    list.add(present_replSrcTxnId);
+    if (present_replSrcTxnId)
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+    boolean present_replpolicy = true && (isSetReplPolicy());
+    list.add(present_replpolicy);
+    if (present_replpolicy)
+      list.add(replPolicy);
+
+    boolean present_srctxnid = true && (isSetReplSrcTxnId());
+    list.add(present_srctxnid);
+    if (present_srctxnid)
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    boolean present_replPolicy = true && (isSetReplPolicy());
+    list.add(present_replPolicy);
+    if (present_replPolicy)
+      list.add(replPolicy);
+
+    boolean present_replSrcTxnId = true && (isSetReplSrcTxnId());
+    list.add(present_replSrcTxnId);
+    if (present_replSrcTxnId)
+      list.add(replSrcTxnId);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 
     return list.hashCode();
   }
@@ -619,7 +1231,31 @@ import org.slf4j.LoggerFactory;
         return lastComparison;
       }
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
     lastComparison = Boolean.valueOf(isSetReplPolicy()).compareTo(other.isSetReplPolicy());
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    lastComparison = Boolean.valueOf(isSetReplPolicy()).compareTo(other.isSetReplPolicy());
+=======
+    lastComparison = Boolean.valueOf(isSetAgentInfo()).compareTo(other.isSetReplPolicy());
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    lastComparison = Boolean.valueOf(isSetReplPolicy()).compareTo(other.isSetReplPolicy());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    lastComparison = Boolean.valueOf(isSetAgentInfo()).compareTo(other.isSetReplPolicy());
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    lastComparison = Boolean.valueOf(isSetReplPolicy()).compareTo(other.isSetReplPolicy());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    lastComparison = Boolean.valueOf(isSetReplPolicy()).compareTo(other.isSetReplPolicy());
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     if (lastComparison != 0) {
       return lastComparison;
     }
@@ -629,12 +1265,28 @@ import org.slf4j.LoggerFactory;
         return lastComparison;
       }
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
     lastComparison = Boolean.valueOf(isSetReplSrcTxnIds()).compareTo(other.isSetReplSrcTxnIds());
     if (lastComparison != 0) {
       return lastComparison;
     }
     if (isSetReplSrcTxnIds()) {
       lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.replSrcTxnIds, other.replSrcTxnIds);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    lastComparison = Boolean.valueOf(isSetReplSrcTxnId()).compareTo(other.isSetReplSrcTxnId());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetReplSrcTxnId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.replSrcTxnId, other.replSrcTxnId);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
       if (lastComparison != 0) {
         return lastComparison;
       }
@@ -688,6 +1340,26 @@ import org.slf4j.LoggerFactory;
       }
       first = false;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    first = false;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    first = false;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     if (isSetReplPolicy()) {
       if (!first) sb.append(", ");
       sb.append("replPolicy:");
@@ -698,6 +1370,8 @@ import org.slf4j.LoggerFactory;
       }
       first = false;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD
     if (isSetReplSrcTxnIds()) {
       if (!first) sb.append(", ");
       sb.append("replSrcTxnIds:");
@@ -708,6 +1382,48 @@ import org.slf4j.LoggerFactory;
       }
       first = false;
     }
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    if (isSetReplSrcTxnId()) {
+      if (!first) sb.append(", ");
+      sb.append("replSrcTxnId:");
+      if (this.replSrcTxnId == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.replSrcTxnId);
+      }
+      first = false;
+    }
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+    first = false;
+    sb.append("replSrcTxnId:");
+    sb.append(this.replSrcTxnId);
+
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     sb.append(")");
     return sb.toString();
   }
@@ -805,6 +1521,7 @@ import org.slf4j.LoggerFactory;
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+<<<<<<< HEAD
           case 6: // REPL_SRC_TXN_IDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
@@ -819,10 +1536,81 @@ import org.slf4j.LoggerFactory;
                 iprot.readListEnd();
               }
               struct.setReplSrcTxnIdsIsSet(true);
+=======
+          case 6: // REPL_SRC_TXN_ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list540 = iprot.readListBegin();
+                struct.replSrcTxnId = new ArrayList<Long>(_list540.size);
+                long _elem541;
+                for (int _i542 = 0; _i542 < _list540.size; ++_i542)
+                {
+                  _elem541 = iprot.readI64();
+                  struct.replSrcTxnId.add(_elem541);
+                }
+                iprot.readListEnd();
+              }
+              struct.setReplSrcTxnIdIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+<<<<<<< HEAD
+          case 5: // REPL_POLICY
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.replPolicy = iprot.readString();
+              struct.setReplPolicyIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 6: // REPL_SRC_TXN_ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list540 = iprot.readListBegin();
+                struct.replSrcTxnId = new ArrayList<Long>(_list540.size);
+                long _elem541;
+                for (int _i542 = 0; _i542 < _list540.size; ++_i542)
+                {
+                  _elem541 = iprot.readI64();
+                  struct.replSrcTxnId.add(_elem541);
+                }
+                iprot.readListEnd();
+              }
+              struct.setReplSrcTxnIdIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 5: // REPL_POLICY
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.replPolicy = iprot.readString();
+              struct.setReplPolicyIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 6: // REPL_SRC_TXN_ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+              {
+                org.apache.thrift.protocol.TList _list540 = iprot.readListBegin();
+                struct.replSrcTxnId = new ArrayList<Long>(_list540.size);
+                long _elem541;
+                for (int _i542 = 0; _i542 < _list540.size; ++_i542)
+                {
+                  _elem541 = iprot.readI64();
+                  struct.replSrcTxnId.add(_elem541);
+                }
+                iprot.readListEnd();
+              }
+              struct.setReplSrcTxnIdIsSet(true);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -863,6 +1651,8 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldEnd();
         }
       }
+<<<<<<< HEAD
+<<<<<<< HEAD
       if (struct.replSrcTxnIds != null) {
         if (struct.isSetReplSrcTxnIds()) {
           oprot.writeFieldBegin(REPL_SRC_TXN_IDS_FIELD_DESC);
@@ -874,6 +1664,58 @@ import org.slf4j.LoggerFactory;
             }
             oprot.writeListEnd();
           }
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      if (struct.replSrcTxnId != null) {
+        if (struct.isSetReplSrcTxnId()) {
+          oprot.writeFieldBegin(REPL_SRC_TXN_ID_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.replSrcTxnId.size()));
+            for (long _iter543 : struct.replSrcTxnId)
+            {
+              oprot.writeI64(_iter543);
+            }
+            oprot.writeListEnd();
+          }
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+      if (struct.replSrcTxnId != -1) {
+        if (struct.isSetReplSrcTxnId()) {
+          oprot.writeFieldBegin(REPL_SOURCE_TXN_ID_FIELD_DESC);
+          oprot.writeI64(struct.replSrcTxnId);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+      if (struct.replSrcTxnId != null) {
+        if (struct.isSetReplSrcTxnId()) {
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+      if (struct.replSrcTxnId != null) {
+        if (struct.isSetReplSrcTxnId()) {
+          oprot.writeFieldBegin(REPL_SRC_TXN_ID_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.replSrcTxnId.size()));
+            for (long _iter543 : struct.replSrcTxnId)
+            {
+              oprot.writeI64(_iter543);
+            }
+            oprot.writeListEnd();
+          }
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
           oprot.writeFieldEnd();
         }
       }
@@ -904,13 +1746,19 @@ import org.slf4j.LoggerFactory;
       if (struct.isSetReplPolicy()) {
         optionals.set(1);
       }
+<<<<<<< HEAD
       if (struct.isSetReplSrcTxnIds()) {
+=======
+      if (struct.isSetReplSrcTxnId()) {
+>>>>>>> HIVE-18679 : create/replicate open transaction event
         optionals.set(2);
       }
       oprot.writeBitSet(optionals, 3);
       if (struct.isSetAgentInfo()) {
         oprot.writeString(struct.agentInfo);
       }
+<<<<<<< HEAD
+<<<<<<< HEAD
       if (struct.isSetReplPolicy()) {
         oprot.writeString(struct.replPolicy);
       }
@@ -922,6 +1770,70 @@ import org.slf4j.LoggerFactory;
             oprot.writeI64(_iter560);
           }
         }
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      if (struct.isSetReplPolicy()) {
+        oprot.writeString(struct.replPolicy);
+      }
+      if (struct.isSetReplSrcTxnId()) {
+        {
+          oprot.writeI32(struct.replSrcTxnId.size());
+          for (long _iter544 : struct.replSrcTxnId)
+          {
+            oprot.writeI64(_iter544);
+          }
+        }
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+      optionals.clear(0);
+      if (struct.isSetReplPolicy()) {
+        optionals.set(0);
+      }
+      oprot.writeBitSet(optionals, 1);
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+      if (struct.isSetReplPolicy()) {
+        oprot.writeString(struct.replPolicy);
+      }
+      if (struct.isSetReplSrcTxnId()) {
+<<<<<<< HEAD
+        oprot.writeI64(struct.replSrcTxnId);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        {
+          oprot.writeI32(struct.replSrcTxnId.size());
+          for (long _iter544 : struct.replSrcTxnId)
+          {
+            oprot.writeI64(_iter544);
+          }
+        }
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+      if (struct.isSetReplPolicy()) {
+        oprot.writeString(struct.replPolicy);
+      }
+      if (struct.isSetReplSrcTxnId()) {
+        {
+          oprot.writeI32(struct.replSrcTxnId.size());
+          for (long _iter544 : struct.replSrcTxnId)
+          {
+            oprot.writeI64(_iter544);
+          }
+        }
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
       }
     }
 
@@ -939,12 +1851,21 @@ import org.slf4j.LoggerFactory;
         struct.agentInfo = iprot.readString();
         struct.setAgentInfoIsSet(true);
       }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
       if (incoming.get(1)) {
         struct.replPolicy = iprot.readString();
         struct.setReplPolicyIsSet(true);
       }
       if (incoming.get(2)) {
         {
+<<<<<<< HEAD
           org.apache.thrift.protocol.TList _list561 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
           struct.replSrcTxnIds = new ArrayList<Long>(_list561.size);
           long _elem562;
@@ -955,6 +1876,54 @@ import org.slf4j.LoggerFactory;
           }
         }
         struct.setReplSrcTxnIdsIsSet(true);
+=======
+          org.apache.thrift.protocol.TList _list545 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+          struct.replSrcTxnId = new ArrayList<Long>(_list545.size);
+          long _elem546;
+          for (int _i547 = 0; _i547 < _list545.size; ++_i547)
+          {
+            _elem546 = iprot.readI64();
+            struct.replSrcTxnId.add(_elem546);
+          }
+        }
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+      incoming = iprot.readBitSet(1);
+      if (incoming.get(0)) {
+        struct.replPolicy = iprot.readString();
+        struct.setReplPolicyIsSet(true);
+      }
+      incoming = iprot.readBitSet(1);
+      if (incoming.get(0)) {
+        struct.replSrcTxnId = iprot.readI64();
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+      if (incoming.get(1)) {
+        struct.replPolicy = iprot.readString();
+        struct.setReplPolicyIsSet(true);
+      }
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+      if (incoming.get(1)) {
+        struct.replPolicy = iprot.readString();
+        struct.setReplPolicyIsSet(true);
+      }
+      if (incoming.get(2)) {
+        {
+          org.apache.thrift.protocol.TList _list545 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+          struct.replSrcTxnId = new ArrayList<Long>(_list545.size);
+          long _elem546;
+          for (int _i547 = 0; _i547 < _list545.size; ++_i547)
+          {
+            _elem546 = iprot.readI64();
+            struct.replSrcTxnId.add(_elem546);
+          }
+        }
+        struct.setReplSrcTxnIdIsSet(true);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
       }
     }
   }

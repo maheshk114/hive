@@ -372,6 +372,10 @@ class AbortTxnsRequest;
 
 class CommitTxnRequest;
 
+class GetTargetTxnIdsRequest;
+
+class GetTargetTxnIdsResponse;
+
 class GetValidWriteIdsRequest;
 
 class TableValidWriteIds;
@@ -5965,10 +5969,17 @@ inline std::ostream& operator<<(std::ostream& out, const GetOpenTxnsResponse& ob
 }
 
 typedef struct _OpenTxnRequest__isset {
+<<<<<<< HEAD
   _OpenTxnRequest__isset() : agentInfo(true), replPolicy(false), replSrcTxnIds(false) {}
   bool agentInfo :1;
   bool replPolicy :1;
   bool replSrcTxnIds :1;
+=======
+  _OpenTxnRequest__isset() : agentInfo(true), replPolicy(false), replSrcTxnId(false) {}
+  bool agentInfo :1;
+  bool replPolicy :1;
+  bool replSrcTxnId :1;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 } _OpenTxnRequest__isset;
 
 class OpenTxnRequest {
@@ -5985,7 +5996,11 @@ class OpenTxnRequest {
   std::string hostname;
   std::string agentInfo;
   std::string replPolicy;
+<<<<<<< HEAD
   std::vector<int64_t>  replSrcTxnIds;
+=======
+  std::vector<int64_t>  replSrcTxnId;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 
   _OpenTxnRequest__isset __isset;
 
@@ -5999,7 +6014,11 @@ class OpenTxnRequest {
 
   void __set_replPolicy(const std::string& val);
 
+<<<<<<< HEAD
   void __set_replSrcTxnIds(const std::vector<int64_t> & val);
+=======
+  void __set_replSrcTxnId(const std::vector<int64_t> & val);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 
   bool operator == (const OpenTxnRequest & rhs) const
   {
@@ -6017,9 +6036,15 @@ class OpenTxnRequest {
       return false;
     else if (__isset.replPolicy && !(replPolicy == rhs.replPolicy))
       return false;
+<<<<<<< HEAD
     if (__isset.replSrcTxnIds != rhs.__isset.replSrcTxnIds)
       return false;
     else if (__isset.replSrcTxnIds && !(replSrcTxnIds == rhs.replSrcTxnIds))
+=======
+    if (__isset.replSrcTxnId != rhs.__isset.replSrcTxnId)
+      return false;
+    else if (__isset.replSrcTxnId && !(replSrcTxnId == rhs.replSrcTxnId))
+>>>>>>> HIVE-18679 : create/replicate open transaction event
       return false;
     return true;
   }
@@ -6224,6 +6249,91 @@ class CommitTxnRequest {
 void swap(CommitTxnRequest &a, CommitTxnRequest &b);
 
 inline std::ostream& operator<<(std::ostream& out, const CommitTxnRequest& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+class GetTargetTxnIdsRequest {
+ public:
+
+  GetTargetTxnIdsRequest(const GetTargetTxnIdsRequest&);
+  GetTargetTxnIdsRequest& operator=(const GetTargetTxnIdsRequest&);
+  GetTargetTxnIdsRequest() : replPolicy() {
+  }
+
+  virtual ~GetTargetTxnIdsRequest() throw();
+  std::vector<int64_t>  txnid;
+  std::string replPolicy;
+
+  void __set_txnid(const std::vector<int64_t> & val);
+
+  void __set_replPolicy(const std::string& val);
+
+  bool operator == (const GetTargetTxnIdsRequest & rhs) const
+  {
+    if (!(txnid == rhs.txnid))
+      return false;
+    if (!(replPolicy == rhs.replPolicy))
+      return false;
+    return true;
+  }
+  bool operator != (const GetTargetTxnIdsRequest &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GetTargetTxnIdsRequest & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(GetTargetTxnIdsRequest &a, GetTargetTxnIdsRequest &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdsRequest& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+class GetTargetTxnIdsResponse {
+ public:
+
+  GetTargetTxnIdsResponse(const GetTargetTxnIdsResponse&);
+  GetTargetTxnIdsResponse& operator=(const GetTargetTxnIdsResponse&);
+  GetTargetTxnIdsResponse() {
+  }
+
+  virtual ~GetTargetTxnIdsResponse() throw();
+  std::vector<int64_t>  txnid;
+
+  void __set_txnid(const std::vector<int64_t> & val);
+
+  bool operator == (const GetTargetTxnIdsResponse & rhs) const
+  {
+    if (!(txnid == rhs.txnid))
+      return false;
+    return true;
+  }
+  bool operator != (const GetTargetTxnIdsResponse &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GetTargetTxnIdsResponse & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(GetTargetTxnIdsResponse &a, GetTargetTxnIdsResponse &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdsResponse& obj)
 {
   obj.printTo(out);
   return out;

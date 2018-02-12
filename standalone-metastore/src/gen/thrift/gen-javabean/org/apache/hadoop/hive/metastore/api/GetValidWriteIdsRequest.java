@@ -436,13 +436,32 @@ import org.slf4j.LoggerFactory;
           case 1: // FULL_TABLE_NAMES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list580 = iprot.readListBegin();
                 struct.fullTableNames = new ArrayList<String>(_list580.size);
                 String _elem581;
                 for (int _i582 = 0; _i582 < _list580.size; ++_i582)
+<<<<<<< HEAD
                 {
                   _elem581 = iprot.readString();
                   struct.fullTableNames.add(_elem581);
+=======
+                org.apache.thrift.protocol.TList _list564 = iprot.readListBegin();
+                struct.fullTableNames = new ArrayList<String>(_list564.size);
+                String _elem565;
+                for (int _i566 = 0; _i566 < _list564.size; ++_i566)
+                {
+                  _elem565 = iprot.readString();
+                  struct.fullTableNames.add(_elem565);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+                {
+                  _elem581 = iprot.readString();
+                  struct.fullTableNames.add(_elem581);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -476,9 +495,21 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(FULL_TABLE_NAMES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.fullTableNames.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (String _iter583 : struct.fullTableNames)
           {
             oprot.writeString(_iter583);
+=======
+          for (String _iter567 : struct.fullTableNames)
+          {
+            oprot.writeString(_iter567);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (String _iter583 : struct.fullTableNames)
+          {
+            oprot.writeString(_iter583);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -508,9 +539,21 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.fullTableNames.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (String _iter584 : struct.fullTableNames)
         {
           oprot.writeString(_iter584);
+=======
+        for (String _iter568 : struct.fullTableNames)
+        {
+          oprot.writeString(_iter568);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (String _iter584 : struct.fullTableNames)
+        {
+          oprot.writeString(_iter584);
+>>>>>>> alloc write id event changes
         }
       }
       oprot.writeString(struct.validTxnList);
@@ -520,13 +563,32 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, GetValidWriteIdsRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list585 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
         struct.fullTableNames = new ArrayList<String>(_list585.size);
         String _elem586;
         for (int _i587 = 0; _i587 < _list585.size; ++_i587)
+<<<<<<< HEAD
         {
           _elem586 = iprot.readString();
           struct.fullTableNames.add(_elem586);
+=======
+        org.apache.thrift.protocol.TList _list569 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.fullTableNames = new ArrayList<String>(_list569.size);
+        String _elem570;
+        for (int _i571 = 0; _i571 < _list569.size; ++_i571)
+        {
+          _elem570 = iprot.readString();
+          struct.fullTableNames.add(_elem570);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        {
+          _elem586 = iprot.readString();
+          struct.fullTableNames.add(_elem586);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setFullTableNamesIsSet(true);

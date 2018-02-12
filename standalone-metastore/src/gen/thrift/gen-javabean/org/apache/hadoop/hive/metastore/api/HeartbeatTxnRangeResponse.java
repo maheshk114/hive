@@ -453,13 +453,58 @@ import org.slf4j.LoggerFactory;
           case 1: // ABORTED
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TSet _set636 = iprot.readSetBegin();
                 struct.aborted = new HashSet<Long>(2*_set636.size);
                 long _elem637;
                 for (int _i638 = 0; _i638 < _set636.size; ++_i638)
+<<<<<<< HEAD
                 {
                   _elem637 = iprot.readI64();
                   struct.aborted.add(_elem637);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TSet _set620 = iprot.readSetBegin();
+                struct.aborted = new HashSet<Long>(2*_set620.size);
+                long _elem621;
+                for (int _i622 = 0; _i622 < _set620.size; ++_i622)
+                {
+                  _elem621 = iprot.readI64();
+                  struct.aborted.add(_elem621);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TSet _set580 = iprot.readSetBegin();
+                struct.aborted = new HashSet<Long>(2*_set580.size);
+                long _elem581;
+                for (int _i582 = 0; _i582 < _set580.size; ++_i582)
+                {
+                  _elem581 = iprot.readI64();
+                  struct.aborted.add(_elem581);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+                org.apache.thrift.protocol.TSet _set580 = iprot.readSetBegin();
+                struct.aborted = new HashSet<Long>(2*_set580.size);
+                long _elem581;
+                for (int _i582 = 0; _i582 < _set580.size; ++_i582)
+                {
+                  _elem581 = iprot.readI64();
+                  struct.aborted.add(_elem581);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem637 = iprot.readI64();
+                  struct.aborted.add(_elem637);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readSetEnd();
               }
@@ -471,13 +516,54 @@ import org.slf4j.LoggerFactory;
           case 2: // NOSUCH
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TSet _set639 = iprot.readSetBegin();
                 struct.nosuch = new HashSet<Long>(2*_set639.size);
                 long _elem640;
                 for (int _i641 = 0; _i641 < _set639.size; ++_i641)
+<<<<<<< HEAD
                 {
                   _elem640 = iprot.readI64();
                   struct.nosuch.add(_elem640);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TSet _set623 = iprot.readSetBegin();
+                struct.nosuch = new HashSet<Long>(2*_set623.size);
+                long _elem624;
+                for (int _i625 = 0; _i625 < _set623.size; ++_i625)
+                {
+                  _elem624 = iprot.readI64();
+                  struct.nosuch.add(_elem624);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+                org.apache.thrift.protocol.TSet _set583 = iprot.readSetBegin();
+                struct.nosuch = new HashSet<Long>(2*_set583.size);
+                long _elem584;
+                for (int _i585 = 0; _i585 < _set583.size; ++_i585)
+                {
+                  _elem584 = iprot.readI64();
+                  struct.nosuch.add(_elem584);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem640 = iprot.readI64();
+                  struct.nosuch.add(_elem640);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readSetEnd();
               }
@@ -503,9 +589,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(ABORTED_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, struct.aborted.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (long _iter642 : struct.aborted)
           {
             oprot.writeI64(_iter642);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (long _iter626 : struct.aborted)
+          {
+            oprot.writeI64(_iter626);
+=======
+          for (long _iter586 : struct.aborted)
+          {
+            oprot.writeI64(_iter586);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (long _iter586 : struct.aborted)
+          {
+            oprot.writeI64(_iter586);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (long _iter626 : struct.aborted)
+          {
+            oprot.writeI64(_iter626);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (long _iter642 : struct.aborted)
+          {
+            oprot.writeI64(_iter642);
+>>>>>>> alloc write id event changes
           }
           oprot.writeSetEnd();
         }
@@ -515,9 +631,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(NOSUCH_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, struct.nosuch.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (long _iter643 : struct.nosuch)
           {
             oprot.writeI64(_iter643);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (long _iter627 : struct.nosuch)
+          {
+            oprot.writeI64(_iter627);
+=======
+          for (long _iter587 : struct.nosuch)
+          {
+            oprot.writeI64(_iter587);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (long _iter587 : struct.nosuch)
+          {
+            oprot.writeI64(_iter587);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (long _iter627 : struct.nosuch)
+          {
+            oprot.writeI64(_iter627);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (long _iter643 : struct.nosuch)
+          {
+            oprot.writeI64(_iter643);
+>>>>>>> alloc write id event changes
           }
           oprot.writeSetEnd();
         }
@@ -542,16 +688,76 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.aborted.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (long _iter644 : struct.aborted)
         {
           oprot.writeI64(_iter644);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for (long _iter628 : struct.aborted)
+        {
+          oprot.writeI64(_iter628);
+=======
+        for (long _iter588 : struct.aborted)
+        {
+          oprot.writeI64(_iter588);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (long _iter588 : struct.aborted)
+        {
+          oprot.writeI64(_iter588);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (long _iter628 : struct.aborted)
+        {
+          oprot.writeI64(_iter628);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (long _iter644 : struct.aborted)
+        {
+          oprot.writeI64(_iter644);
+>>>>>>> alloc write id event changes
         }
       }
       {
         oprot.writeI32(struct.nosuch.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (long _iter645 : struct.nosuch)
         {
           oprot.writeI64(_iter645);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for (long _iter629 : struct.nosuch)
+        {
+          oprot.writeI64(_iter629);
+=======
+        for (long _iter589 : struct.nosuch)
+        {
+          oprot.writeI64(_iter589);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (long _iter589 : struct.nosuch)
+        {
+          oprot.writeI64(_iter589);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (long _iter629 : struct.nosuch)
+        {
+          oprot.writeI64(_iter629);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (long _iter645 : struct.nosuch)
+        {
+          oprot.writeI64(_iter645);
+>>>>>>> alloc write id event changes
         }
       }
     }
@@ -560,24 +766,110 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, HeartbeatTxnRangeResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TSet _set646 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.aborted = new HashSet<Long>(2*_set646.size);
         long _elem647;
         for (int _i648 = 0; _i648 < _set646.size; ++_i648)
+<<<<<<< HEAD
         {
           _elem647 = iprot.readI64();
           struct.aborted.add(_elem647);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TSet _set630 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.aborted = new HashSet<Long>(2*_set630.size);
+        long _elem631;
+        for (int _i632 = 0; _i632 < _set630.size; ++_i632)
+        {
+          _elem631 = iprot.readI64();
+          struct.aborted.add(_elem631);
+<<<<<<< HEAD
+=======
+        org.apache.thrift.protocol.TSet _set590 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.aborted = new HashSet<Long>(2*_set590.size);
+        long _elem591;
+        for (int _i592 = 0; _i592 < _set590.size; ++_i592)
+        {
+          _elem591 = iprot.readI64();
+          struct.aborted.add(_elem591);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        org.apache.thrift.protocol.TSet _set590 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.aborted = new HashSet<Long>(2*_set590.size);
+        long _elem591;
+        for (int _i592 = 0; _i592 < _set590.size; ++_i592)
+        {
+          _elem591 = iprot.readI64();
+          struct.aborted.add(_elem591);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _elem647 = iprot.readI64();
+          struct.aborted.add(_elem647);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setAbortedIsSet(true);
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TSet _set649 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.nosuch = new HashSet<Long>(2*_set649.size);
         long _elem650;
         for (int _i651 = 0; _i651 < _set649.size; ++_i651)
+<<<<<<< HEAD
         {
           _elem650 = iprot.readI64();
           struct.nosuch.add(_elem650);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TSet _set633 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.nosuch = new HashSet<Long>(2*_set633.size);
+        long _elem634;
+        for (int _i635 = 0; _i635 < _set633.size; ++_i635)
+        {
+          _elem634 = iprot.readI64();
+          struct.nosuch.add(_elem634);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        org.apache.thrift.protocol.TSet _set593 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.nosuch = new HashSet<Long>(2*_set593.size);
+        long _elem594;
+        for (int _i595 = 0; _i595 < _set593.size; ++_i595)
+        {
+          _elem594 = iprot.readI64();
+          struct.nosuch.add(_elem594);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _elem650 = iprot.readI64();
+          struct.nosuch.add(_elem650);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setNosuchIsSet(true);

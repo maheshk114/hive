@@ -14340,9 +14340,15 @@ void OpenTxnRequest::__set_replPolicy(const std::string& val) {
 __isset.replPolicy = true;
 }
 
+<<<<<<< HEAD
 void OpenTxnRequest::__set_replSrcTxnIds(const std::vector<int64_t> & val) {
   this->replSrcTxnIds = val;
 __isset.replSrcTxnIds = true;
+=======
+void OpenTxnRequest::__set_replSrcTxnId(const std::vector<int64_t> & val) {
+  this->replSrcTxnId = val;
+__isset.replSrcTxnId = true;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 }
 
 uint32_t OpenTxnRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
@@ -14412,6 +14418,7 @@ uint32_t OpenTxnRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
       case 6:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
+<<<<<<< HEAD
             this->replSrcTxnIds.clear();
             uint32_t _size615;
             ::apache::thrift::protocol::TType _etype618;
@@ -14425,6 +14432,21 @@ uint32_t OpenTxnRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
             xfer += iprot->readListEnd();
           }
           this->__isset.replSrcTxnIds = true;
+=======
+            this->replSrcTxnId.clear();
+            uint32_t _size595;
+            ::apache::thrift::protocol::TType _etype598;
+            xfer += iprot->readListBegin(_etype598, _size595);
+            this->replSrcTxnId.resize(_size595);
+            uint32_t _i599;
+            for (_i599 = 0; _i599 < _size595; ++_i599)
+            {
+              xfer += iprot->readI64(this->replSrcTxnId[_i599]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.replSrcTxnId = true;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -14474,6 +14496,7 @@ uint32_t OpenTxnRequest::write(::apache::thrift::protocol::TProtocol* oprot) con
     xfer += oprot->writeString(this->replPolicy);
     xfer += oprot->writeFieldEnd();
   }
+<<<<<<< HEAD
   if (this->__isset.replSrcTxnIds) {
     xfer += oprot->writeFieldBegin("replSrcTxnIds", ::apache::thrift::protocol::T_LIST, 6);
     {
@@ -14482,6 +14505,16 @@ uint32_t OpenTxnRequest::write(::apache::thrift::protocol::TProtocol* oprot) con
       for (_iter620 = this->replSrcTxnIds.begin(); _iter620 != this->replSrcTxnIds.end(); ++_iter620)
       {
         xfer += oprot->writeI64((*_iter620));
+=======
+  if (this->__isset.replSrcTxnId) {
+    xfer += oprot->writeFieldBegin("replSrcTxnId", ::apache::thrift::protocol::T_LIST, 6);
+    {
+      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->replSrcTxnId.size()));
+      std::vector<int64_t> ::const_iterator _iter600;
+      for (_iter600 = this->replSrcTxnId.begin(); _iter600 != this->replSrcTxnId.end(); ++_iter600)
+      {
+        xfer += oprot->writeI64((*_iter600));
+>>>>>>> HIVE-18679 : create/replicate open transaction event
       }
       xfer += oprot->writeListEnd();
     }
@@ -14499,6 +14532,7 @@ void swap(OpenTxnRequest &a, OpenTxnRequest &b) {
   swap(a.hostname, b.hostname);
   swap(a.agentInfo, b.agentInfo);
   swap(a.replPolicy, b.replPolicy);
+<<<<<<< HEAD
   swap(a.replSrcTxnIds, b.replSrcTxnIds);
   swap(a.__isset, b.__isset);
 }
@@ -14520,6 +14554,29 @@ OpenTxnRequest& OpenTxnRequest::operator=(const OpenTxnRequest& other622) {
   replPolicy = other622.replPolicy;
   replSrcTxnIds = other622.replSrcTxnIds;
   __isset = other622.__isset;
+=======
+  swap(a.replSrcTxnId, b.replSrcTxnId);
+  swap(a.__isset, b.__isset);
+}
+
+OpenTxnRequest::OpenTxnRequest(const OpenTxnRequest& other601) {
+  num_txns = other601.num_txns;
+  user = other601.user;
+  hostname = other601.hostname;
+  agentInfo = other601.agentInfo;
+  replPolicy = other601.replPolicy;
+  replSrcTxnId = other601.replSrcTxnId;
+  __isset = other601.__isset;
+}
+OpenTxnRequest& OpenTxnRequest::operator=(const OpenTxnRequest& other602) {
+  num_txns = other602.num_txns;
+  user = other602.user;
+  hostname = other602.hostname;
+  agentInfo = other602.agentInfo;
+  replPolicy = other602.replPolicy;
+  replSrcTxnId = other602.replSrcTxnId;
+  __isset = other602.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   return *this;
 }
 void OpenTxnRequest::printTo(std::ostream& out) const {
@@ -14530,7 +14587,11 @@ void OpenTxnRequest::printTo(std::ostream& out) const {
   out << ", " << "hostname=" << to_string(hostname);
   out << ", " << "agentInfo="; (__isset.agentInfo ? (out << to_string(agentInfo)) : (out << "<null>"));
   out << ", " << "replPolicy="; (__isset.replPolicy ? (out << to_string(replPolicy)) : (out << "<null>"));
+<<<<<<< HEAD
   out << ", " << "replSrcTxnIds="; (__isset.replSrcTxnIds ? (out << to_string(replSrcTxnIds)) : (out << "<null>"));
+=======
+  out << ", " << "replSrcTxnId="; (__isset.replSrcTxnId ? (out << to_string(replSrcTxnId)) : (out << "<null>"));
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   out << ")";
 }
 
@@ -14569,6 +14630,8 @@ uint32_t OpenTxnsResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->txn_ids.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size623;
             ::apache::thrift::protocol::TType _etype626;
             xfer += iprot->readListBegin(_etype626, _size623);
@@ -14577,6 +14640,21 @@ uint32_t OpenTxnsResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i627 = 0; _i627 < _size623; ++_i627)
             {
               xfer += iprot->readI64(this->txn_ids[_i627]);
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            uint32_t _size603;
+            ::apache::thrift::protocol::TType _etype606;
+            xfer += iprot->readListBegin(_etype606, _size603);
+            this->txn_ids.resize(_size603);
+            uint32_t _i607;
+            for (_i607 = 0; _i607 < _size603; ++_i607)
+            {
+              xfer += iprot->readI64(this->txn_ids[_i607]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
             }
             xfer += iprot->readListEnd();
           }
@@ -14607,10 +14685,23 @@ uint32_t OpenTxnsResponse::write(::apache::thrift::protocol::TProtocol* oprot) c
   xfer += oprot->writeFieldBegin("txn_ids", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->txn_ids.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter628;
     for (_iter628 = this->txn_ids.begin(); _iter628 != this->txn_ids.end(); ++_iter628)
     {
       xfer += oprot->writeI64((*_iter628));
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+    std::vector<int64_t> ::const_iterator _iter608;
+    for (_iter608 = this->txn_ids.begin(); _iter608 != this->txn_ids.end(); ++_iter608)
+    {
+      xfer += oprot->writeI64((*_iter608));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
     }
     xfer += oprot->writeListEnd();
   }
@@ -14626,11 +14717,25 @@ void swap(OpenTxnsResponse &a, OpenTxnsResponse &b) {
   swap(a.txn_ids, b.txn_ids);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 OpenTxnsResponse::OpenTxnsResponse(const OpenTxnsResponse& other629) {
   txn_ids = other629.txn_ids;
 }
 OpenTxnsResponse& OpenTxnsResponse::operator=(const OpenTxnsResponse& other630) {
   txn_ids = other630.txn_ids;
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+OpenTxnsResponse::OpenTxnsResponse(const OpenTxnsResponse& other609) {
+  txn_ids = other609.txn_ids;
+}
+OpenTxnsResponse& OpenTxnsResponse::operator=(const OpenTxnsResponse& other610) {
+  txn_ids = other610.txn_ids;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
   return *this;
 }
 void OpenTxnsResponse::printTo(std::ostream& out) const {
@@ -14732,6 +14837,8 @@ void swap(AbortTxnRequest &a, AbortTxnRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 AbortTxnRequest::AbortTxnRequest(const AbortTxnRequest& other631) {
   txnid = other631.txnid;
   replPolicy = other631.replPolicy;
@@ -14741,6 +14848,43 @@ AbortTxnRequest& AbortTxnRequest::operator=(const AbortTxnRequest& other632) {
   txnid = other632.txnid;
   replPolicy = other632.replPolicy;
   __isset = other632.__isset;
+=======
+AbortTxnRequest::AbortTxnRequest(const AbortTxnRequest& other611) {
+  txnid = other611.txnid;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+AbortTxnRequest::AbortTxnRequest(const AbortTxnRequest& other611) {
+  txnid = other611.txnid;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+  replPolicy = other611.replPolicy;
+  __isset = other611.__isset;
+}
+AbortTxnRequest& AbortTxnRequest::operator=(const AbortTxnRequest& other612) {
+  txnid = other612.txnid;
+  replPolicy = other612.replPolicy;
+  __isset = other612.__isset;
+<<<<<<< HEAD
+=======
+}
+AbortTxnRequest& AbortTxnRequest::operator=(const AbortTxnRequest& other612) {
+  txnid = other612.txnid;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+  replPolicy = other611.replPolicy;
+  __isset = other611.__isset;
+}
+AbortTxnRequest& AbortTxnRequest::operator=(const AbortTxnRequest& other612) {
+  txnid = other612.txnid;
+  replPolicy = other612.replPolicy;
+  __isset = other612.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
   return *this;
 }
 void AbortTxnRequest::printTo(std::ostream& out) const {
@@ -14786,6 +14930,8 @@ uint32_t AbortTxnsRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->txn_ids.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size633;
             ::apache::thrift::protocol::TType _etype636;
             xfer += iprot->readListBegin(_etype636, _size633);
@@ -14794,6 +14940,18 @@ uint32_t AbortTxnsRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i637 = 0; _i637 < _size633; ++_i637)
             {
               xfer += iprot->readI64(this->txn_ids[_i637]);
+=======
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            uint32_t _size613;
+            ::apache::thrift::protocol::TType _etype616;
+            xfer += iprot->readListBegin(_etype616, _size613);
+            this->txn_ids.resize(_size613);
+            uint32_t _i617;
+            for (_i617 = 0; _i617 < _size613; ++_i617)
+            {
+              xfer += iprot->readI64(this->txn_ids[_i617]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
             }
             xfer += iprot->readListEnd();
           }
@@ -14824,10 +14982,17 @@ uint32_t AbortTxnsRequest::write(::apache::thrift::protocol::TProtocol* oprot) c
   xfer += oprot->writeFieldBegin("txn_ids", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->txn_ids.size()));
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter638;
     for (_iter638 = this->txn_ids.begin(); _iter638 != this->txn_ids.end(); ++_iter638)
     {
       xfer += oprot->writeI64((*_iter638));
+=======
+    std::vector<int64_t> ::const_iterator _iter618;
+    for (_iter618 = this->txn_ids.begin(); _iter618 != this->txn_ids.end(); ++_iter618)
+    {
+      xfer += oprot->writeI64((*_iter618));
+>>>>>>> HIVE-18679 : create/replicate open transaction event
     }
     xfer += oprot->writeListEnd();
   }
@@ -14843,11 +15008,19 @@ void swap(AbortTxnsRequest &a, AbortTxnsRequest &b) {
   swap(a.txn_ids, b.txn_ids);
 }
 
+<<<<<<< HEAD
 AbortTxnsRequest::AbortTxnsRequest(const AbortTxnsRequest& other639) {
   txn_ids = other639.txn_ids;
 }
 AbortTxnsRequest& AbortTxnsRequest::operator=(const AbortTxnsRequest& other640) {
   txn_ids = other640.txn_ids;
+=======
+AbortTxnsRequest::AbortTxnsRequest(const AbortTxnsRequest& other619) {
+  txn_ids = other619.txn_ids;
+}
+AbortTxnsRequest& AbortTxnsRequest::operator=(const AbortTxnsRequest& other620) {
+  txn_ids = other620.txn_ids;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   return *this;
 }
 void AbortTxnsRequest::printTo(std::ostream& out) const {
@@ -14949,6 +15122,7 @@ void swap(CommitTxnRequest &a, CommitTxnRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
 CommitTxnRequest::CommitTxnRequest(const CommitTxnRequest& other641) {
   txnid = other641.txnid;
   replPolicy = other641.replPolicy;
@@ -14958,6 +15132,17 @@ CommitTxnRequest& CommitTxnRequest::operator=(const CommitTxnRequest& other642) 
   txnid = other642.txnid;
   replPolicy = other642.replPolicy;
   __isset = other642.__isset;
+=======
+CommitTxnRequest::CommitTxnRequest(const CommitTxnRequest& other621) {
+  txnid = other621.txnid;
+  replPolicy = other621.replPolicy;
+  __isset = other621.__isset;
+}
+CommitTxnRequest& CommitTxnRequest::operator=(const CommitTxnRequest& other622) {
+  txnid = other622.txnid;
+  replPolicy = other622.replPolicy;
+  __isset = other622.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   return *this;
 }
 void CommitTxnRequest::printTo(std::ostream& out) const {
@@ -14965,6 +15150,244 @@ void CommitTxnRequest::printTo(std::ostream& out) const {
   out << "CommitTxnRequest(";
   out << "txnid=" << to_string(txnid);
   out << ", " << "replPolicy="; (__isset.replPolicy ? (out << to_string(replPolicy)) : (out << "<null>"));
+<<<<<<< HEAD
+=======
+  out << ")";
+}
+
+
+GetTargetTxnIdsRequest::~GetTargetTxnIdsRequest() throw() {
+}
+
+
+void GetTargetTxnIdsRequest::__set_txnid(const std::vector<int64_t> & val) {
+  this->txnid = val;
+}
+
+void GetTargetTxnIdsRequest::__set_replPolicy(const std::string& val) {
+  this->replPolicy = val;
+}
+
+uint32_t GetTargetTxnIdsRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  bool isset_txnid = false;
+  bool isset_replPolicy = false;
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->txnid.clear();
+            uint32_t _size623;
+            ::apache::thrift::protocol::TType _etype626;
+            xfer += iprot->readListBegin(_etype626, _size623);
+            this->txnid.resize(_size623);
+            uint32_t _i627;
+            for (_i627 = 0; _i627 < _size623; ++_i627)
+            {
+              xfer += iprot->readI64(this->txnid[_i627]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          isset_txnid = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->replPolicy);
+          isset_replPolicy = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  if (!isset_txnid)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  if (!isset_replPolicy)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  return xfer;
+}
+
+uint32_t GetTargetTxnIdsRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("GetTargetTxnIdsRequest");
+
+  xfer += oprot->writeFieldBegin("txnid", ::apache::thrift::protocol::T_LIST, 1);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->txnid.size()));
+    std::vector<int64_t> ::const_iterator _iter628;
+    for (_iter628 = this->txnid.begin(); _iter628 != this->txnid.end(); ++_iter628)
+    {
+      xfer += oprot->writeI64((*_iter628));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("replPolicy", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->replPolicy);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(GetTargetTxnIdsRequest &a, GetTargetTxnIdsRequest &b) {
+  using ::std::swap;
+  swap(a.txnid, b.txnid);
+  swap(a.replPolicy, b.replPolicy);
+}
+
+GetTargetTxnIdsRequest::GetTargetTxnIdsRequest(const GetTargetTxnIdsRequest& other629) {
+  txnid = other629.txnid;
+  replPolicy = other629.replPolicy;
+}
+GetTargetTxnIdsRequest& GetTargetTxnIdsRequest::operator=(const GetTargetTxnIdsRequest& other630) {
+  txnid = other630.txnid;
+  replPolicy = other630.replPolicy;
+  return *this;
+}
+void GetTargetTxnIdsRequest::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "GetTargetTxnIdsRequest(";
+  out << "txnid=" << to_string(txnid);
+  out << ", " << "replPolicy=" << to_string(replPolicy);
+  out << ")";
+}
+
+
+GetTargetTxnIdsResponse::~GetTargetTxnIdsResponse() throw() {
+}
+
+
+void GetTargetTxnIdsResponse::__set_txnid(const std::vector<int64_t> & val) {
+  this->txnid = val;
+}
+
+uint32_t GetTargetTxnIdsResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+  bool isset_txnid = false;
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->txnid.clear();
+            uint32_t _size631;
+            ::apache::thrift::protocol::TType _etype634;
+            xfer += iprot->readListBegin(_etype634, _size631);
+            this->txnid.resize(_size631);
+            uint32_t _i635;
+            for (_i635 = 0; _i635 < _size631; ++_i635)
+            {
+              xfer += iprot->readI64(this->txnid[_i635]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          isset_txnid = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  if (!isset_txnid)
+    throw TProtocolException(TProtocolException::INVALID_DATA);
+  return xfer;
+}
+
+uint32_t GetTargetTxnIdsResponse::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("GetTargetTxnIdsResponse");
+
+  xfer += oprot->writeFieldBegin("txnid", ::apache::thrift::protocol::T_LIST, 1);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->txnid.size()));
+    std::vector<int64_t> ::const_iterator _iter636;
+    for (_iter636 = this->txnid.begin(); _iter636 != this->txnid.end(); ++_iter636)
+    {
+      xfer += oprot->writeI64((*_iter636));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(GetTargetTxnIdsResponse &a, GetTargetTxnIdsResponse &b) {
+  using ::std::swap;
+  swap(a.txnid, b.txnid);
+}
+
+GetTargetTxnIdsResponse::GetTargetTxnIdsResponse(const GetTargetTxnIdsResponse& other637) {
+  txnid = other637.txnid;
+}
+GetTargetTxnIdsResponse& GetTargetTxnIdsResponse::operator=(const GetTargetTxnIdsResponse& other638) {
+  txnid = other638.txnid;
+  return *this;
+}
+void GetTargetTxnIdsResponse::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "GetTargetTxnIdsResponse(";
+  out << "txnid=" << to_string(txnid);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   out << ")";
 }
 
@@ -15008,6 +15431,9 @@ uint32_t GetValidWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* ip
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->fullTableNames.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size643;
             ::apache::thrift::protocol::TType _etype646;
             xfer += iprot->readListBegin(_etype646, _size643);
@@ -15016,6 +15442,36 @@ uint32_t GetValidWriteIdsRequest::read(::apache::thrift::protocol::TProtocol* ip
             for (_i647 = 0; _i647 < _size643; ++_i647)
             {
               xfer += iprot->readString(this->fullTableNames[_i647]);
+=======
+            uint32_t _size623;
+            ::apache::thrift::protocol::TType _etype626;
+            xfer += iprot->readListBegin(_etype626, _size623);
+            this->fullTableNames.resize(_size623);
+            uint32_t _i627;
+            for (_i627 = 0; _i627 < _size623; ++_i627)
+            {
+              xfer += iprot->readString(this->fullTableNames[_i627]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            uint32_t _size627;
+            ::apache::thrift::protocol::TType _etype630;
+            xfer += iprot->readListBegin(_etype630, _size627);
+            this->fullTableNames.resize(_size627);
+            uint32_t _i631;
+            for (_i631 = 0; _i631 < _size627; ++_i631)
+            {
+              xfer += iprot->readString(this->fullTableNames[_i631]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size639;
+            ::apache::thrift::protocol::TType _etype642;
+            xfer += iprot->readListBegin(_etype642, _size639);
+            this->fullTableNames.resize(_size639);
+            uint32_t _i643;
+            for (_i643 = 0; _i643 < _size639; ++_i643)
+            {
+              xfer += iprot->readString(this->fullTableNames[_i643]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -15056,10 +15512,31 @@ uint32_t GetValidWriteIdsRequest::write(::apache::thrift::protocol::TProtocol* o
   xfer += oprot->writeFieldBegin("fullTableNames", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->fullTableNames.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<std::string> ::const_iterator _iter648;
     for (_iter648 = this->fullTableNames.begin(); _iter648 != this->fullTableNames.end(); ++_iter648)
     {
       xfer += oprot->writeString((*_iter648));
+=======
+    std::vector<std::string> ::const_iterator _iter628;
+    for (_iter628 = this->fullTableNames.begin(); _iter628 != this->fullTableNames.end(); ++_iter628)
+    {
+      xfer += oprot->writeString((*_iter628));
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    std::vector<std::string> ::const_iterator _iter632;
+    for (_iter632 = this->fullTableNames.begin(); _iter632 != this->fullTableNames.end(); ++_iter632)
+    {
+      xfer += oprot->writeString((*_iter632));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<std::string> ::const_iterator _iter644;
+    for (_iter644 = this->fullTableNames.begin(); _iter644 != this->fullTableNames.end(); ++_iter644)
+    {
+      xfer += oprot->writeString((*_iter644));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -15080,6 +15557,9 @@ void swap(GetValidWriteIdsRequest &a, GetValidWriteIdsRequest &b) {
   swap(a.validTxnList, b.validTxnList);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetValidWriteIdsRequest::GetValidWriteIdsRequest(const GetValidWriteIdsRequest& other649) {
   fullTableNames = other649.fullTableNames;
   validTxnList = other649.validTxnList;
@@ -15087,6 +15567,33 @@ GetValidWriteIdsRequest::GetValidWriteIdsRequest(const GetValidWriteIdsRequest& 
 GetValidWriteIdsRequest& GetValidWriteIdsRequest::operator=(const GetValidWriteIdsRequest& other650) {
   fullTableNames = other650.fullTableNames;
   validTxnList = other650.validTxnList;
+=======
+GetValidWriteIdsRequest::GetValidWriteIdsRequest(const GetValidWriteIdsRequest& other629) {
+  fullTableNames = other629.fullTableNames;
+  validTxnList = other629.validTxnList;
+}
+GetValidWriteIdsRequest& GetValidWriteIdsRequest::operator=(const GetValidWriteIdsRequest& other630) {
+  fullTableNames = other630.fullTableNames;
+  validTxnList = other630.validTxnList;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+GetValidWriteIdsRequest::GetValidWriteIdsRequest(const GetValidWriteIdsRequest& other633) {
+  fullTableNames = other633.fullTableNames;
+  validTxnList = other633.validTxnList;
+}
+GetValidWriteIdsRequest& GetValidWriteIdsRequest::operator=(const GetValidWriteIdsRequest& other634) {
+  fullTableNames = other634.fullTableNames;
+  validTxnList = other634.validTxnList;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetValidWriteIdsRequest::GetValidWriteIdsRequest(const GetValidWriteIdsRequest& other645) {
+  fullTableNames = other645.fullTableNames;
+  validTxnList = other645.validTxnList;
+}
+GetValidWriteIdsRequest& GetValidWriteIdsRequest::operator=(const GetValidWriteIdsRequest& other646) {
+  fullTableNames = other646.fullTableNames;
+  validTxnList = other646.validTxnList;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetValidWriteIdsRequest::printTo(std::ostream& out) const {
@@ -15168,6 +15675,9 @@ uint32_t TableValidWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->invalidWriteIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size651;
             ::apache::thrift::protocol::TType _etype654;
             xfer += iprot->readListBegin(_etype654, _size651);
@@ -15176,6 +15686,36 @@ uint32_t TableValidWriteIds::read(::apache::thrift::protocol::TProtocol* iprot) 
             for (_i655 = 0; _i655 < _size651; ++_i655)
             {
               xfer += iprot->readI64(this->invalidWriteIds[_i655]);
+=======
+            uint32_t _size631;
+            ::apache::thrift::protocol::TType _etype634;
+            xfer += iprot->readListBegin(_etype634, _size631);
+            this->invalidWriteIds.resize(_size631);
+            uint32_t _i635;
+            for (_i635 = 0; _i635 < _size631; ++_i635)
+            {
+              xfer += iprot->readI64(this->invalidWriteIds[_i635]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            uint32_t _size635;
+            ::apache::thrift::protocol::TType _etype638;
+            xfer += iprot->readListBegin(_etype638, _size635);
+            this->invalidWriteIds.resize(_size635);
+            uint32_t _i639;
+            for (_i639 = 0; _i639 < _size635; ++_i639)
+            {
+              xfer += iprot->readI64(this->invalidWriteIds[_i639]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size647;
+            ::apache::thrift::protocol::TType _etype650;
+            xfer += iprot->readListBegin(_etype650, _size647);
+            this->invalidWriteIds.resize(_size647);
+            uint32_t _i651;
+            for (_i651 = 0; _i651 < _size647; ++_i651)
+            {
+              xfer += iprot->readI64(this->invalidWriteIds[_i651]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -15236,10 +15776,31 @@ uint32_t TableValidWriteIds::write(::apache::thrift::protocol::TProtocol* oprot)
   xfer += oprot->writeFieldBegin("invalidWriteIds", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->invalidWriteIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter656;
     for (_iter656 = this->invalidWriteIds.begin(); _iter656 != this->invalidWriteIds.end(); ++_iter656)
     {
       xfer += oprot->writeI64((*_iter656));
+=======
+    std::vector<int64_t> ::const_iterator _iter636;
+    for (_iter636 = this->invalidWriteIds.begin(); _iter636 != this->invalidWriteIds.end(); ++_iter636)
+    {
+      xfer += oprot->writeI64((*_iter636));
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    std::vector<int64_t> ::const_iterator _iter640;
+    for (_iter640 = this->invalidWriteIds.begin(); _iter640 != this->invalidWriteIds.end(); ++_iter640)
+    {
+      xfer += oprot->writeI64((*_iter640));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<int64_t> ::const_iterator _iter652;
+    for (_iter652 = this->invalidWriteIds.begin(); _iter652 != this->invalidWriteIds.end(); ++_iter652)
+    {
+      xfer += oprot->writeI64((*_iter652));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -15269,6 +15830,9 @@ void swap(TableValidWriteIds &a, TableValidWriteIds &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 TableValidWriteIds::TableValidWriteIds(const TableValidWriteIds& other657) {
   fullTableName = other657.fullTableName;
   writeIdHighWaterMark = other657.writeIdHighWaterMark;
@@ -15284,6 +15848,57 @@ TableValidWriteIds& TableValidWriteIds::operator=(const TableValidWriteIds& othe
   minOpenWriteId = other658.minOpenWriteId;
   abortedBits = other658.abortedBits;
   __isset = other658.__isset;
+=======
+TableValidWriteIds::TableValidWriteIds(const TableValidWriteIds& other637) {
+  fullTableName = other637.fullTableName;
+  writeIdHighWaterMark = other637.writeIdHighWaterMark;
+  invalidWriteIds = other637.invalidWriteIds;
+  minOpenWriteId = other637.minOpenWriteId;
+  abortedBits = other637.abortedBits;
+  __isset = other637.__isset;
+}
+TableValidWriteIds& TableValidWriteIds::operator=(const TableValidWriteIds& other638) {
+  fullTableName = other638.fullTableName;
+  writeIdHighWaterMark = other638.writeIdHighWaterMark;
+  invalidWriteIds = other638.invalidWriteIds;
+  minOpenWriteId = other638.minOpenWriteId;
+  abortedBits = other638.abortedBits;
+  __isset = other638.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+TableValidWriteIds::TableValidWriteIds(const TableValidWriteIds& other641) {
+  fullTableName = other641.fullTableName;
+  writeIdHighWaterMark = other641.writeIdHighWaterMark;
+  invalidWriteIds = other641.invalidWriteIds;
+  minOpenWriteId = other641.minOpenWriteId;
+  abortedBits = other641.abortedBits;
+  __isset = other641.__isset;
+}
+TableValidWriteIds& TableValidWriteIds::operator=(const TableValidWriteIds& other642) {
+  fullTableName = other642.fullTableName;
+  writeIdHighWaterMark = other642.writeIdHighWaterMark;
+  invalidWriteIds = other642.invalidWriteIds;
+  minOpenWriteId = other642.minOpenWriteId;
+  abortedBits = other642.abortedBits;
+  __isset = other642.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+TableValidWriteIds::TableValidWriteIds(const TableValidWriteIds& other653) {
+  fullTableName = other653.fullTableName;
+  writeIdHighWaterMark = other653.writeIdHighWaterMark;
+  invalidWriteIds = other653.invalidWriteIds;
+  minOpenWriteId = other653.minOpenWriteId;
+  abortedBits = other653.abortedBits;
+  __isset = other653.__isset;
+}
+TableValidWriteIds& TableValidWriteIds::operator=(const TableValidWriteIds& other654) {
+  fullTableName = other654.fullTableName;
+  writeIdHighWaterMark = other654.writeIdHighWaterMark;
+  invalidWriteIds = other654.invalidWriteIds;
+  minOpenWriteId = other654.minOpenWriteId;
+  abortedBits = other654.abortedBits;
+  __isset = other654.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void TableValidWriteIds::printTo(std::ostream& out) const {
@@ -15332,6 +15947,9 @@ uint32_t GetValidWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* i
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->tblValidWriteIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size659;
             ::apache::thrift::protocol::TType _etype662;
             xfer += iprot->readListBegin(_etype662, _size659);
@@ -15340,6 +15958,36 @@ uint32_t GetValidWriteIdsResponse::read(::apache::thrift::protocol::TProtocol* i
             for (_i663 = 0; _i663 < _size659; ++_i663)
             {
               xfer += this->tblValidWriteIds[_i663].read(iprot);
+=======
+            uint32_t _size639;
+            ::apache::thrift::protocol::TType _etype642;
+            xfer += iprot->readListBegin(_etype642, _size639);
+            this->tblValidWriteIds.resize(_size639);
+            uint32_t _i643;
+            for (_i643 = 0; _i643 < _size639; ++_i643)
+            {
+              xfer += this->tblValidWriteIds[_i643].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            uint32_t _size643;
+            ::apache::thrift::protocol::TType _etype646;
+            xfer += iprot->readListBegin(_etype646, _size643);
+            this->tblValidWriteIds.resize(_size643);
+            uint32_t _i647;
+            for (_i647 = 0; _i647 < _size643; ++_i647)
+            {
+              xfer += this->tblValidWriteIds[_i647].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size655;
+            ::apache::thrift::protocol::TType _etype658;
+            xfer += iprot->readListBegin(_etype658, _size655);
+            this->tblValidWriteIds.resize(_size655);
+            uint32_t _i659;
+            for (_i659 = 0; _i659 < _size655; ++_i659)
+            {
+              xfer += this->tblValidWriteIds[_i659].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -15370,10 +16018,31 @@ uint32_t GetValidWriteIdsResponse::write(::apache::thrift::protocol::TProtocol* 
   xfer += oprot->writeFieldBegin("tblValidWriteIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->tblValidWriteIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<TableValidWriteIds> ::const_iterator _iter664;
     for (_iter664 = this->tblValidWriteIds.begin(); _iter664 != this->tblValidWriteIds.end(); ++_iter664)
     {
       xfer += (*_iter664).write(oprot);
+=======
+    std::vector<TableValidWriteIds> ::const_iterator _iter644;
+    for (_iter644 = this->tblValidWriteIds.begin(); _iter644 != this->tblValidWriteIds.end(); ++_iter644)
+    {
+      xfer += (*_iter644).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    std::vector<TableValidWriteIds> ::const_iterator _iter648;
+    for (_iter648 = this->tblValidWriteIds.begin(); _iter648 != this->tblValidWriteIds.end(); ++_iter648)
+    {
+      xfer += (*_iter648).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<TableValidWriteIds> ::const_iterator _iter660;
+    for (_iter660 = this->tblValidWriteIds.begin(); _iter660 != this->tblValidWriteIds.end(); ++_iter660)
+    {
+      xfer += (*_iter660).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -15389,11 +16058,35 @@ void swap(GetValidWriteIdsResponse &a, GetValidWriteIdsResponse &b) {
   swap(a.tblValidWriteIds, b.tblValidWriteIds);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetValidWriteIdsResponse::GetValidWriteIdsResponse(const GetValidWriteIdsResponse& other665) {
   tblValidWriteIds = other665.tblValidWriteIds;
 }
 GetValidWriteIdsResponse& GetValidWriteIdsResponse::operator=(const GetValidWriteIdsResponse& other666) {
   tblValidWriteIds = other666.tblValidWriteIds;
+=======
+GetValidWriteIdsResponse::GetValidWriteIdsResponse(const GetValidWriteIdsResponse& other645) {
+  tblValidWriteIds = other645.tblValidWriteIds;
+}
+GetValidWriteIdsResponse& GetValidWriteIdsResponse::operator=(const GetValidWriteIdsResponse& other646) {
+  tblValidWriteIds = other646.tblValidWriteIds;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+GetValidWriteIdsResponse::GetValidWriteIdsResponse(const GetValidWriteIdsResponse& other649) {
+  tblValidWriteIds = other649.tblValidWriteIds;
+}
+GetValidWriteIdsResponse& GetValidWriteIdsResponse::operator=(const GetValidWriteIdsResponse& other650) {
+  tblValidWriteIds = other650.tblValidWriteIds;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetValidWriteIdsResponse::GetValidWriteIdsResponse(const GetValidWriteIdsResponse& other661) {
+  tblValidWriteIds = other661.tblValidWriteIds;
+}
+GetValidWriteIdsResponse& GetValidWriteIdsResponse::operator=(const GetValidWriteIdsResponse& other662) {
+  tblValidWriteIds = other662.tblValidWriteIds;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetValidWriteIdsResponse::printTo(std::ostream& out) const {
@@ -15448,6 +16141,9 @@ uint32_t AllocateTableWriteIdsRequest::read(::apache::thrift::protocol::TProtoco
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->txnIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size667;
             ::apache::thrift::protocol::TType _etype670;
             xfer += iprot->readListBegin(_etype670, _size667);
@@ -15456,6 +16152,36 @@ uint32_t AllocateTableWriteIdsRequest::read(::apache::thrift::protocol::TProtoco
             for (_i671 = 0; _i671 < _size667; ++_i671)
             {
               xfer += iprot->readI64(this->txnIds[_i671]);
+=======
+            uint32_t _size647;
+            ::apache::thrift::protocol::TType _etype650;
+            xfer += iprot->readListBegin(_etype650, _size647);
+            this->txnIds.resize(_size647);
+            uint32_t _i651;
+            for (_i651 = 0; _i651 < _size647; ++_i651)
+            {
+              xfer += iprot->readI64(this->txnIds[_i651]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            uint32_t _size651;
+            ::apache::thrift::protocol::TType _etype654;
+            xfer += iprot->readListBegin(_etype654, _size651);
+            this->txnIds.resize(_size651);
+            uint32_t _i655;
+            for (_i655 = 0; _i655 < _size651; ++_i655)
+            {
+              xfer += iprot->readI64(this->txnIds[_i655]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size663;
+            ::apache::thrift::protocol::TType _etype666;
+            xfer += iprot->readListBegin(_etype666, _size663);
+            this->txnIds.resize(_size663);
+            uint32_t _i667;
+            for (_i667 = 0; _i667 < _size663; ++_i667)
+            {
+              xfer += iprot->readI64(this->txnIds[_i667]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -15506,10 +16232,31 @@ uint32_t AllocateTableWriteIdsRequest::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeFieldBegin("txnIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->txnIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter672;
     for (_iter672 = this->txnIds.begin(); _iter672 != this->txnIds.end(); ++_iter672)
     {
       xfer += oprot->writeI64((*_iter672));
+=======
+    std::vector<int64_t> ::const_iterator _iter652;
+    for (_iter652 = this->txnIds.begin(); _iter652 != this->txnIds.end(); ++_iter652)
+    {
+      xfer += oprot->writeI64((*_iter652));
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    std::vector<int64_t> ::const_iterator _iter656;
+    for (_iter656 = this->txnIds.begin(); _iter656 != this->txnIds.end(); ++_iter656)
+    {
+      xfer += oprot->writeI64((*_iter656));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<int64_t> ::const_iterator _iter668;
+    for (_iter668 = this->txnIds.begin(); _iter668 != this->txnIds.end(); ++_iter668)
+    {
+      xfer += oprot->writeI64((*_iter668));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -15535,6 +16282,9 @@ void swap(AllocateTableWriteIdsRequest &a, AllocateTableWriteIdsRequest &b) {
   swap(a.tableName, b.tableName);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 AllocateTableWriteIdsRequest::AllocateTableWriteIdsRequest(const AllocateTableWriteIdsRequest& other673) {
   txnIds = other673.txnIds;
   dbName = other673.dbName;
@@ -15544,6 +16294,47 @@ AllocateTableWriteIdsRequest& AllocateTableWriteIdsRequest::operator=(const Allo
   txnIds = other674.txnIds;
   dbName = other674.dbName;
   tableName = other674.tableName;
+=======
+<<<<<<< HEAD
+AllocateTableWriteIdsRequest::AllocateTableWriteIdsRequest(const AllocateTableWriteIdsRequest& other653) {
+  txnIds = other653.txnIds;
+  dbName = other653.dbName;
+  tableName = other653.tableName;
+}
+AllocateTableWriteIdsRequest& AllocateTableWriteIdsRequest::operator=(const AllocateTableWriteIdsRequest& other654) {
+  txnIds = other654.txnIds;
+  dbName = other654.dbName;
+  tableName = other654.tableName;
+=======
+AbortTxnRequest::AbortTxnRequest(const AbortTxnRequest& other611) {
+  txnid = other611.txnid;
+}
+AbortTxnRequest& AbortTxnRequest::operator=(const AbortTxnRequest& other612) {
+  txnid = other612.txnid;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+AllocateTableWriteIdsRequest::AllocateTableWriteIdsRequest(const AllocateTableWriteIdsRequest& other657) {
+  txnIds = other657.txnIds;
+  dbName = other657.dbName;
+  tableName = other657.tableName;
+}
+AllocateTableWriteIdsRequest& AllocateTableWriteIdsRequest::operator=(const AllocateTableWriteIdsRequest& other658) {
+  txnIds = other658.txnIds;
+  dbName = other658.dbName;
+  tableName = other658.tableName;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+AllocateTableWriteIdsRequest::AllocateTableWriteIdsRequest(const AllocateTableWriteIdsRequest& other669) {
+  txnIds = other669.txnIds;
+  dbName = other669.dbName;
+  tableName = other669.tableName;
+}
+AllocateTableWriteIdsRequest& AllocateTableWriteIdsRequest::operator=(const AllocateTableWriteIdsRequest& other670) {
+  txnIds = other670.txnIds;
+  dbName = other670.dbName;
+  tableName = other670.tableName;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void AllocateTableWriteIdsRequest::printTo(std::ostream& out) const {
@@ -15647,6 +16438,9 @@ void swap(TxnToWriteId &a, TxnToWriteId &b) {
   swap(a.writeId, b.writeId);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 TxnToWriteId::TxnToWriteId(const TxnToWriteId& other675) {
   txnId = other675.txnId;
   writeId = other675.writeId;
@@ -15654,6 +16448,41 @@ TxnToWriteId::TxnToWriteId(const TxnToWriteId& other675) {
 TxnToWriteId& TxnToWriteId::operator=(const TxnToWriteId& other676) {
   txnId = other676.txnId;
   writeId = other676.writeId;
+=======
+<<<<<<< HEAD
+TxnToWriteId::TxnToWriteId(const TxnToWriteId& other655) {
+  txnId = other655.txnId;
+  writeId = other655.writeId;
+}
+TxnToWriteId& TxnToWriteId::operator=(const TxnToWriteId& other656) {
+  txnId = other656.txnId;
+  writeId = other656.writeId;
+=======
+AbortTxnsRequest::AbortTxnsRequest(const AbortTxnsRequest& other619) {
+  txn_ids = other619.txn_ids;
+}
+AbortTxnsRequest& AbortTxnsRequest::operator=(const AbortTxnsRequest& other620) {
+  txn_ids = other620.txn_ids;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+TxnToWriteId::TxnToWriteId(const TxnToWriteId& other659) {
+  txnId = other659.txnId;
+  writeId = other659.writeId;
+}
+TxnToWriteId& TxnToWriteId::operator=(const TxnToWriteId& other660) {
+  txnId = other660.txnId;
+  writeId = other660.writeId;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+TxnToWriteId::TxnToWriteId(const TxnToWriteId& other671) {
+  txnId = other671.txnId;
+  writeId = other671.writeId;
+}
+TxnToWriteId& TxnToWriteId::operator=(const TxnToWriteId& other672) {
+  txnId = other672.txnId;
+  writeId = other672.writeId;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void TxnToWriteId::printTo(std::ostream& out) const {
@@ -15699,6 +16528,9 @@ uint32_t AllocateTableWriteIdsResponse::read(::apache::thrift::protocol::TProtoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->txnToWriteIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size677;
             ::apache::thrift::protocol::TType _etype680;
             xfer += iprot->readListBegin(_etype680, _size677);
@@ -15707,6 +16539,36 @@ uint32_t AllocateTableWriteIdsResponse::read(::apache::thrift::protocol::TProtoc
             for (_i681 = 0; _i681 < _size677; ++_i681)
             {
               xfer += this->txnToWriteIds[_i681].read(iprot);
+=======
+            uint32_t _size657;
+            ::apache::thrift::protocol::TType _etype660;
+            xfer += iprot->readListBegin(_etype660, _size657);
+            this->txnToWriteIds.resize(_size657);
+            uint32_t _i661;
+            for (_i661 = 0; _i661 < _size657; ++_i661)
+            {
+              xfer += this->txnToWriteIds[_i661].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            uint32_t _size661;
+            ::apache::thrift::protocol::TType _etype664;
+            xfer += iprot->readListBegin(_etype664, _size661);
+            this->txnToWriteIds.resize(_size661);
+            uint32_t _i665;
+            for (_i665 = 0; _i665 < _size661; ++_i665)
+            {
+              xfer += this->txnToWriteIds[_i665].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size673;
+            ::apache::thrift::protocol::TType _etype676;
+            xfer += iprot->readListBegin(_etype676, _size673);
+            this->txnToWriteIds.resize(_size673);
+            uint32_t _i677;
+            for (_i677 = 0; _i677 < _size673; ++_i677)
+            {
+              xfer += this->txnToWriteIds[_i677].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -15737,10 +16599,31 @@ uint32_t AllocateTableWriteIdsResponse::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeFieldBegin("txnToWriteIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->txnToWriteIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<TxnToWriteId> ::const_iterator _iter682;
     for (_iter682 = this->txnToWriteIds.begin(); _iter682 != this->txnToWriteIds.end(); ++_iter682)
     {
       xfer += (*_iter682).write(oprot);
+=======
+    std::vector<TxnToWriteId> ::const_iterator _iter662;
+    for (_iter662 = this->txnToWriteIds.begin(); _iter662 != this->txnToWriteIds.end(); ++_iter662)
+    {
+      xfer += (*_iter662).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+    std::vector<TxnToWriteId> ::const_iterator _iter666;
+    for (_iter666 = this->txnToWriteIds.begin(); _iter666 != this->txnToWriteIds.end(); ++_iter666)
+    {
+      xfer += (*_iter666).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<TxnToWriteId> ::const_iterator _iter678;
+    for (_iter678 = this->txnToWriteIds.begin(); _iter678 != this->txnToWriteIds.end(); ++_iter678)
+    {
+      xfer += (*_iter678).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -15756,11 +16639,59 @@ void swap(AllocateTableWriteIdsResponse &a, AllocateTableWriteIdsResponse &b) {
   swap(a.txnToWriteIds, b.txnToWriteIds);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 AllocateTableWriteIdsResponse::AllocateTableWriteIdsResponse(const AllocateTableWriteIdsResponse& other683) {
   txnToWriteIds = other683.txnToWriteIds;
 }
 AllocateTableWriteIdsResponse& AllocateTableWriteIdsResponse::operator=(const AllocateTableWriteIdsResponse& other684) {
   txnToWriteIds = other684.txnToWriteIds;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+AllocateTableWriteIdsResponse::AllocateTableWriteIdsResponse(const AllocateTableWriteIdsResponse& other663) {
+  txnToWriteIds = other663.txnToWriteIds;
+}
+AllocateTableWriteIdsResponse& AllocateTableWriteIdsResponse::operator=(const AllocateTableWriteIdsResponse& other664) {
+  txnToWriteIds = other664.txnToWriteIds;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CommitTxnRequest::CommitTxnRequest(const CommitTxnRequest& other621) {
+  txnid = other621.txnid;
+  replPolicy = other621.replPolicy;
+  __isset = other621.__isset;
+}
+CommitTxnRequest& CommitTxnRequest::operator=(const CommitTxnRequest& other622) {
+  txnid = other622.txnid;
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+  replPolicy = other622.replPolicy;
+  __isset = other622.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+AllocateTableWriteIdsResponse::AllocateTableWriteIdsResponse(const AllocateTableWriteIdsResponse& other667) {
+  txnToWriteIds = other667.txnToWriteIds;
+}
+AllocateTableWriteIdsResponse& AllocateTableWriteIdsResponse::operator=(const AllocateTableWriteIdsResponse& other668) {
+  txnToWriteIds = other668.txnToWriteIds;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+AllocateTableWriteIdsResponse::AllocateTableWriteIdsResponse(const AllocateTableWriteIdsResponse& other679) {
+  txnToWriteIds = other679.txnToWriteIds;
+}
+AllocateTableWriteIdsResponse& AllocateTableWriteIdsResponse::operator=(const AllocateTableWriteIdsResponse& other680) {
+  txnToWriteIds = other680.txnToWriteIds;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void AllocateTableWriteIdsResponse::printTo(std::ostream& out) const {
@@ -15838,9 +16769,54 @@ uint32_t LockComponent::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast685;
           xfer += iprot->readI32(ecast685);
           this->type = (LockType::type)ecast685;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast665;
+          xfer += iprot->readI32(ecast665);
+          this->type = (LockType::type)ecast665;
+=======
+          int32_t ecast623;
+          xfer += iprot->readI32(ecast623);
+          this->type = (LockType::type)ecast623;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast627;
+          xfer += iprot->readI32(ecast627);
+          this->type = (LockType::type)ecast627;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast623;
+          xfer += iprot->readI32(ecast623);
+          this->type = (LockType::type)ecast623;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast627;
+          xfer += iprot->readI32(ecast627);
+          this->type = (LockType::type)ecast627;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast669;
+          xfer += iprot->readI32(ecast669);
+          this->type = (LockType::type)ecast669;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast681;
+          xfer += iprot->readI32(ecast681);
+          this->type = (LockType::type)ecast681;
+>>>>>>> alloc write id event changes
           isset_type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -15848,9 +16824,54 @@ uint32_t LockComponent::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast686;
           xfer += iprot->readI32(ecast686);
           this->level = (LockLevel::type)ecast686;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast666;
+          xfer += iprot->readI32(ecast666);
+          this->level = (LockLevel::type)ecast666;
+=======
+          int32_t ecast624;
+          xfer += iprot->readI32(ecast624);
+          this->level = (LockLevel::type)ecast624;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast628;
+          xfer += iprot->readI32(ecast628);
+          this->level = (LockLevel::type)ecast628;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast624;
+          xfer += iprot->readI32(ecast624);
+          this->level = (LockLevel::type)ecast624;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast628;
+          xfer += iprot->readI32(ecast628);
+          this->level = (LockLevel::type)ecast628;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast670;
+          xfer += iprot->readI32(ecast670);
+          this->level = (LockLevel::type)ecast670;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast682;
+          xfer += iprot->readI32(ecast682);
+          this->level = (LockLevel::type)ecast682;
+>>>>>>> alloc write id event changes
           isset_level = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -15882,9 +16903,54 @@ uint32_t LockComponent::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 6:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast687;
           xfer += iprot->readI32(ecast687);
           this->operationType = (DataOperationType::type)ecast687;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast667;
+          xfer += iprot->readI32(ecast667);
+          this->operationType = (DataOperationType::type)ecast667;
+=======
+          int32_t ecast625;
+          xfer += iprot->readI32(ecast625);
+          this->operationType = (DataOperationType::type)ecast625;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast629;
+          xfer += iprot->readI32(ecast629);
+          this->operationType = (DataOperationType::type)ecast629;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast625;
+          xfer += iprot->readI32(ecast625);
+          this->operationType = (DataOperationType::type)ecast625;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast629;
+          xfer += iprot->readI32(ecast629);
+          this->operationType = (DataOperationType::type)ecast629;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast671;
+          xfer += iprot->readI32(ecast671);
+          this->operationType = (DataOperationType::type)ecast671;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast683;
+          xfer += iprot->readI32(ecast683);
+          this->operationType = (DataOperationType::type)ecast683;
+>>>>>>> alloc write id event changes
           this->__isset.operationType = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -15984,6 +17050,9 @@ void swap(LockComponent &a, LockComponent &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 LockComponent::LockComponent(const LockComponent& other688) {
   type = other688.type;
   level = other688.level;
@@ -16005,6 +17074,138 @@ LockComponent& LockComponent::operator=(const LockComponent& other689) {
   isAcid = other689.isAcid;
   isDynamicPartitionWrite = other689.isDynamicPartitionWrite;
   __isset = other689.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+LockComponent::LockComponent(const LockComponent& other668) {
+  type = other668.type;
+  level = other668.level;
+  dbname = other668.dbname;
+  tablename = other668.tablename;
+  partitionname = other668.partitionname;
+  operationType = other668.operationType;
+  isAcid = other668.isAcid;
+  isDynamicPartitionWrite = other668.isDynamicPartitionWrite;
+  __isset = other668.__isset;
+}
+LockComponent& LockComponent::operator=(const LockComponent& other669) {
+  type = other669.type;
+  level = other669.level;
+  dbname = other669.dbname;
+  tablename = other669.tablename;
+  partitionname = other669.partitionname;
+  operationType = other669.operationType;
+  isAcid = other669.isAcid;
+  isDynamicPartitionWrite = other669.isDynamicPartitionWrite;
+  __isset = other669.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+LockComponent::LockComponent(const LockComponent& other626) {
+  type = other626.type;
+  level = other626.level;
+  dbname = other626.dbname;
+  tablename = other626.tablename;
+  partitionname = other626.partitionname;
+  operationType = other626.operationType;
+  isAcid = other626.isAcid;
+  isDynamicPartitionWrite = other626.isDynamicPartitionWrite;
+  __isset = other626.__isset;
+}
+LockComponent& LockComponent::operator=(const LockComponent& other627) {
+  type = other627.type;
+  level = other627.level;
+  dbname = other627.dbname;
+  tablename = other627.tablename;
+  partitionname = other627.partitionname;
+  operationType = other627.operationType;
+  isAcid = other627.isAcid;
+  isDynamicPartitionWrite = other627.isDynamicPartitionWrite;
+  __isset = other627.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+LockComponent::LockComponent(const LockComponent& other630) {
+  type = other630.type;
+  level = other630.level;
+  dbname = other630.dbname;
+  tablename = other630.tablename;
+  partitionname = other630.partitionname;
+  operationType = other630.operationType;
+  isAcid = other630.isAcid;
+  isDynamicPartitionWrite = other630.isDynamicPartitionWrite;
+  __isset = other630.__isset;
+}
+LockComponent& LockComponent::operator=(const LockComponent& other631) {
+  type = other631.type;
+  level = other631.level;
+  dbname = other631.dbname;
+  tablename = other631.tablename;
+  partitionname = other631.partitionname;
+  operationType = other631.operationType;
+  isAcid = other631.isAcid;
+  isDynamicPartitionWrite = other631.isDynamicPartitionWrite;
+  __isset = other631.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+LockComponent::LockComponent(const LockComponent& other672) {
+  type = other672.type;
+  level = other672.level;
+  dbname = other672.dbname;
+  tablename = other672.tablename;
+  partitionname = other672.partitionname;
+  operationType = other672.operationType;
+  isAcid = other672.isAcid;
+  isDynamicPartitionWrite = other672.isDynamicPartitionWrite;
+  __isset = other672.__isset;
+}
+LockComponent& LockComponent::operator=(const LockComponent& other673) {
+  type = other673.type;
+  level = other673.level;
+  dbname = other673.dbname;
+  tablename = other673.tablename;
+  partitionname = other673.partitionname;
+  operationType = other673.operationType;
+  isAcid = other673.isAcid;
+  isDynamicPartitionWrite = other673.isDynamicPartitionWrite;
+  __isset = other673.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+LockComponent::LockComponent(const LockComponent& other684) {
+  type = other684.type;
+  level = other684.level;
+  dbname = other684.dbname;
+  tablename = other684.tablename;
+  partitionname = other684.partitionname;
+  operationType = other684.operationType;
+  isAcid = other684.isAcid;
+  isDynamicPartitionWrite = other684.isDynamicPartitionWrite;
+  __isset = other684.__isset;
+}
+LockComponent& LockComponent::operator=(const LockComponent& other685) {
+  type = other685.type;
+  level = other685.level;
+  dbname = other685.dbname;
+  tablename = other685.tablename;
+  partitionname = other685.partitionname;
+  operationType = other685.operationType;
+  isAcid = other685.isAcid;
+  isDynamicPartitionWrite = other685.isDynamicPartitionWrite;
+  __isset = other685.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void LockComponent::printTo(std::ostream& out) const {
@@ -16076,6 +17277,9 @@ uint32_t LockRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->component.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size690;
             ::apache::thrift::protocol::TType _etype693;
             xfer += iprot->readListBegin(_etype693, _size690);
@@ -16084,6 +17288,77 @@ uint32_t LockRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i694 = 0; _i694 < _size690; ++_i694)
             {
               xfer += this->component[_i694].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size670;
+            ::apache::thrift::protocol::TType _etype673;
+            xfer += iprot->readListBegin(_etype673, _size670);
+            this->component.resize(_size670);
+            uint32_t _i674;
+            for (_i674 = 0; _i674 < _size670; ++_i674)
+            {
+              xfer += this->component[_i674].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size628;
+            ::apache::thrift::protocol::TType _etype631;
+            xfer += iprot->readListBegin(_etype631, _size628);
+            this->component.resize(_size628);
+            uint32_t _i632;
+            for (_i632 = 0; _i632 < _size628; ++_i632)
+<<<<<<< HEAD
+            {
+              xfer += this->component[_i632].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size632;
+            ::apache::thrift::protocol::TType _etype635;
+            xfer += iprot->readListBegin(_etype635, _size632);
+            this->component.resize(_size632);
+            uint32_t _i636;
+            for (_i636 = 0; _i636 < _size632; ++_i636)
+<<<<<<< HEAD
+            {
+              xfer += this->component[_i636].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += this->component[_i632].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += this->component[_i636].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size674;
+            ::apache::thrift::protocol::TType _etype677;
+            xfer += iprot->readListBegin(_etype677, _size674);
+            this->component.resize(_size674);
+            uint32_t _i678;
+            for (_i678 = 0; _i678 < _size674; ++_i678)
+            {
+              xfer += this->component[_i678].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size686;
+            ::apache::thrift::protocol::TType _etype689;
+            xfer += iprot->readListBegin(_etype689, _size686);
+            this->component.resize(_size686);
+            uint32_t _i690;
+            for (_i690 = 0; _i690 < _size686; ++_i690)
+            {
+              xfer += this->component[_i690].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -16150,10 +17425,62 @@ uint32_t LockRequest::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("component", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->component.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<LockComponent> ::const_iterator _iter695;
     for (_iter695 = this->component.begin(); _iter695 != this->component.end(); ++_iter695)
     {
       xfer += (*_iter695).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<LockComponent> ::const_iterator _iter675;
+    for (_iter675 = this->component.begin(); _iter675 != this->component.end(); ++_iter675)
+    {
+      xfer += (*_iter675).write(oprot);
+=======
+    std::vector<LockComponent> ::const_iterator _iter633;
+    for (_iter633 = this->component.begin(); _iter633 != this->component.end(); ++_iter633)
+    {
+      xfer += (*_iter633).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<LockComponent> ::const_iterator _iter637;
+    for (_iter637 = this->component.begin(); _iter637 != this->component.end(); ++_iter637)
+    {
+      xfer += (*_iter637).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<LockComponent> ::const_iterator _iter633;
+    for (_iter633 = this->component.begin(); _iter633 != this->component.end(); ++_iter633)
+    {
+      xfer += (*_iter633).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<LockComponent> ::const_iterator _iter637;
+    for (_iter637 = this->component.begin(); _iter637 != this->component.end(); ++_iter637)
+    {
+      xfer += (*_iter637).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<LockComponent> ::const_iterator _iter679;
+    for (_iter679 = this->component.begin(); _iter679 != this->component.end(); ++_iter679)
+    {
+      xfer += (*_iter679).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<LockComponent> ::const_iterator _iter691;
+    for (_iter691 = this->component.begin(); _iter691 != this->component.end(); ++_iter691)
+    {
+      xfer += (*_iter691).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -16192,6 +17519,9 @@ void swap(LockRequest &a, LockRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 LockRequest::LockRequest(const LockRequest& other696) {
   component = other696.component;
   txnid = other696.txnid;
@@ -16207,6 +17537,108 @@ LockRequest& LockRequest::operator=(const LockRequest& other697) {
   hostname = other697.hostname;
   agentInfo = other697.agentInfo;
   __isset = other697.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+LockRequest::LockRequest(const LockRequest& other676) {
+  component = other676.component;
+  txnid = other676.txnid;
+  user = other676.user;
+  hostname = other676.hostname;
+  agentInfo = other676.agentInfo;
+  __isset = other676.__isset;
+}
+LockRequest& LockRequest::operator=(const LockRequest& other677) {
+  component = other677.component;
+  txnid = other677.txnid;
+  user = other677.user;
+  hostname = other677.hostname;
+  agentInfo = other677.agentInfo;
+  __isset = other677.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+LockRequest::LockRequest(const LockRequest& other634) {
+  component = other634.component;
+  txnid = other634.txnid;
+  user = other634.user;
+  hostname = other634.hostname;
+  agentInfo = other634.agentInfo;
+  __isset = other634.__isset;
+}
+LockRequest& LockRequest::operator=(const LockRequest& other635) {
+  component = other635.component;
+  txnid = other635.txnid;
+  user = other635.user;
+  hostname = other635.hostname;
+  agentInfo = other635.agentInfo;
+  __isset = other635.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+LockRequest::LockRequest(const LockRequest& other638) {
+  component = other638.component;
+  txnid = other638.txnid;
+  user = other638.user;
+  hostname = other638.hostname;
+  agentInfo = other638.agentInfo;
+  __isset = other638.__isset;
+}
+LockRequest& LockRequest::operator=(const LockRequest& other639) {
+  component = other639.component;
+  txnid = other639.txnid;
+  user = other639.user;
+  hostname = other639.hostname;
+  agentInfo = other639.agentInfo;
+  __isset = other639.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+LockRequest::LockRequest(const LockRequest& other680) {
+  component = other680.component;
+  txnid = other680.txnid;
+  user = other680.user;
+  hostname = other680.hostname;
+  agentInfo = other680.agentInfo;
+  __isset = other680.__isset;
+}
+LockRequest& LockRequest::operator=(const LockRequest& other681) {
+  component = other681.component;
+  txnid = other681.txnid;
+  user = other681.user;
+  hostname = other681.hostname;
+  agentInfo = other681.agentInfo;
+  __isset = other681.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+LockRequest::LockRequest(const LockRequest& other692) {
+  component = other692.component;
+  txnid = other692.txnid;
+  user = other692.user;
+  hostname = other692.hostname;
+  agentInfo = other692.agentInfo;
+  __isset = other692.__isset;
+}
+LockRequest& LockRequest::operator=(const LockRequest& other693) {
+  component = other693.component;
+  txnid = other693.txnid;
+  user = other693.user;
+  hostname = other693.hostname;
+  agentInfo = other693.agentInfo;
+  __isset = other693.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void LockRequest::printTo(std::ostream& out) const {
@@ -16266,9 +17698,54 @@ uint32_t LockResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast698;
           xfer += iprot->readI32(ecast698);
           this->state = (LockState::type)ecast698;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast678;
+          xfer += iprot->readI32(ecast678);
+          this->state = (LockState::type)ecast678;
+=======
+          int32_t ecast636;
+          xfer += iprot->readI32(ecast636);
+          this->state = (LockState::type)ecast636;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast640;
+          xfer += iprot->readI32(ecast640);
+          this->state = (LockState::type)ecast640;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast636;
+          xfer += iprot->readI32(ecast636);
+          this->state = (LockState::type)ecast636;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast640;
+          xfer += iprot->readI32(ecast640);
+          this->state = (LockState::type)ecast640;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast682;
+          xfer += iprot->readI32(ecast682);
+          this->state = (LockState::type)ecast682;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast694;
+          xfer += iprot->readI32(ecast694);
+          this->state = (LockState::type)ecast694;
+>>>>>>> alloc write id event changes
           isset_state = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -16314,6 +17791,9 @@ void swap(LockResponse &a, LockResponse &b) {
   swap(a.state, b.state);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 LockResponse::LockResponse(const LockResponse& other699) {
   lockid = other699.lockid;
   state = other699.state;
@@ -16321,6 +17801,76 @@ LockResponse::LockResponse(const LockResponse& other699) {
 LockResponse& LockResponse::operator=(const LockResponse& other700) {
   lockid = other700.lockid;
   state = other700.state;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+LockResponse::LockResponse(const LockResponse& other679) {
+  lockid = other679.lockid;
+  state = other679.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other680) {
+  lockid = other680.lockid;
+  state = other680.state;
+=======
+LockResponse::LockResponse(const LockResponse& other637) {
+  lockid = other637.lockid;
+  state = other637.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other638) {
+  lockid = other638.lockid;
+  state = other638.state;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+LockResponse::LockResponse(const LockResponse& other641) {
+  lockid = other641.lockid;
+  state = other641.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other642) {
+  lockid = other642.lockid;
+  state = other642.state;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+LockResponse::LockResponse(const LockResponse& other637) {
+  lockid = other637.lockid;
+  state = other637.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other638) {
+  lockid = other638.lockid;
+  state = other638.state;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+LockResponse::LockResponse(const LockResponse& other641) {
+  lockid = other641.lockid;
+  state = other641.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other642) {
+  lockid = other642.lockid;
+  state = other642.state;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+LockResponse::LockResponse(const LockResponse& other683) {
+  lockid = other683.lockid;
+  state = other683.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other684) {
+  lockid = other684.lockid;
+  state = other684.state;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+LockResponse::LockResponse(const LockResponse& other695) {
+  lockid = other695.lockid;
+  state = other695.state;
+}
+LockResponse& LockResponse::operator=(const LockResponse& other696) {
+  lockid = other696.lockid;
+  state = other696.state;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void LockResponse::printTo(std::ostream& out) const {
@@ -16442,6 +17992,9 @@ void swap(CheckLockRequest &a, CheckLockRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CheckLockRequest::CheckLockRequest(const CheckLockRequest& other701) {
   lockid = other701.lockid;
   txnid = other701.txnid;
@@ -16453,6 +18006,100 @@ CheckLockRequest& CheckLockRequest::operator=(const CheckLockRequest& other702) 
   txnid = other702.txnid;
   elapsed_ms = other702.elapsed_ms;
   __isset = other702.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other681) {
+  lockid = other681.lockid;
+  txnid = other681.txnid;
+  elapsed_ms = other681.elapsed_ms;
+  __isset = other681.__isset;
+}
+CheckLockRequest& CheckLockRequest::operator=(const CheckLockRequest& other682) {
+  lockid = other682.lockid;
+  txnid = other682.txnid;
+  elapsed_ms = other682.elapsed_ms;
+  __isset = other682.__isset;
+=======
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other639) {
+  lockid = other639.lockid;
+  txnid = other639.txnid;
+  elapsed_ms = other639.elapsed_ms;
+  __isset = other639.__isset;
+}
+=======
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other639) {
+  lockid = other639.lockid;
+  txnid = other639.txnid;
+  elapsed_ms = other639.elapsed_ms;
+  __isset = other639.__isset;
+}
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CheckLockRequest& CheckLockRequest::operator=(const CheckLockRequest& other640) {
+  lockid = other640.lockid;
+  txnid = other640.txnid;
+  elapsed_ms = other640.elapsed_ms;
+  __isset = other640.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other643) {
+  lockid = other643.lockid;
+  txnid = other643.txnid;
+  elapsed_ms = other643.elapsed_ms;
+  __isset = other643.__isset;
+}
+=======
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other643) {
+  lockid = other643.lockid;
+  txnid = other643.txnid;
+  elapsed_ms = other643.elapsed_ms;
+  __isset = other643.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+CheckLockRequest& CheckLockRequest::operator=(const CheckLockRequest& other644) {
+  lockid = other644.lockid;
+  txnid = other644.txnid;
+  elapsed_ms = other644.elapsed_ms;
+  __isset = other644.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other685) {
+  lockid = other685.lockid;
+  txnid = other685.txnid;
+  elapsed_ms = other685.elapsed_ms;
+  __isset = other685.__isset;
+}
+CheckLockRequest& CheckLockRequest::operator=(const CheckLockRequest& other686) {
+  lockid = other686.lockid;
+  txnid = other686.txnid;
+  elapsed_ms = other686.elapsed_ms;
+  __isset = other686.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CheckLockRequest::CheckLockRequest(const CheckLockRequest& other697) {
+  lockid = other697.lockid;
+  txnid = other697.txnid;
+  elapsed_ms = other697.elapsed_ms;
+  __isset = other697.__isset;
+}
+CheckLockRequest& CheckLockRequest::operator=(const CheckLockRequest& other698) {
+  lockid = other698.lockid;
+  txnid = other698.txnid;
+  elapsed_ms = other698.elapsed_ms;
+  __isset = other698.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CheckLockRequest::printTo(std::ostream& out) const {
@@ -16536,11 +18183,70 @@ void swap(UnlockRequest &a, UnlockRequest &b) {
   swap(a.lockid, b.lockid);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 UnlockRequest::UnlockRequest(const UnlockRequest& other703) {
   lockid = other703.lockid;
 }
 UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other704) {
   lockid = other704.lockid;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+UnlockRequest::UnlockRequest(const UnlockRequest& other683) {
+  lockid = other683.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other684) {
+  lockid = other684.lockid;
+=======
+UnlockRequest::UnlockRequest(const UnlockRequest& other641) {
+  lockid = other641.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other642) {
+  lockid = other642.lockid;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+UnlockRequest::UnlockRequest(const UnlockRequest& other645) {
+  lockid = other645.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other646) {
+  lockid = other646.lockid;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnlockRequest::UnlockRequest(const UnlockRequest& other641) {
+  lockid = other641.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other642) {
+  lockid = other642.lockid;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+UnlockRequest::UnlockRequest(const UnlockRequest& other645) {
+  lockid = other645.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other646) {
+  lockid = other646.lockid;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnlockRequest::UnlockRequest(const UnlockRequest& other687) {
+  lockid = other687.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other688) {
+  lockid = other688.lockid;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+UnlockRequest::UnlockRequest(const UnlockRequest& other699) {
+  lockid = other699.lockid;
+}
+UnlockRequest& UnlockRequest::operator=(const UnlockRequest& other700) {
+  lockid = other700.lockid;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void UnlockRequest::printTo(std::ostream& out) const {
@@ -16679,6 +18385,9 @@ void swap(ShowLocksRequest &a, ShowLocksRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other705) {
   dbname = other705.dbname;
   tablename = other705.tablename;
@@ -16692,6 +18401,105 @@ ShowLocksRequest& ShowLocksRequest::operator=(const ShowLocksRequest& other706) 
   partname = other706.partname;
   isExtended = other706.isExtended;
   __isset = other706.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other685) {
+  dbname = other685.dbname;
+  tablename = other685.tablename;
+  partname = other685.partname;
+  isExtended = other685.isExtended;
+  __isset = other685.__isset;
+}
+ShowLocksRequest& ShowLocksRequest::operator=(const ShowLocksRequest& other686) {
+  dbname = other686.dbname;
+  tablename = other686.tablename;
+  partname = other686.partname;
+  isExtended = other686.isExtended;
+  __isset = other686.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other643) {
+  dbname = other643.dbname;
+  tablename = other643.tablename;
+  partname = other643.partname;
+  isExtended = other643.isExtended;
+  __isset = other643.__isset;
+}
+ShowLocksRequest& ShowLocksRequest::operator=(const ShowLocksRequest& other644) {
+  dbname = other644.dbname;
+  tablename = other644.tablename;
+  partname = other644.partname;
+  isExtended = other644.isExtended;
+  __isset = other644.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other647) {
+  dbname = other647.dbname;
+  tablename = other647.tablename;
+  partname = other647.partname;
+  isExtended = other647.isExtended;
+  __isset = other647.__isset;
+}
+=======
+ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other647) {
+  dbname = other647.dbname;
+  tablename = other647.tablename;
+  partname = other647.partname;
+  isExtended = other647.isExtended;
+  __isset = other647.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+ShowLocksRequest& ShowLocksRequest::operator=(const ShowLocksRequest& other648) {
+  dbname = other648.dbname;
+  tablename = other648.tablename;
+  partname = other648.partname;
+  isExtended = other648.isExtended;
+  __isset = other648.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other689) {
+  dbname = other689.dbname;
+  tablename = other689.tablename;
+  partname = other689.partname;
+  isExtended = other689.isExtended;
+  __isset = other689.__isset;
+}
+ShowLocksRequest& ShowLocksRequest::operator=(const ShowLocksRequest& other690) {
+  dbname = other690.dbname;
+  tablename = other690.tablename;
+  partname = other690.partname;
+  isExtended = other690.isExtended;
+  __isset = other690.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ShowLocksRequest::ShowLocksRequest(const ShowLocksRequest& other701) {
+  dbname = other701.dbname;
+  tablename = other701.tablename;
+  partname = other701.partname;
+  isExtended = other701.isExtended;
+  __isset = other701.__isset;
+}
+ShowLocksRequest& ShowLocksRequest::operator=(const ShowLocksRequest& other702) {
+  dbname = other702.dbname;
+  tablename = other702.tablename;
+  partname = other702.partname;
+  isExtended = other702.isExtended;
+  __isset = other702.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ShowLocksRequest::printTo(std::ostream& out) const {
@@ -16844,9 +18652,54 @@ uint32_t ShowLocksResponseElement::read(::apache::thrift::protocol::TProtocol* i
         break;
       case 5:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast707;
           xfer += iprot->readI32(ecast707);
           this->state = (LockState::type)ecast707;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast687;
+          xfer += iprot->readI32(ecast687);
+          this->state = (LockState::type)ecast687;
+=======
+          int32_t ecast645;
+          xfer += iprot->readI32(ecast645);
+          this->state = (LockState::type)ecast645;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast649;
+          xfer += iprot->readI32(ecast649);
+          this->state = (LockState::type)ecast649;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast645;
+          xfer += iprot->readI32(ecast645);
+          this->state = (LockState::type)ecast645;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast649;
+          xfer += iprot->readI32(ecast649);
+          this->state = (LockState::type)ecast649;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast691;
+          xfer += iprot->readI32(ecast691);
+          this->state = (LockState::type)ecast691;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast703;
+          xfer += iprot->readI32(ecast703);
+          this->state = (LockState::type)ecast703;
+>>>>>>> alloc write id event changes
           isset_state = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -16854,9 +18707,54 @@ uint32_t ShowLocksResponseElement::read(::apache::thrift::protocol::TProtocol* i
         break;
       case 6:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast708;
           xfer += iprot->readI32(ecast708);
           this->type = (LockType::type)ecast708;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast688;
+          xfer += iprot->readI32(ecast688);
+          this->type = (LockType::type)ecast688;
+=======
+          int32_t ecast646;
+          xfer += iprot->readI32(ecast646);
+          this->type = (LockType::type)ecast646;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast650;
+          xfer += iprot->readI32(ecast650);
+          this->type = (LockType::type)ecast650;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast646;
+          xfer += iprot->readI32(ecast646);
+          this->type = (LockType::type)ecast646;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast650;
+          xfer += iprot->readI32(ecast650);
+          this->type = (LockType::type)ecast650;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast692;
+          xfer += iprot->readI32(ecast692);
+          this->type = (LockType::type)ecast692;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast704;
+          xfer += iprot->readI32(ecast704);
+          this->type = (LockType::type)ecast704;
+>>>>>>> alloc write id event changes
           isset_type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -17072,6 +18970,9 @@ void swap(ShowLocksResponseElement &a, ShowLocksResponseElement &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ShowLocksResponseElement::ShowLocksResponseElement(const ShowLocksResponseElement& other709) {
   lockid = other709.lockid;
   dbname = other709.dbname;
@@ -17109,6 +19010,218 @@ ShowLocksResponseElement& ShowLocksResponseElement::operator=(const ShowLocksRes
   blockedByIntId = other710.blockedByIntId;
   lockIdInternal = other710.lockIdInternal;
   __isset = other710.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ShowLocksResponseElement::ShowLocksResponseElement(const ShowLocksResponseElement& other689) {
+  lockid = other689.lockid;
+  dbname = other689.dbname;
+  tablename = other689.tablename;
+  partname = other689.partname;
+  state = other689.state;
+  type = other689.type;
+  txnid = other689.txnid;
+  lastheartbeat = other689.lastheartbeat;
+  acquiredat = other689.acquiredat;
+  user = other689.user;
+  hostname = other689.hostname;
+  heartbeatCount = other689.heartbeatCount;
+  agentInfo = other689.agentInfo;
+  blockedByExtId = other689.blockedByExtId;
+  blockedByIntId = other689.blockedByIntId;
+  lockIdInternal = other689.lockIdInternal;
+  __isset = other689.__isset;
+}
+ShowLocksResponseElement& ShowLocksResponseElement::operator=(const ShowLocksResponseElement& other690) {
+  lockid = other690.lockid;
+  dbname = other690.dbname;
+  tablename = other690.tablename;
+  partname = other690.partname;
+  state = other690.state;
+  type = other690.type;
+  txnid = other690.txnid;
+  lastheartbeat = other690.lastheartbeat;
+  acquiredat = other690.acquiredat;
+  user = other690.user;
+  hostname = other690.hostname;
+  heartbeatCount = other690.heartbeatCount;
+  agentInfo = other690.agentInfo;
+  blockedByExtId = other690.blockedByExtId;
+  blockedByIntId = other690.blockedByIntId;
+  lockIdInternal = other690.lockIdInternal;
+  __isset = other690.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ShowLocksResponseElement::ShowLocksResponseElement(const ShowLocksResponseElement& other647) {
+  lockid = other647.lockid;
+  dbname = other647.dbname;
+  tablename = other647.tablename;
+  partname = other647.partname;
+  state = other647.state;
+  type = other647.type;
+  txnid = other647.txnid;
+  lastheartbeat = other647.lastheartbeat;
+  acquiredat = other647.acquiredat;
+  user = other647.user;
+  hostname = other647.hostname;
+  heartbeatCount = other647.heartbeatCount;
+  agentInfo = other647.agentInfo;
+  blockedByExtId = other647.blockedByExtId;
+  blockedByIntId = other647.blockedByIntId;
+  lockIdInternal = other647.lockIdInternal;
+  __isset = other647.__isset;
+}
+ShowLocksResponseElement& ShowLocksResponseElement::operator=(const ShowLocksResponseElement& other648) {
+  lockid = other648.lockid;
+  dbname = other648.dbname;
+  tablename = other648.tablename;
+  partname = other648.partname;
+  state = other648.state;
+  type = other648.type;
+  txnid = other648.txnid;
+  lastheartbeat = other648.lastheartbeat;
+  acquiredat = other648.acquiredat;
+  user = other648.user;
+  hostname = other648.hostname;
+  heartbeatCount = other648.heartbeatCount;
+  agentInfo = other648.agentInfo;
+  blockedByExtId = other648.blockedByExtId;
+  blockedByIntId = other648.blockedByIntId;
+  lockIdInternal = other648.lockIdInternal;
+  __isset = other648.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+ShowLocksResponseElement::ShowLocksResponseElement(const ShowLocksResponseElement& other651) {
+  lockid = other651.lockid;
+  dbname = other651.dbname;
+  tablename = other651.tablename;
+  partname = other651.partname;
+  state = other651.state;
+  type = other651.type;
+  txnid = other651.txnid;
+  lastheartbeat = other651.lastheartbeat;
+  acquiredat = other651.acquiredat;
+  user = other651.user;
+  hostname = other651.hostname;
+  heartbeatCount = other651.heartbeatCount;
+  agentInfo = other651.agentInfo;
+  blockedByExtId = other651.blockedByExtId;
+  blockedByIntId = other651.blockedByIntId;
+  lockIdInternal = other651.lockIdInternal;
+  __isset = other651.__isset;
+}
+ShowLocksResponseElement& ShowLocksResponseElement::operator=(const ShowLocksResponseElement& other652) {
+  lockid = other652.lockid;
+  dbname = other652.dbname;
+  tablename = other652.tablename;
+  partname = other652.partname;
+  state = other652.state;
+  type = other652.type;
+  txnid = other652.txnid;
+  lastheartbeat = other652.lastheartbeat;
+  acquiredat = other652.acquiredat;
+  user = other652.user;
+  hostname = other652.hostname;
+  heartbeatCount = other652.heartbeatCount;
+  agentInfo = other652.agentInfo;
+  blockedByExtId = other652.blockedByExtId;
+  blockedByIntId = other652.blockedByIntId;
+  lockIdInternal = other652.lockIdInternal;
+  __isset = other652.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ShowLocksResponseElement::ShowLocksResponseElement(const ShowLocksResponseElement& other693) {
+  lockid = other693.lockid;
+  dbname = other693.dbname;
+  tablename = other693.tablename;
+  partname = other693.partname;
+  state = other693.state;
+  type = other693.type;
+  txnid = other693.txnid;
+  lastheartbeat = other693.lastheartbeat;
+  acquiredat = other693.acquiredat;
+  user = other693.user;
+  hostname = other693.hostname;
+  heartbeatCount = other693.heartbeatCount;
+  agentInfo = other693.agentInfo;
+  blockedByExtId = other693.blockedByExtId;
+  blockedByIntId = other693.blockedByIntId;
+  lockIdInternal = other693.lockIdInternal;
+  __isset = other693.__isset;
+}
+ShowLocksResponseElement& ShowLocksResponseElement::operator=(const ShowLocksResponseElement& other694) {
+  lockid = other694.lockid;
+  dbname = other694.dbname;
+  tablename = other694.tablename;
+  partname = other694.partname;
+  state = other694.state;
+  type = other694.type;
+  txnid = other694.txnid;
+  lastheartbeat = other694.lastheartbeat;
+  acquiredat = other694.acquiredat;
+  user = other694.user;
+  hostname = other694.hostname;
+  heartbeatCount = other694.heartbeatCount;
+  agentInfo = other694.agentInfo;
+  blockedByExtId = other694.blockedByExtId;
+  blockedByIntId = other694.blockedByIntId;
+  lockIdInternal = other694.lockIdInternal;
+  __isset = other694.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ShowLocksResponseElement::ShowLocksResponseElement(const ShowLocksResponseElement& other705) {
+  lockid = other705.lockid;
+  dbname = other705.dbname;
+  tablename = other705.tablename;
+  partname = other705.partname;
+  state = other705.state;
+  type = other705.type;
+  txnid = other705.txnid;
+  lastheartbeat = other705.lastheartbeat;
+  acquiredat = other705.acquiredat;
+  user = other705.user;
+  hostname = other705.hostname;
+  heartbeatCount = other705.heartbeatCount;
+  agentInfo = other705.agentInfo;
+  blockedByExtId = other705.blockedByExtId;
+  blockedByIntId = other705.blockedByIntId;
+  lockIdInternal = other705.lockIdInternal;
+  __isset = other705.__isset;
+}
+ShowLocksResponseElement& ShowLocksResponseElement::operator=(const ShowLocksResponseElement& other706) {
+  lockid = other706.lockid;
+  dbname = other706.dbname;
+  tablename = other706.tablename;
+  partname = other706.partname;
+  state = other706.state;
+  type = other706.type;
+  txnid = other706.txnid;
+  lastheartbeat = other706.lastheartbeat;
+  acquiredat = other706.acquiredat;
+  user = other706.user;
+  hostname = other706.hostname;
+  heartbeatCount = other706.heartbeatCount;
+  agentInfo = other706.agentInfo;
+  blockedByExtId = other706.blockedByExtId;
+  blockedByIntId = other706.blockedByIntId;
+  lockIdInternal = other706.lockIdInternal;
+  __isset = other706.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ShowLocksResponseElement::printTo(std::ostream& out) const {
@@ -17167,6 +19280,9 @@ uint32_t ShowLocksResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->locks.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size711;
             ::apache::thrift::protocol::TType _etype714;
             xfer += iprot->readListBegin(_etype714, _size711);
@@ -17175,6 +19291,78 @@ uint32_t ShowLocksResponse::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i715 = 0; _i715 < _size711; ++_i715)
             {
               xfer += this->locks[_i715].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size691;
+            ::apache::thrift::protocol::TType _etype694;
+            xfer += iprot->readListBegin(_etype694, _size691);
+            this->locks.resize(_size691);
+            uint32_t _i695;
+            for (_i695 = 0; _i695 < _size691; ++_i695)
+            {
+              xfer += this->locks[_i695].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size649;
+            ::apache::thrift::protocol::TType _etype652;
+            xfer += iprot->readListBegin(_etype652, _size649);
+            this->locks.resize(_size649);
+            uint32_t _i653;
+            for (_i653 = 0; _i653 < _size649; ++_i653)
+            {
+              xfer += this->locks[_i653].read(iprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size653;
+            ::apache::thrift::protocol::TType _etype656;
+            xfer += iprot->readListBegin(_etype656, _size653);
+            this->locks.resize(_size653);
+            uint32_t _i657;
+            for (_i657 = 0; _i657 < _size653; ++_i657)
+            {
+              xfer += this->locks[_i657].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size653;
+            ::apache::thrift::protocol::TType _etype656;
+            xfer += iprot->readListBegin(_etype656, _size653);
+            this->locks.resize(_size653);
+            uint32_t _i657;
+            for (_i657 = 0; _i657 < _size653; ++_i657)
+            {
+              xfer += this->locks[_i657].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size695;
+            ::apache::thrift::protocol::TType _etype698;
+            xfer += iprot->readListBegin(_etype698, _size695);
+            this->locks.resize(_size695);
+            uint32_t _i699;
+            for (_i699 = 0; _i699 < _size695; ++_i699)
+            {
+              xfer += this->locks[_i699].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size707;
+            ::apache::thrift::protocol::TType _etype710;
+            xfer += iprot->readListBegin(_etype710, _size707);
+            this->locks.resize(_size707);
+            uint32_t _i711;
+            for (_i711 = 0; _i711 < _size707; ++_i711)
+            {
+              xfer += this->locks[_i711].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -17203,10 +19391,61 @@ uint32_t ShowLocksResponse::write(::apache::thrift::protocol::TProtocol* oprot) 
   xfer += oprot->writeFieldBegin("locks", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->locks.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<ShowLocksResponseElement> ::const_iterator _iter716;
     for (_iter716 = this->locks.begin(); _iter716 != this->locks.end(); ++_iter716)
     {
       xfer += (*_iter716).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<ShowLocksResponseElement> ::const_iterator _iter696;
+    for (_iter696 = this->locks.begin(); _iter696 != this->locks.end(); ++_iter696)
+    {
+      xfer += (*_iter696).write(oprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<ShowLocksResponseElement> ::const_iterator _iter654;
+    for (_iter654 = this->locks.begin(); _iter654 != this->locks.end(); ++_iter654)
+    {
+      xfer += (*_iter654).write(oprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<ShowLocksResponseElement> ::const_iterator _iter658;
+    for (_iter658 = this->locks.begin(); _iter658 != this->locks.end(); ++_iter658)
+    {
+      xfer += (*_iter658).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<ShowLocksResponseElement> ::const_iterator _iter658;
+    for (_iter658 = this->locks.begin(); _iter658 != this->locks.end(); ++_iter658)
+    {
+      xfer += (*_iter658).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<ShowLocksResponseElement> ::const_iterator _iter700;
+    for (_iter700 = this->locks.begin(); _iter700 != this->locks.end(); ++_iter700)
+    {
+      xfer += (*_iter700).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<ShowLocksResponseElement> ::const_iterator _iter712;
+    for (_iter712 = this->locks.begin(); _iter712 != this->locks.end(); ++_iter712)
+    {
+      xfer += (*_iter712).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -17223,6 +19462,9 @@ void swap(ShowLocksResponse &a, ShowLocksResponse &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other717) {
   locks = other717.locks;
   __isset = other717.__isset;
@@ -17230,6 +19472,72 @@ ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other717) {
 ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other718) {
   locks = other718.locks;
   __isset = other718.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other697) {
+  locks = other697.locks;
+  __isset = other697.__isset;
+}
+ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other698) {
+  locks = other698.locks;
+  __isset = other698.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other655) {
+  locks = other655.locks;
+  __isset = other655.__isset;
+}
+ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other656) {
+  locks = other656.locks;
+  __isset = other656.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other659) {
+  locks = other659.locks;
+  __isset = other659.__isset;
+}
+ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other660) {
+  locks = other660.locks;
+  __isset = other660.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other659) {
+  locks = other659.locks;
+  __isset = other659.__isset;
+}
+ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other660) {
+  locks = other660.locks;
+  __isset = other660.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other701) {
+  locks = other701.locks;
+  __isset = other701.__isset;
+}
+ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other702) {
+  locks = other702.locks;
+  __isset = other702.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ShowLocksResponse::ShowLocksResponse(const ShowLocksResponse& other713) {
+  locks = other713.locks;
+  __isset = other713.__isset;
+}
+ShowLocksResponse& ShowLocksResponse::operator=(const ShowLocksResponse& other714) {
+  locks = other714.locks;
+  __isset = other714.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ShowLocksResponse::printTo(std::ostream& out) const {
@@ -17330,6 +19638,9 @@ void swap(HeartbeatRequest &a, HeartbeatRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other719) {
   lockid = other719.lockid;
   txnid = other719.txnid;
@@ -17339,6 +19650,83 @@ HeartbeatRequest& HeartbeatRequest::operator=(const HeartbeatRequest& other720) 
   lockid = other720.lockid;
   txnid = other720.txnid;
   __isset = other720.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other699) {
+  lockid = other699.lockid;
+  txnid = other699.txnid;
+  __isset = other699.__isset;
+}
+HeartbeatRequest& HeartbeatRequest::operator=(const HeartbeatRequest& other700) {
+  lockid = other700.lockid;
+  txnid = other700.txnid;
+  __isset = other700.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other657) {
+  lockid = other657.lockid;
+  txnid = other657.txnid;
+  __isset = other657.__isset;
+}
+HeartbeatRequest& HeartbeatRequest::operator=(const HeartbeatRequest& other658) {
+  lockid = other658.lockid;
+  txnid = other658.txnid;
+  __isset = other658.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other661) {
+  lockid = other661.lockid;
+  txnid = other661.txnid;
+  __isset = other661.__isset;
+}
+=======
+HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other661) {
+  lockid = other661.lockid;
+  txnid = other661.txnid;
+  __isset = other661.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+HeartbeatRequest& HeartbeatRequest::operator=(const HeartbeatRequest& other662) {
+  lockid = other662.lockid;
+  txnid = other662.txnid;
+  __isset = other662.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other703) {
+  lockid = other703.lockid;
+  txnid = other703.txnid;
+  __isset = other703.__isset;
+}
+HeartbeatRequest& HeartbeatRequest::operator=(const HeartbeatRequest& other704) {
+  lockid = other704.lockid;
+  txnid = other704.txnid;
+  __isset = other704.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+HeartbeatRequest::HeartbeatRequest(const HeartbeatRequest& other715) {
+  lockid = other715.lockid;
+  txnid = other715.txnid;
+  __isset = other715.__isset;
+}
+HeartbeatRequest& HeartbeatRequest::operator=(const HeartbeatRequest& other716) {
+  lockid = other716.lockid;
+  txnid = other716.txnid;
+  __isset = other716.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void HeartbeatRequest::printTo(std::ostream& out) const {
@@ -17441,6 +19829,9 @@ void swap(HeartbeatTxnRangeRequest &a, HeartbeatTxnRangeRequest &b) {
   swap(a.max, b.max);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other721) {
   min = other721.min;
   max = other721.max;
@@ -17448,6 +19839,72 @@ HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeReques
 HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other722) {
   min = other722.min;
   max = other722.max;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other701) {
+  min = other701.min;
+  max = other701.max;
+}
+HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other702) {
+  min = other702.min;
+  max = other702.max;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other659) {
+  min = other659.min;
+  max = other659.max;
+}
+HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other660) {
+  min = other660.min;
+  max = other660.max;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other663) {
+  min = other663.min;
+  max = other663.max;
+}
+HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other664) {
+  min = other664.min;
+  max = other664.max;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other663) {
+  min = other663.min;
+  max = other663.max;
+}
+HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other664) {
+  min = other664.min;
+  max = other664.max;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other705) {
+  min = other705.min;
+  max = other705.max;
+}
+HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other706) {
+  min = other706.min;
+  max = other706.max;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+HeartbeatTxnRangeRequest::HeartbeatTxnRangeRequest(const HeartbeatTxnRangeRequest& other717) {
+  min = other717.min;
+  max = other717.max;
+}
+HeartbeatTxnRangeRequest& HeartbeatTxnRangeRequest::operator=(const HeartbeatTxnRangeRequest& other718) {
+  min = other718.min;
+  max = other718.max;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void HeartbeatTxnRangeRequest::printTo(std::ostream& out) const {
@@ -17498,6 +19955,9 @@ uint32_t HeartbeatTxnRangeResponse::read(::apache::thrift::protocol::TProtocol* 
         if (ftype == ::apache::thrift::protocol::T_SET) {
           {
             this->aborted.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size723;
             ::apache::thrift::protocol::TType _etype726;
             xfer += iprot->readSetBegin(_etype726, _size723);
@@ -17507,6 +19967,86 @@ uint32_t HeartbeatTxnRangeResponse::read(::apache::thrift::protocol::TProtocol* 
               int64_t _elem728;
               xfer += iprot->readI64(_elem728);
               this->aborted.insert(_elem728);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size703;
+            ::apache::thrift::protocol::TType _etype706;
+            xfer += iprot->readSetBegin(_etype706, _size703);
+            uint32_t _i707;
+            for (_i707 = 0; _i707 < _size703; ++_i707)
+            {
+              int64_t _elem708;
+              xfer += iprot->readI64(_elem708);
+              this->aborted.insert(_elem708);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size661;
+            ::apache::thrift::protocol::TType _etype664;
+            xfer += iprot->readSetBegin(_etype664, _size661);
+            uint32_t _i665;
+            for (_i665 = 0; _i665 < _size661; ++_i665)
+<<<<<<< HEAD
+            {
+              int64_t _elem666;
+              xfer += iprot->readI64(_elem666);
+              this->aborted.insert(_elem666);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size665;
+            ::apache::thrift::protocol::TType _etype668;
+            xfer += iprot->readSetBegin(_etype668, _size665);
+            uint32_t _i669;
+            for (_i669 = 0; _i669 < _size665; ++_i669)
+<<<<<<< HEAD
+            {
+              int64_t _elem670;
+              xfer += iprot->readI64(_elem670);
+              this->aborted.insert(_elem670);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              int64_t _elem666;
+              xfer += iprot->readI64(_elem666);
+              this->aborted.insert(_elem666);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              int64_t _elem670;
+              xfer += iprot->readI64(_elem670);
+              this->aborted.insert(_elem670);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size707;
+            ::apache::thrift::protocol::TType _etype710;
+            xfer += iprot->readSetBegin(_etype710, _size707);
+            uint32_t _i711;
+            for (_i711 = 0; _i711 < _size707; ++_i711)
+            {
+              int64_t _elem712;
+              xfer += iprot->readI64(_elem712);
+              this->aborted.insert(_elem712);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size719;
+            ::apache::thrift::protocol::TType _etype722;
+            xfer += iprot->readSetBegin(_etype722, _size719);
+            uint32_t _i723;
+            for (_i723 = 0; _i723 < _size719; ++_i723)
+            {
+              int64_t _elem724;
+              xfer += iprot->readI64(_elem724);
+              this->aborted.insert(_elem724);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readSetEnd();
           }
@@ -17519,6 +20059,9 @@ uint32_t HeartbeatTxnRangeResponse::read(::apache::thrift::protocol::TProtocol* 
         if (ftype == ::apache::thrift::protocol::T_SET) {
           {
             this->nosuch.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size729;
             ::apache::thrift::protocol::TType _etype732;
             xfer += iprot->readSetBegin(_etype732, _size729);
@@ -17528,6 +20071,88 @@ uint32_t HeartbeatTxnRangeResponse::read(::apache::thrift::protocol::TProtocol* 
               int64_t _elem734;
               xfer += iprot->readI64(_elem734);
               this->nosuch.insert(_elem734);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size709;
+            ::apache::thrift::protocol::TType _etype712;
+            xfer += iprot->readSetBegin(_etype712, _size709);
+            uint32_t _i713;
+            for (_i713 = 0; _i713 < _size709; ++_i713)
+            {
+              int64_t _elem714;
+              xfer += iprot->readI64(_elem714);
+              this->nosuch.insert(_elem714);
+=======
+            uint32_t _size667;
+            ::apache::thrift::protocol::TType _etype670;
+            xfer += iprot->readSetBegin(_etype670, _size667);
+            uint32_t _i671;
+            for (_i671 = 0; _i671 < _size667; ++_i671)
+            {
+              int64_t _elem672;
+              xfer += iprot->readI64(_elem672);
+              this->nosuch.insert(_elem672);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size671;
+            ::apache::thrift::protocol::TType _etype674;
+            xfer += iprot->readSetBegin(_etype674, _size671);
+            uint32_t _i675;
+            for (_i675 = 0; _i675 < _size671; ++_i675)
+<<<<<<< HEAD
+            {
+              int64_t _elem676;
+              xfer += iprot->readI64(_elem676);
+              this->nosuch.insert(_elem676);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size667;
+            ::apache::thrift::protocol::TType _etype670;
+            xfer += iprot->readSetBegin(_etype670, _size667);
+            uint32_t _i671;
+            for (_i671 = 0; _i671 < _size667; ++_i671)
+            {
+              int64_t _elem672;
+              xfer += iprot->readI64(_elem672);
+              this->nosuch.insert(_elem672);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              int64_t _elem676;
+              xfer += iprot->readI64(_elem676);
+              this->nosuch.insert(_elem676);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size713;
+            ::apache::thrift::protocol::TType _etype716;
+            xfer += iprot->readSetBegin(_etype716, _size713);
+            uint32_t _i717;
+            for (_i717 = 0; _i717 < _size713; ++_i717)
+            {
+              int64_t _elem718;
+              xfer += iprot->readI64(_elem718);
+              this->nosuch.insert(_elem718);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size725;
+            ::apache::thrift::protocol::TType _etype728;
+            xfer += iprot->readSetBegin(_etype728, _size725);
+            uint32_t _i729;
+            for (_i729 = 0; _i729 < _size725; ++_i729)
+            {
+              int64_t _elem730;
+              xfer += iprot->readI64(_elem730);
+              this->nosuch.insert(_elem730);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readSetEnd();
           }
@@ -17560,10 +20185,62 @@ uint32_t HeartbeatTxnRangeResponse::write(::apache::thrift::protocol::TProtocol*
   xfer += oprot->writeFieldBegin("aborted", ::apache::thrift::protocol::T_SET, 1);
   {
     xfer += oprot->writeSetBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->aborted.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::set<int64_t> ::const_iterator _iter735;
     for (_iter735 = this->aborted.begin(); _iter735 != this->aborted.end(); ++_iter735)
     {
       xfer += oprot->writeI64((*_iter735));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::set<int64_t> ::const_iterator _iter715;
+    for (_iter715 = this->aborted.begin(); _iter715 != this->aborted.end(); ++_iter715)
+    {
+      xfer += oprot->writeI64((*_iter715));
+=======
+    std::set<int64_t> ::const_iterator _iter673;
+    for (_iter673 = this->aborted.begin(); _iter673 != this->aborted.end(); ++_iter673)
+    {
+      xfer += oprot->writeI64((*_iter673));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::set<int64_t> ::const_iterator _iter677;
+    for (_iter677 = this->aborted.begin(); _iter677 != this->aborted.end(); ++_iter677)
+    {
+      xfer += oprot->writeI64((*_iter677));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<int64_t> ::const_iterator _iter673;
+    for (_iter673 = this->aborted.begin(); _iter673 != this->aborted.end(); ++_iter673)
+    {
+      xfer += oprot->writeI64((*_iter673));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::set<int64_t> ::const_iterator _iter677;
+    for (_iter677 = this->aborted.begin(); _iter677 != this->aborted.end(); ++_iter677)
+    {
+      xfer += oprot->writeI64((*_iter677));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<int64_t> ::const_iterator _iter719;
+    for (_iter719 = this->aborted.begin(); _iter719 != this->aborted.end(); ++_iter719)
+    {
+      xfer += oprot->writeI64((*_iter719));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::set<int64_t> ::const_iterator _iter731;
+    for (_iter731 = this->aborted.begin(); _iter731 != this->aborted.end(); ++_iter731)
+    {
+      xfer += oprot->writeI64((*_iter731));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeSetEnd();
   }
@@ -17572,10 +20249,62 @@ uint32_t HeartbeatTxnRangeResponse::write(::apache::thrift::protocol::TProtocol*
   xfer += oprot->writeFieldBegin("nosuch", ::apache::thrift::protocol::T_SET, 2);
   {
     xfer += oprot->writeSetBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->nosuch.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::set<int64_t> ::const_iterator _iter736;
     for (_iter736 = this->nosuch.begin(); _iter736 != this->nosuch.end(); ++_iter736)
     {
       xfer += oprot->writeI64((*_iter736));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::set<int64_t> ::const_iterator _iter716;
+    for (_iter716 = this->nosuch.begin(); _iter716 != this->nosuch.end(); ++_iter716)
+    {
+      xfer += oprot->writeI64((*_iter716));
+=======
+    std::set<int64_t> ::const_iterator _iter674;
+    for (_iter674 = this->nosuch.begin(); _iter674 != this->nosuch.end(); ++_iter674)
+    {
+      xfer += oprot->writeI64((*_iter674));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::set<int64_t> ::const_iterator _iter678;
+    for (_iter678 = this->nosuch.begin(); _iter678 != this->nosuch.end(); ++_iter678)
+    {
+      xfer += oprot->writeI64((*_iter678));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<int64_t> ::const_iterator _iter674;
+    for (_iter674 = this->nosuch.begin(); _iter674 != this->nosuch.end(); ++_iter674)
+    {
+      xfer += oprot->writeI64((*_iter674));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::set<int64_t> ::const_iterator _iter678;
+    for (_iter678 = this->nosuch.begin(); _iter678 != this->nosuch.end(); ++_iter678)
+    {
+      xfer += oprot->writeI64((*_iter678));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<int64_t> ::const_iterator _iter720;
+    for (_iter720 = this->nosuch.begin(); _iter720 != this->nosuch.end(); ++_iter720)
+    {
+      xfer += oprot->writeI64((*_iter720));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::set<int64_t> ::const_iterator _iter732;
+    for (_iter732 = this->nosuch.begin(); _iter732 != this->nosuch.end(); ++_iter732)
+    {
+      xfer += oprot->writeI64((*_iter732));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeSetEnd();
   }
@@ -17592,6 +20321,9 @@ void swap(HeartbeatTxnRangeResponse &a, HeartbeatTxnRangeResponse &b) {
   swap(a.nosuch, b.nosuch);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other737) {
   aborted = other737.aborted;
   nosuch = other737.nosuch;
@@ -17599,6 +20331,72 @@ HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResp
 HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other738) {
   aborted = other738.aborted;
   nosuch = other738.nosuch;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other717) {
+  aborted = other717.aborted;
+  nosuch = other717.nosuch;
+}
+HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other718) {
+  aborted = other718.aborted;
+  nosuch = other718.nosuch;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other675) {
+  aborted = other675.aborted;
+  nosuch = other675.nosuch;
+}
+HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other676) {
+  aborted = other676.aborted;
+  nosuch = other676.nosuch;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other679) {
+  aborted = other679.aborted;
+  nosuch = other679.nosuch;
+}
+HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other680) {
+  aborted = other680.aborted;
+  nosuch = other680.nosuch;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other679) {
+  aborted = other679.aborted;
+  nosuch = other679.nosuch;
+}
+HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other680) {
+  aborted = other680.aborted;
+  nosuch = other680.nosuch;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other721) {
+  aborted = other721.aborted;
+  nosuch = other721.nosuch;
+}
+HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other722) {
+  aborted = other722.aborted;
+  nosuch = other722.nosuch;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+HeartbeatTxnRangeResponse::HeartbeatTxnRangeResponse(const HeartbeatTxnRangeResponse& other733) {
+  aborted = other733.aborted;
+  nosuch = other733.nosuch;
+}
+HeartbeatTxnRangeResponse& HeartbeatTxnRangeResponse::operator=(const HeartbeatTxnRangeResponse& other734) {
+  aborted = other734.aborted;
+  nosuch = other734.nosuch;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void HeartbeatTxnRangeResponse::printTo(std::ostream& out) const {
@@ -17691,9 +20489,54 @@ uint32_t CompactionRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast739;
           xfer += iprot->readI32(ecast739);
           this->type = (CompactionType::type)ecast739;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast719;
+          xfer += iprot->readI32(ecast719);
+          this->type = (CompactionType::type)ecast719;
+=======
+          int32_t ecast677;
+          xfer += iprot->readI32(ecast677);
+          this->type = (CompactionType::type)ecast677;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast681;
+          xfer += iprot->readI32(ecast681);
+          this->type = (CompactionType::type)ecast681;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast677;
+          xfer += iprot->readI32(ecast677);
+          this->type = (CompactionType::type)ecast677;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast681;
+          xfer += iprot->readI32(ecast681);
+          this->type = (CompactionType::type)ecast681;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast723;
+          xfer += iprot->readI32(ecast723);
+          this->type = (CompactionType::type)ecast723;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast735;
+          xfer += iprot->readI32(ecast735);
+          this->type = (CompactionType::type)ecast735;
+>>>>>>> alloc write id event changes
           isset_type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -17711,6 +20554,9 @@ uint32_t CompactionRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->properties.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size740;
             ::apache::thrift::protocol::TType _ktype741;
             ::apache::thrift::protocol::TType _vtype742;
@@ -17722,6 +20568,95 @@ uint32_t CompactionRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
               xfer += iprot->readString(_key745);
               std::string& _val746 = this->properties[_key745];
               xfer += iprot->readString(_val746);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size720;
+            ::apache::thrift::protocol::TType _ktype721;
+            ::apache::thrift::protocol::TType _vtype722;
+            xfer += iprot->readMapBegin(_ktype721, _vtype722, _size720);
+            uint32_t _i724;
+            for (_i724 = 0; _i724 < _size720; ++_i724)
+            {
+              std::string _key725;
+              xfer += iprot->readString(_key725);
+              std::string& _val726 = this->properties[_key725];
+              xfer += iprot->readString(_val726);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size678;
+            ::apache::thrift::protocol::TType _ktype679;
+            ::apache::thrift::protocol::TType _vtype680;
+            xfer += iprot->readMapBegin(_ktype679, _vtype680, _size678);
+            uint32_t _i682;
+            for (_i682 = 0; _i682 < _size678; ++_i682)
+            {
+              std::string _key683;
+              xfer += iprot->readString(_key683);
+              std::string& _val684 = this->properties[_key683];
+              xfer += iprot->readString(_val684);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size682;
+            ::apache::thrift::protocol::TType _ktype683;
+            ::apache::thrift::protocol::TType _vtype684;
+            xfer += iprot->readMapBegin(_ktype683, _vtype684, _size682);
+            uint32_t _i686;
+            for (_i686 = 0; _i686 < _size682; ++_i686)
+            {
+=======
+            uint32_t _size682;
+            ::apache::thrift::protocol::TType _ktype683;
+            ::apache::thrift::protocol::TType _vtype684;
+            xfer += iprot->readMapBegin(_ktype683, _vtype684, _size682);
+            uint32_t _i686;
+            for (_i686 = 0; _i686 < _size682; ++_i686)
+            {
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+              std::string _key687;
+              xfer += iprot->readString(_key687);
+              std::string& _val688 = this->properties[_key687];
+              xfer += iprot->readString(_val688);
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size724;
+            ::apache::thrift::protocol::TType _ktype725;
+            ::apache::thrift::protocol::TType _vtype726;
+            xfer += iprot->readMapBegin(_ktype725, _vtype726, _size724);
+            uint32_t _i728;
+            for (_i728 = 0; _i728 < _size724; ++_i728)
+            {
+              std::string _key729;
+              xfer += iprot->readString(_key729);
+              std::string& _val730 = this->properties[_key729];
+              xfer += iprot->readString(_val730);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size736;
+            ::apache::thrift::protocol::TType _ktype737;
+            ::apache::thrift::protocol::TType _vtype738;
+            xfer += iprot->readMapBegin(_ktype737, _vtype738, _size736);
+            uint32_t _i740;
+            for (_i740 = 0; _i740 < _size736; ++_i740)
+            {
+              std::string _key741;
+              xfer += iprot->readString(_key741);
+              std::string& _val742 = this->properties[_key741];
+              xfer += iprot->readString(_val742);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readMapEnd();
           }
@@ -17779,11 +20714,68 @@ uint32_t CompactionRequest::write(::apache::thrift::protocol::TProtocol* oprot) 
     xfer += oprot->writeFieldBegin("properties", ::apache::thrift::protocol::T_MAP, 6);
     {
       xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->properties.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::map<std::string, std::string> ::const_iterator _iter747;
       for (_iter747 = this->properties.begin(); _iter747 != this->properties.end(); ++_iter747)
       {
         xfer += oprot->writeString(_iter747->first);
         xfer += oprot->writeString(_iter747->second);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::map<std::string, std::string> ::const_iterator _iter727;
+      for (_iter727 = this->properties.begin(); _iter727 != this->properties.end(); ++_iter727)
+      {
+        xfer += oprot->writeString(_iter727->first);
+        xfer += oprot->writeString(_iter727->second);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+      std::map<std::string, std::string> ::const_iterator _iter685;
+      for (_iter685 = this->properties.begin(); _iter685 != this->properties.end(); ++_iter685)
+      {
+        xfer += oprot->writeString(_iter685->first);
+        xfer += oprot->writeString(_iter685->second);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::map<std::string, std::string> ::const_iterator _iter689;
+      for (_iter689 = this->properties.begin(); _iter689 != this->properties.end(); ++_iter689)
+      {
+        xfer += oprot->writeString(_iter689->first);
+        xfer += oprot->writeString(_iter689->second);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::map<std::string, std::string> ::const_iterator _iter689;
+      for (_iter689 = this->properties.begin(); _iter689 != this->properties.end(); ++_iter689)
+      {
+        xfer += oprot->writeString(_iter689->first);
+        xfer += oprot->writeString(_iter689->second);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::map<std::string, std::string> ::const_iterator _iter731;
+      for (_iter731 = this->properties.begin(); _iter731 != this->properties.end(); ++_iter731)
+      {
+        xfer += oprot->writeString(_iter731->first);
+        xfer += oprot->writeString(_iter731->second);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::map<std::string, std::string> ::const_iterator _iter743;
+      for (_iter743 = this->properties.begin(); _iter743 != this->properties.end(); ++_iter743)
+      {
+        xfer += oprot->writeString(_iter743->first);
+        xfer += oprot->writeString(_iter743->second);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeMapEnd();
     }
@@ -17805,6 +20797,9 @@ void swap(CompactionRequest &a, CompactionRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CompactionRequest::CompactionRequest(const CompactionRequest& other748) {
   dbname = other748.dbname;
   tablename = other748.tablename;
@@ -17822,6 +20817,118 @@ CompactionRequest& CompactionRequest::operator=(const CompactionRequest& other74
   runas = other749.runas;
   properties = other749.properties;
   __isset = other749.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CompactionRequest::CompactionRequest(const CompactionRequest& other728) {
+  dbname = other728.dbname;
+  tablename = other728.tablename;
+  partitionname = other728.partitionname;
+  type = other728.type;
+  runas = other728.runas;
+  properties = other728.properties;
+  __isset = other728.__isset;
+}
+CompactionRequest& CompactionRequest::operator=(const CompactionRequest& other729) {
+  dbname = other729.dbname;
+  tablename = other729.tablename;
+  partitionname = other729.partitionname;
+  type = other729.type;
+  runas = other729.runas;
+  properties = other729.properties;
+  __isset = other729.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CompactionRequest::CompactionRequest(const CompactionRequest& other686) {
+  dbname = other686.dbname;
+  tablename = other686.tablename;
+  partitionname = other686.partitionname;
+  type = other686.type;
+  runas = other686.runas;
+  properties = other686.properties;
+  __isset = other686.__isset;
+}
+CompactionRequest& CompactionRequest::operator=(const CompactionRequest& other687) {
+  dbname = other687.dbname;
+  tablename = other687.tablename;
+  partitionname = other687.partitionname;
+  type = other687.type;
+  runas = other687.runas;
+  properties = other687.properties;
+  __isset = other687.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+CompactionRequest::CompactionRequest(const CompactionRequest& other690) {
+  dbname = other690.dbname;
+  tablename = other690.tablename;
+  partitionname = other690.partitionname;
+  type = other690.type;
+  runas = other690.runas;
+  properties = other690.properties;
+  __isset = other690.__isset;
+}
+CompactionRequest& CompactionRequest::operator=(const CompactionRequest& other691) {
+  dbname = other691.dbname;
+  tablename = other691.tablename;
+  partitionname = other691.partitionname;
+  type = other691.type;
+  runas = other691.runas;
+  properties = other691.properties;
+  __isset = other691.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CompactionRequest::CompactionRequest(const CompactionRequest& other732) {
+  dbname = other732.dbname;
+  tablename = other732.tablename;
+  partitionname = other732.partitionname;
+  type = other732.type;
+  runas = other732.runas;
+  properties = other732.properties;
+  __isset = other732.__isset;
+}
+CompactionRequest& CompactionRequest::operator=(const CompactionRequest& other733) {
+  dbname = other733.dbname;
+  tablename = other733.tablename;
+  partitionname = other733.partitionname;
+  type = other733.type;
+  runas = other733.runas;
+  properties = other733.properties;
+  __isset = other733.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CompactionRequest::CompactionRequest(const CompactionRequest& other744) {
+  dbname = other744.dbname;
+  tablename = other744.tablename;
+  partitionname = other744.partitionname;
+  type = other744.type;
+  runas = other744.runas;
+  properties = other744.properties;
+  __isset = other744.__isset;
+}
+CompactionRequest& CompactionRequest::operator=(const CompactionRequest& other745) {
+  dbname = other745.dbname;
+  tablename = other745.tablename;
+  partitionname = other745.partitionname;
+  type = other745.type;
+  runas = other745.runas;
+  properties = other745.properties;
+  __isset = other745.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CompactionRequest::printTo(std::ostream& out) const {
@@ -17948,6 +21055,9 @@ void swap(CompactionResponse &a, CompactionResponse &b) {
   swap(a.accepted, b.accepted);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CompactionResponse::CompactionResponse(const CompactionResponse& other750) {
   id = other750.id;
   state = other750.state;
@@ -17957,6 +21067,88 @@ CompactionResponse& CompactionResponse::operator=(const CompactionResponse& othe
   id = other751.id;
   state = other751.state;
   accepted = other751.accepted;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CompactionResponse::CompactionResponse(const CompactionResponse& other730) {
+  id = other730.id;
+  state = other730.state;
+  accepted = other730.accepted;
+}
+CompactionResponse& CompactionResponse::operator=(const CompactionResponse& other731) {
+  id = other731.id;
+  state = other731.state;
+  accepted = other731.accepted;
+=======
+CompactionResponse::CompactionResponse(const CompactionResponse& other688) {
+  id = other688.id;
+  state = other688.state;
+  accepted = other688.accepted;
+}
+=======
+CompactionResponse::CompactionResponse(const CompactionResponse& other688) {
+  id = other688.id;
+  state = other688.state;
+  accepted = other688.accepted;
+}
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CompactionResponse& CompactionResponse::operator=(const CompactionResponse& other689) {
+  id = other689.id;
+  state = other689.state;
+  accepted = other689.accepted;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CompactionResponse::CompactionResponse(const CompactionResponse& other692) {
+  id = other692.id;
+  state = other692.state;
+  accepted = other692.accepted;
+}
+=======
+CompactionResponse::CompactionResponse(const CompactionResponse& other692) {
+  id = other692.id;
+  state = other692.state;
+  accepted = other692.accepted;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+CompactionResponse& CompactionResponse::operator=(const CompactionResponse& other693) {
+  id = other693.id;
+  state = other693.state;
+  accepted = other693.accepted;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CompactionResponse::CompactionResponse(const CompactionResponse& other734) {
+  id = other734.id;
+  state = other734.state;
+  accepted = other734.accepted;
+}
+CompactionResponse& CompactionResponse::operator=(const CompactionResponse& other735) {
+  id = other735.id;
+  state = other735.state;
+  accepted = other735.accepted;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CompactionResponse::CompactionResponse(const CompactionResponse& other746) {
+  id = other746.id;
+  state = other746.state;
+  accepted = other746.accepted;
+}
+CompactionResponse& CompactionResponse::operator=(const CompactionResponse& other747) {
+  id = other747.id;
+  state = other747.state;
+  accepted = other747.accepted;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CompactionResponse::printTo(std::ostream& out) const {
@@ -18017,11 +21209,68 @@ void swap(ShowCompactRequest &a, ShowCompactRequest &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other752) {
   (void) other752;
 }
 ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other753) {
   (void) other753;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other732) {
+  (void) other732;
+}
+ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other733) {
+  (void) other733;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other690) {
+  (void) other690;
+}
+ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other691) {
+  (void) other691;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other694) {
+  (void) other694;
+}
+ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other695) {
+  (void) other695;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other694) {
+  (void) other694;
+}
+ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other695) {
+  (void) other695;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other736) {
+  (void) other736;
+}
+ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other737) {
+  (void) other737;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ShowCompactRequest::ShowCompactRequest(const ShowCompactRequest& other748) {
+  (void) other748;
+}
+ShowCompactRequest& ShowCompactRequest::operator=(const ShowCompactRequest& other749) {
+  (void) other749;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ShowCompactRequest::printTo(std::ostream& out) const {
@@ -18147,9 +21396,54 @@ uint32_t ShowCompactResponseElement::read(::apache::thrift::protocol::TProtocol*
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast754;
           xfer += iprot->readI32(ecast754);
           this->type = (CompactionType::type)ecast754;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast734;
+          xfer += iprot->readI32(ecast734);
+          this->type = (CompactionType::type)ecast734;
+=======
+          int32_t ecast692;
+          xfer += iprot->readI32(ecast692);
+          this->type = (CompactionType::type)ecast692;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast696;
+          xfer += iprot->readI32(ecast696);
+          this->type = (CompactionType::type)ecast696;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast692;
+          xfer += iprot->readI32(ecast692);
+          this->type = (CompactionType::type)ecast692;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast696;
+          xfer += iprot->readI32(ecast696);
+          this->type = (CompactionType::type)ecast696;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast738;
+          xfer += iprot->readI32(ecast738);
+          this->type = (CompactionType::type)ecast738;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast750;
+          xfer += iprot->readI32(ecast750);
+          this->type = (CompactionType::type)ecast750;
+>>>>>>> alloc write id event changes
           isset_type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -18336,6 +21630,9 @@ void swap(ShowCompactResponseElement &a, ShowCompactResponseElement &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ShowCompactResponseElement::ShowCompactResponseElement(const ShowCompactResponseElement& other755) {
   dbname = other755.dbname;
   tablename = other755.tablename;
@@ -18367,6 +21664,188 @@ ShowCompactResponseElement& ShowCompactResponseElement::operator=(const ShowComp
   hadoopJobId = other756.hadoopJobId;
   id = other756.id;
   __isset = other756.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ShowCompactResponseElement::ShowCompactResponseElement(const ShowCompactResponseElement& other735) {
+  dbname = other735.dbname;
+  tablename = other735.tablename;
+  partitionname = other735.partitionname;
+  type = other735.type;
+  state = other735.state;
+  workerid = other735.workerid;
+  start = other735.start;
+  runAs = other735.runAs;
+  hightestTxnId = other735.hightestTxnId;
+  metaInfo = other735.metaInfo;
+  endTime = other735.endTime;
+  hadoopJobId = other735.hadoopJobId;
+  id = other735.id;
+  __isset = other735.__isset;
+}
+ShowCompactResponseElement& ShowCompactResponseElement::operator=(const ShowCompactResponseElement& other736) {
+  dbname = other736.dbname;
+  tablename = other736.tablename;
+  partitionname = other736.partitionname;
+  type = other736.type;
+  state = other736.state;
+  workerid = other736.workerid;
+  start = other736.start;
+  runAs = other736.runAs;
+  hightestTxnId = other736.hightestTxnId;
+  metaInfo = other736.metaInfo;
+  endTime = other736.endTime;
+  hadoopJobId = other736.hadoopJobId;
+  id = other736.id;
+  __isset = other736.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ShowCompactResponseElement::ShowCompactResponseElement(const ShowCompactResponseElement& other693) {
+  dbname = other693.dbname;
+  tablename = other693.tablename;
+  partitionname = other693.partitionname;
+  type = other693.type;
+  state = other693.state;
+  workerid = other693.workerid;
+  start = other693.start;
+  runAs = other693.runAs;
+  hightestTxnId = other693.hightestTxnId;
+  metaInfo = other693.metaInfo;
+  endTime = other693.endTime;
+  hadoopJobId = other693.hadoopJobId;
+  id = other693.id;
+  __isset = other693.__isset;
+}
+ShowCompactResponseElement& ShowCompactResponseElement::operator=(const ShowCompactResponseElement& other694) {
+  dbname = other694.dbname;
+  tablename = other694.tablename;
+  partitionname = other694.partitionname;
+  type = other694.type;
+  state = other694.state;
+  workerid = other694.workerid;
+  start = other694.start;
+  runAs = other694.runAs;
+  hightestTxnId = other694.hightestTxnId;
+  metaInfo = other694.metaInfo;
+  endTime = other694.endTime;
+  hadoopJobId = other694.hadoopJobId;
+  id = other694.id;
+  __isset = other694.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+ShowCompactResponseElement::ShowCompactResponseElement(const ShowCompactResponseElement& other697) {
+  dbname = other697.dbname;
+  tablename = other697.tablename;
+  partitionname = other697.partitionname;
+  type = other697.type;
+  state = other697.state;
+  workerid = other697.workerid;
+  start = other697.start;
+  runAs = other697.runAs;
+  hightestTxnId = other697.hightestTxnId;
+  metaInfo = other697.metaInfo;
+  endTime = other697.endTime;
+  hadoopJobId = other697.hadoopJobId;
+  id = other697.id;
+  __isset = other697.__isset;
+}
+ShowCompactResponseElement& ShowCompactResponseElement::operator=(const ShowCompactResponseElement& other698) {
+  dbname = other698.dbname;
+  tablename = other698.tablename;
+  partitionname = other698.partitionname;
+  type = other698.type;
+  state = other698.state;
+  workerid = other698.workerid;
+  start = other698.start;
+  runAs = other698.runAs;
+  hightestTxnId = other698.hightestTxnId;
+  metaInfo = other698.metaInfo;
+  endTime = other698.endTime;
+  hadoopJobId = other698.hadoopJobId;
+  id = other698.id;
+  __isset = other698.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ShowCompactResponseElement::ShowCompactResponseElement(const ShowCompactResponseElement& other739) {
+  dbname = other739.dbname;
+  tablename = other739.tablename;
+  partitionname = other739.partitionname;
+  type = other739.type;
+  state = other739.state;
+  workerid = other739.workerid;
+  start = other739.start;
+  runAs = other739.runAs;
+  hightestTxnId = other739.hightestTxnId;
+  metaInfo = other739.metaInfo;
+  endTime = other739.endTime;
+  hadoopJobId = other739.hadoopJobId;
+  id = other739.id;
+  __isset = other739.__isset;
+}
+ShowCompactResponseElement& ShowCompactResponseElement::operator=(const ShowCompactResponseElement& other740) {
+  dbname = other740.dbname;
+  tablename = other740.tablename;
+  partitionname = other740.partitionname;
+  type = other740.type;
+  state = other740.state;
+  workerid = other740.workerid;
+  start = other740.start;
+  runAs = other740.runAs;
+  hightestTxnId = other740.hightestTxnId;
+  metaInfo = other740.metaInfo;
+  endTime = other740.endTime;
+  hadoopJobId = other740.hadoopJobId;
+  id = other740.id;
+  __isset = other740.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ShowCompactResponseElement::ShowCompactResponseElement(const ShowCompactResponseElement& other751) {
+  dbname = other751.dbname;
+  tablename = other751.tablename;
+  partitionname = other751.partitionname;
+  type = other751.type;
+  state = other751.state;
+  workerid = other751.workerid;
+  start = other751.start;
+  runAs = other751.runAs;
+  hightestTxnId = other751.hightestTxnId;
+  metaInfo = other751.metaInfo;
+  endTime = other751.endTime;
+  hadoopJobId = other751.hadoopJobId;
+  id = other751.id;
+  __isset = other751.__isset;
+}
+ShowCompactResponseElement& ShowCompactResponseElement::operator=(const ShowCompactResponseElement& other752) {
+  dbname = other752.dbname;
+  tablename = other752.tablename;
+  partitionname = other752.partitionname;
+  type = other752.type;
+  state = other752.state;
+  workerid = other752.workerid;
+  start = other752.start;
+  runAs = other752.runAs;
+  hightestTxnId = other752.hightestTxnId;
+  metaInfo = other752.metaInfo;
+  endTime = other752.endTime;
+  hadoopJobId = other752.hadoopJobId;
+  id = other752.id;
+  __isset = other752.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ShowCompactResponseElement::printTo(std::ostream& out) const {
@@ -18423,6 +21902,9 @@ uint32_t ShowCompactResponse::read(::apache::thrift::protocol::TProtocol* iprot)
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->compacts.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size757;
             ::apache::thrift::protocol::TType _etype760;
             xfer += iprot->readListBegin(_etype760, _size757);
@@ -18431,6 +21913,78 @@ uint32_t ShowCompactResponse::read(::apache::thrift::protocol::TProtocol* iprot)
             for (_i761 = 0; _i761 < _size757; ++_i761)
             {
               xfer += this->compacts[_i761].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size737;
+            ::apache::thrift::protocol::TType _etype740;
+            xfer += iprot->readListBegin(_etype740, _size737);
+            this->compacts.resize(_size737);
+            uint32_t _i741;
+            for (_i741 = 0; _i741 < _size737; ++_i741)
+            {
+              xfer += this->compacts[_i741].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size695;
+            ::apache::thrift::protocol::TType _etype698;
+            xfer += iprot->readListBegin(_etype698, _size695);
+            this->compacts.resize(_size695);
+            uint32_t _i699;
+            for (_i699 = 0; _i699 < _size695; ++_i699)
+            {
+              xfer += this->compacts[_i699].read(iprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size699;
+            ::apache::thrift::protocol::TType _etype702;
+            xfer += iprot->readListBegin(_etype702, _size699);
+            this->compacts.resize(_size699);
+            uint32_t _i703;
+            for (_i703 = 0; _i703 < _size699; ++_i703)
+            {
+              xfer += this->compacts[_i703].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size699;
+            ::apache::thrift::protocol::TType _etype702;
+            xfer += iprot->readListBegin(_etype702, _size699);
+            this->compacts.resize(_size699);
+            uint32_t _i703;
+            for (_i703 = 0; _i703 < _size699; ++_i703)
+            {
+              xfer += this->compacts[_i703].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size741;
+            ::apache::thrift::protocol::TType _etype744;
+            xfer += iprot->readListBegin(_etype744, _size741);
+            this->compacts.resize(_size741);
+            uint32_t _i745;
+            for (_i745 = 0; _i745 < _size741; ++_i745)
+            {
+              xfer += this->compacts[_i745].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size753;
+            ::apache::thrift::protocol::TType _etype756;
+            xfer += iprot->readListBegin(_etype756, _size753);
+            this->compacts.resize(_size753);
+            uint32_t _i757;
+            for (_i757 = 0; _i757 < _size753; ++_i757)
+            {
+              xfer += this->compacts[_i757].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -18461,10 +22015,61 @@ uint32_t ShowCompactResponse::write(::apache::thrift::protocol::TProtocol* oprot
   xfer += oprot->writeFieldBegin("compacts", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->compacts.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<ShowCompactResponseElement> ::const_iterator _iter762;
     for (_iter762 = this->compacts.begin(); _iter762 != this->compacts.end(); ++_iter762)
     {
       xfer += (*_iter762).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<ShowCompactResponseElement> ::const_iterator _iter742;
+    for (_iter742 = this->compacts.begin(); _iter742 != this->compacts.end(); ++_iter742)
+    {
+      xfer += (*_iter742).write(oprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<ShowCompactResponseElement> ::const_iterator _iter700;
+    for (_iter700 = this->compacts.begin(); _iter700 != this->compacts.end(); ++_iter700)
+    {
+      xfer += (*_iter700).write(oprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<ShowCompactResponseElement> ::const_iterator _iter704;
+    for (_iter704 = this->compacts.begin(); _iter704 != this->compacts.end(); ++_iter704)
+    {
+      xfer += (*_iter704).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<ShowCompactResponseElement> ::const_iterator _iter704;
+    for (_iter704 = this->compacts.begin(); _iter704 != this->compacts.end(); ++_iter704)
+    {
+      xfer += (*_iter704).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<ShowCompactResponseElement> ::const_iterator _iter746;
+    for (_iter746 = this->compacts.begin(); _iter746 != this->compacts.end(); ++_iter746)
+    {
+      xfer += (*_iter746).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<ShowCompactResponseElement> ::const_iterator _iter758;
+    for (_iter758 = this->compacts.begin(); _iter758 != this->compacts.end(); ++_iter758)
+    {
+      xfer += (*_iter758).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -18480,11 +22085,68 @@ void swap(ShowCompactResponse &a, ShowCompactResponse &b) {
   swap(a.compacts, b.compacts);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other763) {
   compacts = other763.compacts;
 }
 ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other764) {
   compacts = other764.compacts;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other743) {
+  compacts = other743.compacts;
+}
+ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other744) {
+  compacts = other744.compacts;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other701) {
+  compacts = other701.compacts;
+}
+ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other702) {
+  compacts = other702.compacts;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other705) {
+  compacts = other705.compacts;
+}
+ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other706) {
+  compacts = other706.compacts;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other705) {
+  compacts = other705.compacts;
+}
+ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other706) {
+  compacts = other706.compacts;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other747) {
+  compacts = other747.compacts;
+}
+ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other748) {
+  compacts = other748.compacts;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ShowCompactResponse::ShowCompactResponse(const ShowCompactResponse& other759) {
+  compacts = other759.compacts;
+}
+ShowCompactResponse& ShowCompactResponse::operator=(const ShowCompactResponse& other760) {
+  compacts = other760.compacts;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ShowCompactResponse::printTo(std::ostream& out) const {
@@ -18586,6 +22248,9 @@ uint32_t AddDynamicPartitions::read(::apache::thrift::protocol::TProtocol* iprot
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->partitionnames.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size765;
             ::apache::thrift::protocol::TType _etype768;
             xfer += iprot->readListBegin(_etype768, _size765);
@@ -18594,6 +22259,78 @@ uint32_t AddDynamicPartitions::read(::apache::thrift::protocol::TProtocol* iprot
             for (_i769 = 0; _i769 < _size765; ++_i769)
             {
               xfer += iprot->readString(this->partitionnames[_i769]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size745;
+            ::apache::thrift::protocol::TType _etype748;
+            xfer += iprot->readListBegin(_etype748, _size745);
+            this->partitionnames.resize(_size745);
+            uint32_t _i749;
+            for (_i749 = 0; _i749 < _size745; ++_i749)
+            {
+              xfer += iprot->readString(this->partitionnames[_i749]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size703;
+            ::apache::thrift::protocol::TType _etype706;
+            xfer += iprot->readListBegin(_etype706, _size703);
+            this->partitionnames.resize(_size703);
+            uint32_t _i707;
+            for (_i707 = 0; _i707 < _size703; ++_i707)
+            {
+              xfer += iprot->readString(this->partitionnames[_i707]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size707;
+            ::apache::thrift::protocol::TType _etype710;
+            xfer += iprot->readListBegin(_etype710, _size707);
+            this->partitionnames.resize(_size707);
+            uint32_t _i711;
+            for (_i711 = 0; _i711 < _size707; ++_i711)
+            {
+              xfer += iprot->readString(this->partitionnames[_i711]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size707;
+            ::apache::thrift::protocol::TType _etype710;
+            xfer += iprot->readListBegin(_etype710, _size707);
+            this->partitionnames.resize(_size707);
+            uint32_t _i711;
+            for (_i711 = 0; _i711 < _size707; ++_i711)
+            {
+              xfer += iprot->readString(this->partitionnames[_i711]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size749;
+            ::apache::thrift::protocol::TType _etype752;
+            xfer += iprot->readListBegin(_etype752, _size749);
+            this->partitionnames.resize(_size749);
+            uint32_t _i753;
+            for (_i753 = 0; _i753 < _size749; ++_i753)
+            {
+              xfer += iprot->readString(this->partitionnames[_i753]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size761;
+            ::apache::thrift::protocol::TType _etype764;
+            xfer += iprot->readListBegin(_etype764, _size761);
+            this->partitionnames.resize(_size761);
+            uint32_t _i765;
+            for (_i765 = 0; _i765 < _size761; ++_i765)
+            {
+              xfer += iprot->readString(this->partitionnames[_i765]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -18604,9 +22341,54 @@ uint32_t AddDynamicPartitions::read(::apache::thrift::protocol::TProtocol* iprot
         break;
       case 6:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast770;
           xfer += iprot->readI32(ecast770);
           this->operationType = (DataOperationType::type)ecast770;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast750;
+          xfer += iprot->readI32(ecast750);
+          this->operationType = (DataOperationType::type)ecast750;
+=======
+          int32_t ecast708;
+          xfer += iprot->readI32(ecast708);
+          this->operationType = (DataOperationType::type)ecast708;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast712;
+          xfer += iprot->readI32(ecast712);
+          this->operationType = (DataOperationType::type)ecast712;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast708;
+          xfer += iprot->readI32(ecast708);
+          this->operationType = (DataOperationType::type)ecast708;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast712;
+          xfer += iprot->readI32(ecast712);
+          this->operationType = (DataOperationType::type)ecast712;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast754;
+          xfer += iprot->readI32(ecast754);
+          this->operationType = (DataOperationType::type)ecast754;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast766;
+          xfer += iprot->readI32(ecast766);
+          this->operationType = (DataOperationType::type)ecast766;
+>>>>>>> alloc write id event changes
           this->__isset.operationType = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -18658,10 +22440,62 @@ uint32_t AddDynamicPartitions::write(::apache::thrift::protocol::TProtocol* opro
   xfer += oprot->writeFieldBegin("partitionnames", ::apache::thrift::protocol::T_LIST, 5);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->partitionnames.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<std::string> ::const_iterator _iter771;
     for (_iter771 = this->partitionnames.begin(); _iter771 != this->partitionnames.end(); ++_iter771)
     {
       xfer += oprot->writeString((*_iter771));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<std::string> ::const_iterator _iter751;
+    for (_iter751 = this->partitionnames.begin(); _iter751 != this->partitionnames.end(); ++_iter751)
+    {
+      xfer += oprot->writeString((*_iter751));
+=======
+    std::vector<std::string> ::const_iterator _iter709;
+    for (_iter709 = this->partitionnames.begin(); _iter709 != this->partitionnames.end(); ++_iter709)
+    {
+      xfer += oprot->writeString((*_iter709));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<std::string> ::const_iterator _iter713;
+    for (_iter713 = this->partitionnames.begin(); _iter713 != this->partitionnames.end(); ++_iter713)
+    {
+      xfer += oprot->writeString((*_iter713));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<std::string> ::const_iterator _iter709;
+    for (_iter709 = this->partitionnames.begin(); _iter709 != this->partitionnames.end(); ++_iter709)
+    {
+      xfer += oprot->writeString((*_iter709));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<std::string> ::const_iterator _iter713;
+    for (_iter713 = this->partitionnames.begin(); _iter713 != this->partitionnames.end(); ++_iter713)
+    {
+      xfer += oprot->writeString((*_iter713));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<std::string> ::const_iterator _iter755;
+    for (_iter755 = this->partitionnames.begin(); _iter755 != this->partitionnames.end(); ++_iter755)
+    {
+      xfer += oprot->writeString((*_iter755));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<std::string> ::const_iterator _iter767;
+    for (_iter767 = this->partitionnames.begin(); _iter767 != this->partitionnames.end(); ++_iter767)
+    {
+      xfer += oprot->writeString((*_iter767));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -18688,6 +22522,9 @@ void swap(AddDynamicPartitions &a, AddDynamicPartitions &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 AddDynamicPartitions::AddDynamicPartitions(const AddDynamicPartitions& other772) {
   txnid = other772.txnid;
   writeid = other772.writeid;
@@ -18705,6 +22542,114 @@ AddDynamicPartitions& AddDynamicPartitions::operator=(const AddDynamicPartitions
   partitionnames = other773.partitionnames;
   operationType = other773.operationType;
   __isset = other773.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+AddDynamicPartitions::AddDynamicPartitions(const AddDynamicPartitions& other752) {
+  txnid = other752.txnid;
+  writeid = other752.writeid;
+  dbname = other752.dbname;
+  tablename = other752.tablename;
+  partitionnames = other752.partitionnames;
+  operationType = other752.operationType;
+  __isset = other752.__isset;
+}
+AddDynamicPartitions& AddDynamicPartitions::operator=(const AddDynamicPartitions& other753) {
+  txnid = other753.txnid;
+  writeid = other753.writeid;
+  dbname = other753.dbname;
+  tablename = other753.tablename;
+  partitionnames = other753.partitionnames;
+  operationType = other753.operationType;
+  __isset = other753.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+AddDynamicPartitions::AddDynamicPartitions(const AddDynamicPartitions& other710) {
+  txnid = other710.txnid;
+  dbname = other710.dbname;
+  tablename = other710.tablename;
+  partitionnames = other710.partitionnames;
+  operationType = other710.operationType;
+  __isset = other710.__isset;
+}
+AddDynamicPartitions& AddDynamicPartitions::operator=(const AddDynamicPartitions& other711) {
+  txnid = other711.txnid;
+  dbname = other711.dbname;
+  tablename = other711.tablename;
+  partitionnames = other711.partitionnames;
+  operationType = other711.operationType;
+  __isset = other711.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+AddDynamicPartitions::AddDynamicPartitions(const AddDynamicPartitions& other714) {
+  txnid = other714.txnid;
+  dbname = other714.dbname;
+  tablename = other714.tablename;
+  partitionnames = other714.partitionnames;
+  operationType = other714.operationType;
+  __isset = other714.__isset;
+}
+AddDynamicPartitions& AddDynamicPartitions::operator=(const AddDynamicPartitions& other715) {
+  txnid = other715.txnid;
+  dbname = other715.dbname;
+  tablename = other715.tablename;
+  partitionnames = other715.partitionnames;
+  operationType = other715.operationType;
+  __isset = other715.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+AddDynamicPartitions::AddDynamicPartitions(const AddDynamicPartitions& other756) {
+  txnid = other756.txnid;
+  writeid = other756.writeid;
+  dbname = other756.dbname;
+  tablename = other756.tablename;
+  partitionnames = other756.partitionnames;
+  operationType = other756.operationType;
+  __isset = other756.__isset;
+}
+AddDynamicPartitions& AddDynamicPartitions::operator=(const AddDynamicPartitions& other757) {
+  txnid = other757.txnid;
+  writeid = other757.writeid;
+  dbname = other757.dbname;
+  tablename = other757.tablename;
+  partitionnames = other757.partitionnames;
+  operationType = other757.operationType;
+  __isset = other757.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+AddDynamicPartitions::AddDynamicPartitions(const AddDynamicPartitions& other768) {
+  txnid = other768.txnid;
+  writeid = other768.writeid;
+  dbname = other768.dbname;
+  tablename = other768.tablename;
+  partitionnames = other768.partitionnames;
+  operationType = other768.operationType;
+  __isset = other768.__isset;
+}
+AddDynamicPartitions& AddDynamicPartitions::operator=(const AddDynamicPartitions& other769) {
+  txnid = other769.txnid;
+  writeid = other769.writeid;
+  dbname = other769.dbname;
+  tablename = other769.tablename;
+  partitionnames = other769.partitionnames;
+  operationType = other769.operationType;
+  __isset = other769.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void AddDynamicPartitions::printTo(std::ostream& out) const {
@@ -18887,6 +22832,9 @@ void swap(BasicTxnInfo &a, BasicTxnInfo &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 BasicTxnInfo::BasicTxnInfo(const BasicTxnInfo& other774) {
   isnull = other774.isnull;
   time = other774.time;
@@ -18904,6 +22852,118 @@ BasicTxnInfo& BasicTxnInfo::operator=(const BasicTxnInfo& other775) {
   tablename = other775.tablename;
   partitionname = other775.partitionname;
   __isset = other775.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+BasicTxnInfo::BasicTxnInfo(const BasicTxnInfo& other754) {
+  isnull = other754.isnull;
+  time = other754.time;
+  txnid = other754.txnid;
+  dbname = other754.dbname;
+  tablename = other754.tablename;
+  partitionname = other754.partitionname;
+  __isset = other754.__isset;
+}
+BasicTxnInfo& BasicTxnInfo::operator=(const BasicTxnInfo& other755) {
+  isnull = other755.isnull;
+  time = other755.time;
+  txnid = other755.txnid;
+  dbname = other755.dbname;
+  tablename = other755.tablename;
+  partitionname = other755.partitionname;
+  __isset = other755.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+BasicTxnInfo::BasicTxnInfo(const BasicTxnInfo& other712) {
+  isnull = other712.isnull;
+  time = other712.time;
+  txnid = other712.txnid;
+  dbname = other712.dbname;
+  tablename = other712.tablename;
+  partitionname = other712.partitionname;
+  __isset = other712.__isset;
+}
+BasicTxnInfo& BasicTxnInfo::operator=(const BasicTxnInfo& other713) {
+  isnull = other713.isnull;
+  time = other713.time;
+  txnid = other713.txnid;
+  dbname = other713.dbname;
+  tablename = other713.tablename;
+  partitionname = other713.partitionname;
+  __isset = other713.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+BasicTxnInfo::BasicTxnInfo(const BasicTxnInfo& other716) {
+  isnull = other716.isnull;
+  time = other716.time;
+  txnid = other716.txnid;
+  dbname = other716.dbname;
+  tablename = other716.tablename;
+  partitionname = other716.partitionname;
+  __isset = other716.__isset;
+}
+BasicTxnInfo& BasicTxnInfo::operator=(const BasicTxnInfo& other717) {
+  isnull = other717.isnull;
+  time = other717.time;
+  txnid = other717.txnid;
+  dbname = other717.dbname;
+  tablename = other717.tablename;
+  partitionname = other717.partitionname;
+  __isset = other717.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+BasicTxnInfo::BasicTxnInfo(const BasicTxnInfo& other758) {
+  isnull = other758.isnull;
+  time = other758.time;
+  txnid = other758.txnid;
+  dbname = other758.dbname;
+  tablename = other758.tablename;
+  partitionname = other758.partitionname;
+  __isset = other758.__isset;
+}
+BasicTxnInfo& BasicTxnInfo::operator=(const BasicTxnInfo& other759) {
+  isnull = other759.isnull;
+  time = other759.time;
+  txnid = other759.txnid;
+  dbname = other759.dbname;
+  tablename = other759.tablename;
+  partitionname = other759.partitionname;
+  __isset = other759.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+BasicTxnInfo::BasicTxnInfo(const BasicTxnInfo& other770) {
+  isnull = other770.isnull;
+  time = other770.time;
+  txnid = other770.txnid;
+  dbname = other770.dbname;
+  tablename = other770.tablename;
+  partitionname = other770.partitionname;
+  __isset = other770.__isset;
+}
+BasicTxnInfo& BasicTxnInfo::operator=(const BasicTxnInfo& other771) {
+  isnull = other771.isnull;
+  time = other771.time;
+  txnid = other771.txnid;
+  dbname = other771.dbname;
+  tablename = other771.tablename;
+  partitionname = other771.partitionname;
+  __isset = other771.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void BasicTxnInfo::printTo(std::ostream& out) const {
@@ -18984,6 +23044,9 @@ uint32_t CreationMetadata::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_SET) {
           {
             this->tablesUsed.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size776;
             ::apache::thrift::protocol::TType _etype779;
             xfer += iprot->readSetBegin(_etype779, _size776);
@@ -18993,6 +23056,84 @@ uint32_t CreationMetadata::read(::apache::thrift::protocol::TProtocol* iprot) {
               std::string _elem781;
               xfer += iprot->readString(_elem781);
               this->tablesUsed.insert(_elem781);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size756;
+            ::apache::thrift::protocol::TType _etype759;
+            xfer += iprot->readSetBegin(_etype759, _size756);
+            uint32_t _i760;
+            for (_i760 = 0; _i760 < _size756; ++_i760)
+            {
+              std::string _elem761;
+              xfer += iprot->readString(_elem761);
+              this->tablesUsed.insert(_elem761);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size714;
+            ::apache::thrift::protocol::TType _etype717;
+            xfer += iprot->readSetBegin(_etype717, _size714);
+            uint32_t _i718;
+            for (_i718 = 0; _i718 < _size714; ++_i718)
+            {
+              std::string _elem719;
+              xfer += iprot->readString(_elem719);
+              this->tablesUsed.insert(_elem719);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size718;
+            ::apache::thrift::protocol::TType _etype721;
+            xfer += iprot->readSetBegin(_etype721, _size718);
+            uint32_t _i722;
+            for (_i722 = 0; _i722 < _size718; ++_i722)
+            {
+              std::string _elem723;
+              xfer += iprot->readString(_elem723);
+              this->tablesUsed.insert(_elem723);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size718;
+            ::apache::thrift::protocol::TType _etype721;
+            xfer += iprot->readSetBegin(_etype721, _size718);
+            uint32_t _i722;
+            for (_i722 = 0; _i722 < _size718; ++_i722)
+            {
+              std::string _elem723;
+              xfer += iprot->readString(_elem723);
+              this->tablesUsed.insert(_elem723);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size760;
+            ::apache::thrift::protocol::TType _etype763;
+            xfer += iprot->readSetBegin(_etype763, _size760);
+            uint32_t _i764;
+            for (_i764 = 0; _i764 < _size760; ++_i764)
+            {
+              std::string _elem765;
+              xfer += iprot->readString(_elem765);
+              this->tablesUsed.insert(_elem765);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size772;
+            ::apache::thrift::protocol::TType _etype775;
+            xfer += iprot->readSetBegin(_etype775, _size772);
+            uint32_t _i776;
+            for (_i776 = 0; _i776 < _size772; ++_i776)
+            {
+              std::string _elem777;
+              xfer += iprot->readString(_elem777);
+              this->tablesUsed.insert(_elem777);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readSetEnd();
           }
@@ -19043,10 +23184,61 @@ uint32_t CreationMetadata::write(::apache::thrift::protocol::TProtocol* oprot) c
   xfer += oprot->writeFieldBegin("tablesUsed", ::apache::thrift::protocol::T_SET, 3);
   {
     xfer += oprot->writeSetBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->tablesUsed.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::set<std::string> ::const_iterator _iter782;
     for (_iter782 = this->tablesUsed.begin(); _iter782 != this->tablesUsed.end(); ++_iter782)
     {
       xfer += oprot->writeString((*_iter782));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::set<std::string> ::const_iterator _iter762;
+    for (_iter762 = this->tablesUsed.begin(); _iter762 != this->tablesUsed.end(); ++_iter762)
+    {
+      xfer += oprot->writeString((*_iter762));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::set<std::string> ::const_iterator _iter720;
+    for (_iter720 = this->tablesUsed.begin(); _iter720 != this->tablesUsed.end(); ++_iter720)
+    {
+      xfer += oprot->writeString((*_iter720));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::set<std::string> ::const_iterator _iter724;
+    for (_iter724 = this->tablesUsed.begin(); _iter724 != this->tablesUsed.end(); ++_iter724)
+    {
+      xfer += oprot->writeString((*_iter724));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::set<std::string> ::const_iterator _iter724;
+    for (_iter724 = this->tablesUsed.begin(); _iter724 != this->tablesUsed.end(); ++_iter724)
+    {
+      xfer += oprot->writeString((*_iter724));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<std::string> ::const_iterator _iter766;
+    for (_iter766 = this->tablesUsed.begin(); _iter766 != this->tablesUsed.end(); ++_iter766)
+    {
+      xfer += oprot->writeString((*_iter766));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::set<std::string> ::const_iterator _iter778;
+    for (_iter778 = this->tablesUsed.begin(); _iter778 != this->tablesUsed.end(); ++_iter778)
+    {
+      xfer += oprot->writeString((*_iter778));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeSetEnd();
   }
@@ -19071,6 +23263,9 @@ void swap(CreationMetadata &a, CreationMetadata &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CreationMetadata::CreationMetadata(const CreationMetadata& other783) {
   dbName = other783.dbName;
   tblName = other783.tblName;
@@ -19084,6 +23279,105 @@ CreationMetadata& CreationMetadata::operator=(const CreationMetadata& other784) 
   tablesUsed = other784.tablesUsed;
   validTxnList = other784.validTxnList;
   __isset = other784.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CreationMetadata::CreationMetadata(const CreationMetadata& other763) {
+  dbName = other763.dbName;
+  tblName = other763.tblName;
+  tablesUsed = other763.tablesUsed;
+  validTxnList = other763.validTxnList;
+  __isset = other763.__isset;
+}
+CreationMetadata& CreationMetadata::operator=(const CreationMetadata& other764) {
+  dbName = other764.dbName;
+  tblName = other764.tblName;
+  tablesUsed = other764.tablesUsed;
+  validTxnList = other764.validTxnList;
+  __isset = other764.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CreationMetadata::CreationMetadata(const CreationMetadata& other721) {
+  dbName = other721.dbName;
+  tblName = other721.tblName;
+  tablesUsed = other721.tablesUsed;
+  validTxnList = other721.validTxnList;
+  __isset = other721.__isset;
+}
+CreationMetadata& CreationMetadata::operator=(const CreationMetadata& other722) {
+  dbName = other722.dbName;
+  tblName = other722.tblName;
+  tablesUsed = other722.tablesUsed;
+  validTxnList = other722.validTxnList;
+  __isset = other722.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CreationMetadata::CreationMetadata(const CreationMetadata& other725) {
+  dbName = other725.dbName;
+  tblName = other725.tblName;
+  tablesUsed = other725.tablesUsed;
+  validTxnList = other725.validTxnList;
+  __isset = other725.__isset;
+}
+=======
+CreationMetadata::CreationMetadata(const CreationMetadata& other725) {
+  dbName = other725.dbName;
+  tblName = other725.tblName;
+  tablesUsed = other725.tablesUsed;
+  validTxnList = other725.validTxnList;
+  __isset = other725.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+CreationMetadata& CreationMetadata::operator=(const CreationMetadata& other726) {
+  dbName = other726.dbName;
+  tblName = other726.tblName;
+  tablesUsed = other726.tablesUsed;
+  validTxnList = other726.validTxnList;
+  __isset = other726.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CreationMetadata::CreationMetadata(const CreationMetadata& other767) {
+  dbName = other767.dbName;
+  tblName = other767.tblName;
+  tablesUsed = other767.tablesUsed;
+  validTxnList = other767.validTxnList;
+  __isset = other767.__isset;
+}
+CreationMetadata& CreationMetadata::operator=(const CreationMetadata& other768) {
+  dbName = other768.dbName;
+  tblName = other768.tblName;
+  tablesUsed = other768.tablesUsed;
+  validTxnList = other768.validTxnList;
+  __isset = other768.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CreationMetadata::CreationMetadata(const CreationMetadata& other779) {
+  dbName = other779.dbName;
+  tblName = other779.tblName;
+  tablesUsed = other779.tablesUsed;
+  validTxnList = other779.validTxnList;
+  __isset = other779.__isset;
+}
+CreationMetadata& CreationMetadata::operator=(const CreationMetadata& other780) {
+  dbName = other780.dbName;
+  tblName = other780.tblName;
+  tablesUsed = other780.tablesUsed;
+  validTxnList = other780.validTxnList;
+  __isset = other780.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CreationMetadata::printTo(std::ostream& out) const {
@@ -19188,6 +23482,9 @@ void swap(NotificationEventRequest &a, NotificationEventRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other785) {
   lastEvent = other785.lastEvent;
   maxEvents = other785.maxEvents;
@@ -19197,6 +23494,83 @@ NotificationEventRequest& NotificationEventRequest::operator=(const Notification
   lastEvent = other786.lastEvent;
   maxEvents = other786.maxEvents;
   __isset = other786.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other765) {
+  lastEvent = other765.lastEvent;
+  maxEvents = other765.maxEvents;
+  __isset = other765.__isset;
+}
+NotificationEventRequest& NotificationEventRequest::operator=(const NotificationEventRequest& other766) {
+  lastEvent = other766.lastEvent;
+  maxEvents = other766.maxEvents;
+  __isset = other766.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other723) {
+  lastEvent = other723.lastEvent;
+  maxEvents = other723.maxEvents;
+  __isset = other723.__isset;
+}
+NotificationEventRequest& NotificationEventRequest::operator=(const NotificationEventRequest& other724) {
+  lastEvent = other724.lastEvent;
+  maxEvents = other724.maxEvents;
+  __isset = other724.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other727) {
+  lastEvent = other727.lastEvent;
+  maxEvents = other727.maxEvents;
+  __isset = other727.__isset;
+}
+=======
+NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other727) {
+  lastEvent = other727.lastEvent;
+  maxEvents = other727.maxEvents;
+  __isset = other727.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+NotificationEventRequest& NotificationEventRequest::operator=(const NotificationEventRequest& other728) {
+  lastEvent = other728.lastEvent;
+  maxEvents = other728.maxEvents;
+  __isset = other728.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other769) {
+  lastEvent = other769.lastEvent;
+  maxEvents = other769.maxEvents;
+  __isset = other769.__isset;
+}
+NotificationEventRequest& NotificationEventRequest::operator=(const NotificationEventRequest& other770) {
+  lastEvent = other770.lastEvent;
+  maxEvents = other770.maxEvents;
+  __isset = other770.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NotificationEventRequest::NotificationEventRequest(const NotificationEventRequest& other781) {
+  lastEvent = other781.lastEvent;
+  maxEvents = other781.maxEvents;
+  __isset = other781.__isset;
+}
+NotificationEventRequest& NotificationEventRequest::operator=(const NotificationEventRequest& other782) {
+  lastEvent = other782.lastEvent;
+  maxEvents = other782.maxEvents;
+  __isset = other782.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NotificationEventRequest::printTo(std::ostream& out) const {
@@ -19397,6 +23771,9 @@ void swap(NotificationEvent &a, NotificationEvent &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NotificationEvent::NotificationEvent(const NotificationEvent& other787) {
   eventId = other787.eventId;
   eventTime = other787.eventTime;
@@ -19416,6 +23793,128 @@ NotificationEvent& NotificationEvent::operator=(const NotificationEvent& other78
   message = other788.message;
   messageFormat = other788.messageFormat;
   __isset = other788.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NotificationEvent::NotificationEvent(const NotificationEvent& other767) {
+  eventId = other767.eventId;
+  eventTime = other767.eventTime;
+  eventType = other767.eventType;
+  dbName = other767.dbName;
+  tableName = other767.tableName;
+  message = other767.message;
+  messageFormat = other767.messageFormat;
+  __isset = other767.__isset;
+}
+NotificationEvent& NotificationEvent::operator=(const NotificationEvent& other768) {
+  eventId = other768.eventId;
+  eventTime = other768.eventTime;
+  eventType = other768.eventType;
+  dbName = other768.dbName;
+  tableName = other768.tableName;
+  message = other768.message;
+  messageFormat = other768.messageFormat;
+  __isset = other768.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+NotificationEvent::NotificationEvent(const NotificationEvent& other725) {
+  eventId = other725.eventId;
+  eventTime = other725.eventTime;
+  eventType = other725.eventType;
+  dbName = other725.dbName;
+  tableName = other725.tableName;
+  message = other725.message;
+  messageFormat = other725.messageFormat;
+  __isset = other725.__isset;
+}
+NotificationEvent& NotificationEvent::operator=(const NotificationEvent& other726) {
+  eventId = other726.eventId;
+  eventTime = other726.eventTime;
+  eventType = other726.eventType;
+  dbName = other726.dbName;
+  tableName = other726.tableName;
+  message = other726.message;
+  messageFormat = other726.messageFormat;
+  __isset = other726.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+NotificationEvent::NotificationEvent(const NotificationEvent& other729) {
+  eventId = other729.eventId;
+  eventTime = other729.eventTime;
+  eventType = other729.eventType;
+  dbName = other729.dbName;
+  tableName = other729.tableName;
+  message = other729.message;
+  messageFormat = other729.messageFormat;
+  __isset = other729.__isset;
+}
+NotificationEvent& NotificationEvent::operator=(const NotificationEvent& other730) {
+  eventId = other730.eventId;
+  eventTime = other730.eventTime;
+  eventType = other730.eventType;
+  dbName = other730.dbName;
+  tableName = other730.tableName;
+  message = other730.message;
+  messageFormat = other730.messageFormat;
+  __isset = other730.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NotificationEvent::NotificationEvent(const NotificationEvent& other771) {
+  eventId = other771.eventId;
+  eventTime = other771.eventTime;
+  eventType = other771.eventType;
+  dbName = other771.dbName;
+  tableName = other771.tableName;
+  message = other771.message;
+  messageFormat = other771.messageFormat;
+  __isset = other771.__isset;
+}
+NotificationEvent& NotificationEvent::operator=(const NotificationEvent& other772) {
+  eventId = other772.eventId;
+  eventTime = other772.eventTime;
+  eventType = other772.eventType;
+  dbName = other772.dbName;
+  tableName = other772.tableName;
+  message = other772.message;
+  messageFormat = other772.messageFormat;
+  __isset = other772.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NotificationEvent::NotificationEvent(const NotificationEvent& other783) {
+  eventId = other783.eventId;
+  eventTime = other783.eventTime;
+  eventType = other783.eventType;
+  dbName = other783.dbName;
+  tableName = other783.tableName;
+  message = other783.message;
+  messageFormat = other783.messageFormat;
+  __isset = other783.__isset;
+}
+NotificationEvent& NotificationEvent::operator=(const NotificationEvent& other784) {
+  eventId = other784.eventId;
+  eventTime = other784.eventTime;
+  eventType = other784.eventType;
+  dbName = other784.dbName;
+  tableName = other784.tableName;
+  message = other784.message;
+  messageFormat = other784.messageFormat;
+  __isset = other784.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NotificationEvent::printTo(std::ostream& out) const {
@@ -19466,6 +23965,9 @@ uint32_t NotificationEventResponse::read(::apache::thrift::protocol::TProtocol* 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->events.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size789;
             ::apache::thrift::protocol::TType _etype792;
             xfer += iprot->readListBegin(_etype792, _size789);
@@ -19474,6 +23976,77 @@ uint32_t NotificationEventResponse::read(::apache::thrift::protocol::TProtocol* 
             for (_i793 = 0; _i793 < _size789; ++_i793)
             {
               xfer += this->events[_i793].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size769;
+            ::apache::thrift::protocol::TType _etype772;
+            xfer += iprot->readListBegin(_etype772, _size769);
+            this->events.resize(_size769);
+            uint32_t _i773;
+            for (_i773 = 0; _i773 < _size769; ++_i773)
+            {
+              xfer += this->events[_i773].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size727;
+            ::apache::thrift::protocol::TType _etype730;
+            xfer += iprot->readListBegin(_etype730, _size727);
+            this->events.resize(_size727);
+            uint32_t _i731;
+            for (_i731 = 0; _i731 < _size727; ++_i731)
+<<<<<<< HEAD
+            {
+              xfer += this->events[_i731].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size731;
+            ::apache::thrift::protocol::TType _etype734;
+            xfer += iprot->readListBegin(_etype734, _size731);
+            this->events.resize(_size731);
+            uint32_t _i735;
+            for (_i735 = 0; _i735 < _size731; ++_i735)
+<<<<<<< HEAD
+            {
+              xfer += this->events[_i735].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += this->events[_i731].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += this->events[_i735].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size773;
+            ::apache::thrift::protocol::TType _etype776;
+            xfer += iprot->readListBegin(_etype776, _size773);
+            this->events.resize(_size773);
+            uint32_t _i777;
+            for (_i777 = 0; _i777 < _size773; ++_i777)
+            {
+              xfer += this->events[_i777].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size785;
+            ::apache::thrift::protocol::TType _etype788;
+            xfer += iprot->readListBegin(_etype788, _size785);
+            this->events.resize(_size785);
+            uint32_t _i789;
+            for (_i789 = 0; _i789 < _size785; ++_i789)
+            {
+              xfer += this->events[_i789].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -19504,10 +24077,62 @@ uint32_t NotificationEventResponse::write(::apache::thrift::protocol::TProtocol*
   xfer += oprot->writeFieldBegin("events", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->events.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<NotificationEvent> ::const_iterator _iter794;
     for (_iter794 = this->events.begin(); _iter794 != this->events.end(); ++_iter794)
     {
       xfer += (*_iter794).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<NotificationEvent> ::const_iterator _iter774;
+    for (_iter774 = this->events.begin(); _iter774 != this->events.end(); ++_iter774)
+    {
+      xfer += (*_iter774).write(oprot);
+=======
+    std::vector<NotificationEvent> ::const_iterator _iter732;
+    for (_iter732 = this->events.begin(); _iter732 != this->events.end(); ++_iter732)
+    {
+      xfer += (*_iter732).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<NotificationEvent> ::const_iterator _iter736;
+    for (_iter736 = this->events.begin(); _iter736 != this->events.end(); ++_iter736)
+    {
+      xfer += (*_iter736).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<NotificationEvent> ::const_iterator _iter732;
+    for (_iter732 = this->events.begin(); _iter732 != this->events.end(); ++_iter732)
+    {
+      xfer += (*_iter732).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<NotificationEvent> ::const_iterator _iter736;
+    for (_iter736 = this->events.begin(); _iter736 != this->events.end(); ++_iter736)
+    {
+      xfer += (*_iter736).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<NotificationEvent> ::const_iterator _iter778;
+    for (_iter778 = this->events.begin(); _iter778 != this->events.end(); ++_iter778)
+    {
+      xfer += (*_iter778).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<NotificationEvent> ::const_iterator _iter790;
+    for (_iter790 = this->events.begin(); _iter790 != this->events.end(); ++_iter790)
+    {
+      xfer += (*_iter790).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -19523,11 +24148,70 @@ void swap(NotificationEventResponse &a, NotificationEventResponse &b) {
   swap(a.events, b.events);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other795) {
   events = other795.events;
 }
 NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other796) {
   events = other796.events;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other775) {
+  events = other775.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other776) {
+  events = other776.events;
+=======
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other733) {
+  events = other733.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other734) {
+  events = other734.events;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other737) {
+  events = other737.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other738) {
+  events = other738.events;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other733) {
+  events = other733.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other734) {
+  events = other734.events;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other737) {
+  events = other737.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other738) {
+  events = other738.events;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other779) {
+  events = other779.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other780) {
+  events = other780.events;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NotificationEventResponse::NotificationEventResponse(const NotificationEventResponse& other791) {
+  events = other791.events;
+}
+NotificationEventResponse& NotificationEventResponse::operator=(const NotificationEventResponse& other792) {
+  events = other792.events;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NotificationEventResponse::printTo(std::ostream& out) const {
@@ -19609,11 +24293,70 @@ void swap(CurrentNotificationEventId &a, CurrentNotificationEventId &b) {
   swap(a.eventId, b.eventId);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other797) {
   eventId = other797.eventId;
 }
 CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other798) {
   eventId = other798.eventId;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other777) {
+  eventId = other777.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other778) {
+  eventId = other778.eventId;
+=======
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other735) {
+  eventId = other735.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other736) {
+  eventId = other736.eventId;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other739) {
+  eventId = other739.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other740) {
+  eventId = other740.eventId;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other735) {
+  eventId = other735.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other736) {
+  eventId = other736.eventId;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other739) {
+  eventId = other739.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other740) {
+  eventId = other740.eventId;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other781) {
+  eventId = other781.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other782) {
+  eventId = other782.eventId;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CurrentNotificationEventId::CurrentNotificationEventId(const CurrentNotificationEventId& other793) {
+  eventId = other793.eventId;
+}
+CurrentNotificationEventId& CurrentNotificationEventId::operator=(const CurrentNotificationEventId& other794) {
+  eventId = other794.eventId;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CurrentNotificationEventId::printTo(std::ostream& out) const {
@@ -19715,6 +24458,9 @@ void swap(NotificationEventsCountRequest &a, NotificationEventsCountRequest &b) 
   swap(a.dbName, b.dbName);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other799) {
   fromEventId = other799.fromEventId;
   dbName = other799.dbName;
@@ -19722,6 +24468,72 @@ NotificationEventsCountRequest::NotificationEventsCountRequest(const Notificatio
 NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other800) {
   fromEventId = other800.fromEventId;
   dbName = other800.dbName;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other779) {
+  fromEventId = other779.fromEventId;
+  dbName = other779.dbName;
+}
+NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other780) {
+  fromEventId = other780.fromEventId;
+  dbName = other780.dbName;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other737) {
+  fromEventId = other737.fromEventId;
+  dbName = other737.dbName;
+}
+NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other738) {
+  fromEventId = other738.fromEventId;
+  dbName = other738.dbName;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other741) {
+  fromEventId = other741.fromEventId;
+  dbName = other741.dbName;
+}
+NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other742) {
+  fromEventId = other742.fromEventId;
+  dbName = other742.dbName;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other741) {
+  fromEventId = other741.fromEventId;
+  dbName = other741.dbName;
+}
+NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other742) {
+  fromEventId = other742.fromEventId;
+  dbName = other742.dbName;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other783) {
+  fromEventId = other783.fromEventId;
+  dbName = other783.dbName;
+}
+NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other784) {
+  fromEventId = other784.fromEventId;
+  dbName = other784.dbName;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NotificationEventsCountRequest::NotificationEventsCountRequest(const NotificationEventsCountRequest& other795) {
+  fromEventId = other795.fromEventId;
+  dbName = other795.dbName;
+}
+NotificationEventsCountRequest& NotificationEventsCountRequest::operator=(const NotificationEventsCountRequest& other796) {
+  fromEventId = other796.fromEventId;
+  dbName = other796.dbName;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NotificationEventsCountRequest::printTo(std::ostream& out) const {
@@ -19804,11 +24616,68 @@ void swap(NotificationEventsCountResponse &a, NotificationEventsCountResponse &b
   swap(a.eventsCount, b.eventsCount);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other801) {
   eventsCount = other801.eventsCount;
 }
 NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other802) {
   eventsCount = other802.eventsCount;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other781) {
+  eventsCount = other781.eventsCount;
+}
+NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other782) {
+  eventsCount = other782.eventsCount;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other739) {
+  eventsCount = other739.eventsCount;
+}
+NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other740) {
+  eventsCount = other740.eventsCount;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other743) {
+  eventsCount = other743.eventsCount;
+}
+NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other744) {
+  eventsCount = other744.eventsCount;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other743) {
+  eventsCount = other743.eventsCount;
+}
+NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other744) {
+  eventsCount = other744.eventsCount;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other785) {
+  eventsCount = other785.eventsCount;
+}
+NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other786) {
+  eventsCount = other786.eventsCount;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NotificationEventsCountResponse::NotificationEventsCountResponse(const NotificationEventsCountResponse& other797) {
+  eventsCount = other797.eventsCount;
+}
+NotificationEventsCountResponse& NotificationEventsCountResponse::operator=(const NotificationEventsCountResponse& other798) {
+  eventsCount = other798.eventsCount;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NotificationEventsCountResponse::printTo(std::ostream& out) const {
@@ -19871,6 +24740,9 @@ uint32_t InsertEventRequestData::read(::apache::thrift::protocol::TProtocol* ipr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->filesAdded.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size803;
             ::apache::thrift::protocol::TType _etype806;
             xfer += iprot->readListBegin(_etype806, _size803);
@@ -19879,6 +24751,78 @@ uint32_t InsertEventRequestData::read(::apache::thrift::protocol::TProtocol* ipr
             for (_i807 = 0; _i807 < _size803; ++_i807)
             {
               xfer += iprot->readString(this->filesAdded[_i807]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size783;
+            ::apache::thrift::protocol::TType _etype786;
+            xfer += iprot->readListBegin(_etype786, _size783);
+            this->filesAdded.resize(_size783);
+            uint32_t _i787;
+            for (_i787 = 0; _i787 < _size783; ++_i787)
+            {
+              xfer += iprot->readString(this->filesAdded[_i787]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size741;
+            ::apache::thrift::protocol::TType _etype744;
+            xfer += iprot->readListBegin(_etype744, _size741);
+            this->filesAdded.resize(_size741);
+            uint32_t _i745;
+            for (_i745 = 0; _i745 < _size741; ++_i745)
+            {
+              xfer += iprot->readString(this->filesAdded[_i745]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size745;
+            ::apache::thrift::protocol::TType _etype748;
+            xfer += iprot->readListBegin(_etype748, _size745);
+            this->filesAdded.resize(_size745);
+            uint32_t _i749;
+            for (_i749 = 0; _i749 < _size745; ++_i749)
+            {
+              xfer += iprot->readString(this->filesAdded[_i749]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size745;
+            ::apache::thrift::protocol::TType _etype748;
+            xfer += iprot->readListBegin(_etype748, _size745);
+            this->filesAdded.resize(_size745);
+            uint32_t _i749;
+            for (_i749 = 0; _i749 < _size745; ++_i749)
+            {
+              xfer += iprot->readString(this->filesAdded[_i749]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size787;
+            ::apache::thrift::protocol::TType _etype790;
+            xfer += iprot->readListBegin(_etype790, _size787);
+            this->filesAdded.resize(_size787);
+            uint32_t _i791;
+            for (_i791 = 0; _i791 < _size787; ++_i791)
+            {
+              xfer += iprot->readString(this->filesAdded[_i791]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size799;
+            ::apache::thrift::protocol::TType _etype802;
+            xfer += iprot->readListBegin(_etype802, _size799);
+            this->filesAdded.resize(_size799);
+            uint32_t _i803;
+            for (_i803 = 0; _i803 < _size799; ++_i803)
+            {
+              xfer += iprot->readString(this->filesAdded[_i803]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -19891,6 +24835,9 @@ uint32_t InsertEventRequestData::read(::apache::thrift::protocol::TProtocol* ipr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->filesAddedChecksum.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size808;
             ::apache::thrift::protocol::TType _etype811;
             xfer += iprot->readListBegin(_etype811, _size808);
@@ -19899,6 +24846,78 @@ uint32_t InsertEventRequestData::read(::apache::thrift::protocol::TProtocol* ipr
             for (_i812 = 0; _i812 < _size808; ++_i812)
             {
               xfer += iprot->readString(this->filesAddedChecksum[_i812]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size788;
+            ::apache::thrift::protocol::TType _etype791;
+            xfer += iprot->readListBegin(_etype791, _size788);
+            this->filesAddedChecksum.resize(_size788);
+            uint32_t _i792;
+            for (_i792 = 0; _i792 < _size788; ++_i792)
+            {
+              xfer += iprot->readString(this->filesAddedChecksum[_i792]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size746;
+            ::apache::thrift::protocol::TType _etype749;
+            xfer += iprot->readListBegin(_etype749, _size746);
+            this->filesAddedChecksum.resize(_size746);
+            uint32_t _i750;
+            for (_i750 = 0; _i750 < _size746; ++_i750)
+            {
+              xfer += iprot->readString(this->filesAddedChecksum[_i750]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size750;
+            ::apache::thrift::protocol::TType _etype753;
+            xfer += iprot->readListBegin(_etype753, _size750);
+            this->filesAddedChecksum.resize(_size750);
+            uint32_t _i754;
+            for (_i754 = 0; _i754 < _size750; ++_i754)
+            {
+              xfer += iprot->readString(this->filesAddedChecksum[_i754]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size750;
+            ::apache::thrift::protocol::TType _etype753;
+            xfer += iprot->readListBegin(_etype753, _size750);
+            this->filesAddedChecksum.resize(_size750);
+            uint32_t _i754;
+            for (_i754 = 0; _i754 < _size750; ++_i754)
+            {
+              xfer += iprot->readString(this->filesAddedChecksum[_i754]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size792;
+            ::apache::thrift::protocol::TType _etype795;
+            xfer += iprot->readListBegin(_etype795, _size792);
+            this->filesAddedChecksum.resize(_size792);
+            uint32_t _i796;
+            for (_i796 = 0; _i796 < _size792; ++_i796)
+            {
+              xfer += iprot->readString(this->filesAddedChecksum[_i796]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size804;
+            ::apache::thrift::protocol::TType _etype807;
+            xfer += iprot->readListBegin(_etype807, _size804);
+            this->filesAddedChecksum.resize(_size804);
+            uint32_t _i808;
+            for (_i808 = 0; _i808 < _size804; ++_i808)
+            {
+              xfer += iprot->readString(this->filesAddedChecksum[_i808]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -19934,10 +24953,61 @@ uint32_t InsertEventRequestData::write(::apache::thrift::protocol::TProtocol* op
   xfer += oprot->writeFieldBegin("filesAdded", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->filesAdded.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<std::string> ::const_iterator _iter813;
     for (_iter813 = this->filesAdded.begin(); _iter813 != this->filesAdded.end(); ++_iter813)
     {
       xfer += oprot->writeString((*_iter813));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<std::string> ::const_iterator _iter793;
+    for (_iter793 = this->filesAdded.begin(); _iter793 != this->filesAdded.end(); ++_iter793)
+    {
+      xfer += oprot->writeString((*_iter793));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<std::string> ::const_iterator _iter751;
+    for (_iter751 = this->filesAdded.begin(); _iter751 != this->filesAdded.end(); ++_iter751)
+    {
+      xfer += oprot->writeString((*_iter751));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<std::string> ::const_iterator _iter755;
+    for (_iter755 = this->filesAdded.begin(); _iter755 != this->filesAdded.end(); ++_iter755)
+    {
+      xfer += oprot->writeString((*_iter755));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<std::string> ::const_iterator _iter755;
+    for (_iter755 = this->filesAdded.begin(); _iter755 != this->filesAdded.end(); ++_iter755)
+    {
+      xfer += oprot->writeString((*_iter755));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<std::string> ::const_iterator _iter797;
+    for (_iter797 = this->filesAdded.begin(); _iter797 != this->filesAdded.end(); ++_iter797)
+    {
+      xfer += oprot->writeString((*_iter797));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<std::string> ::const_iterator _iter809;
+    for (_iter809 = this->filesAdded.begin(); _iter809 != this->filesAdded.end(); ++_iter809)
+    {
+      xfer += oprot->writeString((*_iter809));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -19947,10 +25017,62 @@ uint32_t InsertEventRequestData::write(::apache::thrift::protocol::TProtocol* op
     xfer += oprot->writeFieldBegin("filesAddedChecksum", ::apache::thrift::protocol::T_LIST, 3);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->filesAddedChecksum.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<std::string> ::const_iterator _iter814;
       for (_iter814 = this->filesAddedChecksum.begin(); _iter814 != this->filesAddedChecksum.end(); ++_iter814)
       {
         xfer += oprot->writeString((*_iter814));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<std::string> ::const_iterator _iter794;
+      for (_iter794 = this->filesAddedChecksum.begin(); _iter794 != this->filesAddedChecksum.end(); ++_iter794)
+      {
+        xfer += oprot->writeString((*_iter794));
+=======
+      std::vector<std::string> ::const_iterator _iter752;
+      for (_iter752 = this->filesAddedChecksum.begin(); _iter752 != this->filesAddedChecksum.end(); ++_iter752)
+      {
+        xfer += oprot->writeString((*_iter752));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<std::string> ::const_iterator _iter756;
+      for (_iter756 = this->filesAddedChecksum.begin(); _iter756 != this->filesAddedChecksum.end(); ++_iter756)
+      {
+        xfer += oprot->writeString((*_iter756));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter752;
+      for (_iter752 = this->filesAddedChecksum.begin(); _iter752 != this->filesAddedChecksum.end(); ++_iter752)
+      {
+        xfer += oprot->writeString((*_iter752));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<std::string> ::const_iterator _iter756;
+      for (_iter756 = this->filesAddedChecksum.begin(); _iter756 != this->filesAddedChecksum.end(); ++_iter756)
+      {
+        xfer += oprot->writeString((*_iter756));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter798;
+      for (_iter798 = this->filesAddedChecksum.begin(); _iter798 != this->filesAddedChecksum.end(); ++_iter798)
+      {
+        xfer += oprot->writeString((*_iter798));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<std::string> ::const_iterator _iter810;
+      for (_iter810 = this->filesAddedChecksum.begin(); _iter810 != this->filesAddedChecksum.end(); ++_iter810)
+      {
+        xfer += oprot->writeString((*_iter810));
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -19969,6 +25091,9 @@ void swap(InsertEventRequestData &a, InsertEventRequestData &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 InsertEventRequestData::InsertEventRequestData(const InsertEventRequestData& other815) {
   replace = other815.replace;
   filesAdded = other815.filesAdded;
@@ -19980,6 +25105,100 @@ InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventReque
   filesAdded = other816.filesAdded;
   filesAddedChecksum = other816.filesAddedChecksum;
   __isset = other816.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+InsertEventRequestData::InsertEventRequestData(const InsertEventRequestData& other795) {
+  replace = other795.replace;
+  filesAdded = other795.filesAdded;
+  filesAddedChecksum = other795.filesAddedChecksum;
+  __isset = other795.__isset;
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other796) {
+  replace = other796.replace;
+  filesAdded = other796.filesAdded;
+  filesAddedChecksum = other796.filesAddedChecksum;
+  __isset = other796.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+InsertEventRequestData::InsertEventRequestData(const InsertEventRequestData& other753) {
+  replace = other753.replace;
+  filesAdded = other753.filesAdded;
+  filesAddedChecksum = other753.filesAddedChecksum;
+  __isset = other753.__isset;
+<<<<<<< HEAD
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other754) {
+  replace = other754.replace;
+  filesAdded = other754.filesAdded;
+  filesAddedChecksum = other754.filesAddedChecksum;
+  __isset = other754.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+InsertEventRequestData::InsertEventRequestData(const InsertEventRequestData& other757) {
+  replace = other757.replace;
+  filesAdded = other757.filesAdded;
+  filesAddedChecksum = other757.filesAddedChecksum;
+  __isset = other757.__isset;
+<<<<<<< HEAD
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other758) {
+  replace = other758.replace;
+  filesAdded = other758.filesAdded;
+  filesAddedChecksum = other758.filesAddedChecksum;
+  __isset = other758.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other754) {
+  replace = other754.replace;
+  filesAdded = other754.filesAdded;
+  filesAddedChecksum = other754.filesAddedChecksum;
+  __isset = other754.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other758) {
+  replace = other758.replace;
+  filesAdded = other758.filesAdded;
+  filesAddedChecksum = other758.filesAddedChecksum;
+  __isset = other758.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InsertEventRequestData::InsertEventRequestData(const InsertEventRequestData& other799) {
+  replace = other799.replace;
+  filesAdded = other799.filesAdded;
+  filesAddedChecksum = other799.filesAddedChecksum;
+  __isset = other799.__isset;
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other800) {
+  replace = other800.replace;
+  filesAdded = other800.filesAdded;
+  filesAddedChecksum = other800.filesAddedChecksum;
+  __isset = other800.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+InsertEventRequestData::InsertEventRequestData(const InsertEventRequestData& other811) {
+  replace = other811.replace;
+  filesAdded = other811.filesAdded;
+  filesAddedChecksum = other811.filesAddedChecksum;
+  __isset = other811.__isset;
+}
+InsertEventRequestData& InsertEventRequestData::operator=(const InsertEventRequestData& other812) {
+  replace = other812.replace;
+  filesAdded = other812.filesAdded;
+  filesAddedChecksum = other812.filesAddedChecksum;
+  __isset = other812.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void InsertEventRequestData::printTo(std::ostream& out) const {
@@ -20061,6 +25280,9 @@ void swap(FireEventRequestData &a, FireEventRequestData &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 FireEventRequestData::FireEventRequestData(const FireEventRequestData& other817) {
   insertData = other817.insertData;
   __isset = other817.__isset;
@@ -20068,6 +25290,72 @@ FireEventRequestData::FireEventRequestData(const FireEventRequestData& other817)
 FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other818) {
   insertData = other818.insertData;
   __isset = other818.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+FireEventRequestData::FireEventRequestData(const FireEventRequestData& other797) {
+  insertData = other797.insertData;
+  __isset = other797.__isset;
+}
+FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other798) {
+  insertData = other798.insertData;
+  __isset = other798.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+FireEventRequestData::FireEventRequestData(const FireEventRequestData& other755) {
+  insertData = other755.insertData;
+  __isset = other755.__isset;
+}
+FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other756) {
+  insertData = other756.insertData;
+  __isset = other756.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+FireEventRequestData::FireEventRequestData(const FireEventRequestData& other759) {
+  insertData = other759.insertData;
+  __isset = other759.__isset;
+}
+FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other760) {
+  insertData = other760.insertData;
+  __isset = other760.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+FireEventRequestData::FireEventRequestData(const FireEventRequestData& other759) {
+  insertData = other759.insertData;
+  __isset = other759.__isset;
+}
+FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other760) {
+  insertData = other760.insertData;
+  __isset = other760.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+FireEventRequestData::FireEventRequestData(const FireEventRequestData& other801) {
+  insertData = other801.insertData;
+  __isset = other801.__isset;
+}
+FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other802) {
+  insertData = other802.insertData;
+  __isset = other802.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+FireEventRequestData::FireEventRequestData(const FireEventRequestData& other813) {
+  insertData = other813.insertData;
+  __isset = other813.__isset;
+}
+FireEventRequestData& FireEventRequestData::operator=(const FireEventRequestData& other814) {
+  insertData = other814.insertData;
+  __isset = other814.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void FireEventRequestData::printTo(std::ostream& out) const {
@@ -20164,6 +25452,9 @@ uint32_t FireEventRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->partitionVals.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size819;
             ::apache::thrift::protocol::TType _etype822;
             xfer += iprot->readListBegin(_etype822, _size819);
@@ -20172,6 +25463,80 @@ uint32_t FireEventRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i823 = 0; _i823 < _size819; ++_i823)
             {
               xfer += iprot->readString(this->partitionVals[_i823]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size799;
+            ::apache::thrift::protocol::TType _etype802;
+            xfer += iprot->readListBegin(_etype802, _size799);
+            this->partitionVals.resize(_size799);
+            uint32_t _i803;
+            for (_i803 = 0; _i803 < _size799; ++_i803)
+            {
+              xfer += iprot->readString(this->partitionVals[_i803]);
+=======
+            uint32_t _size757;
+            ::apache::thrift::protocol::TType _etype760;
+            xfer += iprot->readListBegin(_etype760, _size757);
+            this->partitionVals.resize(_size757);
+            uint32_t _i761;
+            for (_i761 = 0; _i761 < _size757; ++_i761)
+            {
+              xfer += iprot->readString(this->partitionVals[_i761]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size761;
+            ::apache::thrift::protocol::TType _etype764;
+            xfer += iprot->readListBegin(_etype764, _size761);
+            this->partitionVals.resize(_size761);
+            uint32_t _i765;
+            for (_i765 = 0; _i765 < _size761; ++_i765)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readString(this->partitionVals[_i765]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size757;
+            ::apache::thrift::protocol::TType _etype760;
+            xfer += iprot->readListBegin(_etype760, _size757);
+            this->partitionVals.resize(_size757);
+            uint32_t _i761;
+            for (_i761 = 0; _i761 < _size757; ++_i761)
+            {
+              xfer += iprot->readString(this->partitionVals[_i761]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += iprot->readString(this->partitionVals[_i765]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size803;
+            ::apache::thrift::protocol::TType _etype806;
+            xfer += iprot->readListBegin(_etype806, _size803);
+            this->partitionVals.resize(_size803);
+            uint32_t _i807;
+            for (_i807 = 0; _i807 < _size803; ++_i807)
+            {
+              xfer += iprot->readString(this->partitionVals[_i807]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size815;
+            ::apache::thrift::protocol::TType _etype818;
+            xfer += iprot->readListBegin(_etype818, _size815);
+            this->partitionVals.resize(_size815);
+            uint32_t _i819;
+            for (_i819 = 0; _i819 < _size815; ++_i819)
+            {
+              xfer += iprot->readString(this->partitionVals[_i819]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -20223,10 +25588,62 @@ uint32_t FireEventRequest::write(::apache::thrift::protocol::TProtocol* oprot) c
     xfer += oprot->writeFieldBegin("partitionVals", ::apache::thrift::protocol::T_LIST, 5);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->partitionVals.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<std::string> ::const_iterator _iter824;
       for (_iter824 = this->partitionVals.begin(); _iter824 != this->partitionVals.end(); ++_iter824)
       {
         xfer += oprot->writeString((*_iter824));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<std::string> ::const_iterator _iter804;
+      for (_iter804 = this->partitionVals.begin(); _iter804 != this->partitionVals.end(); ++_iter804)
+      {
+        xfer += oprot->writeString((*_iter804));
+=======
+      std::vector<std::string> ::const_iterator _iter762;
+      for (_iter762 = this->partitionVals.begin(); _iter762 != this->partitionVals.end(); ++_iter762)
+      {
+        xfer += oprot->writeString((*_iter762));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<std::string> ::const_iterator _iter766;
+      for (_iter766 = this->partitionVals.begin(); _iter766 != this->partitionVals.end(); ++_iter766)
+      {
+        xfer += oprot->writeString((*_iter766));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter762;
+      for (_iter762 = this->partitionVals.begin(); _iter762 != this->partitionVals.end(); ++_iter762)
+      {
+        xfer += oprot->writeString((*_iter762));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<std::string> ::const_iterator _iter766;
+      for (_iter766 = this->partitionVals.begin(); _iter766 != this->partitionVals.end(); ++_iter766)
+      {
+        xfer += oprot->writeString((*_iter766));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter808;
+      for (_iter808 = this->partitionVals.begin(); _iter808 != this->partitionVals.end(); ++_iter808)
+      {
+        xfer += oprot->writeString((*_iter808));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<std::string> ::const_iterator _iter820;
+      for (_iter820 = this->partitionVals.begin(); _iter820 != this->partitionVals.end(); ++_iter820)
+      {
+        xfer += oprot->writeString((*_iter820));
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -20247,6 +25664,9 @@ void swap(FireEventRequest &a, FireEventRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 FireEventRequest::FireEventRequest(const FireEventRequest& other825) {
   successful = other825.successful;
   data = other825.data;
@@ -20262,6 +25682,108 @@ FireEventRequest& FireEventRequest::operator=(const FireEventRequest& other826) 
   tableName = other826.tableName;
   partitionVals = other826.partitionVals;
   __isset = other826.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+FireEventRequest::FireEventRequest(const FireEventRequest& other805) {
+  successful = other805.successful;
+  data = other805.data;
+  dbName = other805.dbName;
+  tableName = other805.tableName;
+  partitionVals = other805.partitionVals;
+  __isset = other805.__isset;
+}
+FireEventRequest& FireEventRequest::operator=(const FireEventRequest& other806) {
+  successful = other806.successful;
+  data = other806.data;
+  dbName = other806.dbName;
+  tableName = other806.tableName;
+  partitionVals = other806.partitionVals;
+  __isset = other806.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+FireEventRequest::FireEventRequest(const FireEventRequest& other763) {
+  successful = other763.successful;
+  data = other763.data;
+  dbName = other763.dbName;
+  tableName = other763.tableName;
+  partitionVals = other763.partitionVals;
+  __isset = other763.__isset;
+}
+FireEventRequest& FireEventRequest::operator=(const FireEventRequest& other764) {
+  successful = other764.successful;
+  data = other764.data;
+  dbName = other764.dbName;
+  tableName = other764.tableName;
+  partitionVals = other764.partitionVals;
+  __isset = other764.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+FireEventRequest::FireEventRequest(const FireEventRequest& other767) {
+  successful = other767.successful;
+  data = other767.data;
+  dbName = other767.dbName;
+  tableName = other767.tableName;
+  partitionVals = other767.partitionVals;
+  __isset = other767.__isset;
+}
+FireEventRequest& FireEventRequest::operator=(const FireEventRequest& other768) {
+  successful = other768.successful;
+  data = other768.data;
+  dbName = other768.dbName;
+  tableName = other768.tableName;
+  partitionVals = other768.partitionVals;
+  __isset = other768.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+FireEventRequest::FireEventRequest(const FireEventRequest& other809) {
+  successful = other809.successful;
+  data = other809.data;
+  dbName = other809.dbName;
+  tableName = other809.tableName;
+  partitionVals = other809.partitionVals;
+  __isset = other809.__isset;
+}
+FireEventRequest& FireEventRequest::operator=(const FireEventRequest& other810) {
+  successful = other810.successful;
+  data = other810.data;
+  dbName = other810.dbName;
+  tableName = other810.tableName;
+  partitionVals = other810.partitionVals;
+  __isset = other810.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+FireEventRequest::FireEventRequest(const FireEventRequest& other821) {
+  successful = other821.successful;
+  data = other821.data;
+  dbName = other821.dbName;
+  tableName = other821.tableName;
+  partitionVals = other821.partitionVals;
+  __isset = other821.__isset;
+}
+FireEventRequest& FireEventRequest::operator=(const FireEventRequest& other822) {
+  successful = other822.successful;
+  data = other822.data;
+  dbName = other822.dbName;
+  tableName = other822.tableName;
+  partitionVals = other822.partitionVals;
+  __isset = other822.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void FireEventRequest::printTo(std::ostream& out) const {
@@ -20324,11 +25846,68 @@ void swap(FireEventResponse &a, FireEventResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 FireEventResponse::FireEventResponse(const FireEventResponse& other827) {
   (void) other827;
 }
 FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other828) {
   (void) other828;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+FireEventResponse::FireEventResponse(const FireEventResponse& other807) {
+  (void) other807;
+}
+FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other808) {
+  (void) other808;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+FireEventResponse::FireEventResponse(const FireEventResponse& other765) {
+  (void) other765;
+}
+FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other766) {
+  (void) other766;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+FireEventResponse::FireEventResponse(const FireEventResponse& other769) {
+  (void) other769;
+}
+FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other770) {
+  (void) other770;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+FireEventResponse::FireEventResponse(const FireEventResponse& other769) {
+  (void) other769;
+}
+FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other770) {
+  (void) other770;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+FireEventResponse::FireEventResponse(const FireEventResponse& other811) {
+  (void) other811;
+}
+FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other812) {
+  (void) other812;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+FireEventResponse::FireEventResponse(const FireEventResponse& other823) {
+  (void) other823;
+}
+FireEventResponse& FireEventResponse::operator=(const FireEventResponse& other824) {
+  (void) other824;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void FireEventResponse::printTo(std::ostream& out) const {
@@ -20428,6 +26007,9 @@ void swap(MetadataPpdResult &a, MetadataPpdResult &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other829) {
   metadata = other829.metadata;
   includeBitset = other829.includeBitset;
@@ -20437,6 +26019,88 @@ MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other83
   metadata = other830.metadata;
   includeBitset = other830.includeBitset;
   __isset = other830.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other809) {
+  metadata = other809.metadata;
+  includeBitset = other809.includeBitset;
+  __isset = other809.__isset;
+}
+MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other810) {
+  metadata = other810.metadata;
+  includeBitset = other810.includeBitset;
+  __isset = other810.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other767) {
+  metadata = other767.metadata;
+  includeBitset = other767.includeBitset;
+  __isset = other767.__isset;
+<<<<<<< HEAD
+}
+MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other768) {
+  metadata = other768.metadata;
+  includeBitset = other768.includeBitset;
+  __isset = other768.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other771) {
+  metadata = other771.metadata;
+  includeBitset = other771.includeBitset;
+  __isset = other771.__isset;
+}
+=======
+MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other771) {
+  metadata = other771.metadata;
+  includeBitset = other771.includeBitset;
+  __isset = other771.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other772) {
+  metadata = other772.metadata;
+  includeBitset = other772.includeBitset;
+  __isset = other772.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+}
+MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other768) {
+  metadata = other768.metadata;
+  includeBitset = other768.includeBitset;
+  __isset = other768.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other813) {
+  metadata = other813.metadata;
+  includeBitset = other813.includeBitset;
+  __isset = other813.__isset;
+}
+MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other814) {
+  metadata = other814.metadata;
+  includeBitset = other814.includeBitset;
+  __isset = other814.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+MetadataPpdResult::MetadataPpdResult(const MetadataPpdResult& other825) {
+  metadata = other825.metadata;
+  includeBitset = other825.includeBitset;
+  __isset = other825.__isset;
+}
+MetadataPpdResult& MetadataPpdResult::operator=(const MetadataPpdResult& other826) {
+  metadata = other826.metadata;
+  includeBitset = other826.includeBitset;
+  __isset = other826.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void MetadataPpdResult::printTo(std::ostream& out) const {
@@ -20487,6 +26151,9 @@ uint32_t GetFileMetadataByExprResult::read(::apache::thrift::protocol::TProtocol
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->metadata.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size831;
             ::apache::thrift::protocol::TType _ktype832;
             ::apache::thrift::protocol::TType _vtype833;
@@ -20498,6 +26165,98 @@ uint32_t GetFileMetadataByExprResult::read(::apache::thrift::protocol::TProtocol
               xfer += iprot->readI64(_key836);
               MetadataPpdResult& _val837 = this->metadata[_key836];
               xfer += _val837.read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size811;
+            ::apache::thrift::protocol::TType _ktype812;
+            ::apache::thrift::protocol::TType _vtype813;
+            xfer += iprot->readMapBegin(_ktype812, _vtype813, _size811);
+            uint32_t _i815;
+            for (_i815 = 0; _i815 < _size811; ++_i815)
+            {
+              int64_t _key816;
+              xfer += iprot->readI64(_key816);
+              MetadataPpdResult& _val817 = this->metadata[_key816];
+              xfer += _val817.read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size769;
+            ::apache::thrift::protocol::TType _ktype770;
+            ::apache::thrift::protocol::TType _vtype771;
+            xfer += iprot->readMapBegin(_ktype770, _vtype771, _size769);
+            uint32_t _i773;
+            for (_i773 = 0; _i773 < _size769; ++_i773)
+<<<<<<< HEAD
+            {
+              int64_t _key774;
+              xfer += iprot->readI64(_key774);
+              MetadataPpdResult& _val775 = this->metadata[_key774];
+              xfer += _val775.read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size773;
+            ::apache::thrift::protocol::TType _ktype774;
+            ::apache::thrift::protocol::TType _vtype775;
+            xfer += iprot->readMapBegin(_ktype774, _vtype775, _size773);
+            uint32_t _i777;
+            for (_i777 = 0; _i777 < _size773; ++_i777)
+<<<<<<< HEAD
+            {
+              int64_t _key778;
+              xfer += iprot->readI64(_key778);
+              MetadataPpdResult& _val779 = this->metadata[_key778];
+              xfer += _val779.read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              int64_t _key774;
+              xfer += iprot->readI64(_key774);
+              MetadataPpdResult& _val775 = this->metadata[_key774];
+              xfer += _val775.read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              int64_t _key778;
+              xfer += iprot->readI64(_key778);
+              MetadataPpdResult& _val779 = this->metadata[_key778];
+              xfer += _val779.read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size815;
+            ::apache::thrift::protocol::TType _ktype816;
+            ::apache::thrift::protocol::TType _vtype817;
+            xfer += iprot->readMapBegin(_ktype816, _vtype817, _size815);
+            uint32_t _i819;
+            for (_i819 = 0; _i819 < _size815; ++_i819)
+            {
+              int64_t _key820;
+              xfer += iprot->readI64(_key820);
+              MetadataPpdResult& _val821 = this->metadata[_key820];
+              xfer += _val821.read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size827;
+            ::apache::thrift::protocol::TType _ktype828;
+            ::apache::thrift::protocol::TType _vtype829;
+            xfer += iprot->readMapBegin(_ktype828, _vtype829, _size827);
+            uint32_t _i831;
+            for (_i831 = 0; _i831 < _size827; ++_i831)
+            {
+              int64_t _key832;
+              xfer += iprot->readI64(_key832);
+              MetadataPpdResult& _val833 = this->metadata[_key832];
+              xfer += _val833.read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readMapEnd();
           }
@@ -20538,11 +26297,68 @@ uint32_t GetFileMetadataByExprResult::write(::apache::thrift::protocol::TProtoco
   xfer += oprot->writeFieldBegin("metadata", ::apache::thrift::protocol::T_MAP, 1);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_I64, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->metadata.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::map<int64_t, MetadataPpdResult> ::const_iterator _iter838;
     for (_iter838 = this->metadata.begin(); _iter838 != this->metadata.end(); ++_iter838)
     {
       xfer += oprot->writeI64(_iter838->first);
       xfer += _iter838->second.write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::map<int64_t, MetadataPpdResult> ::const_iterator _iter818;
+    for (_iter818 = this->metadata.begin(); _iter818 != this->metadata.end(); ++_iter818)
+    {
+      xfer += oprot->writeI64(_iter818->first);
+      xfer += _iter818->second.write(oprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::map<int64_t, MetadataPpdResult> ::const_iterator _iter776;
+    for (_iter776 = this->metadata.begin(); _iter776 != this->metadata.end(); ++_iter776)
+    {
+      xfer += oprot->writeI64(_iter776->first);
+      xfer += _iter776->second.write(oprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::map<int64_t, MetadataPpdResult> ::const_iterator _iter780;
+    for (_iter780 = this->metadata.begin(); _iter780 != this->metadata.end(); ++_iter780)
+    {
+      xfer += oprot->writeI64(_iter780->first);
+      xfer += _iter780->second.write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::map<int64_t, MetadataPpdResult> ::const_iterator _iter780;
+    for (_iter780 = this->metadata.begin(); _iter780 != this->metadata.end(); ++_iter780)
+    {
+      xfer += oprot->writeI64(_iter780->first);
+      xfer += _iter780->second.write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::map<int64_t, MetadataPpdResult> ::const_iterator _iter822;
+    for (_iter822 = this->metadata.begin(); _iter822 != this->metadata.end(); ++_iter822)
+    {
+      xfer += oprot->writeI64(_iter822->first);
+      xfer += _iter822->second.write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::map<int64_t, MetadataPpdResult> ::const_iterator _iter834;
+    for (_iter834 = this->metadata.begin(); _iter834 != this->metadata.end(); ++_iter834)
+    {
+      xfer += oprot->writeI64(_iter834->first);
+      xfer += _iter834->second.write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeMapEnd();
   }
@@ -20563,6 +26379,9 @@ void swap(GetFileMetadataByExprResult &a, GetFileMetadataByExprResult &b) {
   swap(a.isSupported, b.isSupported);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other839) {
   metadata = other839.metadata;
   isSupported = other839.isSupported;
@@ -20570,6 +26389,72 @@ GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataBy
 GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other840) {
   metadata = other840.metadata;
   isSupported = other840.isSupported;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other819) {
+  metadata = other819.metadata;
+  isSupported = other819.isSupported;
+}
+GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other820) {
+  metadata = other820.metadata;
+  isSupported = other820.isSupported;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other777) {
+  metadata = other777.metadata;
+  isSupported = other777.isSupported;
+}
+GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other778) {
+  metadata = other778.metadata;
+  isSupported = other778.isSupported;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other781) {
+  metadata = other781.metadata;
+  isSupported = other781.isSupported;
+}
+GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other782) {
+  metadata = other782.metadata;
+  isSupported = other782.isSupported;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other781) {
+  metadata = other781.metadata;
+  isSupported = other781.isSupported;
+}
+GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other782) {
+  metadata = other782.metadata;
+  isSupported = other782.isSupported;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other823) {
+  metadata = other823.metadata;
+  isSupported = other823.isSupported;
+}
+GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other824) {
+  metadata = other824.metadata;
+  isSupported = other824.isSupported;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetFileMetadataByExprResult::GetFileMetadataByExprResult(const GetFileMetadataByExprResult& other835) {
+  metadata = other835.metadata;
+  isSupported = other835.isSupported;
+}
+GetFileMetadataByExprResult& GetFileMetadataByExprResult::operator=(const GetFileMetadataByExprResult& other836) {
+  metadata = other836.metadata;
+  isSupported = other836.isSupported;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetFileMetadataByExprResult::printTo(std::ostream& out) const {
@@ -20630,6 +26515,9 @@ uint32_t GetFileMetadataByExprRequest::read(::apache::thrift::protocol::TProtoco
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->fileIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size841;
             ::apache::thrift::protocol::TType _etype844;
             xfer += iprot->readListBegin(_etype844, _size841);
@@ -20638,6 +26526,78 @@ uint32_t GetFileMetadataByExprRequest::read(::apache::thrift::protocol::TProtoco
             for (_i845 = 0; _i845 < _size841; ++_i845)
             {
               xfer += iprot->readI64(this->fileIds[_i845]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size821;
+            ::apache::thrift::protocol::TType _etype824;
+            xfer += iprot->readListBegin(_etype824, _size821);
+            this->fileIds.resize(_size821);
+            uint32_t _i825;
+            for (_i825 = 0; _i825 < _size821; ++_i825)
+            {
+              xfer += iprot->readI64(this->fileIds[_i825]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size779;
+            ::apache::thrift::protocol::TType _etype782;
+            xfer += iprot->readListBegin(_etype782, _size779);
+            this->fileIds.resize(_size779);
+            uint32_t _i783;
+            for (_i783 = 0; _i783 < _size779; ++_i783)
+            {
+              xfer += iprot->readI64(this->fileIds[_i783]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size783;
+            ::apache::thrift::protocol::TType _etype786;
+            xfer += iprot->readListBegin(_etype786, _size783);
+            this->fileIds.resize(_size783);
+            uint32_t _i787;
+            for (_i787 = 0; _i787 < _size783; ++_i787)
+            {
+              xfer += iprot->readI64(this->fileIds[_i787]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size783;
+            ::apache::thrift::protocol::TType _etype786;
+            xfer += iprot->readListBegin(_etype786, _size783);
+            this->fileIds.resize(_size783);
+            uint32_t _i787;
+            for (_i787 = 0; _i787 < _size783; ++_i787)
+            {
+              xfer += iprot->readI64(this->fileIds[_i787]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size825;
+            ::apache::thrift::protocol::TType _etype828;
+            xfer += iprot->readListBegin(_etype828, _size825);
+            this->fileIds.resize(_size825);
+            uint32_t _i829;
+            for (_i829 = 0; _i829 < _size825; ++_i829)
+            {
+              xfer += iprot->readI64(this->fileIds[_i829]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size837;
+            ::apache::thrift::protocol::TType _etype840;
+            xfer += iprot->readListBegin(_etype840, _size837);
+            this->fileIds.resize(_size837);
+            uint32_t _i841;
+            for (_i841 = 0; _i841 < _size837; ++_i841)
+            {
+              xfer += iprot->readI64(this->fileIds[_i841]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -20664,9 +26624,54 @@ uint32_t GetFileMetadataByExprRequest::read(::apache::thrift::protocol::TProtoco
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast846;
           xfer += iprot->readI32(ecast846);
           this->type = (FileMetadataExprType::type)ecast846;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast826;
+          xfer += iprot->readI32(ecast826);
+          this->type = (FileMetadataExprType::type)ecast826;
+=======
+          int32_t ecast784;
+          xfer += iprot->readI32(ecast784);
+          this->type = (FileMetadataExprType::type)ecast784;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast788;
+          xfer += iprot->readI32(ecast788);
+          this->type = (FileMetadataExprType::type)ecast788;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast784;
+          xfer += iprot->readI32(ecast784);
+          this->type = (FileMetadataExprType::type)ecast784;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast788;
+          xfer += iprot->readI32(ecast788);
+          this->type = (FileMetadataExprType::type)ecast788;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast830;
+          xfer += iprot->readI32(ecast830);
+          this->type = (FileMetadataExprType::type)ecast830;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast842;
+          xfer += iprot->readI32(ecast842);
+          this->type = (FileMetadataExprType::type)ecast842;
+>>>>>>> alloc write id event changes
           this->__isset.type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -20696,10 +26701,61 @@ uint32_t GetFileMetadataByExprRequest::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeFieldBegin("fileIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->fileIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter847;
     for (_iter847 = this->fileIds.begin(); _iter847 != this->fileIds.end(); ++_iter847)
     {
       xfer += oprot->writeI64((*_iter847));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<int64_t> ::const_iterator _iter827;
+    for (_iter827 = this->fileIds.begin(); _iter827 != this->fileIds.end(); ++_iter827)
+    {
+      xfer += oprot->writeI64((*_iter827));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<int64_t> ::const_iterator _iter785;
+    for (_iter785 = this->fileIds.begin(); _iter785 != this->fileIds.end(); ++_iter785)
+    {
+      xfer += oprot->writeI64((*_iter785));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<int64_t> ::const_iterator _iter789;
+    for (_iter789 = this->fileIds.begin(); _iter789 != this->fileIds.end(); ++_iter789)
+    {
+      xfer += oprot->writeI64((*_iter789));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<int64_t> ::const_iterator _iter789;
+    for (_iter789 = this->fileIds.begin(); _iter789 != this->fileIds.end(); ++_iter789)
+    {
+      xfer += oprot->writeI64((*_iter789));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<int64_t> ::const_iterator _iter831;
+    for (_iter831 = this->fileIds.begin(); _iter831 != this->fileIds.end(); ++_iter831)
+    {
+      xfer += oprot->writeI64((*_iter831));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<int64_t> ::const_iterator _iter843;
+    for (_iter843 = this->fileIds.begin(); _iter843 != this->fileIds.end(); ++_iter843)
+    {
+      xfer += oprot->writeI64((*_iter843));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -20733,6 +26789,9 @@ void swap(GetFileMetadataByExprRequest &a, GetFileMetadataByExprRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other848) {
   fileIds = other848.fileIds;
   expr = other848.expr;
@@ -20746,6 +26805,105 @@ GetFileMetadataByExprRequest& GetFileMetadataByExprRequest::operator=(const GetF
   doGetFooters = other849.doGetFooters;
   type = other849.type;
   __isset = other849.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other828) {
+  fileIds = other828.fileIds;
+  expr = other828.expr;
+  doGetFooters = other828.doGetFooters;
+  type = other828.type;
+  __isset = other828.__isset;
+}
+GetFileMetadataByExprRequest& GetFileMetadataByExprRequest::operator=(const GetFileMetadataByExprRequest& other829) {
+  fileIds = other829.fileIds;
+  expr = other829.expr;
+  doGetFooters = other829.doGetFooters;
+  type = other829.type;
+  __isset = other829.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other786) {
+  fileIds = other786.fileIds;
+  expr = other786.expr;
+  doGetFooters = other786.doGetFooters;
+  type = other786.type;
+  __isset = other786.__isset;
+}
+GetFileMetadataByExprRequest& GetFileMetadataByExprRequest::operator=(const GetFileMetadataByExprRequest& other787) {
+  fileIds = other787.fileIds;
+  expr = other787.expr;
+  doGetFooters = other787.doGetFooters;
+  type = other787.type;
+  __isset = other787.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other790) {
+  fileIds = other790.fileIds;
+  expr = other790.expr;
+  doGetFooters = other790.doGetFooters;
+  type = other790.type;
+  __isset = other790.__isset;
+}
+=======
+GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other790) {
+  fileIds = other790.fileIds;
+  expr = other790.expr;
+  doGetFooters = other790.doGetFooters;
+  type = other790.type;
+  __isset = other790.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+GetFileMetadataByExprRequest& GetFileMetadataByExprRequest::operator=(const GetFileMetadataByExprRequest& other791) {
+  fileIds = other791.fileIds;
+  expr = other791.expr;
+  doGetFooters = other791.doGetFooters;
+  type = other791.type;
+  __isset = other791.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other832) {
+  fileIds = other832.fileIds;
+  expr = other832.expr;
+  doGetFooters = other832.doGetFooters;
+  type = other832.type;
+  __isset = other832.__isset;
+}
+GetFileMetadataByExprRequest& GetFileMetadataByExprRequest::operator=(const GetFileMetadataByExprRequest& other833) {
+  fileIds = other833.fileIds;
+  expr = other833.expr;
+  doGetFooters = other833.doGetFooters;
+  type = other833.type;
+  __isset = other833.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetFileMetadataByExprRequest::GetFileMetadataByExprRequest(const GetFileMetadataByExprRequest& other844) {
+  fileIds = other844.fileIds;
+  expr = other844.expr;
+  doGetFooters = other844.doGetFooters;
+  type = other844.type;
+  __isset = other844.__isset;
+}
+GetFileMetadataByExprRequest& GetFileMetadataByExprRequest::operator=(const GetFileMetadataByExprRequest& other845) {
+  fileIds = other845.fileIds;
+  expr = other845.expr;
+  doGetFooters = other845.doGetFooters;
+  type = other845.type;
+  __isset = other845.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetFileMetadataByExprRequest::printTo(std::ostream& out) const {
@@ -20798,6 +26956,9 @@ uint32_t GetFileMetadataResult::read(::apache::thrift::protocol::TProtocol* ipro
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->metadata.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size850;
             ::apache::thrift::protocol::TType _ktype851;
             ::apache::thrift::protocol::TType _vtype852;
@@ -20809,6 +26970,95 @@ uint32_t GetFileMetadataResult::read(::apache::thrift::protocol::TProtocol* ipro
               xfer += iprot->readI64(_key855);
               std::string& _val856 = this->metadata[_key855];
               xfer += iprot->readBinary(_val856);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size830;
+            ::apache::thrift::protocol::TType _ktype831;
+            ::apache::thrift::protocol::TType _vtype832;
+            xfer += iprot->readMapBegin(_ktype831, _vtype832, _size830);
+            uint32_t _i834;
+            for (_i834 = 0; _i834 < _size830; ++_i834)
+            {
+              int64_t _key835;
+              xfer += iprot->readI64(_key835);
+              std::string& _val836 = this->metadata[_key835];
+              xfer += iprot->readBinary(_val836);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size788;
+            ::apache::thrift::protocol::TType _ktype789;
+            ::apache::thrift::protocol::TType _vtype790;
+            xfer += iprot->readMapBegin(_ktype789, _vtype790, _size788);
+            uint32_t _i792;
+            for (_i792 = 0; _i792 < _size788; ++_i792)
+            {
+              int64_t _key793;
+              xfer += iprot->readI64(_key793);
+              std::string& _val794 = this->metadata[_key793];
+              xfer += iprot->readBinary(_val794);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size792;
+            ::apache::thrift::protocol::TType _ktype793;
+            ::apache::thrift::protocol::TType _vtype794;
+            xfer += iprot->readMapBegin(_ktype793, _vtype794, _size792);
+            uint32_t _i796;
+            for (_i796 = 0; _i796 < _size792; ++_i796)
+            {
+=======
+            uint32_t _size792;
+            ::apache::thrift::protocol::TType _ktype793;
+            ::apache::thrift::protocol::TType _vtype794;
+            xfer += iprot->readMapBegin(_ktype793, _vtype794, _size792);
+            uint32_t _i796;
+            for (_i796 = 0; _i796 < _size792; ++_i796)
+            {
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+              int64_t _key797;
+              xfer += iprot->readI64(_key797);
+              std::string& _val798 = this->metadata[_key797];
+              xfer += iprot->readBinary(_val798);
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size834;
+            ::apache::thrift::protocol::TType _ktype835;
+            ::apache::thrift::protocol::TType _vtype836;
+            xfer += iprot->readMapBegin(_ktype835, _vtype836, _size834);
+            uint32_t _i838;
+            for (_i838 = 0; _i838 < _size834; ++_i838)
+            {
+              int64_t _key839;
+              xfer += iprot->readI64(_key839);
+              std::string& _val840 = this->metadata[_key839];
+              xfer += iprot->readBinary(_val840);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size846;
+            ::apache::thrift::protocol::TType _ktype847;
+            ::apache::thrift::protocol::TType _vtype848;
+            xfer += iprot->readMapBegin(_ktype847, _vtype848, _size846);
+            uint32_t _i850;
+            for (_i850 = 0; _i850 < _size846; ++_i850)
+            {
+              int64_t _key851;
+              xfer += iprot->readI64(_key851);
+              std::string& _val852 = this->metadata[_key851];
+              xfer += iprot->readBinary(_val852);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readMapEnd();
           }
@@ -20849,11 +27099,68 @@ uint32_t GetFileMetadataResult::write(::apache::thrift::protocol::TProtocol* opr
   xfer += oprot->writeFieldBegin("metadata", ::apache::thrift::protocol::T_MAP, 1);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_I64, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->metadata.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::map<int64_t, std::string> ::const_iterator _iter857;
     for (_iter857 = this->metadata.begin(); _iter857 != this->metadata.end(); ++_iter857)
     {
       xfer += oprot->writeI64(_iter857->first);
       xfer += oprot->writeBinary(_iter857->second);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::map<int64_t, std::string> ::const_iterator _iter837;
+    for (_iter837 = this->metadata.begin(); _iter837 != this->metadata.end(); ++_iter837)
+    {
+      xfer += oprot->writeI64(_iter837->first);
+      xfer += oprot->writeBinary(_iter837->second);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::map<int64_t, std::string> ::const_iterator _iter795;
+    for (_iter795 = this->metadata.begin(); _iter795 != this->metadata.end(); ++_iter795)
+    {
+      xfer += oprot->writeI64(_iter795->first);
+      xfer += oprot->writeBinary(_iter795->second);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::map<int64_t, std::string> ::const_iterator _iter799;
+    for (_iter799 = this->metadata.begin(); _iter799 != this->metadata.end(); ++_iter799)
+    {
+      xfer += oprot->writeI64(_iter799->first);
+      xfer += oprot->writeBinary(_iter799->second);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::map<int64_t, std::string> ::const_iterator _iter799;
+    for (_iter799 = this->metadata.begin(); _iter799 != this->metadata.end(); ++_iter799)
+    {
+      xfer += oprot->writeI64(_iter799->first);
+      xfer += oprot->writeBinary(_iter799->second);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::map<int64_t, std::string> ::const_iterator _iter841;
+    for (_iter841 = this->metadata.begin(); _iter841 != this->metadata.end(); ++_iter841)
+    {
+      xfer += oprot->writeI64(_iter841->first);
+      xfer += oprot->writeBinary(_iter841->second);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::map<int64_t, std::string> ::const_iterator _iter853;
+    for (_iter853 = this->metadata.begin(); _iter853 != this->metadata.end(); ++_iter853)
+    {
+      xfer += oprot->writeI64(_iter853->first);
+      xfer += oprot->writeBinary(_iter853->second);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeMapEnd();
   }
@@ -20874,6 +27181,9 @@ void swap(GetFileMetadataResult &a, GetFileMetadataResult &b) {
   swap(a.isSupported, b.isSupported);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other858) {
   metadata = other858.metadata;
   isSupported = other858.isSupported;
@@ -20881,6 +27191,72 @@ GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other8
 GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other859) {
   metadata = other859.metadata;
   isSupported = other859.isSupported;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other838) {
+  metadata = other838.metadata;
+  isSupported = other838.isSupported;
+}
+GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other839) {
+  metadata = other839.metadata;
+  isSupported = other839.isSupported;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other796) {
+  metadata = other796.metadata;
+  isSupported = other796.isSupported;
+}
+GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other797) {
+  metadata = other797.metadata;
+  isSupported = other797.isSupported;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other800) {
+  metadata = other800.metadata;
+  isSupported = other800.isSupported;
+}
+GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other801) {
+  metadata = other801.metadata;
+  isSupported = other801.isSupported;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other800) {
+  metadata = other800.metadata;
+  isSupported = other800.isSupported;
+}
+GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other801) {
+  metadata = other801.metadata;
+  isSupported = other801.isSupported;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other842) {
+  metadata = other842.metadata;
+  isSupported = other842.isSupported;
+}
+GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other843) {
+  metadata = other843.metadata;
+  isSupported = other843.isSupported;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetFileMetadataResult::GetFileMetadataResult(const GetFileMetadataResult& other854) {
+  metadata = other854.metadata;
+  isSupported = other854.isSupported;
+}
+GetFileMetadataResult& GetFileMetadataResult::operator=(const GetFileMetadataResult& other855) {
+  metadata = other855.metadata;
+  isSupported = other855.isSupported;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetFileMetadataResult::printTo(std::ostream& out) const {
@@ -20926,6 +27302,9 @@ uint32_t GetFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->fileIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size860;
             ::apache::thrift::protocol::TType _etype863;
             xfer += iprot->readListBegin(_etype863, _size860);
@@ -20934,6 +27313,77 @@ uint32_t GetFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
             for (_i864 = 0; _i864 < _size860; ++_i864)
             {
               xfer += iprot->readI64(this->fileIds[_i864]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size840;
+            ::apache::thrift::protocol::TType _etype843;
+            xfer += iprot->readListBegin(_etype843, _size840);
+            this->fileIds.resize(_size840);
+            uint32_t _i844;
+            for (_i844 = 0; _i844 < _size840; ++_i844)
+            {
+              xfer += iprot->readI64(this->fileIds[_i844]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size798;
+            ::apache::thrift::protocol::TType _etype801;
+            xfer += iprot->readListBegin(_etype801, _size798);
+            this->fileIds.resize(_size798);
+            uint32_t _i802;
+            for (_i802 = 0; _i802 < _size798; ++_i802)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readI64(this->fileIds[_i802]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size802;
+            ::apache::thrift::protocol::TType _etype805;
+            xfer += iprot->readListBegin(_etype805, _size802);
+            this->fileIds.resize(_size802);
+            uint32_t _i806;
+            for (_i806 = 0; _i806 < _size802; ++_i806)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readI64(this->fileIds[_i806]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += iprot->readI64(this->fileIds[_i802]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += iprot->readI64(this->fileIds[_i806]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size844;
+            ::apache::thrift::protocol::TType _etype847;
+            xfer += iprot->readListBegin(_etype847, _size844);
+            this->fileIds.resize(_size844);
+            uint32_t _i848;
+            for (_i848 = 0; _i848 < _size844; ++_i848)
+            {
+              xfer += iprot->readI64(this->fileIds[_i848]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size856;
+            ::apache::thrift::protocol::TType _etype859;
+            xfer += iprot->readListBegin(_etype859, _size856);
+            this->fileIds.resize(_size856);
+            uint32_t _i860;
+            for (_i860 = 0; _i860 < _size856; ++_i860)
+            {
+              xfer += iprot->readI64(this->fileIds[_i860]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -20964,10 +27414,62 @@ uint32_t GetFileMetadataRequest::write(::apache::thrift::protocol::TProtocol* op
   xfer += oprot->writeFieldBegin("fileIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->fileIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter865;
     for (_iter865 = this->fileIds.begin(); _iter865 != this->fileIds.end(); ++_iter865)
     {
       xfer += oprot->writeI64((*_iter865));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<int64_t> ::const_iterator _iter845;
+    for (_iter845 = this->fileIds.begin(); _iter845 != this->fileIds.end(); ++_iter845)
+    {
+      xfer += oprot->writeI64((*_iter845));
+=======
+    std::vector<int64_t> ::const_iterator _iter803;
+    for (_iter803 = this->fileIds.begin(); _iter803 != this->fileIds.end(); ++_iter803)
+    {
+      xfer += oprot->writeI64((*_iter803));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<int64_t> ::const_iterator _iter807;
+    for (_iter807 = this->fileIds.begin(); _iter807 != this->fileIds.end(); ++_iter807)
+    {
+      xfer += oprot->writeI64((*_iter807));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<int64_t> ::const_iterator _iter803;
+    for (_iter803 = this->fileIds.begin(); _iter803 != this->fileIds.end(); ++_iter803)
+    {
+      xfer += oprot->writeI64((*_iter803));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<int64_t> ::const_iterator _iter807;
+    for (_iter807 = this->fileIds.begin(); _iter807 != this->fileIds.end(); ++_iter807)
+    {
+      xfer += oprot->writeI64((*_iter807));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<int64_t> ::const_iterator _iter849;
+    for (_iter849 = this->fileIds.begin(); _iter849 != this->fileIds.end(); ++_iter849)
+    {
+      xfer += oprot->writeI64((*_iter849));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<int64_t> ::const_iterator _iter861;
+    for (_iter861 = this->fileIds.begin(); _iter861 != this->fileIds.end(); ++_iter861)
+    {
+      xfer += oprot->writeI64((*_iter861));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -20983,11 +27485,70 @@ void swap(GetFileMetadataRequest &a, GetFileMetadataRequest &b) {
   swap(a.fileIds, b.fileIds);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other866) {
   fileIds = other866.fileIds;
 }
 GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other867) {
   fileIds = other867.fileIds;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other846) {
+  fileIds = other846.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other847) {
+  fileIds = other847.fileIds;
+=======
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other804) {
+  fileIds = other804.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other805) {
+  fileIds = other805.fileIds;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other808) {
+  fileIds = other808.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other809) {
+  fileIds = other809.fileIds;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other804) {
+  fileIds = other804.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other805) {
+  fileIds = other805.fileIds;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other808) {
+  fileIds = other808.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other809) {
+  fileIds = other809.fileIds;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other850) {
+  fileIds = other850.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other851) {
+  fileIds = other851.fileIds;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetFileMetadataRequest::GetFileMetadataRequest(const GetFileMetadataRequest& other862) {
+  fileIds = other862.fileIds;
+}
+GetFileMetadataRequest& GetFileMetadataRequest::operator=(const GetFileMetadataRequest& other863) {
+  fileIds = other863.fileIds;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetFileMetadataRequest::printTo(std::ostream& out) const {
@@ -21046,11 +27607,70 @@ void swap(PutFileMetadataResult &a, PutFileMetadataResult &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other868) {
   (void) other868;
 }
 PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other869) {
   (void) other869;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other848) {
+  (void) other848;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other849) {
+  (void) other849;
+=======
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other806) {
+  (void) other806;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other807) {
+  (void) other807;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other810) {
+  (void) other810;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other811) {
+  (void) other811;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other806) {
+  (void) other806;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other807) {
+  (void) other807;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other810) {
+  (void) other810;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other811) {
+  (void) other811;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other852) {
+  (void) other852;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other853) {
+  (void) other853;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+PutFileMetadataResult::PutFileMetadataResult(const PutFileMetadataResult& other864) {
+  (void) other864;
+}
+PutFileMetadataResult& PutFileMetadataResult::operator=(const PutFileMetadataResult& other865) {
+  (void) other865;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void PutFileMetadataResult::printTo(std::ostream& out) const {
@@ -21104,6 +27724,9 @@ uint32_t PutFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->fileIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size870;
             ::apache::thrift::protocol::TType _etype873;
             xfer += iprot->readListBegin(_etype873, _size870);
@@ -21112,6 +27735,80 @@ uint32_t PutFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
             for (_i874 = 0; _i874 < _size870; ++_i874)
             {
               xfer += iprot->readI64(this->fileIds[_i874]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size850;
+            ::apache::thrift::protocol::TType _etype853;
+            xfer += iprot->readListBegin(_etype853, _size850);
+            this->fileIds.resize(_size850);
+            uint32_t _i854;
+            for (_i854 = 0; _i854 < _size850; ++_i854)
+            {
+              xfer += iprot->readI64(this->fileIds[_i854]);
+=======
+            uint32_t _size808;
+            ::apache::thrift::protocol::TType _etype811;
+            xfer += iprot->readListBegin(_etype811, _size808);
+            this->fileIds.resize(_size808);
+            uint32_t _i812;
+            for (_i812 = 0; _i812 < _size808; ++_i812)
+            {
+              xfer += iprot->readI64(this->fileIds[_i812]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size812;
+            ::apache::thrift::protocol::TType _etype815;
+            xfer += iprot->readListBegin(_etype815, _size812);
+            this->fileIds.resize(_size812);
+            uint32_t _i816;
+            for (_i816 = 0; _i816 < _size812; ++_i816)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readI64(this->fileIds[_i816]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size808;
+            ::apache::thrift::protocol::TType _etype811;
+            xfer += iprot->readListBegin(_etype811, _size808);
+            this->fileIds.resize(_size808);
+            uint32_t _i812;
+            for (_i812 = 0; _i812 < _size808; ++_i812)
+            {
+              xfer += iprot->readI64(this->fileIds[_i812]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += iprot->readI64(this->fileIds[_i816]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size854;
+            ::apache::thrift::protocol::TType _etype857;
+            xfer += iprot->readListBegin(_etype857, _size854);
+            this->fileIds.resize(_size854);
+            uint32_t _i858;
+            for (_i858 = 0; _i858 < _size854; ++_i858)
+            {
+              xfer += iprot->readI64(this->fileIds[_i858]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size866;
+            ::apache::thrift::protocol::TType _etype869;
+            xfer += iprot->readListBegin(_etype869, _size866);
+            this->fileIds.resize(_size866);
+            uint32_t _i870;
+            for (_i870 = 0; _i870 < _size866; ++_i870)
+            {
+              xfer += iprot->readI64(this->fileIds[_i870]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -21124,6 +27821,9 @@ uint32_t PutFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->metadata.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size875;
             ::apache::thrift::protocol::TType _etype878;
             xfer += iprot->readListBegin(_etype878, _size875);
@@ -21132,6 +27832,78 @@ uint32_t PutFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
             for (_i879 = 0; _i879 < _size875; ++_i879)
             {
               xfer += iprot->readBinary(this->metadata[_i879]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size855;
+            ::apache::thrift::protocol::TType _etype858;
+            xfer += iprot->readListBegin(_etype858, _size855);
+            this->metadata.resize(_size855);
+            uint32_t _i859;
+            for (_i859 = 0; _i859 < _size855; ++_i859)
+            {
+              xfer += iprot->readBinary(this->metadata[_i859]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size813;
+            ::apache::thrift::protocol::TType _etype816;
+            xfer += iprot->readListBegin(_etype816, _size813);
+            this->metadata.resize(_size813);
+            uint32_t _i817;
+            for (_i817 = 0; _i817 < _size813; ++_i817)
+            {
+              xfer += iprot->readBinary(this->metadata[_i817]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size817;
+            ::apache::thrift::protocol::TType _etype820;
+            xfer += iprot->readListBegin(_etype820, _size817);
+            this->metadata.resize(_size817);
+            uint32_t _i821;
+            for (_i821 = 0; _i821 < _size817; ++_i821)
+            {
+              xfer += iprot->readBinary(this->metadata[_i821]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size817;
+            ::apache::thrift::protocol::TType _etype820;
+            xfer += iprot->readListBegin(_etype820, _size817);
+            this->metadata.resize(_size817);
+            uint32_t _i821;
+            for (_i821 = 0; _i821 < _size817; ++_i821)
+            {
+              xfer += iprot->readBinary(this->metadata[_i821]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size859;
+            ::apache::thrift::protocol::TType _etype862;
+            xfer += iprot->readListBegin(_etype862, _size859);
+            this->metadata.resize(_size859);
+            uint32_t _i863;
+            for (_i863 = 0; _i863 < _size859; ++_i863)
+            {
+              xfer += iprot->readBinary(this->metadata[_i863]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size871;
+            ::apache::thrift::protocol::TType _etype874;
+            xfer += iprot->readListBegin(_etype874, _size871);
+            this->metadata.resize(_size871);
+            uint32_t _i875;
+            for (_i875 = 0; _i875 < _size871; ++_i875)
+            {
+              xfer += iprot->readBinary(this->metadata[_i875]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -21142,9 +27914,54 @@ uint32_t PutFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* ipr
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast880;
           xfer += iprot->readI32(ecast880);
           this->type = (FileMetadataExprType::type)ecast880;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast860;
+          xfer += iprot->readI32(ecast860);
+          this->type = (FileMetadataExprType::type)ecast860;
+=======
+          int32_t ecast818;
+          xfer += iprot->readI32(ecast818);
+          this->type = (FileMetadataExprType::type)ecast818;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast822;
+          xfer += iprot->readI32(ecast822);
+          this->type = (FileMetadataExprType::type)ecast822;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast818;
+          xfer += iprot->readI32(ecast818);
+          this->type = (FileMetadataExprType::type)ecast818;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast822;
+          xfer += iprot->readI32(ecast822);
+          this->type = (FileMetadataExprType::type)ecast822;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast864;
+          xfer += iprot->readI32(ecast864);
+          this->type = (FileMetadataExprType::type)ecast864;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast876;
+          xfer += iprot->readI32(ecast876);
+          this->type = (FileMetadataExprType::type)ecast876;
+>>>>>>> alloc write id event changes
           this->__isset.type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -21174,10 +27991,61 @@ uint32_t PutFileMetadataRequest::write(::apache::thrift::protocol::TProtocol* op
   xfer += oprot->writeFieldBegin("fileIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->fileIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter881;
     for (_iter881 = this->fileIds.begin(); _iter881 != this->fileIds.end(); ++_iter881)
     {
       xfer += oprot->writeI64((*_iter881));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<int64_t> ::const_iterator _iter861;
+    for (_iter861 = this->fileIds.begin(); _iter861 != this->fileIds.end(); ++_iter861)
+    {
+      xfer += oprot->writeI64((*_iter861));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<int64_t> ::const_iterator _iter819;
+    for (_iter819 = this->fileIds.begin(); _iter819 != this->fileIds.end(); ++_iter819)
+    {
+      xfer += oprot->writeI64((*_iter819));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<int64_t> ::const_iterator _iter823;
+    for (_iter823 = this->fileIds.begin(); _iter823 != this->fileIds.end(); ++_iter823)
+    {
+      xfer += oprot->writeI64((*_iter823));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<int64_t> ::const_iterator _iter823;
+    for (_iter823 = this->fileIds.begin(); _iter823 != this->fileIds.end(); ++_iter823)
+    {
+      xfer += oprot->writeI64((*_iter823));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<int64_t> ::const_iterator _iter865;
+    for (_iter865 = this->fileIds.begin(); _iter865 != this->fileIds.end(); ++_iter865)
+    {
+      xfer += oprot->writeI64((*_iter865));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<int64_t> ::const_iterator _iter877;
+    for (_iter877 = this->fileIds.begin(); _iter877 != this->fileIds.end(); ++_iter877)
+    {
+      xfer += oprot->writeI64((*_iter877));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -21186,10 +28054,61 @@ uint32_t PutFileMetadataRequest::write(::apache::thrift::protocol::TProtocol* op
   xfer += oprot->writeFieldBegin("metadata", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->metadata.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<std::string> ::const_iterator _iter882;
     for (_iter882 = this->metadata.begin(); _iter882 != this->metadata.end(); ++_iter882)
     {
       xfer += oprot->writeBinary((*_iter882));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<std::string> ::const_iterator _iter862;
+    for (_iter862 = this->metadata.begin(); _iter862 != this->metadata.end(); ++_iter862)
+    {
+      xfer += oprot->writeBinary((*_iter862));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<std::string> ::const_iterator _iter820;
+    for (_iter820 = this->metadata.begin(); _iter820 != this->metadata.end(); ++_iter820)
+    {
+      xfer += oprot->writeBinary((*_iter820));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<std::string> ::const_iterator _iter824;
+    for (_iter824 = this->metadata.begin(); _iter824 != this->metadata.end(); ++_iter824)
+    {
+      xfer += oprot->writeBinary((*_iter824));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<std::string> ::const_iterator _iter824;
+    for (_iter824 = this->metadata.begin(); _iter824 != this->metadata.end(); ++_iter824)
+    {
+      xfer += oprot->writeBinary((*_iter824));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<std::string> ::const_iterator _iter866;
+    for (_iter866 = this->metadata.begin(); _iter866 != this->metadata.end(); ++_iter866)
+    {
+      xfer += oprot->writeBinary((*_iter866));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<std::string> ::const_iterator _iter878;
+    for (_iter878 = this->metadata.begin(); _iter878 != this->metadata.end(); ++_iter878)
+    {
+      xfer += oprot->writeBinary((*_iter878));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -21213,6 +28132,9 @@ void swap(PutFileMetadataRequest &a, PutFileMetadataRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 PutFileMetadataRequest::PutFileMetadataRequest(const PutFileMetadataRequest& other883) {
   fileIds = other883.fileIds;
   metadata = other883.metadata;
@@ -21224,6 +28146,100 @@ PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataR
   metadata = other884.metadata;
   type = other884.type;
   __isset = other884.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+PutFileMetadataRequest::PutFileMetadataRequest(const PutFileMetadataRequest& other863) {
+  fileIds = other863.fileIds;
+  metadata = other863.metadata;
+  type = other863.type;
+  __isset = other863.__isset;
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other864) {
+  fileIds = other864.fileIds;
+  metadata = other864.metadata;
+  type = other864.type;
+  __isset = other864.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+PutFileMetadataRequest::PutFileMetadataRequest(const PutFileMetadataRequest& other821) {
+  fileIds = other821.fileIds;
+  metadata = other821.metadata;
+  type = other821.type;
+  __isset = other821.__isset;
+<<<<<<< HEAD
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other822) {
+  fileIds = other822.fileIds;
+  metadata = other822.metadata;
+  type = other822.type;
+  __isset = other822.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+PutFileMetadataRequest::PutFileMetadataRequest(const PutFileMetadataRequest& other825) {
+  fileIds = other825.fileIds;
+  metadata = other825.metadata;
+  type = other825.type;
+  __isset = other825.__isset;
+<<<<<<< HEAD
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other826) {
+  fileIds = other826.fileIds;
+  metadata = other826.metadata;
+  type = other826.type;
+  __isset = other826.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other822) {
+  fileIds = other822.fileIds;
+  metadata = other822.metadata;
+  type = other822.type;
+  __isset = other822.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other826) {
+  fileIds = other826.fileIds;
+  metadata = other826.metadata;
+  type = other826.type;
+  __isset = other826.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+PutFileMetadataRequest::PutFileMetadataRequest(const PutFileMetadataRequest& other867) {
+  fileIds = other867.fileIds;
+  metadata = other867.metadata;
+  type = other867.type;
+  __isset = other867.__isset;
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other868) {
+  fileIds = other868.fileIds;
+  metadata = other868.metadata;
+  type = other868.type;
+  __isset = other868.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+PutFileMetadataRequest::PutFileMetadataRequest(const PutFileMetadataRequest& other879) {
+  fileIds = other879.fileIds;
+  metadata = other879.metadata;
+  type = other879.type;
+  __isset = other879.__isset;
+}
+PutFileMetadataRequest& PutFileMetadataRequest::operator=(const PutFileMetadataRequest& other880) {
+  fileIds = other880.fileIds;
+  metadata = other880.metadata;
+  type = other880.type;
+  __isset = other880.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void PutFileMetadataRequest::printTo(std::ostream& out) const {
@@ -21284,11 +28300,68 @@ void swap(ClearFileMetadataResult &a, ClearFileMetadataResult &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other885) {
   (void) other885;
 }
 ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other886) {
   (void) other886;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other865) {
+  (void) other865;
+}
+ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other866) {
+  (void) other866;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other823) {
+  (void) other823;
+}
+ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other824) {
+  (void) other824;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other827) {
+  (void) other827;
+}
+ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other828) {
+  (void) other828;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other827) {
+  (void) other827;
+}
+ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other828) {
+  (void) other828;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other869) {
+  (void) other869;
+}
+ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other870) {
+  (void) other870;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ClearFileMetadataResult::ClearFileMetadataResult(const ClearFileMetadataResult& other881) {
+  (void) other881;
+}
+ClearFileMetadataResult& ClearFileMetadataResult::operator=(const ClearFileMetadataResult& other882) {
+  (void) other882;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ClearFileMetadataResult::printTo(std::ostream& out) const {
@@ -21332,6 +28405,9 @@ uint32_t ClearFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* i
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->fileIds.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size887;
             ::apache::thrift::protocol::TType _etype890;
             xfer += iprot->readListBegin(_etype890, _size887);
@@ -21340,6 +28416,78 @@ uint32_t ClearFileMetadataRequest::read(::apache::thrift::protocol::TProtocol* i
             for (_i891 = 0; _i891 < _size887; ++_i891)
             {
               xfer += iprot->readI64(this->fileIds[_i891]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size867;
+            ::apache::thrift::protocol::TType _etype870;
+            xfer += iprot->readListBegin(_etype870, _size867);
+            this->fileIds.resize(_size867);
+            uint32_t _i871;
+            for (_i871 = 0; _i871 < _size867; ++_i871)
+            {
+              xfer += iprot->readI64(this->fileIds[_i871]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size825;
+            ::apache::thrift::protocol::TType _etype828;
+            xfer += iprot->readListBegin(_etype828, _size825);
+            this->fileIds.resize(_size825);
+            uint32_t _i829;
+            for (_i829 = 0; _i829 < _size825; ++_i829)
+            {
+              xfer += iprot->readI64(this->fileIds[_i829]);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size829;
+            ::apache::thrift::protocol::TType _etype832;
+            xfer += iprot->readListBegin(_etype832, _size829);
+            this->fileIds.resize(_size829);
+            uint32_t _i833;
+            for (_i833 = 0; _i833 < _size829; ++_i833)
+            {
+              xfer += iprot->readI64(this->fileIds[_i833]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size829;
+            ::apache::thrift::protocol::TType _etype832;
+            xfer += iprot->readListBegin(_etype832, _size829);
+            this->fileIds.resize(_size829);
+            uint32_t _i833;
+            for (_i833 = 0; _i833 < _size829; ++_i833)
+            {
+              xfer += iprot->readI64(this->fileIds[_i833]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size871;
+            ::apache::thrift::protocol::TType _etype874;
+            xfer += iprot->readListBegin(_etype874, _size871);
+            this->fileIds.resize(_size871);
+            uint32_t _i875;
+            for (_i875 = 0; _i875 < _size871; ++_i875)
+            {
+              xfer += iprot->readI64(this->fileIds[_i875]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size883;
+            ::apache::thrift::protocol::TType _etype886;
+            xfer += iprot->readListBegin(_etype886, _size883);
+            this->fileIds.resize(_size883);
+            uint32_t _i887;
+            for (_i887 = 0; _i887 < _size883; ++_i887)
+            {
+              xfer += iprot->readI64(this->fileIds[_i887]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -21370,10 +28518,61 @@ uint32_t ClearFileMetadataRequest::write(::apache::thrift::protocol::TProtocol* 
   xfer += oprot->writeFieldBegin("fileIds", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I64, static_cast<uint32_t>(this->fileIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<int64_t> ::const_iterator _iter892;
     for (_iter892 = this->fileIds.begin(); _iter892 != this->fileIds.end(); ++_iter892)
     {
       xfer += oprot->writeI64((*_iter892));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<int64_t> ::const_iterator _iter872;
+    for (_iter872 = this->fileIds.begin(); _iter872 != this->fileIds.end(); ++_iter872)
+    {
+      xfer += oprot->writeI64((*_iter872));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<int64_t> ::const_iterator _iter830;
+    for (_iter830 = this->fileIds.begin(); _iter830 != this->fileIds.end(); ++_iter830)
+    {
+      xfer += oprot->writeI64((*_iter830));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<int64_t> ::const_iterator _iter834;
+    for (_iter834 = this->fileIds.begin(); _iter834 != this->fileIds.end(); ++_iter834)
+    {
+      xfer += oprot->writeI64((*_iter834));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<int64_t> ::const_iterator _iter834;
+    for (_iter834 = this->fileIds.begin(); _iter834 != this->fileIds.end(); ++_iter834)
+    {
+      xfer += oprot->writeI64((*_iter834));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<int64_t> ::const_iterator _iter876;
+    for (_iter876 = this->fileIds.begin(); _iter876 != this->fileIds.end(); ++_iter876)
+    {
+      xfer += oprot->writeI64((*_iter876));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<int64_t> ::const_iterator _iter888;
+    for (_iter888 = this->fileIds.begin(); _iter888 != this->fileIds.end(); ++_iter888)
+    {
+      xfer += oprot->writeI64((*_iter888));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -21389,11 +28588,70 @@ void swap(ClearFileMetadataRequest &a, ClearFileMetadataRequest &b) {
   swap(a.fileIds, b.fileIds);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other893) {
   fileIds = other893.fileIds;
 }
 ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other894) {
   fileIds = other894.fileIds;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other873) {
+  fileIds = other873.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other874) {
+  fileIds = other874.fileIds;
+=======
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other831) {
+  fileIds = other831.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other832) {
+  fileIds = other832.fileIds;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other835) {
+  fileIds = other835.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other836) {
+  fileIds = other836.fileIds;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other831) {
+  fileIds = other831.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other832) {
+  fileIds = other832.fileIds;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other835) {
+  fileIds = other835.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other836) {
+  fileIds = other836.fileIds;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other877) {
+  fileIds = other877.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other878) {
+  fileIds = other878.fileIds;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ClearFileMetadataRequest::ClearFileMetadataRequest(const ClearFileMetadataRequest& other889) {
+  fileIds = other889.fileIds;
+}
+ClearFileMetadataRequest& ClearFileMetadataRequest::operator=(const ClearFileMetadataRequest& other890) {
+  fileIds = other890.fileIds;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ClearFileMetadataRequest::printTo(std::ostream& out) const {
@@ -21475,11 +28733,68 @@ void swap(CacheFileMetadataResult &a, CacheFileMetadataResult &b) {
   swap(a.isSupported, b.isSupported);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other895) {
   isSupported = other895.isSupported;
 }
 CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other896) {
   isSupported = other896.isSupported;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other875) {
+  isSupported = other875.isSupported;
+}
+CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other876) {
+  isSupported = other876.isSupported;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other833) {
+  isSupported = other833.isSupported;
+}
+CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other834) {
+  isSupported = other834.isSupported;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other837) {
+  isSupported = other837.isSupported;
+}
+CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other838) {
+  isSupported = other838.isSupported;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other837) {
+  isSupported = other837.isSupported;
+}
+CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other838) {
+  isSupported = other838.isSupported;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other879) {
+  isSupported = other879.isSupported;
+}
+CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other880) {
+  isSupported = other880.isSupported;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CacheFileMetadataResult::CacheFileMetadataResult(const CacheFileMetadataResult& other891) {
+  isSupported = other891.isSupported;
+}
+CacheFileMetadataResult& CacheFileMetadataResult::operator=(const CacheFileMetadataResult& other892) {
+  isSupported = other892.isSupported;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CacheFileMetadataResult::printTo(std::ostream& out) const {
@@ -21620,6 +28935,9 @@ void swap(CacheFileMetadataRequest &a, CacheFileMetadataRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other897) {
   dbName = other897.dbName;
   tblName = other897.tblName;
@@ -21633,6 +28951,105 @@ CacheFileMetadataRequest& CacheFileMetadataRequest::operator=(const CacheFileMet
   partName = other898.partName;
   isAllParts = other898.isAllParts;
   __isset = other898.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other877) {
+  dbName = other877.dbName;
+  tblName = other877.tblName;
+  partName = other877.partName;
+  isAllParts = other877.isAllParts;
+  __isset = other877.__isset;
+}
+CacheFileMetadataRequest& CacheFileMetadataRequest::operator=(const CacheFileMetadataRequest& other878) {
+  dbName = other878.dbName;
+  tblName = other878.tblName;
+  partName = other878.partName;
+  isAllParts = other878.isAllParts;
+  __isset = other878.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other835) {
+  dbName = other835.dbName;
+  tblName = other835.tblName;
+  partName = other835.partName;
+  isAllParts = other835.isAllParts;
+  __isset = other835.__isset;
+}
+CacheFileMetadataRequest& CacheFileMetadataRequest::operator=(const CacheFileMetadataRequest& other836) {
+  dbName = other836.dbName;
+  tblName = other836.tblName;
+  partName = other836.partName;
+  isAllParts = other836.isAllParts;
+  __isset = other836.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other839) {
+  dbName = other839.dbName;
+  tblName = other839.tblName;
+  partName = other839.partName;
+  isAllParts = other839.isAllParts;
+  __isset = other839.__isset;
+}
+=======
+CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other839) {
+  dbName = other839.dbName;
+  tblName = other839.tblName;
+  partName = other839.partName;
+  isAllParts = other839.isAllParts;
+  __isset = other839.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+CacheFileMetadataRequest& CacheFileMetadataRequest::operator=(const CacheFileMetadataRequest& other840) {
+  dbName = other840.dbName;
+  tblName = other840.tblName;
+  partName = other840.partName;
+  isAllParts = other840.isAllParts;
+  __isset = other840.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other881) {
+  dbName = other881.dbName;
+  tblName = other881.tblName;
+  partName = other881.partName;
+  isAllParts = other881.isAllParts;
+  __isset = other881.__isset;
+}
+CacheFileMetadataRequest& CacheFileMetadataRequest::operator=(const CacheFileMetadataRequest& other882) {
+  dbName = other882.dbName;
+  tblName = other882.tblName;
+  partName = other882.partName;
+  isAllParts = other882.isAllParts;
+  __isset = other882.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CacheFileMetadataRequest::CacheFileMetadataRequest(const CacheFileMetadataRequest& other893) {
+  dbName = other893.dbName;
+  tblName = other893.tblName;
+  partName = other893.partName;
+  isAllParts = other893.isAllParts;
+  __isset = other893.__isset;
+}
+CacheFileMetadataRequest& CacheFileMetadataRequest::operator=(const CacheFileMetadataRequest& other894) {
+  dbName = other894.dbName;
+  tblName = other894.tblName;
+  partName = other894.partName;
+  isAllParts = other894.isAllParts;
+  __isset = other894.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CacheFileMetadataRequest::printTo(std::ostream& out) const {
@@ -21680,6 +29097,9 @@ uint32_t GetAllFunctionsResponse::read(::apache::thrift::protocol::TProtocol* ip
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->functions.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size899;
             ::apache::thrift::protocol::TType _etype902;
             xfer += iprot->readListBegin(_etype902, _size899);
@@ -21688,6 +29108,78 @@ uint32_t GetAllFunctionsResponse::read(::apache::thrift::protocol::TProtocol* ip
             for (_i903 = 0; _i903 < _size899; ++_i903)
             {
               xfer += this->functions[_i903].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size879;
+            ::apache::thrift::protocol::TType _etype882;
+            xfer += iprot->readListBegin(_etype882, _size879);
+            this->functions.resize(_size879);
+            uint32_t _i883;
+            for (_i883 = 0; _i883 < _size879; ++_i883)
+            {
+              xfer += this->functions[_i883].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size837;
+            ::apache::thrift::protocol::TType _etype840;
+            xfer += iprot->readListBegin(_etype840, _size837);
+            this->functions.resize(_size837);
+            uint32_t _i841;
+            for (_i841 = 0; _i841 < _size837; ++_i841)
+            {
+              xfer += this->functions[_i841].read(iprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size841;
+            ::apache::thrift::protocol::TType _etype844;
+            xfer += iprot->readListBegin(_etype844, _size841);
+            this->functions.resize(_size841);
+            uint32_t _i845;
+            for (_i845 = 0; _i845 < _size841; ++_i845)
+            {
+              xfer += this->functions[_i845].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size841;
+            ::apache::thrift::protocol::TType _etype844;
+            xfer += iprot->readListBegin(_etype844, _size841);
+            this->functions.resize(_size841);
+            uint32_t _i845;
+            for (_i845 = 0; _i845 < _size841; ++_i845)
+            {
+              xfer += this->functions[_i845].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size883;
+            ::apache::thrift::protocol::TType _etype886;
+            xfer += iprot->readListBegin(_etype886, _size883);
+            this->functions.resize(_size883);
+            uint32_t _i887;
+            for (_i887 = 0; _i887 < _size883; ++_i887)
+            {
+              xfer += this->functions[_i887].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size895;
+            ::apache::thrift::protocol::TType _etype898;
+            xfer += iprot->readListBegin(_etype898, _size895);
+            this->functions.resize(_size895);
+            uint32_t _i899;
+            for (_i899 = 0; _i899 < _size895; ++_i899)
+            {
+              xfer += this->functions[_i899].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -21717,10 +29209,61 @@ uint32_t GetAllFunctionsResponse::write(::apache::thrift::protocol::TProtocol* o
     xfer += oprot->writeFieldBegin("functions", ::apache::thrift::protocol::T_LIST, 1);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->functions.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<Function> ::const_iterator _iter904;
       for (_iter904 = this->functions.begin(); _iter904 != this->functions.end(); ++_iter904)
       {
         xfer += (*_iter904).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<Function> ::const_iterator _iter884;
+      for (_iter884 = this->functions.begin(); _iter884 != this->functions.end(); ++_iter884)
+      {
+        xfer += (*_iter884).write(oprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+      std::vector<Function> ::const_iterator _iter842;
+      for (_iter842 = this->functions.begin(); _iter842 != this->functions.end(); ++_iter842)
+      {
+        xfer += (*_iter842).write(oprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<Function> ::const_iterator _iter846;
+      for (_iter846 = this->functions.begin(); _iter846 != this->functions.end(); ++_iter846)
+      {
+        xfer += (*_iter846).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<Function> ::const_iterator _iter846;
+      for (_iter846 = this->functions.begin(); _iter846 != this->functions.end(); ++_iter846)
+      {
+        xfer += (*_iter846).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<Function> ::const_iterator _iter888;
+      for (_iter888 = this->functions.begin(); _iter888 != this->functions.end(); ++_iter888)
+      {
+        xfer += (*_iter888).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<Function> ::const_iterator _iter900;
+      for (_iter900 = this->functions.begin(); _iter900 != this->functions.end(); ++_iter900)
+      {
+        xfer += (*_iter900).write(oprot);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -21737,6 +29280,9 @@ void swap(GetAllFunctionsResponse &a, GetAllFunctionsResponse &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other905) {
   functions = other905.functions;
   __isset = other905.__isset;
@@ -21744,6 +29290,76 @@ GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& 
 GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other906) {
   functions = other906.functions;
   __isset = other906.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other885) {
+  functions = other885.functions;
+  __isset = other885.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other886) {
+  functions = other886.functions;
+  __isset = other886.__isset;
+=======
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other843) {
+  functions = other843.functions;
+  __isset = other843.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other844) {
+  functions = other844.functions;
+  __isset = other844.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other847) {
+  functions = other847.functions;
+  __isset = other847.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other848) {
+  functions = other848.functions;
+  __isset = other848.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other843) {
+  functions = other843.functions;
+  __isset = other843.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other844) {
+  functions = other844.functions;
+  __isset = other844.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other847) {
+  functions = other847.functions;
+  __isset = other847.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other848) {
+  functions = other848.functions;
+  __isset = other848.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other889) {
+  functions = other889.functions;
+  __isset = other889.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other890) {
+  functions = other890.functions;
+  __isset = other890.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetAllFunctionsResponse::GetAllFunctionsResponse(const GetAllFunctionsResponse& other901) {
+  functions = other901.functions;
+  __isset = other901.__isset;
+}
+GetAllFunctionsResponse& GetAllFunctionsResponse::operator=(const GetAllFunctionsResponse& other902) {
+  functions = other902.functions;
+  __isset = other902.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetAllFunctionsResponse::printTo(std::ostream& out) const {
@@ -21788,6 +29404,9 @@ uint32_t ClientCapabilities::read(::apache::thrift::protocol::TProtocol* iprot) 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->values.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size907;
             ::apache::thrift::protocol::TType _etype910;
             xfer += iprot->readListBegin(_etype910, _size907);
@@ -21798,6 +29417,90 @@ uint32_t ClientCapabilities::read(::apache::thrift::protocol::TProtocol* iprot) 
               int32_t ecast912;
               xfer += iprot->readI32(ecast912);
               this->values[_i911] = (ClientCapability::type)ecast912;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size887;
+            ::apache::thrift::protocol::TType _etype890;
+            xfer += iprot->readListBegin(_etype890, _size887);
+            this->values.resize(_size887);
+            uint32_t _i891;
+            for (_i891 = 0; _i891 < _size887; ++_i891)
+            {
+              int32_t ecast892;
+              xfer += iprot->readI32(ecast892);
+              this->values[_i891] = (ClientCapability::type)ecast892;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size845;
+            ::apache::thrift::protocol::TType _etype848;
+            xfer += iprot->readListBegin(_etype848, _size845);
+            this->values.resize(_size845);
+            uint32_t _i849;
+            for (_i849 = 0; _i849 < _size845; ++_i849)
+            {
+              int32_t ecast850;
+              xfer += iprot->readI32(ecast850);
+              this->values[_i849] = (ClientCapability::type)ecast850;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size849;
+            ::apache::thrift::protocol::TType _etype852;
+            xfer += iprot->readListBegin(_etype852, _size849);
+            this->values.resize(_size849);
+            uint32_t _i853;
+            for (_i853 = 0; _i853 < _size849; ++_i853)
+            {
+              int32_t ecast854;
+              xfer += iprot->readI32(ecast854);
+              this->values[_i853] = (ClientCapability::type)ecast854;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size849;
+            ::apache::thrift::protocol::TType _etype852;
+            xfer += iprot->readListBegin(_etype852, _size849);
+            this->values.resize(_size849);
+            uint32_t _i853;
+            for (_i853 = 0; _i853 < _size849; ++_i853)
+            {
+              int32_t ecast854;
+              xfer += iprot->readI32(ecast854);
+              this->values[_i853] = (ClientCapability::type)ecast854;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size891;
+            ::apache::thrift::protocol::TType _etype894;
+            xfer += iprot->readListBegin(_etype894, _size891);
+            this->values.resize(_size891);
+            uint32_t _i895;
+            for (_i895 = 0; _i895 < _size891; ++_i895)
+            {
+              int32_t ecast896;
+              xfer += iprot->readI32(ecast896);
+              this->values[_i895] = (ClientCapability::type)ecast896;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size903;
+            ::apache::thrift::protocol::TType _etype906;
+            xfer += iprot->readListBegin(_etype906, _size903);
+            this->values.resize(_size903);
+            uint32_t _i907;
+            for (_i907 = 0; _i907 < _size903; ++_i907)
+            {
+              int32_t ecast908;
+              xfer += iprot->readI32(ecast908);
+              this->values[_i907] = (ClientCapability::type)ecast908;
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -21828,10 +29531,61 @@ uint32_t ClientCapabilities::write(::apache::thrift::protocol::TProtocol* oprot)
   xfer += oprot->writeFieldBegin("values", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->values.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<ClientCapability::type> ::const_iterator _iter913;
     for (_iter913 = this->values.begin(); _iter913 != this->values.end(); ++_iter913)
     {
       xfer += oprot->writeI32((int32_t)(*_iter913));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<ClientCapability::type> ::const_iterator _iter893;
+    for (_iter893 = this->values.begin(); _iter893 != this->values.end(); ++_iter893)
+    {
+      xfer += oprot->writeI32((int32_t)(*_iter893));
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<ClientCapability::type> ::const_iterator _iter851;
+    for (_iter851 = this->values.begin(); _iter851 != this->values.end(); ++_iter851)
+    {
+      xfer += oprot->writeI32((int32_t)(*_iter851));
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<ClientCapability::type> ::const_iterator _iter855;
+    for (_iter855 = this->values.begin(); _iter855 != this->values.end(); ++_iter855)
+    {
+      xfer += oprot->writeI32((int32_t)(*_iter855));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<ClientCapability::type> ::const_iterator _iter855;
+    for (_iter855 = this->values.begin(); _iter855 != this->values.end(); ++_iter855)
+    {
+      xfer += oprot->writeI32((int32_t)(*_iter855));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<ClientCapability::type> ::const_iterator _iter897;
+    for (_iter897 = this->values.begin(); _iter897 != this->values.end(); ++_iter897)
+    {
+      xfer += oprot->writeI32((int32_t)(*_iter897));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<ClientCapability::type> ::const_iterator _iter909;
+    for (_iter909 = this->values.begin(); _iter909 != this->values.end(); ++_iter909)
+    {
+      xfer += oprot->writeI32((int32_t)(*_iter909));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -21847,11 +29601,68 @@ void swap(ClientCapabilities &a, ClientCapabilities &b) {
   swap(a.values, b.values);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ClientCapabilities::ClientCapabilities(const ClientCapabilities& other914) {
   values = other914.values;
 }
 ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other915) {
   values = other915.values;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ClientCapabilities::ClientCapabilities(const ClientCapabilities& other894) {
+  values = other894.values;
+}
+ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other895) {
+  values = other895.values;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+ClientCapabilities::ClientCapabilities(const ClientCapabilities& other852) {
+  values = other852.values;
+}
+ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other853) {
+  values = other853.values;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ClientCapabilities::ClientCapabilities(const ClientCapabilities& other856) {
+  values = other856.values;
+}
+ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other857) {
+  values = other857.values;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ClientCapabilities::ClientCapabilities(const ClientCapabilities& other856) {
+  values = other856.values;
+}
+ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other857) {
+  values = other857.values;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ClientCapabilities::ClientCapabilities(const ClientCapabilities& other898) {
+  values = other898.values;
+}
+ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other899) {
+  values = other899.values;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ClientCapabilities::ClientCapabilities(const ClientCapabilities& other910) {
+  values = other910.values;
+}
+ClientCapabilities& ClientCapabilities::operator=(const ClientCapabilities& other911) {
+  values = other911.values;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ClientCapabilities::printTo(std::ostream& out) const {
@@ -21973,6 +29784,9 @@ void swap(GetTableRequest &a, GetTableRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetTableRequest::GetTableRequest(const GetTableRequest& other916) {
   dbName = other916.dbName;
   tblName = other916.tblName;
@@ -21984,6 +29798,100 @@ GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other917) {
   tblName = other917.tblName;
   capabilities = other917.capabilities;
   __isset = other917.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetTableRequest::GetTableRequest(const GetTableRequest& other896) {
+  dbName = other896.dbName;
+  tblName = other896.tblName;
+  capabilities = other896.capabilities;
+  __isset = other896.__isset;
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other897) {
+  dbName = other897.dbName;
+  tblName = other897.tblName;
+  capabilities = other897.capabilities;
+  __isset = other897.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+GetTableRequest::GetTableRequest(const GetTableRequest& other854) {
+  dbName = other854.dbName;
+  tblName = other854.tblName;
+  capabilities = other854.capabilities;
+  __isset = other854.__isset;
+<<<<<<< HEAD
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other855) {
+  dbName = other855.dbName;
+  tblName = other855.tblName;
+  capabilities = other855.capabilities;
+  __isset = other855.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+GetTableRequest::GetTableRequest(const GetTableRequest& other858) {
+  dbName = other858.dbName;
+  tblName = other858.tblName;
+  capabilities = other858.capabilities;
+  __isset = other858.__isset;
+<<<<<<< HEAD
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other859) {
+  dbName = other859.dbName;
+  tblName = other859.tblName;
+  capabilities = other859.capabilities;
+  __isset = other859.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other855) {
+  dbName = other855.dbName;
+  tblName = other855.tblName;
+  capabilities = other855.capabilities;
+  __isset = other855.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other859) {
+  dbName = other859.dbName;
+  tblName = other859.tblName;
+  capabilities = other859.capabilities;
+  __isset = other859.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetTableRequest::GetTableRequest(const GetTableRequest& other900) {
+  dbName = other900.dbName;
+  tblName = other900.tblName;
+  capabilities = other900.capabilities;
+  __isset = other900.__isset;
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other901) {
+  dbName = other901.dbName;
+  tblName = other901.tblName;
+  capabilities = other901.capabilities;
+  __isset = other901.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetTableRequest::GetTableRequest(const GetTableRequest& other912) {
+  dbName = other912.dbName;
+  tblName = other912.tblName;
+  capabilities = other912.capabilities;
+  __isset = other912.__isset;
+}
+GetTableRequest& GetTableRequest::operator=(const GetTableRequest& other913) {
+  dbName = other913.dbName;
+  tblName = other913.tblName;
+  capabilities = other913.capabilities;
+  __isset = other913.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetTableRequest::printTo(std::ostream& out) const {
@@ -22067,11 +29975,70 @@ void swap(GetTableResult &a, GetTableResult &b) {
   swap(a.table, b.table);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetTableResult::GetTableResult(const GetTableResult& other918) {
   table = other918.table;
 }
 GetTableResult& GetTableResult::operator=(const GetTableResult& other919) {
   table = other919.table;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetTableResult::GetTableResult(const GetTableResult& other898) {
+  table = other898.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other899) {
+  table = other899.table;
+=======
+GetTableResult::GetTableResult(const GetTableResult& other856) {
+  table = other856.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other857) {
+  table = other857.table;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetTableResult::GetTableResult(const GetTableResult& other860) {
+  table = other860.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other861) {
+  table = other861.table;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetTableResult::GetTableResult(const GetTableResult& other856) {
+  table = other856.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other857) {
+  table = other857.table;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+GetTableResult::GetTableResult(const GetTableResult& other860) {
+  table = other860.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other861) {
+  table = other861.table;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetTableResult::GetTableResult(const GetTableResult& other902) {
+  table = other902.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other903) {
+  table = other903.table;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetTableResult::GetTableResult(const GetTableResult& other914) {
+  table = other914.table;
+}
+GetTableResult& GetTableResult::operator=(const GetTableResult& other915) {
+  table = other915.table;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetTableResult::printTo(std::ostream& out) const {
@@ -22134,6 +30101,9 @@ uint32_t GetTablesRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->tblNames.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size920;
             ::apache::thrift::protocol::TType _etype923;
             xfer += iprot->readListBegin(_etype923, _size920);
@@ -22142,6 +30112,77 @@ uint32_t GetTablesRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i924 = 0; _i924 < _size920; ++_i924)
             {
               xfer += iprot->readString(this->tblNames[_i924]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size900;
+            ::apache::thrift::protocol::TType _etype903;
+            xfer += iprot->readListBegin(_etype903, _size900);
+            this->tblNames.resize(_size900);
+            uint32_t _i904;
+            for (_i904 = 0; _i904 < _size900; ++_i904)
+            {
+              xfer += iprot->readString(this->tblNames[_i904]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size858;
+            ::apache::thrift::protocol::TType _etype861;
+            xfer += iprot->readListBegin(_etype861, _size858);
+            this->tblNames.resize(_size858);
+            uint32_t _i862;
+            for (_i862 = 0; _i862 < _size858; ++_i862)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readString(this->tblNames[_i862]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size862;
+            ::apache::thrift::protocol::TType _etype865;
+            xfer += iprot->readListBegin(_etype865, _size862);
+            this->tblNames.resize(_size862);
+            uint32_t _i866;
+            for (_i866 = 0; _i866 < _size862; ++_i866)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readString(this->tblNames[_i866]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += iprot->readString(this->tblNames[_i862]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += iprot->readString(this->tblNames[_i866]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size904;
+            ::apache::thrift::protocol::TType _etype907;
+            xfer += iprot->readListBegin(_etype907, _size904);
+            this->tblNames.resize(_size904);
+            uint32_t _i908;
+            for (_i908 = 0; _i908 < _size904; ++_i908)
+            {
+              xfer += iprot->readString(this->tblNames[_i908]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size916;
+            ::apache::thrift::protocol::TType _etype919;
+            xfer += iprot->readListBegin(_etype919, _size916);
+            this->tblNames.resize(_size916);
+            uint32_t _i920;
+            for (_i920 = 0; _i920 < _size916; ++_i920)
+            {
+              xfer += iprot->readString(this->tblNames[_i920]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -22185,10 +30226,62 @@ uint32_t GetTablesRequest::write(::apache::thrift::protocol::TProtocol* oprot) c
     xfer += oprot->writeFieldBegin("tblNames", ::apache::thrift::protocol::T_LIST, 2);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->tblNames.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<std::string> ::const_iterator _iter925;
       for (_iter925 = this->tblNames.begin(); _iter925 != this->tblNames.end(); ++_iter925)
       {
         xfer += oprot->writeString((*_iter925));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<std::string> ::const_iterator _iter905;
+      for (_iter905 = this->tblNames.begin(); _iter905 != this->tblNames.end(); ++_iter905)
+      {
+        xfer += oprot->writeString((*_iter905));
+=======
+      std::vector<std::string> ::const_iterator _iter863;
+      for (_iter863 = this->tblNames.begin(); _iter863 != this->tblNames.end(); ++_iter863)
+      {
+        xfer += oprot->writeString((*_iter863));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<std::string> ::const_iterator _iter867;
+      for (_iter867 = this->tblNames.begin(); _iter867 != this->tblNames.end(); ++_iter867)
+      {
+        xfer += oprot->writeString((*_iter867));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter863;
+      for (_iter863 = this->tblNames.begin(); _iter863 != this->tblNames.end(); ++_iter863)
+      {
+        xfer += oprot->writeString((*_iter863));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<std::string> ::const_iterator _iter867;
+      for (_iter867 = this->tblNames.begin(); _iter867 != this->tblNames.end(); ++_iter867)
+      {
+        xfer += oprot->writeString((*_iter867));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter909;
+      for (_iter909 = this->tblNames.begin(); _iter909 != this->tblNames.end(); ++_iter909)
+      {
+        xfer += oprot->writeString((*_iter909));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<std::string> ::const_iterator _iter921;
+      for (_iter921 = this->tblNames.begin(); _iter921 != this->tblNames.end(); ++_iter921)
+      {
+        xfer += oprot->writeString((*_iter921));
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -22212,6 +30305,9 @@ void swap(GetTablesRequest &a, GetTablesRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetTablesRequest::GetTablesRequest(const GetTablesRequest& other926) {
   dbName = other926.dbName;
   tblNames = other926.tblNames;
@@ -22223,6 +30319,94 @@ GetTablesRequest& GetTablesRequest::operator=(const GetTablesRequest& other927) 
   tblNames = other927.tblNames;
   capabilities = other927.capabilities;
   __isset = other927.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetTablesRequest::GetTablesRequest(const GetTablesRequest& other906) {
+  dbName = other906.dbName;
+  tblNames = other906.tblNames;
+  capabilities = other906.capabilities;
+  __isset = other906.__isset;
+}
+GetTablesRequest& GetTablesRequest::operator=(const GetTablesRequest& other907) {
+  dbName = other907.dbName;
+  tblNames = other907.tblNames;
+  capabilities = other907.capabilities;
+  __isset = other907.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+GetTablesRequest::GetTablesRequest(const GetTablesRequest& other864) {
+  dbName = other864.dbName;
+  tblNames = other864.tblNames;
+  capabilities = other864.capabilities;
+  __isset = other864.__isset;
+}
+GetTablesRequest& GetTablesRequest::operator=(const GetTablesRequest& other865) {
+  dbName = other865.dbName;
+  tblNames = other865.tblNames;
+  capabilities = other865.capabilities;
+  __isset = other865.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetTablesRequest::GetTablesRequest(const GetTablesRequest& other868) {
+  dbName = other868.dbName;
+  tblNames = other868.tblNames;
+  capabilities = other868.capabilities;
+  __isset = other868.__isset;
+}
+=======
+GetTablesRequest::GetTablesRequest(const GetTablesRequest& other868) {
+  dbName = other868.dbName;
+  tblNames = other868.tblNames;
+  capabilities = other868.capabilities;
+  __isset = other868.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+GetTablesRequest& GetTablesRequest::operator=(const GetTablesRequest& other869) {
+  dbName = other869.dbName;
+  tblNames = other869.tblNames;
+  capabilities = other869.capabilities;
+  __isset = other869.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetTablesRequest::GetTablesRequest(const GetTablesRequest& other910) {
+  dbName = other910.dbName;
+  tblNames = other910.tblNames;
+  capabilities = other910.capabilities;
+  __isset = other910.__isset;
+}
+GetTablesRequest& GetTablesRequest::operator=(const GetTablesRequest& other911) {
+  dbName = other911.dbName;
+  tblNames = other911.tblNames;
+  capabilities = other911.capabilities;
+  __isset = other911.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetTablesRequest::GetTablesRequest(const GetTablesRequest& other922) {
+  dbName = other922.dbName;
+  tblNames = other922.tblNames;
+  capabilities = other922.capabilities;
+  __isset = other922.__isset;
+}
+GetTablesRequest& GetTablesRequest::operator=(const GetTablesRequest& other923) {
+  dbName = other923.dbName;
+  tblNames = other923.tblNames;
+  capabilities = other923.capabilities;
+  __isset = other923.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetTablesRequest::printTo(std::ostream& out) const {
@@ -22269,6 +30453,9 @@ uint32_t GetTablesResult::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->tables.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size928;
             ::apache::thrift::protocol::TType _etype931;
             xfer += iprot->readListBegin(_etype931, _size928);
@@ -22277,6 +30464,78 @@ uint32_t GetTablesResult::read(::apache::thrift::protocol::TProtocol* iprot) {
             for (_i932 = 0; _i932 < _size928; ++_i932)
             {
               xfer += this->tables[_i932].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size908;
+            ::apache::thrift::protocol::TType _etype911;
+            xfer += iprot->readListBegin(_etype911, _size908);
+            this->tables.resize(_size908);
+            uint32_t _i912;
+            for (_i912 = 0; _i912 < _size908; ++_i912)
+            {
+              xfer += this->tables[_i912].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size866;
+            ::apache::thrift::protocol::TType _etype869;
+            xfer += iprot->readListBegin(_etype869, _size866);
+            this->tables.resize(_size866);
+            uint32_t _i870;
+            for (_i870 = 0; _i870 < _size866; ++_i870)
+            {
+              xfer += this->tables[_i870].read(iprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size870;
+            ::apache::thrift::protocol::TType _etype873;
+            xfer += iprot->readListBegin(_etype873, _size870);
+            this->tables.resize(_size870);
+            uint32_t _i874;
+            for (_i874 = 0; _i874 < _size870; ++_i874)
+            {
+              xfer += this->tables[_i874].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size870;
+            ::apache::thrift::protocol::TType _etype873;
+            xfer += iprot->readListBegin(_etype873, _size870);
+            this->tables.resize(_size870);
+            uint32_t _i874;
+            for (_i874 = 0; _i874 < _size870; ++_i874)
+            {
+              xfer += this->tables[_i874].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size912;
+            ::apache::thrift::protocol::TType _etype915;
+            xfer += iprot->readListBegin(_etype915, _size912);
+            this->tables.resize(_size912);
+            uint32_t _i916;
+            for (_i916 = 0; _i916 < _size912; ++_i916)
+            {
+              xfer += this->tables[_i916].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size924;
+            ::apache::thrift::protocol::TType _etype927;
+            xfer += iprot->readListBegin(_etype927, _size924);
+            this->tables.resize(_size924);
+            uint32_t _i928;
+            for (_i928 = 0; _i928 < _size924; ++_i928)
+            {
+              xfer += this->tables[_i928].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -22307,10 +30566,61 @@ uint32_t GetTablesResult::write(::apache::thrift::protocol::TProtocol* oprot) co
   xfer += oprot->writeFieldBegin("tables", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->tables.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<Table> ::const_iterator _iter933;
     for (_iter933 = this->tables.begin(); _iter933 != this->tables.end(); ++_iter933)
     {
       xfer += (*_iter933).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<Table> ::const_iterator _iter913;
+    for (_iter913 = this->tables.begin(); _iter913 != this->tables.end(); ++_iter913)
+    {
+      xfer += (*_iter913).write(oprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+    std::vector<Table> ::const_iterator _iter871;
+    for (_iter871 = this->tables.begin(); _iter871 != this->tables.end(); ++_iter871)
+    {
+      xfer += (*_iter871).write(oprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<Table> ::const_iterator _iter875;
+    for (_iter875 = this->tables.begin(); _iter875 != this->tables.end(); ++_iter875)
+    {
+      xfer += (*_iter875).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<Table> ::const_iterator _iter875;
+    for (_iter875 = this->tables.begin(); _iter875 != this->tables.end(); ++_iter875)
+    {
+      xfer += (*_iter875).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<Table> ::const_iterator _iter917;
+    for (_iter917 = this->tables.begin(); _iter917 != this->tables.end(); ++_iter917)
+    {
+      xfer += (*_iter917).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<Table> ::const_iterator _iter929;
+    for (_iter929 = this->tables.begin(); _iter929 != this->tables.end(); ++_iter929)
+    {
+      xfer += (*_iter929).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -22326,11 +30636,68 @@ void swap(GetTablesResult &a, GetTablesResult &b) {
   swap(a.tables, b.tables);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 GetTablesResult::GetTablesResult(const GetTablesResult& other934) {
   tables = other934.tables;
 }
 GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other935) {
   tables = other935.tables;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+GetTablesResult::GetTablesResult(const GetTablesResult& other914) {
+  tables = other914.tables;
+}
+GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other915) {
+  tables = other915.tables;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+GetTablesResult::GetTablesResult(const GetTablesResult& other872) {
+  tables = other872.tables;
+}
+GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other873) {
+  tables = other873.tables;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+GetTablesResult::GetTablesResult(const GetTablesResult& other876) {
+  tables = other876.tables;
+}
+GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other877) {
+  tables = other877.tables;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+GetTablesResult::GetTablesResult(const GetTablesResult& other876) {
+  tables = other876.tables;
+}
+GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other877) {
+  tables = other877.tables;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+GetTablesResult::GetTablesResult(const GetTablesResult& other918) {
+  tables = other918.tables;
+}
+GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other919) {
+  tables = other919.tables;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+GetTablesResult::GetTablesResult(const GetTablesResult& other930) {
+  tables = other930.tables;
+}
+GetTablesResult& GetTablesResult::operator=(const GetTablesResult& other931) {
+  tables = other931.tables;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void GetTablesResult::printTo(std::ostream& out) const {
@@ -22432,6 +30799,9 @@ void swap(CmRecycleRequest &a, CmRecycleRequest &b) {
   swap(a.purge, b.purge);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other936) {
   dataPath = other936.dataPath;
   purge = other936.purge;
@@ -22439,6 +30809,72 @@ CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other936) {
 CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other937) {
   dataPath = other937.dataPath;
   purge = other937.purge;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other916) {
+  dataPath = other916.dataPath;
+  purge = other916.purge;
+}
+CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other917) {
+  dataPath = other917.dataPath;
+  purge = other917.purge;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other874) {
+  dataPath = other874.dataPath;
+  purge = other874.purge;
+}
+CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other875) {
+  dataPath = other875.dataPath;
+  purge = other875.purge;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other878) {
+  dataPath = other878.dataPath;
+  purge = other878.purge;
+}
+CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other879) {
+  dataPath = other879.dataPath;
+  purge = other879.purge;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other878) {
+  dataPath = other878.dataPath;
+  purge = other878.purge;
+}
+CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other879) {
+  dataPath = other879.dataPath;
+  purge = other879.purge;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other920) {
+  dataPath = other920.dataPath;
+  purge = other920.purge;
+}
+CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other921) {
+  dataPath = other921.dataPath;
+  purge = other921.purge;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CmRecycleRequest::CmRecycleRequest(const CmRecycleRequest& other932) {
+  dataPath = other932.dataPath;
+  purge = other932.purge;
+}
+CmRecycleRequest& CmRecycleRequest::operator=(const CmRecycleRequest& other933) {
+  dataPath = other933.dataPath;
+  purge = other933.purge;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CmRecycleRequest::printTo(std::ostream& out) const {
@@ -22498,11 +30934,70 @@ void swap(CmRecycleResponse &a, CmRecycleResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other938) {
   (void) other938;
 }
 CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other939) {
   (void) other939;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other918) {
+  (void) other918;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other919) {
+  (void) other919;
+=======
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other876) {
+  (void) other876;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other877) {
+  (void) other877;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other880) {
+  (void) other880;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other881) {
+  (void) other881;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other876) {
+  (void) other876;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other877) {
+  (void) other877;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other880) {
+  (void) other880;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other881) {
+  (void) other881;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other922) {
+  (void) other922;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other923) {
+  (void) other923;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+CmRecycleResponse::CmRecycleResponse(const CmRecycleResponse& other934) {
+  (void) other934;
+}
+CmRecycleResponse& CmRecycleResponse::operator=(const CmRecycleResponse& other935) {
+  (void) other935;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void CmRecycleResponse::printTo(std::ostream& out) const {
@@ -22643,6 +31138,9 @@ void swap(TableMeta &a, TableMeta &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 TableMeta::TableMeta(const TableMeta& other940) {
   dbName = other940.dbName;
   tableName = other940.tableName;
@@ -22656,6 +31154,105 @@ TableMeta& TableMeta::operator=(const TableMeta& other941) {
   tableType = other941.tableType;
   comments = other941.comments;
   __isset = other941.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+TableMeta::TableMeta(const TableMeta& other920) {
+  dbName = other920.dbName;
+  tableName = other920.tableName;
+  tableType = other920.tableType;
+  comments = other920.comments;
+  __isset = other920.__isset;
+}
+TableMeta& TableMeta::operator=(const TableMeta& other921) {
+  dbName = other921.dbName;
+  tableName = other921.tableName;
+  tableType = other921.tableType;
+  comments = other921.comments;
+  __isset = other921.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+TableMeta::TableMeta(const TableMeta& other878) {
+  dbName = other878.dbName;
+  tableName = other878.tableName;
+  tableType = other878.tableType;
+  comments = other878.comments;
+  __isset = other878.__isset;
+}
+TableMeta& TableMeta::operator=(const TableMeta& other879) {
+  dbName = other879.dbName;
+  tableName = other879.tableName;
+  tableType = other879.tableType;
+  comments = other879.comments;
+  __isset = other879.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+TableMeta::TableMeta(const TableMeta& other882) {
+  dbName = other882.dbName;
+  tableName = other882.tableName;
+  tableType = other882.tableType;
+  comments = other882.comments;
+  __isset = other882.__isset;
+}
+=======
+TableMeta::TableMeta(const TableMeta& other882) {
+  dbName = other882.dbName;
+  tableName = other882.tableName;
+  tableType = other882.tableType;
+  comments = other882.comments;
+  __isset = other882.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+TableMeta& TableMeta::operator=(const TableMeta& other883) {
+  dbName = other883.dbName;
+  tableName = other883.tableName;
+  tableType = other883.tableType;
+  comments = other883.comments;
+  __isset = other883.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+TableMeta::TableMeta(const TableMeta& other924) {
+  dbName = other924.dbName;
+  tableName = other924.tableName;
+  tableType = other924.tableType;
+  comments = other924.comments;
+  __isset = other924.__isset;
+}
+TableMeta& TableMeta::operator=(const TableMeta& other925) {
+  dbName = other925.dbName;
+  tableName = other925.tableName;
+  tableType = other925.tableType;
+  comments = other925.comments;
+  __isset = other925.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+TableMeta::TableMeta(const TableMeta& other936) {
+  dbName = other936.dbName;
+  tableName = other936.tableName;
+  tableType = other936.tableType;
+  comments = other936.comments;
+  __isset = other936.__isset;
+}
+TableMeta& TableMeta::operator=(const TableMeta& other937) {
+  dbName = other937.dbName;
+  tableName = other937.tableName;
+  tableType = other937.tableType;
+  comments = other937.comments;
+  __isset = other937.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void TableMeta::printTo(std::ostream& out) const {
@@ -22713,6 +31310,9 @@ uint32_t Materialization::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_SET) {
           {
             this->tablesUsed.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size942;
             ::apache::thrift::protocol::TType _etype945;
             xfer += iprot->readSetBegin(_etype945, _size942);
@@ -22722,6 +31322,84 @@ uint32_t Materialization::read(::apache::thrift::protocol::TProtocol* iprot) {
               std::string _elem947;
               xfer += iprot->readString(_elem947);
               this->tablesUsed.insert(_elem947);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size922;
+            ::apache::thrift::protocol::TType _etype925;
+            xfer += iprot->readSetBegin(_etype925, _size922);
+            uint32_t _i926;
+            for (_i926 = 0; _i926 < _size922; ++_i926)
+            {
+              std::string _elem927;
+              xfer += iprot->readString(_elem927);
+              this->tablesUsed.insert(_elem927);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size880;
+            ::apache::thrift::protocol::TType _etype883;
+            xfer += iprot->readSetBegin(_etype883, _size880);
+            uint32_t _i884;
+            for (_i884 = 0; _i884 < _size880; ++_i884)
+            {
+              std::string _elem885;
+              xfer += iprot->readString(_elem885);
+              this->tablesUsed.insert(_elem885);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size884;
+            ::apache::thrift::protocol::TType _etype887;
+            xfer += iprot->readSetBegin(_etype887, _size884);
+            uint32_t _i888;
+            for (_i888 = 0; _i888 < _size884; ++_i888)
+            {
+              std::string _elem889;
+              xfer += iprot->readString(_elem889);
+              this->tablesUsed.insert(_elem889);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size884;
+            ::apache::thrift::protocol::TType _etype887;
+            xfer += iprot->readSetBegin(_etype887, _size884);
+            uint32_t _i888;
+            for (_i888 = 0; _i888 < _size884; ++_i888)
+            {
+              std::string _elem889;
+              xfer += iprot->readString(_elem889);
+              this->tablesUsed.insert(_elem889);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size926;
+            ::apache::thrift::protocol::TType _etype929;
+            xfer += iprot->readSetBegin(_etype929, _size926);
+            uint32_t _i930;
+            for (_i930 = 0; _i930 < _size926; ++_i930)
+            {
+              std::string _elem931;
+              xfer += iprot->readString(_elem931);
+              this->tablesUsed.insert(_elem931);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size938;
+            ::apache::thrift::protocol::TType _etype941;
+            xfer += iprot->readSetBegin(_etype941, _size938);
+            uint32_t _i942;
+            for (_i942 = 0; _i942 < _size938; ++_i942)
+            {
+              std::string _elem943;
+              xfer += iprot->readString(_elem943);
+              this->tablesUsed.insert(_elem943);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readSetEnd();
           }
@@ -22770,10 +31448,62 @@ uint32_t Materialization::write(::apache::thrift::protocol::TProtocol* oprot) co
   xfer += oprot->writeFieldBegin("tablesUsed", ::apache::thrift::protocol::T_SET, 1);
   {
     xfer += oprot->writeSetBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->tablesUsed.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::set<std::string> ::const_iterator _iter948;
     for (_iter948 = this->tablesUsed.begin(); _iter948 != this->tablesUsed.end(); ++_iter948)
     {
       xfer += oprot->writeString((*_iter948));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::set<std::string> ::const_iterator _iter928;
+    for (_iter928 = this->tablesUsed.begin(); _iter928 != this->tablesUsed.end(); ++_iter928)
+    {
+      xfer += oprot->writeString((*_iter928));
+=======
+    std::set<std::string> ::const_iterator _iter886;
+    for (_iter886 = this->tablesUsed.begin(); _iter886 != this->tablesUsed.end(); ++_iter886)
+    {
+      xfer += oprot->writeString((*_iter886));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::set<std::string> ::const_iterator _iter890;
+    for (_iter890 = this->tablesUsed.begin(); _iter890 != this->tablesUsed.end(); ++_iter890)
+    {
+      xfer += oprot->writeString((*_iter890));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<std::string> ::const_iterator _iter886;
+    for (_iter886 = this->tablesUsed.begin(); _iter886 != this->tablesUsed.end(); ++_iter886)
+    {
+      xfer += oprot->writeString((*_iter886));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::set<std::string> ::const_iterator _iter890;
+    for (_iter890 = this->tablesUsed.begin(); _iter890 != this->tablesUsed.end(); ++_iter890)
+    {
+      xfer += oprot->writeString((*_iter890));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::set<std::string> ::const_iterator _iter932;
+    for (_iter932 = this->tablesUsed.begin(); _iter932 != this->tablesUsed.end(); ++_iter932)
+    {
+      xfer += oprot->writeString((*_iter932));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::set<std::string> ::const_iterator _iter944;
+    for (_iter944 = this->tablesUsed.begin(); _iter944 != this->tablesUsed.end(); ++_iter944)
+    {
+      xfer += oprot->writeString((*_iter944));
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeSetEnd();
   }
@@ -22801,6 +31531,9 @@ void swap(Materialization &a, Materialization &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 Materialization::Materialization(const Materialization& other949) {
   tablesUsed = other949.tablesUsed;
   validTxnList = other949.validTxnList;
@@ -22812,6 +31545,89 @@ Materialization& Materialization::operator=(const Materialization& other950) {
   validTxnList = other950.validTxnList;
   invalidationTime = other950.invalidationTime;
   __isset = other950.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+Materialization::Materialization(const Materialization& other929) {
+  tablesUsed = other929.tablesUsed;
+  validTxnList = other929.validTxnList;
+  invalidationTime = other929.invalidationTime;
+  __isset = other929.__isset;
+}
+Materialization& Materialization::operator=(const Materialization& other930) {
+  tablesUsed = other930.tablesUsed;
+  validTxnList = other930.validTxnList;
+  invalidationTime = other930.invalidationTime;
+  __isset = other930.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+Materialization::Materialization(const Materialization& other887) {
+  materializationTable = other887.materializationTable;
+  tablesUsed = other887.tablesUsed;
+  invalidationTime = other887.invalidationTime;
+}
+Materialization& Materialization::operator=(const Materialization& other888) {
+  materializationTable = other888.materializationTable;
+  tablesUsed = other888.tablesUsed;
+  invalidationTime = other888.invalidationTime;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+Materialization::Materialization(const Materialization& other891) {
+  materializationTable = other891.materializationTable;
+  tablesUsed = other891.tablesUsed;
+  invalidationTime = other891.invalidationTime;
+}
+=======
+Materialization::Materialization(const Materialization& other891) {
+  materializationTable = other891.materializationTable;
+  tablesUsed = other891.tablesUsed;
+  invalidationTime = other891.invalidationTime;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+Materialization& Materialization::operator=(const Materialization& other892) {
+  materializationTable = other892.materializationTable;
+  tablesUsed = other892.tablesUsed;
+  invalidationTime = other892.invalidationTime;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+Materialization::Materialization(const Materialization& other933) {
+  tablesUsed = other933.tablesUsed;
+  validTxnList = other933.validTxnList;
+  invalidationTime = other933.invalidationTime;
+  __isset = other933.__isset;
+}
+Materialization& Materialization::operator=(const Materialization& other934) {
+  tablesUsed = other934.tablesUsed;
+  validTxnList = other934.validTxnList;
+  invalidationTime = other934.invalidationTime;
+  __isset = other934.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+Materialization::Materialization(const Materialization& other945) {
+  tablesUsed = other945.tablesUsed;
+  validTxnList = other945.validTxnList;
+  invalidationTime = other945.invalidationTime;
+  __isset = other945.__isset;
+}
+Materialization& Materialization::operator=(const Materialization& other946) {
+  tablesUsed = other946.tablesUsed;
+  validTxnList = other946.validTxnList;
+  invalidationTime = other946.invalidationTime;
+  __isset = other946.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void Materialization::printTo(std::ostream& out) const {
@@ -22879,9 +31695,54 @@ uint32_t WMResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast951;
           xfer += iprot->readI32(ecast951);
           this->status = (WMResourcePlanStatus::type)ecast951;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast931;
+          xfer += iprot->readI32(ecast931);
+          this->status = (WMResourcePlanStatus::type)ecast931;
+=======
+          int32_t ecast889;
+          xfer += iprot->readI32(ecast889);
+          this->status = (WMResourcePlanStatus::type)ecast889;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast893;
+          xfer += iprot->readI32(ecast893);
+          this->status = (WMResourcePlanStatus::type)ecast893;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast889;
+          xfer += iprot->readI32(ecast889);
+          this->status = (WMResourcePlanStatus::type)ecast889;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast893;
+          xfer += iprot->readI32(ecast893);
+          this->status = (WMResourcePlanStatus::type)ecast893;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast935;
+          xfer += iprot->readI32(ecast935);
+          this->status = (WMResourcePlanStatus::type)ecast935;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast947;
+          xfer += iprot->readI32(ecast947);
+          this->status = (WMResourcePlanStatus::type)ecast947;
+>>>>>>> alloc write id event changes
           this->__isset.status = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -22955,6 +31816,9 @@ void swap(WMResourcePlan &a, WMResourcePlan &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMResourcePlan::WMResourcePlan(const WMResourcePlan& other952) {
   name = other952.name;
   status = other952.status;
@@ -22968,6 +31832,112 @@ WMResourcePlan& WMResourcePlan::operator=(const WMResourcePlan& other953) {
   queryParallelism = other953.queryParallelism;
   defaultPoolPath = other953.defaultPoolPath;
   __isset = other953.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other932) {
+  name = other932.name;
+  status = other932.status;
+  queryParallelism = other932.queryParallelism;
+  defaultPoolPath = other932.defaultPoolPath;
+  __isset = other932.__isset;
+}
+WMResourcePlan& WMResourcePlan::operator=(const WMResourcePlan& other933) {
+  name = other933.name;
+  status = other933.status;
+  queryParallelism = other933.queryParallelism;
+  defaultPoolPath = other933.defaultPoolPath;
+  __isset = other933.__isset;
+=======
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other890) {
+  name = other890.name;
+  status = other890.status;
+  queryParallelism = other890.queryParallelism;
+  defaultPoolPath = other890.defaultPoolPath;
+  __isset = other890.__isset;
+}
+=======
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other890) {
+  name = other890.name;
+  status = other890.status;
+  queryParallelism = other890.queryParallelism;
+  defaultPoolPath = other890.defaultPoolPath;
+  __isset = other890.__isset;
+}
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMResourcePlan& WMResourcePlan::operator=(const WMResourcePlan& other891) {
+  name = other891.name;
+  status = other891.status;
+  queryParallelism = other891.queryParallelism;
+  defaultPoolPath = other891.defaultPoolPath;
+  __isset = other891.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other894) {
+  name = other894.name;
+  status = other894.status;
+  queryParallelism = other894.queryParallelism;
+  defaultPoolPath = other894.defaultPoolPath;
+  __isset = other894.__isset;
+}
+=======
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other894) {
+  name = other894.name;
+  status = other894.status;
+  queryParallelism = other894.queryParallelism;
+  defaultPoolPath = other894.defaultPoolPath;
+  __isset = other894.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMResourcePlan& WMResourcePlan::operator=(const WMResourcePlan& other895) {
+  name = other895.name;
+  status = other895.status;
+  queryParallelism = other895.queryParallelism;
+  defaultPoolPath = other895.defaultPoolPath;
+  __isset = other895.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other936) {
+  name = other936.name;
+  status = other936.status;
+  queryParallelism = other936.queryParallelism;
+  defaultPoolPath = other936.defaultPoolPath;
+  __isset = other936.__isset;
+}
+WMResourcePlan& WMResourcePlan::operator=(const WMResourcePlan& other937) {
+  name = other937.name;
+  status = other937.status;
+  queryParallelism = other937.queryParallelism;
+  defaultPoolPath = other937.defaultPoolPath;
+  __isset = other937.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMResourcePlan::WMResourcePlan(const WMResourcePlan& other948) {
+  name = other948.name;
+  status = other948.status;
+  queryParallelism = other948.queryParallelism;
+  defaultPoolPath = other948.defaultPoolPath;
+  __isset = other948.__isset;
+}
+WMResourcePlan& WMResourcePlan::operator=(const WMResourcePlan& other949) {
+  name = other949.name;
+  status = other949.status;
+  queryParallelism = other949.queryParallelism;
+  defaultPoolPath = other949.defaultPoolPath;
+  __isset = other949.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMResourcePlan::printTo(std::ostream& out) const {
@@ -23046,9 +32016,54 @@ uint32_t WMNullableResourcePlan::read(::apache::thrift::protocol::TProtocol* ipr
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           int32_t ecast954;
           xfer += iprot->readI32(ecast954);
           this->status = (WMResourcePlanStatus::type)ecast954;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+          int32_t ecast934;
+          xfer += iprot->readI32(ecast934);
+          this->status = (WMResourcePlanStatus::type)ecast934;
+=======
+          int32_t ecast892;
+          xfer += iprot->readI32(ecast892);
+          this->status = (WMResourcePlanStatus::type)ecast892;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          int32_t ecast896;
+          xfer += iprot->readI32(ecast896);
+          this->status = (WMResourcePlanStatus::type)ecast896;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast892;
+          xfer += iprot->readI32(ecast892);
+          this->status = (WMResourcePlanStatus::type)ecast892;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+          int32_t ecast896;
+          xfer += iprot->readI32(ecast896);
+          this->status = (WMResourcePlanStatus::type)ecast896;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+          int32_t ecast938;
+          xfer += iprot->readI32(ecast938);
+          this->status = (WMResourcePlanStatus::type)ecast938;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          int32_t ecast950;
+          xfer += iprot->readI32(ecast950);
+          this->status = (WMResourcePlanStatus::type)ecast950;
+>>>>>>> alloc write id event changes
           this->__isset.status = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -23150,6 +32165,9 @@ void swap(WMNullableResourcePlan &a, WMNullableResourcePlan &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other955) {
   name = other955.name;
   status = other955.status;
@@ -23167,6 +32185,127 @@ WMNullableResourcePlan& WMNullableResourcePlan::operator=(const WMNullableResour
   defaultPoolPath = other956.defaultPoolPath;
   isSetDefaultPoolPath = other956.isSetDefaultPoolPath;
   __isset = other956.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other935) {
+  name = other935.name;
+  status = other935.status;
+  queryParallelism = other935.queryParallelism;
+  isSetQueryParallelism = other935.isSetQueryParallelism;
+  defaultPoolPath = other935.defaultPoolPath;
+  isSetDefaultPoolPath = other935.isSetDefaultPoolPath;
+  __isset = other935.__isset;
+}
+WMNullableResourcePlan& WMNullableResourcePlan::operator=(const WMNullableResourcePlan& other936) {
+  name = other936.name;
+  status = other936.status;
+  queryParallelism = other936.queryParallelism;
+  isSetQueryParallelism = other936.isSetQueryParallelism;
+  defaultPoolPath = other936.defaultPoolPath;
+  isSetDefaultPoolPath = other936.isSetDefaultPoolPath;
+  __isset = other936.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other893) {
+  name = other893.name;
+  status = other893.status;
+  queryParallelism = other893.queryParallelism;
+  isSetQueryParallelism = other893.isSetQueryParallelism;
+  defaultPoolPath = other893.defaultPoolPath;
+  isSetDefaultPoolPath = other893.isSetDefaultPoolPath;
+  __isset = other893.__isset;
+}
+WMNullableResourcePlan& WMNullableResourcePlan::operator=(const WMNullableResourcePlan& other894) {
+  name = other894.name;
+  status = other894.status;
+  queryParallelism = other894.queryParallelism;
+  isSetQueryParallelism = other894.isSetQueryParallelism;
+  defaultPoolPath = other894.defaultPoolPath;
+  isSetDefaultPoolPath = other894.isSetDefaultPoolPath;
+  __isset = other894.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other897) {
+  name = other897.name;
+  status = other897.status;
+  queryParallelism = other897.queryParallelism;
+  isSetQueryParallelism = other897.isSetQueryParallelism;
+  defaultPoolPath = other897.defaultPoolPath;
+  isSetDefaultPoolPath = other897.isSetDefaultPoolPath;
+  __isset = other897.__isset;
+}
+=======
+WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other897) {
+  name = other897.name;
+  status = other897.status;
+  queryParallelism = other897.queryParallelism;
+  isSetQueryParallelism = other897.isSetQueryParallelism;
+  defaultPoolPath = other897.defaultPoolPath;
+  isSetDefaultPoolPath = other897.isSetDefaultPoolPath;
+  __isset = other897.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMNullableResourcePlan& WMNullableResourcePlan::operator=(const WMNullableResourcePlan& other898) {
+  name = other898.name;
+  status = other898.status;
+  queryParallelism = other898.queryParallelism;
+  isSetQueryParallelism = other898.isSetQueryParallelism;
+  defaultPoolPath = other898.defaultPoolPath;
+  isSetDefaultPoolPath = other898.isSetDefaultPoolPath;
+  __isset = other898.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other939) {
+  name = other939.name;
+  status = other939.status;
+  queryParallelism = other939.queryParallelism;
+  isSetQueryParallelism = other939.isSetQueryParallelism;
+  defaultPoolPath = other939.defaultPoolPath;
+  isSetDefaultPoolPath = other939.isSetDefaultPoolPath;
+  __isset = other939.__isset;
+}
+WMNullableResourcePlan& WMNullableResourcePlan::operator=(const WMNullableResourcePlan& other940) {
+  name = other940.name;
+  status = other940.status;
+  queryParallelism = other940.queryParallelism;
+  isSetQueryParallelism = other940.isSetQueryParallelism;
+  defaultPoolPath = other940.defaultPoolPath;
+  isSetDefaultPoolPath = other940.isSetDefaultPoolPath;
+  __isset = other940.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMNullableResourcePlan::WMNullableResourcePlan(const WMNullableResourcePlan& other951) {
+  name = other951.name;
+  status = other951.status;
+  queryParallelism = other951.queryParallelism;
+  isSetQueryParallelism = other951.isSetQueryParallelism;
+  defaultPoolPath = other951.defaultPoolPath;
+  isSetDefaultPoolPath = other951.isSetDefaultPoolPath;
+  __isset = other951.__isset;
+}
+WMNullableResourcePlan& WMNullableResourcePlan::operator=(const WMNullableResourcePlan& other952) {
+  name = other952.name;
+  status = other952.status;
+  queryParallelism = other952.queryParallelism;
+  isSetQueryParallelism = other952.isSetQueryParallelism;
+  defaultPoolPath = other952.defaultPoolPath;
+  isSetDefaultPoolPath = other952.isSetDefaultPoolPath;
+  __isset = other952.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMNullableResourcePlan::printTo(std::ostream& out) const {
@@ -23331,6 +32470,9 @@ void swap(WMPool &a, WMPool &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMPool::WMPool(const WMPool& other957) {
   resourcePlanName = other957.resourcePlanName;
   poolPath = other957.poolPath;
@@ -23346,6 +32488,116 @@ WMPool& WMPool::operator=(const WMPool& other958) {
   queryParallelism = other958.queryParallelism;
   schedulingPolicy = other958.schedulingPolicy;
   __isset = other958.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMPool::WMPool(const WMPool& other937) {
+  resourcePlanName = other937.resourcePlanName;
+  poolPath = other937.poolPath;
+  allocFraction = other937.allocFraction;
+  queryParallelism = other937.queryParallelism;
+  schedulingPolicy = other937.schedulingPolicy;
+  __isset = other937.__isset;
+}
+WMPool& WMPool::operator=(const WMPool& other938) {
+  resourcePlanName = other938.resourcePlanName;
+  poolPath = other938.poolPath;
+  allocFraction = other938.allocFraction;
+  queryParallelism = other938.queryParallelism;
+  schedulingPolicy = other938.schedulingPolicy;
+  __isset = other938.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMPool::WMPool(const WMPool& other895) {
+  resourcePlanName = other895.resourcePlanName;
+  poolPath = other895.poolPath;
+  allocFraction = other895.allocFraction;
+  queryParallelism = other895.queryParallelism;
+  schedulingPolicy = other895.schedulingPolicy;
+  __isset = other895.__isset;
+}
+WMPool& WMPool::operator=(const WMPool& other896) {
+  resourcePlanName = other896.resourcePlanName;
+  poolPath = other896.poolPath;
+  allocFraction = other896.allocFraction;
+  queryParallelism = other896.queryParallelism;
+  schedulingPolicy = other896.schedulingPolicy;
+  __isset = other896.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMPool::WMPool(const WMPool& other899) {
+  resourcePlanName = other899.resourcePlanName;
+  poolPath = other899.poolPath;
+  allocFraction = other899.allocFraction;
+  queryParallelism = other899.queryParallelism;
+  schedulingPolicy = other899.schedulingPolicy;
+  __isset = other899.__isset;
+}
+=======
+WMPool::WMPool(const WMPool& other899) {
+  resourcePlanName = other899.resourcePlanName;
+  poolPath = other899.poolPath;
+  allocFraction = other899.allocFraction;
+  queryParallelism = other899.queryParallelism;
+  schedulingPolicy = other899.schedulingPolicy;
+  __isset = other899.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMPool& WMPool::operator=(const WMPool& other900) {
+  resourcePlanName = other900.resourcePlanName;
+  poolPath = other900.poolPath;
+  allocFraction = other900.allocFraction;
+  queryParallelism = other900.queryParallelism;
+  schedulingPolicy = other900.schedulingPolicy;
+  __isset = other900.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMPool::WMPool(const WMPool& other941) {
+  resourcePlanName = other941.resourcePlanName;
+  poolPath = other941.poolPath;
+  allocFraction = other941.allocFraction;
+  queryParallelism = other941.queryParallelism;
+  schedulingPolicy = other941.schedulingPolicy;
+  __isset = other941.__isset;
+}
+WMPool& WMPool::operator=(const WMPool& other942) {
+  resourcePlanName = other942.resourcePlanName;
+  poolPath = other942.poolPath;
+  allocFraction = other942.allocFraction;
+  queryParallelism = other942.queryParallelism;
+  schedulingPolicy = other942.schedulingPolicy;
+  __isset = other942.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMPool::WMPool(const WMPool& other953) {
+  resourcePlanName = other953.resourcePlanName;
+  poolPath = other953.poolPath;
+  allocFraction = other953.allocFraction;
+  queryParallelism = other953.queryParallelism;
+  schedulingPolicy = other953.schedulingPolicy;
+  __isset = other953.__isset;
+}
+WMPool& WMPool::operator=(const WMPool& other954) {
+  resourcePlanName = other954.resourcePlanName;
+  poolPath = other954.poolPath;
+  allocFraction = other954.allocFraction;
+  queryParallelism = other954.queryParallelism;
+  schedulingPolicy = other954.schedulingPolicy;
+  __isset = other954.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMPool::printTo(std::ostream& out) const {
@@ -23528,6 +32780,9 @@ void swap(WMNullablePool &a, WMNullablePool &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMNullablePool::WMNullablePool(const WMNullablePool& other959) {
   resourcePlanName = other959.resourcePlanName;
   poolPath = other959.poolPath;
@@ -23545,6 +32800,127 @@ WMNullablePool& WMNullablePool::operator=(const WMNullablePool& other960) {
   schedulingPolicy = other960.schedulingPolicy;
   isSetSchedulingPolicy = other960.isSetSchedulingPolicy;
   __isset = other960.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMNullablePool::WMNullablePool(const WMNullablePool& other939) {
+  resourcePlanName = other939.resourcePlanName;
+  poolPath = other939.poolPath;
+  allocFraction = other939.allocFraction;
+  queryParallelism = other939.queryParallelism;
+  schedulingPolicy = other939.schedulingPolicy;
+  isSetSchedulingPolicy = other939.isSetSchedulingPolicy;
+  __isset = other939.__isset;
+}
+WMNullablePool& WMNullablePool::operator=(const WMNullablePool& other940) {
+  resourcePlanName = other940.resourcePlanName;
+  poolPath = other940.poolPath;
+  allocFraction = other940.allocFraction;
+  queryParallelism = other940.queryParallelism;
+  schedulingPolicy = other940.schedulingPolicy;
+  isSetSchedulingPolicy = other940.isSetSchedulingPolicy;
+  __isset = other940.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMNullablePool::WMNullablePool(const WMNullablePool& other897) {
+  resourcePlanName = other897.resourcePlanName;
+  poolPath = other897.poolPath;
+  allocFraction = other897.allocFraction;
+  queryParallelism = other897.queryParallelism;
+  schedulingPolicy = other897.schedulingPolicy;
+  isSetSchedulingPolicy = other897.isSetSchedulingPolicy;
+  __isset = other897.__isset;
+}
+WMNullablePool& WMNullablePool::operator=(const WMNullablePool& other898) {
+  resourcePlanName = other898.resourcePlanName;
+  poolPath = other898.poolPath;
+  allocFraction = other898.allocFraction;
+  queryParallelism = other898.queryParallelism;
+  schedulingPolicy = other898.schedulingPolicy;
+  isSetSchedulingPolicy = other898.isSetSchedulingPolicy;
+  __isset = other898.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMNullablePool::WMNullablePool(const WMNullablePool& other901) {
+  resourcePlanName = other901.resourcePlanName;
+  poolPath = other901.poolPath;
+  allocFraction = other901.allocFraction;
+  queryParallelism = other901.queryParallelism;
+  schedulingPolicy = other901.schedulingPolicy;
+  isSetSchedulingPolicy = other901.isSetSchedulingPolicy;
+  __isset = other901.__isset;
+}
+=======
+WMNullablePool::WMNullablePool(const WMNullablePool& other901) {
+  resourcePlanName = other901.resourcePlanName;
+  poolPath = other901.poolPath;
+  allocFraction = other901.allocFraction;
+  queryParallelism = other901.queryParallelism;
+  schedulingPolicy = other901.schedulingPolicy;
+  isSetSchedulingPolicy = other901.isSetSchedulingPolicy;
+  __isset = other901.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMNullablePool& WMNullablePool::operator=(const WMNullablePool& other902) {
+  resourcePlanName = other902.resourcePlanName;
+  poolPath = other902.poolPath;
+  allocFraction = other902.allocFraction;
+  queryParallelism = other902.queryParallelism;
+  schedulingPolicy = other902.schedulingPolicy;
+  isSetSchedulingPolicy = other902.isSetSchedulingPolicy;
+  __isset = other902.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMNullablePool::WMNullablePool(const WMNullablePool& other943) {
+  resourcePlanName = other943.resourcePlanName;
+  poolPath = other943.poolPath;
+  allocFraction = other943.allocFraction;
+  queryParallelism = other943.queryParallelism;
+  schedulingPolicy = other943.schedulingPolicy;
+  isSetSchedulingPolicy = other943.isSetSchedulingPolicy;
+  __isset = other943.__isset;
+}
+WMNullablePool& WMNullablePool::operator=(const WMNullablePool& other944) {
+  resourcePlanName = other944.resourcePlanName;
+  poolPath = other944.poolPath;
+  allocFraction = other944.allocFraction;
+  queryParallelism = other944.queryParallelism;
+  schedulingPolicy = other944.schedulingPolicy;
+  isSetSchedulingPolicy = other944.isSetSchedulingPolicy;
+  __isset = other944.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMNullablePool::WMNullablePool(const WMNullablePool& other955) {
+  resourcePlanName = other955.resourcePlanName;
+  poolPath = other955.poolPath;
+  allocFraction = other955.allocFraction;
+  queryParallelism = other955.queryParallelism;
+  schedulingPolicy = other955.schedulingPolicy;
+  isSetSchedulingPolicy = other955.isSetSchedulingPolicy;
+  __isset = other955.__isset;
+}
+WMNullablePool& WMNullablePool::operator=(const WMNullablePool& other956) {
+  resourcePlanName = other956.resourcePlanName;
+  poolPath = other956.poolPath;
+  allocFraction = other956.allocFraction;
+  queryParallelism = other956.queryParallelism;
+  schedulingPolicy = other956.schedulingPolicy;
+  isSetSchedulingPolicy = other956.isSetSchedulingPolicy;
+  __isset = other956.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMNullablePool::printTo(std::ostream& out) const {
@@ -23709,6 +33085,9 @@ void swap(WMTrigger &a, WMTrigger &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMTrigger::WMTrigger(const WMTrigger& other961) {
   resourcePlanName = other961.resourcePlanName;
   triggerName = other961.triggerName;
@@ -23724,6 +33103,108 @@ WMTrigger& WMTrigger::operator=(const WMTrigger& other962) {
   actionExpression = other962.actionExpression;
   isInUnmanaged = other962.isInUnmanaged;
   __isset = other962.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMTrigger::WMTrigger(const WMTrigger& other941) {
+  resourcePlanName = other941.resourcePlanName;
+  triggerName = other941.triggerName;
+  triggerExpression = other941.triggerExpression;
+  actionExpression = other941.actionExpression;
+  isInUnmanaged = other941.isInUnmanaged;
+  __isset = other941.__isset;
+}
+WMTrigger& WMTrigger::operator=(const WMTrigger& other942) {
+  resourcePlanName = other942.resourcePlanName;
+  triggerName = other942.triggerName;
+  triggerExpression = other942.triggerExpression;
+  actionExpression = other942.actionExpression;
+  isInUnmanaged = other942.isInUnmanaged;
+  __isset = other942.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMTrigger::WMTrigger(const WMTrigger& other899) {
+  resourcePlanName = other899.resourcePlanName;
+  triggerName = other899.triggerName;
+  triggerExpression = other899.triggerExpression;
+  actionExpression = other899.actionExpression;
+  isInUnmanaged = other899.isInUnmanaged;
+  __isset = other899.__isset;
+}
+WMTrigger& WMTrigger::operator=(const WMTrigger& other900) {
+  resourcePlanName = other900.resourcePlanName;
+  triggerName = other900.triggerName;
+  triggerExpression = other900.triggerExpression;
+  actionExpression = other900.actionExpression;
+  isInUnmanaged = other900.isInUnmanaged;
+  __isset = other900.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMTrigger::WMTrigger(const WMTrigger& other903) {
+  resourcePlanName = other903.resourcePlanName;
+  triggerName = other903.triggerName;
+  triggerExpression = other903.triggerExpression;
+  actionExpression = other903.actionExpression;
+  isInUnmanaged = other903.isInUnmanaged;
+  __isset = other903.__isset;
+}
+WMTrigger& WMTrigger::operator=(const WMTrigger& other904) {
+  resourcePlanName = other904.resourcePlanName;
+  triggerName = other904.triggerName;
+  triggerExpression = other904.triggerExpression;
+  actionExpression = other904.actionExpression;
+  isInUnmanaged = other904.isInUnmanaged;
+  __isset = other904.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMTrigger::WMTrigger(const WMTrigger& other945) {
+  resourcePlanName = other945.resourcePlanName;
+  triggerName = other945.triggerName;
+  triggerExpression = other945.triggerExpression;
+  actionExpression = other945.actionExpression;
+  isInUnmanaged = other945.isInUnmanaged;
+  __isset = other945.__isset;
+}
+WMTrigger& WMTrigger::operator=(const WMTrigger& other946) {
+  resourcePlanName = other946.resourcePlanName;
+  triggerName = other946.triggerName;
+  triggerExpression = other946.triggerExpression;
+  actionExpression = other946.actionExpression;
+  isInUnmanaged = other946.isInUnmanaged;
+  __isset = other946.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMTrigger::WMTrigger(const WMTrigger& other957) {
+  resourcePlanName = other957.resourcePlanName;
+  triggerName = other957.triggerName;
+  triggerExpression = other957.triggerExpression;
+  actionExpression = other957.actionExpression;
+  isInUnmanaged = other957.isInUnmanaged;
+  __isset = other957.__isset;
+}
+WMTrigger& WMTrigger::operator=(const WMTrigger& other958) {
+  resourcePlanName = other958.resourcePlanName;
+  triggerName = other958.triggerName;
+  triggerExpression = other958.triggerExpression;
+  actionExpression = other958.actionExpression;
+  isInUnmanaged = other958.isInUnmanaged;
+  __isset = other958.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMTrigger::printTo(std::ostream& out) const {
@@ -23888,6 +33369,9 @@ void swap(WMMapping &a, WMMapping &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMMapping::WMMapping(const WMMapping& other963) {
   resourcePlanName = other963.resourcePlanName;
   entityType = other963.entityType;
@@ -23903,6 +33387,108 @@ WMMapping& WMMapping::operator=(const WMMapping& other964) {
   poolPath = other964.poolPath;
   ordering = other964.ordering;
   __isset = other964.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMMapping::WMMapping(const WMMapping& other943) {
+  resourcePlanName = other943.resourcePlanName;
+  entityType = other943.entityType;
+  entityName = other943.entityName;
+  poolPath = other943.poolPath;
+  ordering = other943.ordering;
+  __isset = other943.__isset;
+}
+WMMapping& WMMapping::operator=(const WMMapping& other944) {
+  resourcePlanName = other944.resourcePlanName;
+  entityType = other944.entityType;
+  entityName = other944.entityName;
+  poolPath = other944.poolPath;
+  ordering = other944.ordering;
+  __isset = other944.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMMapping::WMMapping(const WMMapping& other901) {
+  resourcePlanName = other901.resourcePlanName;
+  entityType = other901.entityType;
+  entityName = other901.entityName;
+  poolPath = other901.poolPath;
+  ordering = other901.ordering;
+  __isset = other901.__isset;
+}
+WMMapping& WMMapping::operator=(const WMMapping& other902) {
+  resourcePlanName = other902.resourcePlanName;
+  entityType = other902.entityType;
+  entityName = other902.entityName;
+  poolPath = other902.poolPath;
+  ordering = other902.ordering;
+  __isset = other902.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMMapping::WMMapping(const WMMapping& other905) {
+  resourcePlanName = other905.resourcePlanName;
+  entityType = other905.entityType;
+  entityName = other905.entityName;
+  poolPath = other905.poolPath;
+  ordering = other905.ordering;
+  __isset = other905.__isset;
+}
+WMMapping& WMMapping::operator=(const WMMapping& other906) {
+  resourcePlanName = other906.resourcePlanName;
+  entityType = other906.entityType;
+  entityName = other906.entityName;
+  poolPath = other906.poolPath;
+  ordering = other906.ordering;
+  __isset = other906.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMMapping::WMMapping(const WMMapping& other947) {
+  resourcePlanName = other947.resourcePlanName;
+  entityType = other947.entityType;
+  entityName = other947.entityName;
+  poolPath = other947.poolPath;
+  ordering = other947.ordering;
+  __isset = other947.__isset;
+}
+WMMapping& WMMapping::operator=(const WMMapping& other948) {
+  resourcePlanName = other948.resourcePlanName;
+  entityType = other948.entityType;
+  entityName = other948.entityName;
+  poolPath = other948.poolPath;
+  ordering = other948.ordering;
+  __isset = other948.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMMapping::WMMapping(const WMMapping& other959) {
+  resourcePlanName = other959.resourcePlanName;
+  entityType = other959.entityType;
+  entityName = other959.entityName;
+  poolPath = other959.poolPath;
+  ordering = other959.ordering;
+  __isset = other959.__isset;
+}
+WMMapping& WMMapping::operator=(const WMMapping& other960) {
+  resourcePlanName = other960.resourcePlanName;
+  entityType = other960.entityType;
+  entityName = other960.entityName;
+  poolPath = other960.poolPath;
+  ordering = other960.ordering;
+  __isset = other960.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMMapping::printTo(std::ostream& out) const {
@@ -24008,6 +33594,9 @@ void swap(WMPoolTrigger &a, WMPoolTrigger &b) {
   swap(a.trigger, b.trigger);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other965) {
   pool = other965.pool;
   trigger = other965.trigger;
@@ -24015,6 +33604,72 @@ WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other965) {
 WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other966) {
   pool = other966.pool;
   trigger = other966.trigger;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other945) {
+  pool = other945.pool;
+  trigger = other945.trigger;
+}
+WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other946) {
+  pool = other946.pool;
+  trigger = other946.trigger;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other903) {
+  pool = other903.pool;
+  trigger = other903.trigger;
+}
+WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other904) {
+  pool = other904.pool;
+  trigger = other904.trigger;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other907) {
+  pool = other907.pool;
+  trigger = other907.trigger;
+}
+WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other908) {
+  pool = other908.pool;
+  trigger = other908.trigger;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other907) {
+  pool = other907.pool;
+  trigger = other907.trigger;
+}
+WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other908) {
+  pool = other908.pool;
+  trigger = other908.trigger;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other949) {
+  pool = other949.pool;
+  trigger = other949.trigger;
+}
+WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other950) {
+  pool = other950.pool;
+  trigger = other950.trigger;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMPoolTrigger::WMPoolTrigger(const WMPoolTrigger& other961) {
+  pool = other961.pool;
+  trigger = other961.trigger;
+}
+WMPoolTrigger& WMPoolTrigger::operator=(const WMPoolTrigger& other962) {
+  pool = other962.pool;
+  trigger = other962.trigger;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMPoolTrigger::printTo(std::ostream& out) const {
@@ -24088,6 +33743,9 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->pools.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size967;
             ::apache::thrift::protocol::TType _etype970;
             xfer += iprot->readListBegin(_etype970, _size967);
@@ -24096,6 +33754,77 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
             for (_i971 = 0; _i971 < _size967; ++_i971)
             {
               xfer += this->pools[_i971].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size947;
+            ::apache::thrift::protocol::TType _etype950;
+            xfer += iprot->readListBegin(_etype950, _size947);
+            this->pools.resize(_size947);
+            uint32_t _i951;
+            for (_i951 = 0; _i951 < _size947; ++_i951)
+            {
+              xfer += this->pools[_i951].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size905;
+            ::apache::thrift::protocol::TType _etype908;
+            xfer += iprot->readListBegin(_etype908, _size905);
+            this->pools.resize(_size905);
+            uint32_t _i909;
+            for (_i909 = 0; _i909 < _size905; ++_i909)
+<<<<<<< HEAD
+            {
+              xfer += this->pools[_i909].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size909;
+            ::apache::thrift::protocol::TType _etype912;
+            xfer += iprot->readListBegin(_etype912, _size909);
+            this->pools.resize(_size909);
+            uint32_t _i913;
+            for (_i913 = 0; _i913 < _size909; ++_i913)
+<<<<<<< HEAD
+            {
+              xfer += this->pools[_i913].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += this->pools[_i909].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += this->pools[_i913].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size951;
+            ::apache::thrift::protocol::TType _etype954;
+            xfer += iprot->readListBegin(_etype954, _size951);
+            this->pools.resize(_size951);
+            uint32_t _i955;
+            for (_i955 = 0; _i955 < _size951; ++_i955)
+            {
+              xfer += this->pools[_i955].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size963;
+            ::apache::thrift::protocol::TType _etype966;
+            xfer += iprot->readListBegin(_etype966, _size963);
+            this->pools.resize(_size963);
+            uint32_t _i967;
+            for (_i967 = 0; _i967 < _size963; ++_i967)
+            {
+              xfer += this->pools[_i967].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -24108,6 +33837,9 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->mappings.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size972;
             ::apache::thrift::protocol::TType _etype975;
             xfer += iprot->readListBegin(_etype975, _size972);
@@ -24116,6 +33848,77 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
             for (_i976 = 0; _i976 < _size972; ++_i976)
             {
               xfer += this->mappings[_i976].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size952;
+            ::apache::thrift::protocol::TType _etype955;
+            xfer += iprot->readListBegin(_etype955, _size952);
+            this->mappings.resize(_size952);
+            uint32_t _i956;
+            for (_i956 = 0; _i956 < _size952; ++_i956)
+            {
+              xfer += this->mappings[_i956].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size910;
+            ::apache::thrift::protocol::TType _etype913;
+            xfer += iprot->readListBegin(_etype913, _size910);
+            this->mappings.resize(_size910);
+            uint32_t _i914;
+            for (_i914 = 0; _i914 < _size910; ++_i914)
+<<<<<<< HEAD
+            {
+              xfer += this->mappings[_i914].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size914;
+            ::apache::thrift::protocol::TType _etype917;
+            xfer += iprot->readListBegin(_etype917, _size914);
+            this->mappings.resize(_size914);
+            uint32_t _i918;
+            for (_i918 = 0; _i918 < _size914; ++_i918)
+<<<<<<< HEAD
+            {
+              xfer += this->mappings[_i918].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += this->mappings[_i914].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += this->mappings[_i918].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size956;
+            ::apache::thrift::protocol::TType _etype959;
+            xfer += iprot->readListBegin(_etype959, _size956);
+            this->mappings.resize(_size956);
+            uint32_t _i960;
+            for (_i960 = 0; _i960 < _size956; ++_i960)
+            {
+              xfer += this->mappings[_i960].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size968;
+            ::apache::thrift::protocol::TType _etype971;
+            xfer += iprot->readListBegin(_etype971, _size968);
+            this->mappings.resize(_size968);
+            uint32_t _i972;
+            for (_i972 = 0; _i972 < _size968; ++_i972)
+            {
+              xfer += this->mappings[_i972].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -24128,6 +33931,9 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->triggers.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size977;
             ::apache::thrift::protocol::TType _etype980;
             xfer += iprot->readListBegin(_etype980, _size977);
@@ -24136,6 +33942,78 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
             for (_i981 = 0; _i981 < _size977; ++_i981)
             {
               xfer += this->triggers[_i981].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size957;
+            ::apache::thrift::protocol::TType _etype960;
+            xfer += iprot->readListBegin(_etype960, _size957);
+            this->triggers.resize(_size957);
+            uint32_t _i961;
+            for (_i961 = 0; _i961 < _size957; ++_i961)
+            {
+              xfer += this->triggers[_i961].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size915;
+            ::apache::thrift::protocol::TType _etype918;
+            xfer += iprot->readListBegin(_etype918, _size915);
+            this->triggers.resize(_size915);
+            uint32_t _i919;
+            for (_i919 = 0; _i919 < _size915; ++_i919)
+            {
+              xfer += this->triggers[_i919].read(iprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size919;
+            ::apache::thrift::protocol::TType _etype922;
+            xfer += iprot->readListBegin(_etype922, _size919);
+            this->triggers.resize(_size919);
+            uint32_t _i923;
+            for (_i923 = 0; _i923 < _size919; ++_i923)
+            {
+              xfer += this->triggers[_i923].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size919;
+            ::apache::thrift::protocol::TType _etype922;
+            xfer += iprot->readListBegin(_etype922, _size919);
+            this->triggers.resize(_size919);
+            uint32_t _i923;
+            for (_i923 = 0; _i923 < _size919; ++_i923)
+            {
+              xfer += this->triggers[_i923].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size961;
+            ::apache::thrift::protocol::TType _etype964;
+            xfer += iprot->readListBegin(_etype964, _size961);
+            this->triggers.resize(_size961);
+            uint32_t _i965;
+            for (_i965 = 0; _i965 < _size961; ++_i965)
+            {
+              xfer += this->triggers[_i965].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size973;
+            ::apache::thrift::protocol::TType _etype976;
+            xfer += iprot->readListBegin(_etype976, _size973);
+            this->triggers.resize(_size973);
+            uint32_t _i977;
+            for (_i977 = 0; _i977 < _size973; ++_i977)
+            {
+              xfer += this->triggers[_i977].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -24148,6 +34026,9 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->poolTriggers.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size982;
             ::apache::thrift::protocol::TType _etype985;
             xfer += iprot->readListBegin(_etype985, _size982);
@@ -24156,6 +34037,80 @@ uint32_t WMFullResourcePlan::read(::apache::thrift::protocol::TProtocol* iprot) 
             for (_i986 = 0; _i986 < _size982; ++_i986)
             {
               xfer += this->poolTriggers[_i986].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size962;
+            ::apache::thrift::protocol::TType _etype965;
+            xfer += iprot->readListBegin(_etype965, _size962);
+            this->poolTriggers.resize(_size962);
+            uint32_t _i966;
+            for (_i966 = 0; _i966 < _size962; ++_i966)
+            {
+              xfer += this->poolTriggers[_i966].read(iprot);
+=======
+            uint32_t _size920;
+            ::apache::thrift::protocol::TType _etype923;
+            xfer += iprot->readListBegin(_etype923, _size920);
+            this->poolTriggers.resize(_size920);
+            uint32_t _i924;
+            for (_i924 = 0; _i924 < _size920; ++_i924)
+            {
+              xfer += this->poolTriggers[_i924].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size924;
+            ::apache::thrift::protocol::TType _etype927;
+            xfer += iprot->readListBegin(_etype927, _size924);
+            this->poolTriggers.resize(_size924);
+            uint32_t _i928;
+            for (_i928 = 0; _i928 < _size924; ++_i928)
+<<<<<<< HEAD
+            {
+              xfer += this->poolTriggers[_i928].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size920;
+            ::apache::thrift::protocol::TType _etype923;
+            xfer += iprot->readListBegin(_etype923, _size920);
+            this->poolTriggers.resize(_size920);
+            uint32_t _i924;
+            for (_i924 = 0; _i924 < _size920; ++_i924)
+            {
+              xfer += this->poolTriggers[_i924].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += this->poolTriggers[_i928].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size966;
+            ::apache::thrift::protocol::TType _etype969;
+            xfer += iprot->readListBegin(_etype969, _size966);
+            this->poolTriggers.resize(_size966);
+            uint32_t _i970;
+            for (_i970 = 0; _i970 < _size966; ++_i970)
+            {
+              xfer += this->poolTriggers[_i970].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size978;
+            ::apache::thrift::protocol::TType _etype981;
+            xfer += iprot->readListBegin(_etype981, _size978);
+            this->poolTriggers.resize(_size978);
+            uint32_t _i982;
+            for (_i982 = 0; _i982 < _size978; ++_i982)
+            {
+              xfer += this->poolTriggers[_i982].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -24192,10 +34147,62 @@ uint32_t WMFullResourcePlan::write(::apache::thrift::protocol::TProtocol* oprot)
   xfer += oprot->writeFieldBegin("pools", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->pools.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     std::vector<WMPool> ::const_iterator _iter987;
     for (_iter987 = this->pools.begin(); _iter987 != this->pools.end(); ++_iter987)
     {
       xfer += (*_iter987).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+    std::vector<WMPool> ::const_iterator _iter967;
+    for (_iter967 = this->pools.begin(); _iter967 != this->pools.end(); ++_iter967)
+    {
+      xfer += (*_iter967).write(oprot);
+=======
+    std::vector<WMPool> ::const_iterator _iter925;
+    for (_iter925 = this->pools.begin(); _iter925 != this->pools.end(); ++_iter925)
+    {
+      xfer += (*_iter925).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+    std::vector<WMPool> ::const_iterator _iter929;
+    for (_iter929 = this->pools.begin(); _iter929 != this->pools.end(); ++_iter929)
+    {
+      xfer += (*_iter929).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<WMPool> ::const_iterator _iter925;
+    for (_iter925 = this->pools.begin(); _iter925 != this->pools.end(); ++_iter925)
+    {
+      xfer += (*_iter925).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+    std::vector<WMPool> ::const_iterator _iter929;
+    for (_iter929 = this->pools.begin(); _iter929 != this->pools.end(); ++_iter929)
+    {
+      xfer += (*_iter929).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+    std::vector<WMPool> ::const_iterator _iter971;
+    for (_iter971 = this->pools.begin(); _iter971 != this->pools.end(); ++_iter971)
+    {
+      xfer += (*_iter971).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+    std::vector<WMPool> ::const_iterator _iter983;
+    for (_iter983 = this->pools.begin(); _iter983 != this->pools.end(); ++_iter983)
+    {
+      xfer += (*_iter983).write(oprot);
+>>>>>>> alloc write id event changes
     }
     xfer += oprot->writeListEnd();
   }
@@ -24205,10 +34212,62 @@ uint32_t WMFullResourcePlan::write(::apache::thrift::protocol::TProtocol* oprot)
     xfer += oprot->writeFieldBegin("mappings", ::apache::thrift::protocol::T_LIST, 3);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->mappings.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<WMMapping> ::const_iterator _iter988;
       for (_iter988 = this->mappings.begin(); _iter988 != this->mappings.end(); ++_iter988)
       {
         xfer += (*_iter988).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<WMMapping> ::const_iterator _iter968;
+      for (_iter968 = this->mappings.begin(); _iter968 != this->mappings.end(); ++_iter968)
+      {
+        xfer += (*_iter968).write(oprot);
+=======
+      std::vector<WMMapping> ::const_iterator _iter926;
+      for (_iter926 = this->mappings.begin(); _iter926 != this->mappings.end(); ++_iter926)
+      {
+        xfer += (*_iter926).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<WMMapping> ::const_iterator _iter930;
+      for (_iter930 = this->mappings.begin(); _iter930 != this->mappings.end(); ++_iter930)
+      {
+        xfer += (*_iter930).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMMapping> ::const_iterator _iter926;
+      for (_iter926 = this->mappings.begin(); _iter926 != this->mappings.end(); ++_iter926)
+      {
+        xfer += (*_iter926).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<WMMapping> ::const_iterator _iter930;
+      for (_iter930 = this->mappings.begin(); _iter930 != this->mappings.end(); ++_iter930)
+      {
+        xfer += (*_iter930).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMMapping> ::const_iterator _iter972;
+      for (_iter972 = this->mappings.begin(); _iter972 != this->mappings.end(); ++_iter972)
+      {
+        xfer += (*_iter972).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<WMMapping> ::const_iterator _iter984;
+      for (_iter984 = this->mappings.begin(); _iter984 != this->mappings.end(); ++_iter984)
+      {
+        xfer += (*_iter984).write(oprot);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -24218,10 +34277,62 @@ uint32_t WMFullResourcePlan::write(::apache::thrift::protocol::TProtocol* oprot)
     xfer += oprot->writeFieldBegin("triggers", ::apache::thrift::protocol::T_LIST, 4);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->triggers.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<WMTrigger> ::const_iterator _iter989;
       for (_iter989 = this->triggers.begin(); _iter989 != this->triggers.end(); ++_iter989)
       {
         xfer += (*_iter989).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<WMTrigger> ::const_iterator _iter969;
+      for (_iter969 = this->triggers.begin(); _iter969 != this->triggers.end(); ++_iter969)
+      {
+        xfer += (*_iter969).write(oprot);
+=======
+      std::vector<WMTrigger> ::const_iterator _iter927;
+      for (_iter927 = this->triggers.begin(); _iter927 != this->triggers.end(); ++_iter927)
+      {
+        xfer += (*_iter927).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<WMTrigger> ::const_iterator _iter931;
+      for (_iter931 = this->triggers.begin(); _iter931 != this->triggers.end(); ++_iter931)
+      {
+        xfer += (*_iter931).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMTrigger> ::const_iterator _iter927;
+      for (_iter927 = this->triggers.begin(); _iter927 != this->triggers.end(); ++_iter927)
+      {
+        xfer += (*_iter927).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<WMTrigger> ::const_iterator _iter931;
+      for (_iter931 = this->triggers.begin(); _iter931 != this->triggers.end(); ++_iter931)
+      {
+        xfer += (*_iter931).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMTrigger> ::const_iterator _iter973;
+      for (_iter973 = this->triggers.begin(); _iter973 != this->triggers.end(); ++_iter973)
+      {
+        xfer += (*_iter973).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<WMTrigger> ::const_iterator _iter985;
+      for (_iter985 = this->triggers.begin(); _iter985 != this->triggers.end(); ++_iter985)
+      {
+        xfer += (*_iter985).write(oprot);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -24231,10 +34342,62 @@ uint32_t WMFullResourcePlan::write(::apache::thrift::protocol::TProtocol* oprot)
     xfer += oprot->writeFieldBegin("poolTriggers", ::apache::thrift::protocol::T_LIST, 5);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->poolTriggers.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<WMPoolTrigger> ::const_iterator _iter990;
       for (_iter990 = this->poolTriggers.begin(); _iter990 != this->poolTriggers.end(); ++_iter990)
       {
         xfer += (*_iter990).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<WMPoolTrigger> ::const_iterator _iter970;
+      for (_iter970 = this->poolTriggers.begin(); _iter970 != this->poolTriggers.end(); ++_iter970)
+      {
+        xfer += (*_iter970).write(oprot);
+=======
+      std::vector<WMPoolTrigger> ::const_iterator _iter928;
+      for (_iter928 = this->poolTriggers.begin(); _iter928 != this->poolTriggers.end(); ++_iter928)
+      {
+        xfer += (*_iter928).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<WMPoolTrigger> ::const_iterator _iter932;
+      for (_iter932 = this->poolTriggers.begin(); _iter932 != this->poolTriggers.end(); ++_iter932)
+      {
+        xfer += (*_iter932).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMPoolTrigger> ::const_iterator _iter928;
+      for (_iter928 = this->poolTriggers.begin(); _iter928 != this->poolTriggers.end(); ++_iter928)
+      {
+        xfer += (*_iter928).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<WMPoolTrigger> ::const_iterator _iter932;
+      for (_iter932 = this->poolTriggers.begin(); _iter932 != this->poolTriggers.end(); ++_iter932)
+      {
+        xfer += (*_iter932).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMPoolTrigger> ::const_iterator _iter974;
+      for (_iter974 = this->poolTriggers.begin(); _iter974 != this->poolTriggers.end(); ++_iter974)
+      {
+        xfer += (*_iter974).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<WMPoolTrigger> ::const_iterator _iter986;
+      for (_iter986 = this->poolTriggers.begin(); _iter986 != this->poolTriggers.end(); ++_iter986)
+      {
+        xfer += (*_iter986).write(oprot);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -24255,6 +34418,9 @@ void swap(WMFullResourcePlan &a, WMFullResourcePlan &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMFullResourcePlan::WMFullResourcePlan(const WMFullResourcePlan& other991) {
   plan = other991.plan;
   pools = other991.pools;
@@ -24270,6 +34436,108 @@ WMFullResourcePlan& WMFullResourcePlan::operator=(const WMFullResourcePlan& othe
   triggers = other992.triggers;
   poolTriggers = other992.poolTriggers;
   __isset = other992.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMFullResourcePlan::WMFullResourcePlan(const WMFullResourcePlan& other971) {
+  plan = other971.plan;
+  pools = other971.pools;
+  mappings = other971.mappings;
+  triggers = other971.triggers;
+  poolTriggers = other971.poolTriggers;
+  __isset = other971.__isset;
+}
+WMFullResourcePlan& WMFullResourcePlan::operator=(const WMFullResourcePlan& other972) {
+  plan = other972.plan;
+  pools = other972.pools;
+  mappings = other972.mappings;
+  triggers = other972.triggers;
+  poolTriggers = other972.poolTriggers;
+  __isset = other972.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMFullResourcePlan::WMFullResourcePlan(const WMFullResourcePlan& other929) {
+  plan = other929.plan;
+  pools = other929.pools;
+  mappings = other929.mappings;
+  triggers = other929.triggers;
+  poolTriggers = other929.poolTriggers;
+  __isset = other929.__isset;
+}
+WMFullResourcePlan& WMFullResourcePlan::operator=(const WMFullResourcePlan& other930) {
+  plan = other930.plan;
+  pools = other930.pools;
+  mappings = other930.mappings;
+  triggers = other930.triggers;
+  poolTriggers = other930.poolTriggers;
+  __isset = other930.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMFullResourcePlan::WMFullResourcePlan(const WMFullResourcePlan& other933) {
+  plan = other933.plan;
+  pools = other933.pools;
+  mappings = other933.mappings;
+  triggers = other933.triggers;
+  poolTriggers = other933.poolTriggers;
+  __isset = other933.__isset;
+}
+WMFullResourcePlan& WMFullResourcePlan::operator=(const WMFullResourcePlan& other934) {
+  plan = other934.plan;
+  pools = other934.pools;
+  mappings = other934.mappings;
+  triggers = other934.triggers;
+  poolTriggers = other934.poolTriggers;
+  __isset = other934.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMFullResourcePlan::WMFullResourcePlan(const WMFullResourcePlan& other975) {
+  plan = other975.plan;
+  pools = other975.pools;
+  mappings = other975.mappings;
+  triggers = other975.triggers;
+  poolTriggers = other975.poolTriggers;
+  __isset = other975.__isset;
+}
+WMFullResourcePlan& WMFullResourcePlan::operator=(const WMFullResourcePlan& other976) {
+  plan = other976.plan;
+  pools = other976.pools;
+  mappings = other976.mappings;
+  triggers = other976.triggers;
+  poolTriggers = other976.poolTriggers;
+  __isset = other976.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMFullResourcePlan::WMFullResourcePlan(const WMFullResourcePlan& other987) {
+  plan = other987.plan;
+  pools = other987.pools;
+  mappings = other987.mappings;
+  triggers = other987.triggers;
+  poolTriggers = other987.poolTriggers;
+  __isset = other987.__isset;
+}
+WMFullResourcePlan& WMFullResourcePlan::operator=(const WMFullResourcePlan& other988) {
+  plan = other988.plan;
+  pools = other988.pools;
+  mappings = other988.mappings;
+  triggers = other988.triggers;
+  poolTriggers = other988.poolTriggers;
+  __isset = other988.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMFullResourcePlan::printTo(std::ostream& out) const {
@@ -24374,6 +34642,9 @@ void swap(WMCreateResourcePlanRequest &a, WMCreateResourcePlanRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateResourcePlanRequest::WMCreateResourcePlanRequest(const WMCreateResourcePlanRequest& other993) {
   resourcePlan = other993.resourcePlan;
   copyFrom = other993.copyFrom;
@@ -24383,6 +34654,88 @@ WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCrea
   resourcePlan = other994.resourcePlan;
   copyFrom = other994.copyFrom;
   __isset = other994.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateResourcePlanRequest::WMCreateResourcePlanRequest(const WMCreateResourcePlanRequest& other973) {
+  resourcePlan = other973.resourcePlan;
+  copyFrom = other973.copyFrom;
+  __isset = other973.__isset;
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other974) {
+  resourcePlan = other974.resourcePlan;
+  copyFrom = other974.copyFrom;
+  __isset = other974.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMCreateResourcePlanRequest::WMCreateResourcePlanRequest(const WMCreateResourcePlanRequest& other931) {
+  resourcePlan = other931.resourcePlan;
+  copyFrom = other931.copyFrom;
+  __isset = other931.__isset;
+<<<<<<< HEAD
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other932) {
+  resourcePlan = other932.resourcePlan;
+  copyFrom = other932.copyFrom;
+  __isset = other932.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMCreateResourcePlanRequest::WMCreateResourcePlanRequest(const WMCreateResourcePlanRequest& other935) {
+  resourcePlan = other935.resourcePlan;
+  copyFrom = other935.copyFrom;
+  __isset = other935.__isset;
+<<<<<<< HEAD
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other936) {
+  resourcePlan = other936.resourcePlan;
+  copyFrom = other936.copyFrom;
+  __isset = other936.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other932) {
+  resourcePlan = other932.resourcePlan;
+  copyFrom = other932.copyFrom;
+  __isset = other932.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other936) {
+  resourcePlan = other936.resourcePlan;
+  copyFrom = other936.copyFrom;
+  __isset = other936.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateResourcePlanRequest::WMCreateResourcePlanRequest(const WMCreateResourcePlanRequest& other977) {
+  resourcePlan = other977.resourcePlan;
+  copyFrom = other977.copyFrom;
+  __isset = other977.__isset;
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other978) {
+  resourcePlan = other978.resourcePlan;
+  copyFrom = other978.copyFrom;
+  __isset = other978.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateResourcePlanRequest::WMCreateResourcePlanRequest(const WMCreateResourcePlanRequest& other989) {
+  resourcePlan = other989.resourcePlan;
+  copyFrom = other989.copyFrom;
+  __isset = other989.__isset;
+}
+WMCreateResourcePlanRequest& WMCreateResourcePlanRequest::operator=(const WMCreateResourcePlanRequest& other990) {
+  resourcePlan = other990.resourcePlan;
+  copyFrom = other990.copyFrom;
+  __isset = other990.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateResourcePlanRequest::printTo(std::ostream& out) const {
@@ -24442,11 +34795,70 @@ void swap(WMCreateResourcePlanResponse &a, WMCreateResourcePlanResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other995) {
   (void) other995;
 }
 WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other996) {
   (void) other996;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other975) {
+  (void) other975;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other976) {
+  (void) other976;
+=======
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other933) {
+  (void) other933;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other934) {
+  (void) other934;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other937) {
+  (void) other937;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other938) {
+  (void) other938;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other933) {
+  (void) other933;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other934) {
+  (void) other934;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other937) {
+  (void) other937;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other938) {
+  (void) other938;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other979) {
+  (void) other979;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other980) {
+  (void) other980;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateResourcePlanResponse::WMCreateResourcePlanResponse(const WMCreateResourcePlanResponse& other991) {
+  (void) other991;
+}
+WMCreateResourcePlanResponse& WMCreateResourcePlanResponse::operator=(const WMCreateResourcePlanResponse& other992) {
+  (void) other992;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateResourcePlanResponse::printTo(std::ostream& out) const {
@@ -24504,11 +34916,70 @@ void swap(WMGetActiveResourcePlanRequest &a, WMGetActiveResourcePlanRequest &b) 
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other997) {
   (void) other997;
 }
 WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other998) {
   (void) other998;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other977) {
+  (void) other977;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other978) {
+  (void) other978;
+=======
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other935) {
+  (void) other935;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other936) {
+  (void) other936;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other939) {
+  (void) other939;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other940) {
+  (void) other940;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other935) {
+  (void) other935;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other936) {
+  (void) other936;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other939) {
+  (void) other939;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other940) {
+  (void) other940;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other981) {
+  (void) other981;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other982) {
+  (void) other982;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetActiveResourcePlanRequest::WMGetActiveResourcePlanRequest(const WMGetActiveResourcePlanRequest& other993) {
+  (void) other993;
+}
+WMGetActiveResourcePlanRequest& WMGetActiveResourcePlanRequest::operator=(const WMGetActiveResourcePlanRequest& other994) {
+  (void) other994;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetActiveResourcePlanRequest::printTo(std::ostream& out) const {
@@ -24589,6 +35060,9 @@ void swap(WMGetActiveResourcePlanResponse &a, WMGetActiveResourcePlanResponse &b
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other999) {
   resourcePlan = other999.resourcePlan;
   __isset = other999.__isset;
@@ -24596,6 +35070,76 @@ WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActi
 WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other1000) {
   resourcePlan = other1000.resourcePlan;
   __isset = other1000.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other979) {
+  resourcePlan = other979.resourcePlan;
+  __isset = other979.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other980) {
+  resourcePlan = other980.resourcePlan;
+  __isset = other980.__isset;
+=======
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other937) {
+  resourcePlan = other937.resourcePlan;
+  __isset = other937.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other938) {
+  resourcePlan = other938.resourcePlan;
+  __isset = other938.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other941) {
+  resourcePlan = other941.resourcePlan;
+  __isset = other941.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other942) {
+  resourcePlan = other942.resourcePlan;
+  __isset = other942.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other937) {
+  resourcePlan = other937.resourcePlan;
+  __isset = other937.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other938) {
+  resourcePlan = other938.resourcePlan;
+  __isset = other938.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other941) {
+  resourcePlan = other941.resourcePlan;
+  __isset = other941.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other942) {
+  resourcePlan = other942.resourcePlan;
+  __isset = other942.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other983) {
+  resourcePlan = other983.resourcePlan;
+  __isset = other983.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other984) {
+  resourcePlan = other984.resourcePlan;
+  __isset = other984.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetActiveResourcePlanResponse::WMGetActiveResourcePlanResponse(const WMGetActiveResourcePlanResponse& other995) {
+  resourcePlan = other995.resourcePlan;
+  __isset = other995.__isset;
+}
+WMGetActiveResourcePlanResponse& WMGetActiveResourcePlanResponse::operator=(const WMGetActiveResourcePlanResponse& other996) {
+  resourcePlan = other996.resourcePlan;
+  __isset = other996.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetActiveResourcePlanResponse::printTo(std::ostream& out) const {
@@ -24677,6 +35221,9 @@ void swap(WMGetResourcePlanRequest &a, WMGetResourcePlanRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other1001) {
   resourcePlanName = other1001.resourcePlanName;
   __isset = other1001.__isset;
@@ -24684,6 +35231,72 @@ WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanReques
 WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other1002) {
   resourcePlanName = other1002.resourcePlanName;
   __isset = other1002.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other981) {
+  resourcePlanName = other981.resourcePlanName;
+  __isset = other981.__isset;
+}
+WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other982) {
+  resourcePlanName = other982.resourcePlanName;
+  __isset = other982.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other939) {
+  resourcePlanName = other939.resourcePlanName;
+  __isset = other939.__isset;
+}
+WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other940) {
+  resourcePlanName = other940.resourcePlanName;
+  __isset = other940.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other943) {
+  resourcePlanName = other943.resourcePlanName;
+  __isset = other943.__isset;
+}
+WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other944) {
+  resourcePlanName = other944.resourcePlanName;
+  __isset = other944.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other943) {
+  resourcePlanName = other943.resourcePlanName;
+  __isset = other943.__isset;
+}
+WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other944) {
+  resourcePlanName = other944.resourcePlanName;
+  __isset = other944.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other985) {
+  resourcePlanName = other985.resourcePlanName;
+  __isset = other985.__isset;
+}
+WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other986) {
+  resourcePlanName = other986.resourcePlanName;
+  __isset = other986.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetResourcePlanRequest::WMGetResourcePlanRequest(const WMGetResourcePlanRequest& other997) {
+  resourcePlanName = other997.resourcePlanName;
+  __isset = other997.__isset;
+}
+WMGetResourcePlanRequest& WMGetResourcePlanRequest::operator=(const WMGetResourcePlanRequest& other998) {
+  resourcePlanName = other998.resourcePlanName;
+  __isset = other998.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetResourcePlanRequest::printTo(std::ostream& out) const {
@@ -24765,6 +35378,9 @@ void swap(WMGetResourcePlanResponse &a, WMGetResourcePlanResponse &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other1003) {
   resourcePlan = other1003.resourcePlan;
   __isset = other1003.__isset;
@@ -24772,6 +35388,76 @@ WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResp
 WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other1004) {
   resourcePlan = other1004.resourcePlan;
   __isset = other1004.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other983) {
+  resourcePlan = other983.resourcePlan;
+  __isset = other983.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other984) {
+  resourcePlan = other984.resourcePlan;
+  __isset = other984.__isset;
+=======
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other941) {
+  resourcePlan = other941.resourcePlan;
+  __isset = other941.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other942) {
+  resourcePlan = other942.resourcePlan;
+  __isset = other942.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other945) {
+  resourcePlan = other945.resourcePlan;
+  __isset = other945.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other946) {
+  resourcePlan = other946.resourcePlan;
+  __isset = other946.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other941) {
+  resourcePlan = other941.resourcePlan;
+  __isset = other941.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other942) {
+  resourcePlan = other942.resourcePlan;
+  __isset = other942.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other945) {
+  resourcePlan = other945.resourcePlan;
+  __isset = other945.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other946) {
+  resourcePlan = other946.resourcePlan;
+  __isset = other946.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other987) {
+  resourcePlan = other987.resourcePlan;
+  __isset = other987.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other988) {
+  resourcePlan = other988.resourcePlan;
+  __isset = other988.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetResourcePlanResponse::WMGetResourcePlanResponse(const WMGetResourcePlanResponse& other999) {
+  resourcePlan = other999.resourcePlan;
+  __isset = other999.__isset;
+}
+WMGetResourcePlanResponse& WMGetResourcePlanResponse::operator=(const WMGetResourcePlanResponse& other1000) {
+  resourcePlan = other1000.resourcePlan;
+  __isset = other1000.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetResourcePlanResponse::printTo(std::ostream& out) const {
@@ -24830,11 +35516,70 @@ void swap(WMGetAllResourcePlanRequest &a, WMGetAllResourcePlanRequest &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other1005) {
   (void) other1005;
 }
 WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other1006) {
   (void) other1006;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other985) {
+  (void) other985;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other986) {
+  (void) other986;
+=======
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other943) {
+  (void) other943;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other944) {
+  (void) other944;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other947) {
+  (void) other947;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other948) {
+  (void) other948;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other943) {
+  (void) other943;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other944) {
+  (void) other944;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other947) {
+  (void) other947;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other948) {
+  (void) other948;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other989) {
+  (void) other989;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other990) {
+  (void) other990;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetAllResourcePlanRequest::WMGetAllResourcePlanRequest(const WMGetAllResourcePlanRequest& other1001) {
+  (void) other1001;
+}
+WMGetAllResourcePlanRequest& WMGetAllResourcePlanRequest::operator=(const WMGetAllResourcePlanRequest& other1002) {
+  (void) other1002;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetAllResourcePlanRequest::printTo(std::ostream& out) const {
@@ -24878,6 +35623,9 @@ uint32_t WMGetAllResourcePlanResponse::read(::apache::thrift::protocol::TProtoco
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->resourcePlans.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size1007;
             ::apache::thrift::protocol::TType _etype1010;
             xfer += iprot->readListBegin(_etype1010, _size1007);
@@ -24886,6 +35634,77 @@ uint32_t WMGetAllResourcePlanResponse::read(::apache::thrift::protocol::TProtoco
             for (_i1011 = 0; _i1011 < _size1007; ++_i1011)
             {
               xfer += this->resourcePlans[_i1011].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size987;
+            ::apache::thrift::protocol::TType _etype990;
+            xfer += iprot->readListBegin(_etype990, _size987);
+            this->resourcePlans.resize(_size987);
+            uint32_t _i991;
+            for (_i991 = 0; _i991 < _size987; ++_i991)
+            {
+              xfer += this->resourcePlans[_i991].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size945;
+            ::apache::thrift::protocol::TType _etype948;
+            xfer += iprot->readListBegin(_etype948, _size945);
+            this->resourcePlans.resize(_size945);
+            uint32_t _i949;
+            for (_i949 = 0; _i949 < _size945; ++_i949)
+<<<<<<< HEAD
+            {
+              xfer += this->resourcePlans[_i949].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size949;
+            ::apache::thrift::protocol::TType _etype952;
+            xfer += iprot->readListBegin(_etype952, _size949);
+            this->resourcePlans.resize(_size949);
+            uint32_t _i953;
+            for (_i953 = 0; _i953 < _size949; ++_i953)
+<<<<<<< HEAD
+            {
+              xfer += this->resourcePlans[_i953].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += this->resourcePlans[_i949].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += this->resourcePlans[_i953].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size991;
+            ::apache::thrift::protocol::TType _etype994;
+            xfer += iprot->readListBegin(_etype994, _size991);
+            this->resourcePlans.resize(_size991);
+            uint32_t _i995;
+            for (_i995 = 0; _i995 < _size991; ++_i995)
+            {
+              xfer += this->resourcePlans[_i995].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size1003;
+            ::apache::thrift::protocol::TType _etype1006;
+            xfer += iprot->readListBegin(_etype1006, _size1003);
+            this->resourcePlans.resize(_size1003);
+            uint32_t _i1007;
+            for (_i1007 = 0; _i1007 < _size1003; ++_i1007)
+            {
+              xfer += this->resourcePlans[_i1007].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -24915,10 +35734,62 @@ uint32_t WMGetAllResourcePlanResponse::write(::apache::thrift::protocol::TProtoc
     xfer += oprot->writeFieldBegin("resourcePlans", ::apache::thrift::protocol::T_LIST, 1);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->resourcePlans.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<WMResourcePlan> ::const_iterator _iter1012;
       for (_iter1012 = this->resourcePlans.begin(); _iter1012 != this->resourcePlans.end(); ++_iter1012)
       {
         xfer += (*_iter1012).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<WMResourcePlan> ::const_iterator _iter992;
+      for (_iter992 = this->resourcePlans.begin(); _iter992 != this->resourcePlans.end(); ++_iter992)
+      {
+        xfer += (*_iter992).write(oprot);
+=======
+      std::vector<WMResourcePlan> ::const_iterator _iter950;
+      for (_iter950 = this->resourcePlans.begin(); _iter950 != this->resourcePlans.end(); ++_iter950)
+      {
+        xfer += (*_iter950).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<WMResourcePlan> ::const_iterator _iter954;
+      for (_iter954 = this->resourcePlans.begin(); _iter954 != this->resourcePlans.end(); ++_iter954)
+      {
+        xfer += (*_iter954).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMResourcePlan> ::const_iterator _iter950;
+      for (_iter950 = this->resourcePlans.begin(); _iter950 != this->resourcePlans.end(); ++_iter950)
+      {
+        xfer += (*_iter950).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<WMResourcePlan> ::const_iterator _iter954;
+      for (_iter954 = this->resourcePlans.begin(); _iter954 != this->resourcePlans.end(); ++_iter954)
+      {
+        xfer += (*_iter954).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMResourcePlan> ::const_iterator _iter996;
+      for (_iter996 = this->resourcePlans.begin(); _iter996 != this->resourcePlans.end(); ++_iter996)
+      {
+        xfer += (*_iter996).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<WMResourcePlan> ::const_iterator _iter1008;
+      for (_iter1008 = this->resourcePlans.begin(); _iter1008 != this->resourcePlans.end(); ++_iter1008)
+      {
+        xfer += (*_iter1008).write(oprot);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -24935,6 +35806,9 @@ void swap(WMGetAllResourcePlanResponse &a, WMGetAllResourcePlanResponse &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other1013) {
   resourcePlans = other1013.resourcePlans;
   __isset = other1013.__isset;
@@ -24942,6 +35816,76 @@ WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourc
 WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other1014) {
   resourcePlans = other1014.resourcePlans;
   __isset = other1014.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other993) {
+  resourcePlans = other993.resourcePlans;
+  __isset = other993.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other994) {
+  resourcePlans = other994.resourcePlans;
+  __isset = other994.__isset;
+=======
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other951) {
+  resourcePlans = other951.resourcePlans;
+  __isset = other951.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other952) {
+  resourcePlans = other952.resourcePlans;
+  __isset = other952.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other955) {
+  resourcePlans = other955.resourcePlans;
+  __isset = other955.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other956) {
+  resourcePlans = other956.resourcePlans;
+  __isset = other956.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other951) {
+  resourcePlans = other951.resourcePlans;
+  __isset = other951.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other952) {
+  resourcePlans = other952.resourcePlans;
+  __isset = other952.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other955) {
+  resourcePlans = other955.resourcePlans;
+  __isset = other955.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other956) {
+  resourcePlans = other956.resourcePlans;
+  __isset = other956.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other997) {
+  resourcePlans = other997.resourcePlans;
+  __isset = other997.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other998) {
+  resourcePlans = other998.resourcePlans;
+  __isset = other998.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetAllResourcePlanResponse::WMGetAllResourcePlanResponse(const WMGetAllResourcePlanResponse& other1009) {
+  resourcePlans = other1009.resourcePlans;
+  __isset = other1009.__isset;
+}
+WMGetAllResourcePlanResponse& WMGetAllResourcePlanResponse::operator=(const WMGetAllResourcePlanResponse& other1010) {
+  resourcePlans = other1010.resourcePlans;
+  __isset = other1010.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetAllResourcePlanResponse::printTo(std::ostream& out) const {
@@ -25099,6 +36043,9 @@ void swap(WMAlterResourcePlanRequest &a, WMAlterResourcePlanRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMAlterResourcePlanRequest::WMAlterResourcePlanRequest(const WMAlterResourcePlanRequest& other1015) {
   resourcePlanName = other1015.resourcePlanName;
   resourcePlan = other1015.resourcePlan;
@@ -25114,6 +36061,108 @@ WMAlterResourcePlanRequest& WMAlterResourcePlanRequest::operator=(const WMAlterR
   isForceDeactivate = other1016.isForceDeactivate;
   isReplace = other1016.isReplace;
   __isset = other1016.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMAlterResourcePlanRequest::WMAlterResourcePlanRequest(const WMAlterResourcePlanRequest& other995) {
+  resourcePlanName = other995.resourcePlanName;
+  resourcePlan = other995.resourcePlan;
+  isEnableAndActivate = other995.isEnableAndActivate;
+  isForceDeactivate = other995.isForceDeactivate;
+  isReplace = other995.isReplace;
+  __isset = other995.__isset;
+}
+WMAlterResourcePlanRequest& WMAlterResourcePlanRequest::operator=(const WMAlterResourcePlanRequest& other996) {
+  resourcePlanName = other996.resourcePlanName;
+  resourcePlan = other996.resourcePlan;
+  isEnableAndActivate = other996.isEnableAndActivate;
+  isForceDeactivate = other996.isForceDeactivate;
+  isReplace = other996.isReplace;
+  __isset = other996.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMAlterResourcePlanRequest::WMAlterResourcePlanRequest(const WMAlterResourcePlanRequest& other953) {
+  resourcePlanName = other953.resourcePlanName;
+  resourcePlan = other953.resourcePlan;
+  isEnableAndActivate = other953.isEnableAndActivate;
+  isForceDeactivate = other953.isForceDeactivate;
+  isReplace = other953.isReplace;
+  __isset = other953.__isset;
+}
+WMAlterResourcePlanRequest& WMAlterResourcePlanRequest::operator=(const WMAlterResourcePlanRequest& other954) {
+  resourcePlanName = other954.resourcePlanName;
+  resourcePlan = other954.resourcePlan;
+  isEnableAndActivate = other954.isEnableAndActivate;
+  isForceDeactivate = other954.isForceDeactivate;
+  isReplace = other954.isReplace;
+  __isset = other954.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMAlterResourcePlanRequest::WMAlterResourcePlanRequest(const WMAlterResourcePlanRequest& other957) {
+  resourcePlanName = other957.resourcePlanName;
+  resourcePlan = other957.resourcePlan;
+  isEnableAndActivate = other957.isEnableAndActivate;
+  isForceDeactivate = other957.isForceDeactivate;
+  isReplace = other957.isReplace;
+  __isset = other957.__isset;
+}
+WMAlterResourcePlanRequest& WMAlterResourcePlanRequest::operator=(const WMAlterResourcePlanRequest& other958) {
+  resourcePlanName = other958.resourcePlanName;
+  resourcePlan = other958.resourcePlan;
+  isEnableAndActivate = other958.isEnableAndActivate;
+  isForceDeactivate = other958.isForceDeactivate;
+  isReplace = other958.isReplace;
+  __isset = other958.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterResourcePlanRequest::WMAlterResourcePlanRequest(const WMAlterResourcePlanRequest& other999) {
+  resourcePlanName = other999.resourcePlanName;
+  resourcePlan = other999.resourcePlan;
+  isEnableAndActivate = other999.isEnableAndActivate;
+  isForceDeactivate = other999.isForceDeactivate;
+  isReplace = other999.isReplace;
+  __isset = other999.__isset;
+}
+WMAlterResourcePlanRequest& WMAlterResourcePlanRequest::operator=(const WMAlterResourcePlanRequest& other1000) {
+  resourcePlanName = other1000.resourcePlanName;
+  resourcePlan = other1000.resourcePlan;
+  isEnableAndActivate = other1000.isEnableAndActivate;
+  isForceDeactivate = other1000.isForceDeactivate;
+  isReplace = other1000.isReplace;
+  __isset = other1000.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMAlterResourcePlanRequest::WMAlterResourcePlanRequest(const WMAlterResourcePlanRequest& other1011) {
+  resourcePlanName = other1011.resourcePlanName;
+  resourcePlan = other1011.resourcePlan;
+  isEnableAndActivate = other1011.isEnableAndActivate;
+  isForceDeactivate = other1011.isForceDeactivate;
+  isReplace = other1011.isReplace;
+  __isset = other1011.__isset;
+}
+WMAlterResourcePlanRequest& WMAlterResourcePlanRequest::operator=(const WMAlterResourcePlanRequest& other1012) {
+  resourcePlanName = other1012.resourcePlanName;
+  resourcePlan = other1012.resourcePlan;
+  isEnableAndActivate = other1012.isEnableAndActivate;
+  isForceDeactivate = other1012.isForceDeactivate;
+  isReplace = other1012.isReplace;
+  __isset = other1012.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMAlterResourcePlanRequest::printTo(std::ostream& out) const {
@@ -25199,6 +36248,9 @@ void swap(WMAlterResourcePlanResponse &a, WMAlterResourcePlanResponse &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other1017) {
   fullResourcePlan = other1017.fullResourcePlan;
   __isset = other1017.__isset;
@@ -25206,6 +36258,76 @@ WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePl
 WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other1018) {
   fullResourcePlan = other1018.fullResourcePlan;
   __isset = other1018.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other997) {
+  fullResourcePlan = other997.fullResourcePlan;
+  __isset = other997.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other998) {
+  fullResourcePlan = other998.fullResourcePlan;
+  __isset = other998.__isset;
+=======
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other955) {
+  fullResourcePlan = other955.fullResourcePlan;
+  __isset = other955.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other956) {
+  fullResourcePlan = other956.fullResourcePlan;
+  __isset = other956.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other959) {
+  fullResourcePlan = other959.fullResourcePlan;
+  __isset = other959.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other960) {
+  fullResourcePlan = other960.fullResourcePlan;
+  __isset = other960.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other955) {
+  fullResourcePlan = other955.fullResourcePlan;
+  __isset = other955.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other956) {
+  fullResourcePlan = other956.fullResourcePlan;
+  __isset = other956.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other959) {
+  fullResourcePlan = other959.fullResourcePlan;
+  __isset = other959.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other960) {
+  fullResourcePlan = other960.fullResourcePlan;
+  __isset = other960.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other1001) {
+  fullResourcePlan = other1001.fullResourcePlan;
+  __isset = other1001.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other1002) {
+  fullResourcePlan = other1002.fullResourcePlan;
+  __isset = other1002.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMAlterResourcePlanResponse::WMAlterResourcePlanResponse(const WMAlterResourcePlanResponse& other1013) {
+  fullResourcePlan = other1013.fullResourcePlan;
+  __isset = other1013.__isset;
+}
+WMAlterResourcePlanResponse& WMAlterResourcePlanResponse::operator=(const WMAlterResourcePlanResponse& other1014) {
+  fullResourcePlan = other1014.fullResourcePlan;
+  __isset = other1014.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMAlterResourcePlanResponse::printTo(std::ostream& out) const {
@@ -25287,6 +36409,9 @@ void swap(WMValidateResourcePlanRequest &a, WMValidateResourcePlanRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other1019) {
   resourcePlanName = other1019.resourcePlanName;
   __isset = other1019.__isset;
@@ -25294,6 +36419,72 @@ WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateRes
 WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other1020) {
   resourcePlanName = other1020.resourcePlanName;
   __isset = other1020.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other999) {
+  resourcePlanName = other999.resourcePlanName;
+  __isset = other999.__isset;
+}
+WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other1000) {
+  resourcePlanName = other1000.resourcePlanName;
+  __isset = other1000.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other957) {
+  resourcePlanName = other957.resourcePlanName;
+  __isset = other957.__isset;
+}
+WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other958) {
+  resourcePlanName = other958.resourcePlanName;
+  __isset = other958.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other961) {
+  resourcePlanName = other961.resourcePlanName;
+  __isset = other961.__isset;
+}
+WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other962) {
+  resourcePlanName = other962.resourcePlanName;
+  __isset = other962.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other961) {
+  resourcePlanName = other961.resourcePlanName;
+  __isset = other961.__isset;
+}
+WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other962) {
+  resourcePlanName = other962.resourcePlanName;
+  __isset = other962.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other1003) {
+  resourcePlanName = other1003.resourcePlanName;
+  __isset = other1003.__isset;
+}
+WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other1004) {
+  resourcePlanName = other1004.resourcePlanName;
+  __isset = other1004.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMValidateResourcePlanRequest::WMValidateResourcePlanRequest(const WMValidateResourcePlanRequest& other1015) {
+  resourcePlanName = other1015.resourcePlanName;
+  __isset = other1015.__isset;
+}
+WMValidateResourcePlanRequest& WMValidateResourcePlanRequest::operator=(const WMValidateResourcePlanRequest& other1016) {
+  resourcePlanName = other1016.resourcePlanName;
+  __isset = other1016.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMValidateResourcePlanRequest::printTo(std::ostream& out) const {
@@ -25343,6 +36534,9 @@ uint32_t WMValidateResourcePlanResponse::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->errors.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size1021;
             ::apache::thrift::protocol::TType _etype1024;
             xfer += iprot->readListBegin(_etype1024, _size1021);
@@ -25351,6 +36545,77 @@ uint32_t WMValidateResourcePlanResponse::read(::apache::thrift::protocol::TProto
             for (_i1025 = 0; _i1025 < _size1021; ++_i1025)
             {
               xfer += iprot->readString(this->errors[_i1025]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size1001;
+            ::apache::thrift::protocol::TType _etype1004;
+            xfer += iprot->readListBegin(_etype1004, _size1001);
+            this->errors.resize(_size1001);
+            uint32_t _i1005;
+            for (_i1005 = 0; _i1005 < _size1001; ++_i1005)
+            {
+              xfer += iprot->readString(this->errors[_i1005]);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size959;
+            ::apache::thrift::protocol::TType _etype962;
+            xfer += iprot->readListBegin(_etype962, _size959);
+            this->errors.resize(_size959);
+            uint32_t _i963;
+            for (_i963 = 0; _i963 < _size959; ++_i963)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readString(this->errors[_i963]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size963;
+            ::apache::thrift::protocol::TType _etype966;
+            xfer += iprot->readListBegin(_etype966, _size963);
+            this->errors.resize(_size963);
+            uint32_t _i967;
+            for (_i967 = 0; _i967 < _size963; ++_i967)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readString(this->errors[_i967]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += iprot->readString(this->errors[_i963]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += iprot->readString(this->errors[_i967]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size1005;
+            ::apache::thrift::protocol::TType _etype1008;
+            xfer += iprot->readListBegin(_etype1008, _size1005);
+            this->errors.resize(_size1005);
+            uint32_t _i1009;
+            for (_i1009 = 0; _i1009 < _size1005; ++_i1009)
+            {
+              xfer += iprot->readString(this->errors[_i1009]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size1017;
+            ::apache::thrift::protocol::TType _etype1020;
+            xfer += iprot->readListBegin(_etype1020, _size1017);
+            this->errors.resize(_size1017);
+            uint32_t _i1021;
+            for (_i1021 = 0; _i1021 < _size1017; ++_i1021)
+            {
+              xfer += iprot->readString(this->errors[_i1021]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -25363,6 +36628,9 @@ uint32_t WMValidateResourcePlanResponse::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->warnings.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size1026;
             ::apache::thrift::protocol::TType _etype1029;
             xfer += iprot->readListBegin(_etype1029, _size1026);
@@ -25371,6 +36639,80 @@ uint32_t WMValidateResourcePlanResponse::read(::apache::thrift::protocol::TProto
             for (_i1030 = 0; _i1030 < _size1026; ++_i1030)
             {
               xfer += iprot->readString(this->warnings[_i1030]);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size1006;
+            ::apache::thrift::protocol::TType _etype1009;
+            xfer += iprot->readListBegin(_etype1009, _size1006);
+            this->warnings.resize(_size1006);
+            uint32_t _i1010;
+            for (_i1010 = 0; _i1010 < _size1006; ++_i1010)
+            {
+              xfer += iprot->readString(this->warnings[_i1010]);
+=======
+            uint32_t _size964;
+            ::apache::thrift::protocol::TType _etype967;
+            xfer += iprot->readListBegin(_etype967, _size964);
+            this->warnings.resize(_size964);
+            uint32_t _i968;
+            for (_i968 = 0; _i968 < _size964; ++_i968)
+            {
+              xfer += iprot->readString(this->warnings[_i968]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+            uint32_t _size968;
+            ::apache::thrift::protocol::TType _etype971;
+            xfer += iprot->readListBegin(_etype971, _size968);
+            this->warnings.resize(_size968);
+            uint32_t _i972;
+            for (_i972 = 0; _i972 < _size968; ++_i972)
+<<<<<<< HEAD
+            {
+              xfer += iprot->readString(this->warnings[_i972]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size964;
+            ::apache::thrift::protocol::TType _etype967;
+            xfer += iprot->readListBegin(_etype967, _size964);
+            this->warnings.resize(_size964);
+            uint32_t _i968;
+            for (_i968 = 0; _i968 < _size964; ++_i968)
+            {
+              xfer += iprot->readString(this->warnings[_i968]);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            {
+              xfer += iprot->readString(this->warnings[_i972]);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size1010;
+            ::apache::thrift::protocol::TType _etype1013;
+            xfer += iprot->readListBegin(_etype1013, _size1010);
+            this->warnings.resize(_size1010);
+            uint32_t _i1014;
+            for (_i1014 = 0; _i1014 < _size1010; ++_i1014)
+            {
+              xfer += iprot->readString(this->warnings[_i1014]);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size1022;
+            ::apache::thrift::protocol::TType _etype1025;
+            xfer += iprot->readListBegin(_etype1025, _size1022);
+            this->warnings.resize(_size1022);
+            uint32_t _i1026;
+            for (_i1026 = 0; _i1026 < _size1022; ++_i1026)
+            {
+              xfer += iprot->readString(this->warnings[_i1026]);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -25400,10 +36742,62 @@ uint32_t WMValidateResourcePlanResponse::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("errors", ::apache::thrift::protocol::T_LIST, 1);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->errors.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<std::string> ::const_iterator _iter1031;
       for (_iter1031 = this->errors.begin(); _iter1031 != this->errors.end(); ++_iter1031)
       {
         xfer += oprot->writeString((*_iter1031));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<std::string> ::const_iterator _iter1011;
+      for (_iter1011 = this->errors.begin(); _iter1011 != this->errors.end(); ++_iter1011)
+      {
+        xfer += oprot->writeString((*_iter1011));
+=======
+      std::vector<std::string> ::const_iterator _iter969;
+      for (_iter969 = this->errors.begin(); _iter969 != this->errors.end(); ++_iter969)
+      {
+        xfer += oprot->writeString((*_iter969));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<std::string> ::const_iterator _iter973;
+      for (_iter973 = this->errors.begin(); _iter973 != this->errors.end(); ++_iter973)
+      {
+        xfer += oprot->writeString((*_iter973));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter969;
+      for (_iter969 = this->errors.begin(); _iter969 != this->errors.end(); ++_iter969)
+      {
+        xfer += oprot->writeString((*_iter969));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<std::string> ::const_iterator _iter973;
+      for (_iter973 = this->errors.begin(); _iter973 != this->errors.end(); ++_iter973)
+      {
+        xfer += oprot->writeString((*_iter973));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter1015;
+      for (_iter1015 = this->errors.begin(); _iter1015 != this->errors.end(); ++_iter1015)
+      {
+        xfer += oprot->writeString((*_iter1015));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<std::string> ::const_iterator _iter1027;
+      for (_iter1027 = this->errors.begin(); _iter1027 != this->errors.end(); ++_iter1027)
+      {
+        xfer += oprot->writeString((*_iter1027));
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -25413,10 +36807,62 @@ uint32_t WMValidateResourcePlanResponse::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("warnings", ::apache::thrift::protocol::T_LIST, 2);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->warnings.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<std::string> ::const_iterator _iter1032;
       for (_iter1032 = this->warnings.begin(); _iter1032 != this->warnings.end(); ++_iter1032)
       {
         xfer += oprot->writeString((*_iter1032));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<std::string> ::const_iterator _iter1012;
+      for (_iter1012 = this->warnings.begin(); _iter1012 != this->warnings.end(); ++_iter1012)
+      {
+        xfer += oprot->writeString((*_iter1012));
+=======
+      std::vector<std::string> ::const_iterator _iter970;
+      for (_iter970 = this->warnings.begin(); _iter970 != this->warnings.end(); ++_iter970)
+      {
+        xfer += oprot->writeString((*_iter970));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<std::string> ::const_iterator _iter974;
+      for (_iter974 = this->warnings.begin(); _iter974 != this->warnings.end(); ++_iter974)
+      {
+        xfer += oprot->writeString((*_iter974));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter970;
+      for (_iter970 = this->warnings.begin(); _iter970 != this->warnings.end(); ++_iter970)
+      {
+        xfer += oprot->writeString((*_iter970));
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<std::string> ::const_iterator _iter974;
+      for (_iter974 = this->warnings.begin(); _iter974 != this->warnings.end(); ++_iter974)
+      {
+        xfer += oprot->writeString((*_iter974));
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<std::string> ::const_iterator _iter1016;
+      for (_iter1016 = this->warnings.begin(); _iter1016 != this->warnings.end(); ++_iter1016)
+      {
+        xfer += oprot->writeString((*_iter1016));
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<std::string> ::const_iterator _iter1028;
+      for (_iter1028 = this->warnings.begin(); _iter1028 != this->warnings.end(); ++_iter1028)
+      {
+        xfer += oprot->writeString((*_iter1028));
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -25434,6 +36880,9 @@ void swap(WMValidateResourcePlanResponse &a, WMValidateResourcePlanResponse &b) 
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMValidateResourcePlanResponse::WMValidateResourcePlanResponse(const WMValidateResourcePlanResponse& other1033) {
   errors = other1033.errors;
   warnings = other1033.warnings;
@@ -25443,6 +36892,88 @@ WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const 
   errors = other1034.errors;
   warnings = other1034.warnings;
   __isset = other1034.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMValidateResourcePlanResponse::WMValidateResourcePlanResponse(const WMValidateResourcePlanResponse& other1013) {
+  errors = other1013.errors;
+  warnings = other1013.warnings;
+  __isset = other1013.__isset;
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other1014) {
+  errors = other1014.errors;
+  warnings = other1014.warnings;
+  __isset = other1014.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMValidateResourcePlanResponse::WMValidateResourcePlanResponse(const WMValidateResourcePlanResponse& other971) {
+  errors = other971.errors;
+  warnings = other971.warnings;
+  __isset = other971.__isset;
+<<<<<<< HEAD
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other972) {
+  errors = other972.errors;
+  warnings = other972.warnings;
+  __isset = other972.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMValidateResourcePlanResponse::WMValidateResourcePlanResponse(const WMValidateResourcePlanResponse& other975) {
+  errors = other975.errors;
+  warnings = other975.warnings;
+  __isset = other975.__isset;
+<<<<<<< HEAD
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other976) {
+  errors = other976.errors;
+  warnings = other976.warnings;
+  __isset = other976.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other972) {
+  errors = other972.errors;
+  warnings = other972.warnings;
+  __isset = other972.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other976) {
+  errors = other976.errors;
+  warnings = other976.warnings;
+  __isset = other976.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMValidateResourcePlanResponse::WMValidateResourcePlanResponse(const WMValidateResourcePlanResponse& other1017) {
+  errors = other1017.errors;
+  warnings = other1017.warnings;
+  __isset = other1017.__isset;
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other1018) {
+  errors = other1018.errors;
+  warnings = other1018.warnings;
+  __isset = other1018.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMValidateResourcePlanResponse::WMValidateResourcePlanResponse(const WMValidateResourcePlanResponse& other1029) {
+  errors = other1029.errors;
+  warnings = other1029.warnings;
+  __isset = other1029.__isset;
+}
+WMValidateResourcePlanResponse& WMValidateResourcePlanResponse::operator=(const WMValidateResourcePlanResponse& other1030) {
+  errors = other1030.errors;
+  warnings = other1030.warnings;
+  __isset = other1030.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMValidateResourcePlanResponse::printTo(std::ostream& out) const {
@@ -25525,6 +37056,9 @@ void swap(WMDropResourcePlanRequest &a, WMDropResourcePlanRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other1035) {
   resourcePlanName = other1035.resourcePlanName;
   __isset = other1035.__isset;
@@ -25532,6 +37066,72 @@ WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanReq
 WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other1036) {
   resourcePlanName = other1036.resourcePlanName;
   __isset = other1036.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other1015) {
+  resourcePlanName = other1015.resourcePlanName;
+  __isset = other1015.__isset;
+}
+WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other1016) {
+  resourcePlanName = other1016.resourcePlanName;
+  __isset = other1016.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other973) {
+  resourcePlanName = other973.resourcePlanName;
+  __isset = other973.__isset;
+}
+WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other974) {
+  resourcePlanName = other974.resourcePlanName;
+  __isset = other974.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other977) {
+  resourcePlanName = other977.resourcePlanName;
+  __isset = other977.__isset;
+}
+WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other978) {
+  resourcePlanName = other978.resourcePlanName;
+  __isset = other978.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other977) {
+  resourcePlanName = other977.resourcePlanName;
+  __isset = other977.__isset;
+}
+WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other978) {
+  resourcePlanName = other978.resourcePlanName;
+  __isset = other978.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other1019) {
+  resourcePlanName = other1019.resourcePlanName;
+  __isset = other1019.__isset;
+}
+WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other1020) {
+  resourcePlanName = other1020.resourcePlanName;
+  __isset = other1020.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropResourcePlanRequest::WMDropResourcePlanRequest(const WMDropResourcePlanRequest& other1031) {
+  resourcePlanName = other1031.resourcePlanName;
+  __isset = other1031.__isset;
+}
+WMDropResourcePlanRequest& WMDropResourcePlanRequest::operator=(const WMDropResourcePlanRequest& other1032) {
+  resourcePlanName = other1032.resourcePlanName;
+  __isset = other1032.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropResourcePlanRequest::printTo(std::ostream& out) const {
@@ -25590,11 +37190,68 @@ void swap(WMDropResourcePlanResponse &a, WMDropResourcePlanResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other1037) {
   (void) other1037;
 }
 WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other1038) {
   (void) other1038;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other1017) {
+  (void) other1017;
+}
+WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other1018) {
+  (void) other1018;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other975) {
+  (void) other975;
+}
+WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other976) {
+  (void) other976;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other979) {
+  (void) other979;
+}
+WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other980) {
+  (void) other980;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other979) {
+  (void) other979;
+}
+WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other980) {
+  (void) other980;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other1021) {
+  (void) other1021;
+}
+WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other1022) {
+  (void) other1022;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropResourcePlanResponse::WMDropResourcePlanResponse(const WMDropResourcePlanResponse& other1033) {
+  (void) other1033;
+}
+WMDropResourcePlanResponse& WMDropResourcePlanResponse::operator=(const WMDropResourcePlanResponse& other1034) {
+  (void) other1034;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropResourcePlanResponse::printTo(std::ostream& out) const {
@@ -25675,6 +37332,9 @@ void swap(WMCreateTriggerRequest &a, WMCreateTriggerRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other1039) {
   trigger = other1039.trigger;
   __isset = other1039.__isset;
@@ -25682,6 +37342,76 @@ WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& oth
 WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other1040) {
   trigger = other1040.trigger;
   __isset = other1040.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other1019) {
+  trigger = other1019.trigger;
+  __isset = other1019.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other1020) {
+  trigger = other1020.trigger;
+  __isset = other1020.__isset;
+=======
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other977) {
+  trigger = other977.trigger;
+  __isset = other977.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other978) {
+  trigger = other978.trigger;
+  __isset = other978.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other981) {
+  trigger = other981.trigger;
+  __isset = other981.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other982) {
+  trigger = other982.trigger;
+  __isset = other982.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other977) {
+  trigger = other977.trigger;
+  __isset = other977.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other978) {
+  trigger = other978.trigger;
+  __isset = other978.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other981) {
+  trigger = other981.trigger;
+  __isset = other981.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other982) {
+  trigger = other982.trigger;
+  __isset = other982.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other1023) {
+  trigger = other1023.trigger;
+  __isset = other1023.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other1024) {
+  trigger = other1024.trigger;
+  __isset = other1024.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateTriggerRequest::WMCreateTriggerRequest(const WMCreateTriggerRequest& other1035) {
+  trigger = other1035.trigger;
+  __isset = other1035.__isset;
+}
+WMCreateTriggerRequest& WMCreateTriggerRequest::operator=(const WMCreateTriggerRequest& other1036) {
+  trigger = other1036.trigger;
+  __isset = other1036.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateTriggerRequest::printTo(std::ostream& out) const {
@@ -25740,11 +37470,68 @@ void swap(WMCreateTriggerResponse &a, WMCreateTriggerResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other1041) {
   (void) other1041;
 }
 WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other1042) {
   (void) other1042;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other1021) {
+  (void) other1021;
+}
+WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other1022) {
+  (void) other1022;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other979) {
+  (void) other979;
+}
+WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other980) {
+  (void) other980;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other983) {
+  (void) other983;
+}
+WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other984) {
+  (void) other984;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other983) {
+  (void) other983;
+}
+WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other984) {
+  (void) other984;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other1025) {
+  (void) other1025;
+}
+WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other1026) {
+  (void) other1026;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateTriggerResponse::WMCreateTriggerResponse(const WMCreateTriggerResponse& other1037) {
+  (void) other1037;
+}
+WMCreateTriggerResponse& WMCreateTriggerResponse::operator=(const WMCreateTriggerResponse& other1038) {
+  (void) other1038;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateTriggerResponse::printTo(std::ostream& out) const {
@@ -25825,6 +37612,9 @@ void swap(WMAlterTriggerRequest &a, WMAlterTriggerRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other1043) {
   trigger = other1043.trigger;
   __isset = other1043.__isset;
@@ -25832,6 +37622,76 @@ WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other1
 WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other1044) {
   trigger = other1044.trigger;
   __isset = other1044.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other1023) {
+  trigger = other1023.trigger;
+  __isset = other1023.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other1024) {
+  trigger = other1024.trigger;
+  __isset = other1024.__isset;
+=======
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other981) {
+  trigger = other981.trigger;
+  __isset = other981.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other982) {
+  trigger = other982.trigger;
+  __isset = other982.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other985) {
+  trigger = other985.trigger;
+  __isset = other985.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other986) {
+  trigger = other986.trigger;
+  __isset = other986.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other981) {
+  trigger = other981.trigger;
+  __isset = other981.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other982) {
+  trigger = other982.trigger;
+  __isset = other982.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other985) {
+  trigger = other985.trigger;
+  __isset = other985.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other986) {
+  trigger = other986.trigger;
+  __isset = other986.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other1027) {
+  trigger = other1027.trigger;
+  __isset = other1027.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other1028) {
+  trigger = other1028.trigger;
+  __isset = other1028.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMAlterTriggerRequest::WMAlterTriggerRequest(const WMAlterTriggerRequest& other1039) {
+  trigger = other1039.trigger;
+  __isset = other1039.__isset;
+}
+WMAlterTriggerRequest& WMAlterTriggerRequest::operator=(const WMAlterTriggerRequest& other1040) {
+  trigger = other1040.trigger;
+  __isset = other1040.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMAlterTriggerRequest::printTo(std::ostream& out) const {
@@ -25890,11 +37750,70 @@ void swap(WMAlterTriggerResponse &a, WMAlterTriggerResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other1045) {
   (void) other1045;
 }
 WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other1046) {
   (void) other1046;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other1025) {
+  (void) other1025;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other1026) {
+  (void) other1026;
+=======
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other983) {
+  (void) other983;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other984) {
+  (void) other984;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other987) {
+  (void) other987;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other988) {
+  (void) other988;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other983) {
+  (void) other983;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other984) {
+  (void) other984;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other987) {
+  (void) other987;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other988) {
+  (void) other988;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other1029) {
+  (void) other1029;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other1030) {
+  (void) other1030;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMAlterTriggerResponse::WMAlterTriggerResponse(const WMAlterTriggerResponse& other1041) {
+  (void) other1041;
+}
+WMAlterTriggerResponse& WMAlterTriggerResponse::operator=(const WMAlterTriggerResponse& other1042) {
+  (void) other1042;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMAlterTriggerResponse::printTo(std::ostream& out) const {
@@ -25994,6 +37913,9 @@ void swap(WMDropTriggerRequest &a, WMDropTriggerRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other1047) {
   resourcePlanName = other1047.resourcePlanName;
   triggerName = other1047.triggerName;
@@ -26003,6 +37925,88 @@ WMDropTriggerRequest& WMDropTriggerRequest::operator=(const WMDropTriggerRequest
   resourcePlanName = other1048.resourcePlanName;
   triggerName = other1048.triggerName;
   __isset = other1048.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other1027) {
+  resourcePlanName = other1027.resourcePlanName;
+  triggerName = other1027.triggerName;
+  __isset = other1027.__isset;
+}
+WMDropTriggerRequest& WMDropTriggerRequest::operator=(const WMDropTriggerRequest& other1028) {
+  resourcePlanName = other1028.resourcePlanName;
+  triggerName = other1028.triggerName;
+  __isset = other1028.__isset;
+=======
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other985) {
+  resourcePlanName = other985.resourcePlanName;
+  triggerName = other985.triggerName;
+  __isset = other985.__isset;
+}
+=======
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other985) {
+  resourcePlanName = other985.resourcePlanName;
+  triggerName = other985.triggerName;
+  __isset = other985.__isset;
+}
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMDropTriggerRequest& WMDropTriggerRequest::operator=(const WMDropTriggerRequest& other986) {
+  resourcePlanName = other986.resourcePlanName;
+  triggerName = other986.triggerName;
+  __isset = other986.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other989) {
+  resourcePlanName = other989.resourcePlanName;
+  triggerName = other989.triggerName;
+  __isset = other989.__isset;
+}
+=======
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other989) {
+  resourcePlanName = other989.resourcePlanName;
+  triggerName = other989.triggerName;
+  __isset = other989.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMDropTriggerRequest& WMDropTriggerRequest::operator=(const WMDropTriggerRequest& other990) {
+  resourcePlanName = other990.resourcePlanName;
+  triggerName = other990.triggerName;
+  __isset = other990.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other1031) {
+  resourcePlanName = other1031.resourcePlanName;
+  triggerName = other1031.triggerName;
+  __isset = other1031.__isset;
+}
+WMDropTriggerRequest& WMDropTriggerRequest::operator=(const WMDropTriggerRequest& other1032) {
+  resourcePlanName = other1032.resourcePlanName;
+  triggerName = other1032.triggerName;
+  __isset = other1032.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropTriggerRequest::WMDropTriggerRequest(const WMDropTriggerRequest& other1043) {
+  resourcePlanName = other1043.resourcePlanName;
+  triggerName = other1043.triggerName;
+  __isset = other1043.__isset;
+}
+WMDropTriggerRequest& WMDropTriggerRequest::operator=(const WMDropTriggerRequest& other1044) {
+  resourcePlanName = other1044.resourcePlanName;
+  triggerName = other1044.triggerName;
+  __isset = other1044.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropTriggerRequest::printTo(std::ostream& out) const {
@@ -26062,11 +38066,68 @@ void swap(WMDropTriggerResponse &a, WMDropTriggerResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other1049) {
   (void) other1049;
 }
 WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other1050) {
   (void) other1050;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other1029) {
+  (void) other1029;
+}
+WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other1030) {
+  (void) other1030;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other987) {
+  (void) other987;
+}
+WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other988) {
+  (void) other988;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other991) {
+  (void) other991;
+}
+WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other992) {
+  (void) other992;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other991) {
+  (void) other991;
+}
+WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other992) {
+  (void) other992;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other1033) {
+  (void) other1033;
+}
+WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other1034) {
+  (void) other1034;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropTriggerResponse::WMDropTriggerResponse(const WMDropTriggerResponse& other1045) {
+  (void) other1045;
+}
+WMDropTriggerResponse& WMDropTriggerResponse::operator=(const WMDropTriggerResponse& other1046) {
+  (void) other1046;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropTriggerResponse::printTo(std::ostream& out) const {
@@ -26147,6 +38208,9 @@ void swap(WMGetTriggersForResourePlanRequest &a, WMGetTriggersForResourePlanRequ
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other1051) {
   resourcePlanName = other1051.resourcePlanName;
   __isset = other1051.__isset;
@@ -26154,6 +38218,76 @@ WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMG
 WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other1052) {
   resourcePlanName = other1052.resourcePlanName;
   __isset = other1052.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other1031) {
+  resourcePlanName = other1031.resourcePlanName;
+  __isset = other1031.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other1032) {
+  resourcePlanName = other1032.resourcePlanName;
+  __isset = other1032.__isset;
+=======
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other989) {
+  resourcePlanName = other989.resourcePlanName;
+  __isset = other989.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other990) {
+  resourcePlanName = other990.resourcePlanName;
+  __isset = other990.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other993) {
+  resourcePlanName = other993.resourcePlanName;
+  __isset = other993.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other994) {
+  resourcePlanName = other994.resourcePlanName;
+  __isset = other994.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other989) {
+  resourcePlanName = other989.resourcePlanName;
+  __isset = other989.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other990) {
+  resourcePlanName = other990.resourcePlanName;
+  __isset = other990.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other993) {
+  resourcePlanName = other993.resourcePlanName;
+  __isset = other993.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other994) {
+  resourcePlanName = other994.resourcePlanName;
+  __isset = other994.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other1035) {
+  resourcePlanName = other1035.resourcePlanName;
+  __isset = other1035.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other1036) {
+  resourcePlanName = other1036.resourcePlanName;
+  __isset = other1036.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetTriggersForResourePlanRequest::WMGetTriggersForResourePlanRequest(const WMGetTriggersForResourePlanRequest& other1047) {
+  resourcePlanName = other1047.resourcePlanName;
+  __isset = other1047.__isset;
+}
+WMGetTriggersForResourePlanRequest& WMGetTriggersForResourePlanRequest::operator=(const WMGetTriggersForResourePlanRequest& other1048) {
+  resourcePlanName = other1048.resourcePlanName;
+  __isset = other1048.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetTriggersForResourePlanRequest::printTo(std::ostream& out) const {
@@ -26198,6 +38332,9 @@ uint32_t WMGetTriggersForResourePlanResponse::read(::apache::thrift::protocol::T
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->triggers.clear();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             uint32_t _size1053;
             ::apache::thrift::protocol::TType _etype1056;
             xfer += iprot->readListBegin(_etype1056, _size1053);
@@ -26206,6 +38343,80 @@ uint32_t WMGetTriggersForResourePlanResponse::read(::apache::thrift::protocol::T
             for (_i1057 = 0; _i1057 < _size1053; ++_i1057)
             {
               xfer += this->triggers[_i1057].read(iprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            uint32_t _size1033;
+            ::apache::thrift::protocol::TType _etype1036;
+            xfer += iprot->readListBegin(_etype1036, _size1033);
+            this->triggers.resize(_size1033);
+            uint32_t _i1037;
+            for (_i1037 = 0; _i1037 < _size1033; ++_i1037)
+            {
+              xfer += this->triggers[_i1037].read(iprot);
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            uint32_t _size991;
+            ::apache::thrift::protocol::TType _etype994;
+            xfer += iprot->readListBegin(_etype994, _size991);
+            this->triggers.resize(_size991);
+            uint32_t _i995;
+            for (_i995 = 0; _i995 < _size991; ++_i995)
+<<<<<<< HEAD
+            {
+              xfer += this->triggers[_i995].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            uint32_t _size995;
+            ::apache::thrift::protocol::TType _etype998;
+            xfer += iprot->readListBegin(_etype998, _size995);
+            this->triggers.resize(_size995);
+            uint32_t _i999;
+            for (_i999 = 0; _i999 < _size995; ++_i999)
+            {
+              xfer += this->triggers[_i999].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            {
+              xfer += this->triggers[_i995].read(iprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+            uint32_t _size995;
+            ::apache::thrift::protocol::TType _etype998;
+            xfer += iprot->readListBegin(_etype998, _size995);
+            this->triggers.resize(_size995);
+            uint32_t _i999;
+            for (_i999 = 0; _i999 < _size995; ++_i999)
+            {
+              xfer += this->triggers[_i999].read(iprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+            uint32_t _size1037;
+            ::apache::thrift::protocol::TType _etype1040;
+            xfer += iprot->readListBegin(_etype1040, _size1037);
+            this->triggers.resize(_size1037);
+            uint32_t _i1041;
+            for (_i1041 = 0; _i1041 < _size1037; ++_i1041)
+            {
+              xfer += this->triggers[_i1041].read(iprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            uint32_t _size1049;
+            ::apache::thrift::protocol::TType _etype1052;
+            xfer += iprot->readListBegin(_etype1052, _size1049);
+            this->triggers.resize(_size1049);
+            uint32_t _i1053;
+            for (_i1053 = 0; _i1053 < _size1049; ++_i1053)
+            {
+              xfer += this->triggers[_i1053].read(iprot);
+>>>>>>> alloc write id event changes
             }
             xfer += iprot->readListEnd();
           }
@@ -26235,10 +38446,62 @@ uint32_t WMGetTriggersForResourePlanResponse::write(::apache::thrift::protocol::
     xfer += oprot->writeFieldBegin("triggers", ::apache::thrift::protocol::T_LIST, 1);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->triggers.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
       std::vector<WMTrigger> ::const_iterator _iter1058;
       for (_iter1058 = this->triggers.begin(); _iter1058 != this->triggers.end(); ++_iter1058)
       {
         xfer += (*_iter1058).write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+      std::vector<WMTrigger> ::const_iterator _iter1038;
+      for (_iter1038 = this->triggers.begin(); _iter1038 != this->triggers.end(); ++_iter1038)
+      {
+        xfer += (*_iter1038).write(oprot);
+=======
+      std::vector<WMTrigger> ::const_iterator _iter996;
+      for (_iter996 = this->triggers.begin(); _iter996 != this->triggers.end(); ++_iter996)
+      {
+        xfer += (*_iter996).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+      std::vector<WMTrigger> ::const_iterator _iter1000;
+      for (_iter1000 = this->triggers.begin(); _iter1000 != this->triggers.end(); ++_iter1000)
+      {
+        xfer += (*_iter1000).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMTrigger> ::const_iterator _iter996;
+      for (_iter996 = this->triggers.begin(); _iter996 != this->triggers.end(); ++_iter996)
+      {
+        xfer += (*_iter996).write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+      std::vector<WMTrigger> ::const_iterator _iter1000;
+      for (_iter1000 = this->triggers.begin(); _iter1000 != this->triggers.end(); ++_iter1000)
+      {
+        xfer += (*_iter1000).write(oprot);
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+      std::vector<WMTrigger> ::const_iterator _iter1042;
+      for (_iter1042 = this->triggers.begin(); _iter1042 != this->triggers.end(); ++_iter1042)
+      {
+        xfer += (*_iter1042).write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+      std::vector<WMTrigger> ::const_iterator _iter1054;
+      for (_iter1054 = this->triggers.begin(); _iter1054 != this->triggers.end(); ++_iter1054)
+      {
+        xfer += (*_iter1054).write(oprot);
+>>>>>>> alloc write id event changes
       }
       xfer += oprot->writeListEnd();
     }
@@ -26255,6 +38518,9 @@ void swap(WMGetTriggersForResourePlanResponse &a, WMGetTriggersForResourePlanRes
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other1059) {
   triggers = other1059.triggers;
   __isset = other1059.__isset;
@@ -26262,6 +38528,76 @@ WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const W
 WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other1060) {
   triggers = other1060.triggers;
   __isset = other1060.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other1039) {
+  triggers = other1039.triggers;
+  __isset = other1039.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other1040) {
+  triggers = other1040.triggers;
+  __isset = other1040.__isset;
+=======
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other997) {
+  triggers = other997.triggers;
+  __isset = other997.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other998) {
+  triggers = other998.triggers;
+  __isset = other998.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other1001) {
+  triggers = other1001.triggers;
+  __isset = other1001.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other1002) {
+  triggers = other1002.triggers;
+  __isset = other1002.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other997) {
+  triggers = other997.triggers;
+  __isset = other997.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other998) {
+  triggers = other998.triggers;
+  __isset = other998.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other1001) {
+  triggers = other1001.triggers;
+  __isset = other1001.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other1002) {
+  triggers = other1002.triggers;
+  __isset = other1002.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other1043) {
+  triggers = other1043.triggers;
+  __isset = other1043.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other1044) {
+  triggers = other1044.triggers;
+  __isset = other1044.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMGetTriggersForResourePlanResponse::WMGetTriggersForResourePlanResponse(const WMGetTriggersForResourePlanResponse& other1055) {
+  triggers = other1055.triggers;
+  __isset = other1055.__isset;
+}
+WMGetTriggersForResourePlanResponse& WMGetTriggersForResourePlanResponse::operator=(const WMGetTriggersForResourePlanResponse& other1056) {
+  triggers = other1056.triggers;
+  __isset = other1056.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMGetTriggersForResourePlanResponse::printTo(std::ostream& out) const {
@@ -26343,6 +38679,9 @@ void swap(WMCreatePoolRequest &a, WMCreatePoolRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1061) {
   pool = other1061.pool;
   __isset = other1061.__isset;
@@ -26350,6 +38689,76 @@ WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1061) {
 WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1062) {
   pool = other1062.pool;
   __isset = other1062.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1041) {
+  pool = other1041.pool;
+  __isset = other1041.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1042) {
+  pool = other1042.pool;
+  __isset = other1042.__isset;
+=======
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other999) {
+  pool = other999.pool;
+  __isset = other999.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1000) {
+  pool = other1000.pool;
+  __isset = other1000.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1003) {
+  pool = other1003.pool;
+  __isset = other1003.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1004) {
+  pool = other1004.pool;
+  __isset = other1004.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other999) {
+  pool = other999.pool;
+  __isset = other999.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1000) {
+  pool = other1000.pool;
+  __isset = other1000.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1003) {
+  pool = other1003.pool;
+  __isset = other1003.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1004) {
+  pool = other1004.pool;
+  __isset = other1004.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1045) {
+  pool = other1045.pool;
+  __isset = other1045.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1046) {
+  pool = other1046.pool;
+  __isset = other1046.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreatePoolRequest::WMCreatePoolRequest(const WMCreatePoolRequest& other1057) {
+  pool = other1057.pool;
+  __isset = other1057.__isset;
+}
+WMCreatePoolRequest& WMCreatePoolRequest::operator=(const WMCreatePoolRequest& other1058) {
+  pool = other1058.pool;
+  __isset = other1058.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreatePoolRequest::printTo(std::ostream& out) const {
@@ -26408,11 +38817,70 @@ void swap(WMCreatePoolResponse &a, WMCreatePoolResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1063) {
   (void) other1063;
 }
 WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1064) {
   (void) other1064;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1043) {
+  (void) other1043;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1044) {
+  (void) other1044;
+=======
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1001) {
+  (void) other1001;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1002) {
+  (void) other1002;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1005) {
+  (void) other1005;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1006) {
+  (void) other1006;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1001) {
+  (void) other1001;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1002) {
+  (void) other1002;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1005) {
+  (void) other1005;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1006) {
+  (void) other1006;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1047) {
+  (void) other1047;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1048) {
+  (void) other1048;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreatePoolResponse::WMCreatePoolResponse(const WMCreatePoolResponse& other1059) {
+  (void) other1059;
+}
+WMCreatePoolResponse& WMCreatePoolResponse::operator=(const WMCreatePoolResponse& other1060) {
+  (void) other1060;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreatePoolResponse::printTo(std::ostream& out) const {
@@ -26512,6 +38980,9 @@ void swap(WMAlterPoolRequest &a, WMAlterPoolRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1065) {
   pool = other1065.pool;
   poolPath = other1065.poolPath;
@@ -26521,6 +38992,88 @@ WMAlterPoolRequest& WMAlterPoolRequest::operator=(const WMAlterPoolRequest& othe
   pool = other1066.pool;
   poolPath = other1066.poolPath;
   __isset = other1066.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1045) {
+  pool = other1045.pool;
+  poolPath = other1045.poolPath;
+  __isset = other1045.__isset;
+}
+WMAlterPoolRequest& WMAlterPoolRequest::operator=(const WMAlterPoolRequest& other1046) {
+  pool = other1046.pool;
+  poolPath = other1046.poolPath;
+  __isset = other1046.__isset;
+=======
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1003) {
+  pool = other1003.pool;
+  poolPath = other1003.poolPath;
+  __isset = other1003.__isset;
+}
+=======
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1003) {
+  pool = other1003.pool;
+  poolPath = other1003.poolPath;
+  __isset = other1003.__isset;
+}
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMAlterPoolRequest& WMAlterPoolRequest::operator=(const WMAlterPoolRequest& other1004) {
+  pool = other1004.pool;
+  poolPath = other1004.poolPath;
+  __isset = other1004.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1007) {
+  pool = other1007.pool;
+  poolPath = other1007.poolPath;
+  __isset = other1007.__isset;
+}
+=======
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1007) {
+  pool = other1007.pool;
+  poolPath = other1007.poolPath;
+  __isset = other1007.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMAlterPoolRequest& WMAlterPoolRequest::operator=(const WMAlterPoolRequest& other1008) {
+  pool = other1008.pool;
+  poolPath = other1008.poolPath;
+  __isset = other1008.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1049) {
+  pool = other1049.pool;
+  poolPath = other1049.poolPath;
+  __isset = other1049.__isset;
+}
+WMAlterPoolRequest& WMAlterPoolRequest::operator=(const WMAlterPoolRequest& other1050) {
+  pool = other1050.pool;
+  poolPath = other1050.poolPath;
+  __isset = other1050.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMAlterPoolRequest::WMAlterPoolRequest(const WMAlterPoolRequest& other1061) {
+  pool = other1061.pool;
+  poolPath = other1061.poolPath;
+  __isset = other1061.__isset;
+}
+WMAlterPoolRequest& WMAlterPoolRequest::operator=(const WMAlterPoolRequest& other1062) {
+  pool = other1062.pool;
+  poolPath = other1062.poolPath;
+  __isset = other1062.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMAlterPoolRequest::printTo(std::ostream& out) const {
@@ -26580,11 +39133,70 @@ void swap(WMAlterPoolResponse &a, WMAlterPoolResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1067) {
   (void) other1067;
 }
 WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1068) {
   (void) other1068;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1047) {
+  (void) other1047;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1048) {
+  (void) other1048;
+=======
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1005) {
+  (void) other1005;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1006) {
+  (void) other1006;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1009) {
+  (void) other1009;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1010) {
+  (void) other1010;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1005) {
+  (void) other1005;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1006) {
+  (void) other1006;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1009) {
+  (void) other1009;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1010) {
+  (void) other1010;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1051) {
+  (void) other1051;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1052) {
+  (void) other1052;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMAlterPoolResponse::WMAlterPoolResponse(const WMAlterPoolResponse& other1063) {
+  (void) other1063;
+}
+WMAlterPoolResponse& WMAlterPoolResponse::operator=(const WMAlterPoolResponse& other1064) {
+  (void) other1064;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMAlterPoolResponse::printTo(std::ostream& out) const {
@@ -26684,6 +39296,9 @@ void swap(WMDropPoolRequest &a, WMDropPoolRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1069) {
   resourcePlanName = other1069.resourcePlanName;
   poolPath = other1069.poolPath;
@@ -26693,6 +39308,83 @@ WMDropPoolRequest& WMDropPoolRequest::operator=(const WMDropPoolRequest& other10
   resourcePlanName = other1070.resourcePlanName;
   poolPath = other1070.poolPath;
   __isset = other1070.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1049) {
+  resourcePlanName = other1049.resourcePlanName;
+  poolPath = other1049.poolPath;
+  __isset = other1049.__isset;
+}
+WMDropPoolRequest& WMDropPoolRequest::operator=(const WMDropPoolRequest& other1050) {
+  resourcePlanName = other1050.resourcePlanName;
+  poolPath = other1050.poolPath;
+  __isset = other1050.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1007) {
+  resourcePlanName = other1007.resourcePlanName;
+  poolPath = other1007.poolPath;
+  __isset = other1007.__isset;
+}
+WMDropPoolRequest& WMDropPoolRequest::operator=(const WMDropPoolRequest& other1008) {
+  resourcePlanName = other1008.resourcePlanName;
+  poolPath = other1008.poolPath;
+  __isset = other1008.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1011) {
+  resourcePlanName = other1011.resourcePlanName;
+  poolPath = other1011.poolPath;
+  __isset = other1011.__isset;
+}
+=======
+WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1011) {
+  resourcePlanName = other1011.resourcePlanName;
+  poolPath = other1011.poolPath;
+  __isset = other1011.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMDropPoolRequest& WMDropPoolRequest::operator=(const WMDropPoolRequest& other1012) {
+  resourcePlanName = other1012.resourcePlanName;
+  poolPath = other1012.poolPath;
+  __isset = other1012.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1053) {
+  resourcePlanName = other1053.resourcePlanName;
+  poolPath = other1053.poolPath;
+  __isset = other1053.__isset;
+}
+WMDropPoolRequest& WMDropPoolRequest::operator=(const WMDropPoolRequest& other1054) {
+  resourcePlanName = other1054.resourcePlanName;
+  poolPath = other1054.poolPath;
+  __isset = other1054.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropPoolRequest::WMDropPoolRequest(const WMDropPoolRequest& other1065) {
+  resourcePlanName = other1065.resourcePlanName;
+  poolPath = other1065.poolPath;
+  __isset = other1065.__isset;
+}
+WMDropPoolRequest& WMDropPoolRequest::operator=(const WMDropPoolRequest& other1066) {
+  resourcePlanName = other1066.resourcePlanName;
+  poolPath = other1066.poolPath;
+  __isset = other1066.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropPoolRequest::printTo(std::ostream& out) const {
@@ -26752,11 +39444,68 @@ void swap(WMDropPoolResponse &a, WMDropPoolResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1071) {
   (void) other1071;
 }
 WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1072) {
   (void) other1072;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1051) {
+  (void) other1051;
+}
+WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1052) {
+  (void) other1052;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1009) {
+  (void) other1009;
+}
+WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1010) {
+  (void) other1010;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1013) {
+  (void) other1013;
+}
+WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1014) {
+  (void) other1014;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1013) {
+  (void) other1013;
+}
+WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1014) {
+  (void) other1014;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1055) {
+  (void) other1055;
+}
+WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1056) {
+  (void) other1056;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropPoolResponse::WMDropPoolResponse(const WMDropPoolResponse& other1067) {
+  (void) other1067;
+}
+WMDropPoolResponse& WMDropPoolResponse::operator=(const WMDropPoolResponse& other1068) {
+  (void) other1068;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropPoolResponse::printTo(std::ostream& out) const {
@@ -26856,6 +39605,9 @@ void swap(WMCreateOrUpdateMappingRequest &a, WMCreateOrUpdateMappingRequest &b) 
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1073) {
   mapping = other1073.mapping;
   update = other1073.update;
@@ -26865,6 +39617,83 @@ WMCreateOrUpdateMappingRequest& WMCreateOrUpdateMappingRequest::operator=(const 
   mapping = other1074.mapping;
   update = other1074.update;
   __isset = other1074.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1053) {
+  mapping = other1053.mapping;
+  update = other1053.update;
+  __isset = other1053.__isset;
+}
+WMCreateOrUpdateMappingRequest& WMCreateOrUpdateMappingRequest::operator=(const WMCreateOrUpdateMappingRequest& other1054) {
+  mapping = other1054.mapping;
+  update = other1054.update;
+  __isset = other1054.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1011) {
+  mapping = other1011.mapping;
+  update = other1011.update;
+  __isset = other1011.__isset;
+}
+WMCreateOrUpdateMappingRequest& WMCreateOrUpdateMappingRequest::operator=(const WMCreateOrUpdateMappingRequest& other1012) {
+  mapping = other1012.mapping;
+  update = other1012.update;
+  __isset = other1012.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1015) {
+  mapping = other1015.mapping;
+  update = other1015.update;
+  __isset = other1015.__isset;
+}
+=======
+WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1015) {
+  mapping = other1015.mapping;
+  update = other1015.update;
+  __isset = other1015.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMCreateOrUpdateMappingRequest& WMCreateOrUpdateMappingRequest::operator=(const WMCreateOrUpdateMappingRequest& other1016) {
+  mapping = other1016.mapping;
+  update = other1016.update;
+  __isset = other1016.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1057) {
+  mapping = other1057.mapping;
+  update = other1057.update;
+  __isset = other1057.__isset;
+}
+WMCreateOrUpdateMappingRequest& WMCreateOrUpdateMappingRequest::operator=(const WMCreateOrUpdateMappingRequest& other1058) {
+  mapping = other1058.mapping;
+  update = other1058.update;
+  __isset = other1058.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateOrUpdateMappingRequest::WMCreateOrUpdateMappingRequest(const WMCreateOrUpdateMappingRequest& other1069) {
+  mapping = other1069.mapping;
+  update = other1069.update;
+  __isset = other1069.__isset;
+}
+WMCreateOrUpdateMappingRequest& WMCreateOrUpdateMappingRequest::operator=(const WMCreateOrUpdateMappingRequest& other1070) {
+  mapping = other1070.mapping;
+  update = other1070.update;
+  __isset = other1070.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateOrUpdateMappingRequest::printTo(std::ostream& out) const {
@@ -26924,11 +39753,70 @@ void swap(WMCreateOrUpdateMappingResponse &a, WMCreateOrUpdateMappingResponse &b
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1075) {
   (void) other1075;
 }
 WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1076) {
   (void) other1076;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1055) {
+  (void) other1055;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1056) {
+  (void) other1056;
+=======
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1013) {
+  (void) other1013;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1014) {
+  (void) other1014;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1017) {
+  (void) other1017;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1018) {
+  (void) other1018;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1013) {
+  (void) other1013;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1014) {
+  (void) other1014;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1017) {
+  (void) other1017;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1018) {
+  (void) other1018;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1059) {
+  (void) other1059;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1060) {
+  (void) other1060;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateOrUpdateMappingResponse::WMCreateOrUpdateMappingResponse(const WMCreateOrUpdateMappingResponse& other1071) {
+  (void) other1071;
+}
+WMCreateOrUpdateMappingResponse& WMCreateOrUpdateMappingResponse::operator=(const WMCreateOrUpdateMappingResponse& other1072) {
+  (void) other1072;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateOrUpdateMappingResponse::printTo(std::ostream& out) const {
@@ -27009,6 +39897,9 @@ void swap(WMDropMappingRequest &a, WMDropMappingRequest &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1077) {
   mapping = other1077.mapping;
   __isset = other1077.__isset;
@@ -27016,6 +39907,76 @@ WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1077
 WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1078) {
   mapping = other1078.mapping;
   __isset = other1078.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1057) {
+  mapping = other1057.mapping;
+  __isset = other1057.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1058) {
+  mapping = other1058.mapping;
+  __isset = other1058.__isset;
+=======
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1015) {
+  mapping = other1015.mapping;
+  __isset = other1015.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1016) {
+  mapping = other1016.mapping;
+  __isset = other1016.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1019) {
+  mapping = other1019.mapping;
+  __isset = other1019.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1020) {
+  mapping = other1020.mapping;
+  __isset = other1020.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1015) {
+  mapping = other1015.mapping;
+  __isset = other1015.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1016) {
+  mapping = other1016.mapping;
+  __isset = other1016.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1019) {
+  mapping = other1019.mapping;
+  __isset = other1019.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1020) {
+  mapping = other1020.mapping;
+  __isset = other1020.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1061) {
+  mapping = other1061.mapping;
+  __isset = other1061.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1062) {
+  mapping = other1062.mapping;
+  __isset = other1062.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropMappingRequest::WMDropMappingRequest(const WMDropMappingRequest& other1073) {
+  mapping = other1073.mapping;
+  __isset = other1073.__isset;
+}
+WMDropMappingRequest& WMDropMappingRequest::operator=(const WMDropMappingRequest& other1074) {
+  mapping = other1074.mapping;
+  __isset = other1074.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropMappingRequest::printTo(std::ostream& out) const {
@@ -27074,11 +40035,70 @@ void swap(WMDropMappingResponse &a, WMDropMappingResponse &b) {
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1079) {
   (void) other1079;
 }
 WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1080) {
   (void) other1080;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1059) {
+  (void) other1059;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1060) {
+  (void) other1060;
+=======
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1017) {
+  (void) other1017;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1018) {
+  (void) other1018;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1021) {
+  (void) other1021;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1022) {
+  (void) other1022;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1017) {
+  (void) other1017;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1018) {
+  (void) other1018;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1021) {
+  (void) other1021;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1022) {
+  (void) other1022;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1063) {
+  (void) other1063;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1064) {
+  (void) other1064;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMDropMappingResponse::WMDropMappingResponse(const WMDropMappingResponse& other1075) {
+  (void) other1075;
+}
+WMDropMappingResponse& WMDropMappingResponse::operator=(const WMDropMappingResponse& other1076) {
+  (void) other1076;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMDropMappingResponse::printTo(std::ostream& out) const {
@@ -27216,6 +40236,9 @@ void swap(WMCreateOrDropTriggerToPoolMappingRequest &a, WMCreateOrDropTriggerToP
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1081) {
   resourcePlanName = other1081.resourcePlanName;
   triggerName = other1081.triggerName;
@@ -27229,6 +40252,105 @@ WMCreateOrDropTriggerToPoolMappingRequest& WMCreateOrDropTriggerToPoolMappingReq
   poolPath = other1082.poolPath;
   drop = other1082.drop;
   __isset = other1082.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1061) {
+  resourcePlanName = other1061.resourcePlanName;
+  triggerName = other1061.triggerName;
+  poolPath = other1061.poolPath;
+  drop = other1061.drop;
+  __isset = other1061.__isset;
+}
+WMCreateOrDropTriggerToPoolMappingRequest& WMCreateOrDropTriggerToPoolMappingRequest::operator=(const WMCreateOrDropTriggerToPoolMappingRequest& other1062) {
+  resourcePlanName = other1062.resourcePlanName;
+  triggerName = other1062.triggerName;
+  poolPath = other1062.poolPath;
+  drop = other1062.drop;
+  __isset = other1062.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1019) {
+  resourcePlanName = other1019.resourcePlanName;
+  triggerName = other1019.triggerName;
+  poolPath = other1019.poolPath;
+  drop = other1019.drop;
+  __isset = other1019.__isset;
+}
+WMCreateOrDropTriggerToPoolMappingRequest& WMCreateOrDropTriggerToPoolMappingRequest::operator=(const WMCreateOrDropTriggerToPoolMappingRequest& other1020) {
+  resourcePlanName = other1020.resourcePlanName;
+  triggerName = other1020.triggerName;
+  poolPath = other1020.poolPath;
+  drop = other1020.drop;
+  __isset = other1020.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1023) {
+  resourcePlanName = other1023.resourcePlanName;
+  triggerName = other1023.triggerName;
+  poolPath = other1023.poolPath;
+  drop = other1023.drop;
+  __isset = other1023.__isset;
+}
+=======
+WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1023) {
+  resourcePlanName = other1023.resourcePlanName;
+  triggerName = other1023.triggerName;
+  poolPath = other1023.poolPath;
+  drop = other1023.drop;
+  __isset = other1023.__isset;
+}
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+WMCreateOrDropTriggerToPoolMappingRequest& WMCreateOrDropTriggerToPoolMappingRequest::operator=(const WMCreateOrDropTriggerToPoolMappingRequest& other1024) {
+  resourcePlanName = other1024.resourcePlanName;
+  triggerName = other1024.triggerName;
+  poolPath = other1024.poolPath;
+  drop = other1024.drop;
+  __isset = other1024.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1065) {
+  resourcePlanName = other1065.resourcePlanName;
+  triggerName = other1065.triggerName;
+  poolPath = other1065.poolPath;
+  drop = other1065.drop;
+  __isset = other1065.__isset;
+}
+WMCreateOrDropTriggerToPoolMappingRequest& WMCreateOrDropTriggerToPoolMappingRequest::operator=(const WMCreateOrDropTriggerToPoolMappingRequest& other1066) {
+  resourcePlanName = other1066.resourcePlanName;
+  triggerName = other1066.triggerName;
+  poolPath = other1066.poolPath;
+  drop = other1066.drop;
+  __isset = other1066.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateOrDropTriggerToPoolMappingRequest::WMCreateOrDropTriggerToPoolMappingRequest(const WMCreateOrDropTriggerToPoolMappingRequest& other1077) {
+  resourcePlanName = other1077.resourcePlanName;
+  triggerName = other1077.triggerName;
+  poolPath = other1077.poolPath;
+  drop = other1077.drop;
+  __isset = other1077.__isset;
+}
+WMCreateOrDropTriggerToPoolMappingRequest& WMCreateOrDropTriggerToPoolMappingRequest::operator=(const WMCreateOrDropTriggerToPoolMappingRequest& other1078) {
+  resourcePlanName = other1078.resourcePlanName;
+  triggerName = other1078.triggerName;
+  poolPath = other1078.poolPath;
+  drop = other1078.drop;
+  __isset = other1078.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateOrDropTriggerToPoolMappingRequest::printTo(std::ostream& out) const {
@@ -27290,11 +40412,68 @@ void swap(WMCreateOrDropTriggerToPoolMappingResponse &a, WMCreateOrDropTriggerTo
   (void) b;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1083) {
   (void) other1083;
 }
 WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1084) {
   (void) other1084;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1063) {
+  (void) other1063;
+}
+WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1064) {
+  (void) other1064;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1021) {
+  (void) other1021;
+}
+WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1022) {
+  (void) other1022;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1025) {
+  (void) other1025;
+}
+WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1026) {
+  (void) other1026;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1025) {
+  (void) other1025;
+}
+WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1026) {
+  (void) other1026;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1067) {
+  (void) other1067;
+}
+WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1068) {
+  (void) other1068;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+WMCreateOrDropTriggerToPoolMappingResponse::WMCreateOrDropTriggerToPoolMappingResponse(const WMCreateOrDropTriggerToPoolMappingResponse& other1079) {
+  (void) other1079;
+}
+WMCreateOrDropTriggerToPoolMappingResponse& WMCreateOrDropTriggerToPoolMappingResponse::operator=(const WMCreateOrDropTriggerToPoolMappingResponse& other1080) {
+  (void) other1080;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void WMCreateOrDropTriggerToPoolMappingResponse::printTo(std::ostream& out) const {
@@ -27373,6 +40552,9 @@ void swap(MetaException &a, MetaException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 MetaException::MetaException(const MetaException& other1085) : TException() {
   message = other1085.message;
   __isset = other1085.__isset;
@@ -27380,6 +40562,76 @@ MetaException::MetaException(const MetaException& other1085) : TException() {
 MetaException& MetaException::operator=(const MetaException& other1086) {
   message = other1086.message;
   __isset = other1086.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+MetaException::MetaException(const MetaException& other1065) : TException() {
+  message = other1065.message;
+  __isset = other1065.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1066) {
+  message = other1066.message;
+  __isset = other1066.__isset;
+=======
+MetaException::MetaException(const MetaException& other1023) : TException() {
+  message = other1023.message;
+  __isset = other1023.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1024) {
+  message = other1024.message;
+  __isset = other1024.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+MetaException::MetaException(const MetaException& other1027) : TException() {
+  message = other1027.message;
+  __isset = other1027.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1028) {
+  message = other1028.message;
+  __isset = other1028.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+MetaException::MetaException(const MetaException& other1023) : TException() {
+  message = other1023.message;
+  __isset = other1023.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1024) {
+  message = other1024.message;
+  __isset = other1024.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+MetaException::MetaException(const MetaException& other1027) : TException() {
+  message = other1027.message;
+  __isset = other1027.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1028) {
+  message = other1028.message;
+  __isset = other1028.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+MetaException::MetaException(const MetaException& other1069) : TException() {
+  message = other1069.message;
+  __isset = other1069.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1070) {
+  message = other1070.message;
+  __isset = other1070.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+MetaException::MetaException(const MetaException& other1081) : TException() {
+  message = other1081.message;
+  __isset = other1081.__isset;
+}
+MetaException& MetaException::operator=(const MetaException& other1082) {
+  message = other1082.message;
+  __isset = other1082.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void MetaException::printTo(std::ostream& out) const {
@@ -27470,6 +40722,9 @@ void swap(UnknownTableException &a, UnknownTableException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 UnknownTableException::UnknownTableException(const UnknownTableException& other1087) : TException() {
   message = other1087.message;
   __isset = other1087.__isset;
@@ -27477,6 +40732,76 @@ UnknownTableException::UnknownTableException(const UnknownTableException& other1
 UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1088) {
   message = other1088.message;
   __isset = other1088.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+UnknownTableException::UnknownTableException(const UnknownTableException& other1067) : TException() {
+  message = other1067.message;
+  __isset = other1067.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1068) {
+  message = other1068.message;
+  __isset = other1068.__isset;
+=======
+UnknownTableException::UnknownTableException(const UnknownTableException& other1025) : TException() {
+  message = other1025.message;
+  __isset = other1025.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1026) {
+  message = other1026.message;
+  __isset = other1026.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+UnknownTableException::UnknownTableException(const UnknownTableException& other1029) : TException() {
+  message = other1029.message;
+  __isset = other1029.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1030) {
+  message = other1030.message;
+  __isset = other1030.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnknownTableException::UnknownTableException(const UnknownTableException& other1025) : TException() {
+  message = other1025.message;
+  __isset = other1025.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1026) {
+  message = other1026.message;
+  __isset = other1026.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+UnknownTableException::UnknownTableException(const UnknownTableException& other1029) : TException() {
+  message = other1029.message;
+  __isset = other1029.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1030) {
+  message = other1030.message;
+  __isset = other1030.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnknownTableException::UnknownTableException(const UnknownTableException& other1071) : TException() {
+  message = other1071.message;
+  __isset = other1071.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1072) {
+  message = other1072.message;
+  __isset = other1072.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+UnknownTableException::UnknownTableException(const UnknownTableException& other1083) : TException() {
+  message = other1083.message;
+  __isset = other1083.__isset;
+}
+UnknownTableException& UnknownTableException::operator=(const UnknownTableException& other1084) {
+  message = other1084.message;
+  __isset = other1084.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void UnknownTableException::printTo(std::ostream& out) const {
@@ -27567,6 +40892,9 @@ void swap(UnknownDBException &a, UnknownDBException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 UnknownDBException::UnknownDBException(const UnknownDBException& other1089) : TException() {
   message = other1089.message;
   __isset = other1089.__isset;
@@ -27574,6 +40902,72 @@ UnknownDBException::UnknownDBException(const UnknownDBException& other1089) : TE
 UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1090) {
   message = other1090.message;
   __isset = other1090.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+UnknownDBException::UnknownDBException(const UnknownDBException& other1069) : TException() {
+  message = other1069.message;
+  __isset = other1069.__isset;
+}
+UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1070) {
+  message = other1070.message;
+  __isset = other1070.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+UnknownDBException::UnknownDBException(const UnknownDBException& other1027) : TException() {
+  message = other1027.message;
+  __isset = other1027.__isset;
+}
+UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1028) {
+  message = other1028.message;
+  __isset = other1028.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+UnknownDBException::UnknownDBException(const UnknownDBException& other1031) : TException() {
+  message = other1031.message;
+  __isset = other1031.__isset;
+}
+UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1032) {
+  message = other1032.message;
+  __isset = other1032.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+UnknownDBException::UnknownDBException(const UnknownDBException& other1031) : TException() {
+  message = other1031.message;
+  __isset = other1031.__isset;
+}
+UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1032) {
+  message = other1032.message;
+  __isset = other1032.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnknownDBException::UnknownDBException(const UnknownDBException& other1073) : TException() {
+  message = other1073.message;
+  __isset = other1073.__isset;
+}
+UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1074) {
+  message = other1074.message;
+  __isset = other1074.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+UnknownDBException::UnknownDBException(const UnknownDBException& other1085) : TException() {
+  message = other1085.message;
+  __isset = other1085.__isset;
+}
+UnknownDBException& UnknownDBException::operator=(const UnknownDBException& other1086) {
+  message = other1086.message;
+  __isset = other1086.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void UnknownDBException::printTo(std::ostream& out) const {
@@ -27664,6 +41058,9 @@ void swap(AlreadyExistsException &a, AlreadyExistsException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1091) : TException() {
   message = other1091.message;
   __isset = other1091.__isset;
@@ -27671,6 +41068,76 @@ AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& oth
 AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1092) {
   message = other1092.message;
   __isset = other1092.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1071) : TException() {
+  message = other1071.message;
+  __isset = other1071.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1072) {
+  message = other1072.message;
+  __isset = other1072.__isset;
+=======
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1029) : TException() {
+  message = other1029.message;
+  __isset = other1029.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1030) {
+  message = other1030.message;
+  __isset = other1030.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1033) : TException() {
+  message = other1033.message;
+  __isset = other1033.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1034) {
+  message = other1034.message;
+  __isset = other1034.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1029) : TException() {
+  message = other1029.message;
+  __isset = other1029.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1030) {
+  message = other1030.message;
+  __isset = other1030.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1033) : TException() {
+  message = other1033.message;
+  __isset = other1033.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1034) {
+  message = other1034.message;
+  __isset = other1034.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1075) : TException() {
+  message = other1075.message;
+  __isset = other1075.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1076) {
+  message = other1076.message;
+  __isset = other1076.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+AlreadyExistsException::AlreadyExistsException(const AlreadyExistsException& other1087) : TException() {
+  message = other1087.message;
+  __isset = other1087.__isset;
+}
+AlreadyExistsException& AlreadyExistsException::operator=(const AlreadyExistsException& other1088) {
+  message = other1088.message;
+  __isset = other1088.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void AlreadyExistsException::printTo(std::ostream& out) const {
@@ -27761,6 +41228,9 @@ void swap(InvalidPartitionException &a, InvalidPartitionException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1093) : TException() {
   message = other1093.message;
   __isset = other1093.__isset;
@@ -27768,6 +41238,76 @@ InvalidPartitionException::InvalidPartitionException(const InvalidPartitionExcep
 InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1094) {
   message = other1094.message;
   __isset = other1094.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1073) : TException() {
+  message = other1073.message;
+  __isset = other1073.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1074) {
+  message = other1074.message;
+  __isset = other1074.__isset;
+=======
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1031) : TException() {
+  message = other1031.message;
+  __isset = other1031.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1032) {
+  message = other1032.message;
+  __isset = other1032.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1035) : TException() {
+  message = other1035.message;
+  __isset = other1035.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1036) {
+  message = other1036.message;
+  __isset = other1036.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1031) : TException() {
+  message = other1031.message;
+  __isset = other1031.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1032) {
+  message = other1032.message;
+  __isset = other1032.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1035) : TException() {
+  message = other1035.message;
+  __isset = other1035.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1036) {
+  message = other1036.message;
+  __isset = other1036.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1077) : TException() {
+  message = other1077.message;
+  __isset = other1077.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1078) {
+  message = other1078.message;
+  __isset = other1078.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+InvalidPartitionException::InvalidPartitionException(const InvalidPartitionException& other1089) : TException() {
+  message = other1089.message;
+  __isset = other1089.__isset;
+}
+InvalidPartitionException& InvalidPartitionException::operator=(const InvalidPartitionException& other1090) {
+  message = other1090.message;
+  __isset = other1090.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void InvalidPartitionException::printTo(std::ostream& out) const {
@@ -27858,6 +41398,9 @@ void swap(UnknownPartitionException &a, UnknownPartitionException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1095) : TException() {
   message = other1095.message;
   __isset = other1095.__isset;
@@ -27865,6 +41408,76 @@ UnknownPartitionException::UnknownPartitionException(const UnknownPartitionExcep
 UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1096) {
   message = other1096.message;
   __isset = other1096.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1075) : TException() {
+  message = other1075.message;
+  __isset = other1075.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1076) {
+  message = other1076.message;
+  __isset = other1076.__isset;
+=======
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1033) : TException() {
+  message = other1033.message;
+  __isset = other1033.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1034) {
+  message = other1034.message;
+  __isset = other1034.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1037) : TException() {
+  message = other1037.message;
+  __isset = other1037.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1038) {
+  message = other1038.message;
+  __isset = other1038.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1033) : TException() {
+  message = other1033.message;
+  __isset = other1033.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1034) {
+  message = other1034.message;
+  __isset = other1034.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1037) : TException() {
+  message = other1037.message;
+  __isset = other1037.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1038) {
+  message = other1038.message;
+  __isset = other1038.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1079) : TException() {
+  message = other1079.message;
+  __isset = other1079.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1080) {
+  message = other1080.message;
+  __isset = other1080.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+UnknownPartitionException::UnknownPartitionException(const UnknownPartitionException& other1091) : TException() {
+  message = other1091.message;
+  __isset = other1091.__isset;
+}
+UnknownPartitionException& UnknownPartitionException::operator=(const UnknownPartitionException& other1092) {
+  message = other1092.message;
+  __isset = other1092.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void UnknownPartitionException::printTo(std::ostream& out) const {
@@ -27955,6 +41568,9 @@ void swap(InvalidObjectException &a, InvalidObjectException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1097) : TException() {
   message = other1097.message;
   __isset = other1097.__isset;
@@ -27962,6 +41578,76 @@ InvalidObjectException::InvalidObjectException(const InvalidObjectException& oth
 InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1098) {
   message = other1098.message;
   __isset = other1098.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1077) : TException() {
+  message = other1077.message;
+  __isset = other1077.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1078) {
+  message = other1078.message;
+  __isset = other1078.__isset;
+=======
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1035) : TException() {
+  message = other1035.message;
+  __isset = other1035.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1036) {
+  message = other1036.message;
+  __isset = other1036.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1039) : TException() {
+  message = other1039.message;
+  __isset = other1039.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1040) {
+  message = other1040.message;
+  __isset = other1040.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1035) : TException() {
+  message = other1035.message;
+  __isset = other1035.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1036) {
+  message = other1036.message;
+  __isset = other1036.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1039) : TException() {
+  message = other1039.message;
+  __isset = other1039.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1040) {
+  message = other1040.message;
+  __isset = other1040.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1081) : TException() {
+  message = other1081.message;
+  __isset = other1081.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1082) {
+  message = other1082.message;
+  __isset = other1082.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+InvalidObjectException::InvalidObjectException(const InvalidObjectException& other1093) : TException() {
+  message = other1093.message;
+  __isset = other1093.__isset;
+}
+InvalidObjectException& InvalidObjectException::operator=(const InvalidObjectException& other1094) {
+  message = other1094.message;
+  __isset = other1094.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void InvalidObjectException::printTo(std::ostream& out) const {
@@ -28052,6 +41738,9 @@ void swap(NoSuchObjectException &a, NoSuchObjectException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1099) : TException() {
   message = other1099.message;
   __isset = other1099.__isset;
@@ -28059,6 +41748,76 @@ NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1
 NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1100) {
   message = other1100.message;
   __isset = other1100.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1079) : TException() {
+  message = other1079.message;
+  __isset = other1079.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1080) {
+  message = other1080.message;
+  __isset = other1080.__isset;
+=======
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1037) : TException() {
+  message = other1037.message;
+  __isset = other1037.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1038) {
+  message = other1038.message;
+  __isset = other1038.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1041) : TException() {
+  message = other1041.message;
+  __isset = other1041.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1042) {
+  message = other1042.message;
+  __isset = other1042.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1037) : TException() {
+  message = other1037.message;
+  __isset = other1037.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1038) {
+  message = other1038.message;
+  __isset = other1038.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1041) : TException() {
+  message = other1041.message;
+  __isset = other1041.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1042) {
+  message = other1042.message;
+  __isset = other1042.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1083) : TException() {
+  message = other1083.message;
+  __isset = other1083.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1084) {
+  message = other1084.message;
+  __isset = other1084.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NoSuchObjectException::NoSuchObjectException(const NoSuchObjectException& other1095) : TException() {
+  message = other1095.message;
+  __isset = other1095.__isset;
+}
+NoSuchObjectException& NoSuchObjectException::operator=(const NoSuchObjectException& other1096) {
+  message = other1096.message;
+  __isset = other1096.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NoSuchObjectException::printTo(std::ostream& out) const {
@@ -28149,6 +41908,9 @@ void swap(IndexAlreadyExistsException &a, IndexAlreadyExistsException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1101) : TException() {
   message = other1101.message;
   __isset = other1101.__isset;
@@ -28156,6 +41918,76 @@ IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExist
 IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1102) {
   message = other1102.message;
   __isset = other1102.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1081) : TException() {
+  message = other1081.message;
+  __isset = other1081.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1082) {
+  message = other1082.message;
+  __isset = other1082.__isset;
+=======
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1039) : TException() {
+  message = other1039.message;
+  __isset = other1039.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1040) {
+  message = other1040.message;
+  __isset = other1040.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1043) : TException() {
+  message = other1043.message;
+  __isset = other1043.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1044) {
+  message = other1044.message;
+  __isset = other1044.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1039) : TException() {
+  message = other1039.message;
+  __isset = other1039.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1040) {
+  message = other1040.message;
+  __isset = other1040.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1043) : TException() {
+  message = other1043.message;
+  __isset = other1043.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1044) {
+  message = other1044.message;
+  __isset = other1044.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1085) : TException() {
+  message = other1085.message;
+  __isset = other1085.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1086) {
+  message = other1086.message;
+  __isset = other1086.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+IndexAlreadyExistsException::IndexAlreadyExistsException(const IndexAlreadyExistsException& other1097) : TException() {
+  message = other1097.message;
+  __isset = other1097.__isset;
+}
+IndexAlreadyExistsException& IndexAlreadyExistsException::operator=(const IndexAlreadyExistsException& other1098) {
+  message = other1098.message;
+  __isset = other1098.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void IndexAlreadyExistsException::printTo(std::ostream& out) const {
@@ -28246,6 +42078,9 @@ void swap(InvalidOperationException &a, InvalidOperationException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1103) : TException() {
   message = other1103.message;
   __isset = other1103.__isset;
@@ -28253,6 +42088,76 @@ InvalidOperationException::InvalidOperationException(const InvalidOperationExcep
 InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1104) {
   message = other1104.message;
   __isset = other1104.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1083) : TException() {
+  message = other1083.message;
+  __isset = other1083.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1084) {
+  message = other1084.message;
+  __isset = other1084.__isset;
+=======
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1041) : TException() {
+  message = other1041.message;
+  __isset = other1041.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1042) {
+  message = other1042.message;
+  __isset = other1042.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1045) : TException() {
+  message = other1045.message;
+  __isset = other1045.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1046) {
+  message = other1046.message;
+  __isset = other1046.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1041) : TException() {
+  message = other1041.message;
+  __isset = other1041.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1042) {
+  message = other1042.message;
+  __isset = other1042.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1045) : TException() {
+  message = other1045.message;
+  __isset = other1045.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1046) {
+  message = other1046.message;
+  __isset = other1046.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1087) : TException() {
+  message = other1087.message;
+  __isset = other1087.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1088) {
+  message = other1088.message;
+  __isset = other1088.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+InvalidOperationException::InvalidOperationException(const InvalidOperationException& other1099) : TException() {
+  message = other1099.message;
+  __isset = other1099.__isset;
+}
+InvalidOperationException& InvalidOperationException::operator=(const InvalidOperationException& other1100) {
+  message = other1100.message;
+  __isset = other1100.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void InvalidOperationException::printTo(std::ostream& out) const {
@@ -28343,6 +42248,9 @@ void swap(ConfigValSecurityException &a, ConfigValSecurityException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1105) : TException() {
   message = other1105.message;
   __isset = other1105.__isset;
@@ -28350,6 +42258,76 @@ ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityEx
 ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1106) {
   message = other1106.message;
   __isset = other1106.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1085) : TException() {
+  message = other1085.message;
+  __isset = other1085.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1086) {
+  message = other1086.message;
+  __isset = other1086.__isset;
+=======
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1043) : TException() {
+  message = other1043.message;
+  __isset = other1043.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1044) {
+  message = other1044.message;
+  __isset = other1044.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1047) : TException() {
+  message = other1047.message;
+  __isset = other1047.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1048) {
+  message = other1048.message;
+  __isset = other1048.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1043) : TException() {
+  message = other1043.message;
+  __isset = other1043.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1044) {
+  message = other1044.message;
+  __isset = other1044.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1047) : TException() {
+  message = other1047.message;
+  __isset = other1047.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1048) {
+  message = other1048.message;
+  __isset = other1048.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1089) : TException() {
+  message = other1089.message;
+  __isset = other1089.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1090) {
+  message = other1090.message;
+  __isset = other1090.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+ConfigValSecurityException::ConfigValSecurityException(const ConfigValSecurityException& other1101) : TException() {
+  message = other1101.message;
+  __isset = other1101.__isset;
+}
+ConfigValSecurityException& ConfigValSecurityException::operator=(const ConfigValSecurityException& other1102) {
+  message = other1102.message;
+  __isset = other1102.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void ConfigValSecurityException::printTo(std::ostream& out) const {
@@ -28440,6 +42418,9 @@ void swap(InvalidInputException &a, InvalidInputException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 InvalidInputException::InvalidInputException(const InvalidInputException& other1107) : TException() {
   message = other1107.message;
   __isset = other1107.__isset;
@@ -28447,6 +42428,76 @@ InvalidInputException::InvalidInputException(const InvalidInputException& other1
 InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1108) {
   message = other1108.message;
   __isset = other1108.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+InvalidInputException::InvalidInputException(const InvalidInputException& other1087) : TException() {
+  message = other1087.message;
+  __isset = other1087.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1088) {
+  message = other1088.message;
+  __isset = other1088.__isset;
+=======
+InvalidInputException::InvalidInputException(const InvalidInputException& other1045) : TException() {
+  message = other1045.message;
+  __isset = other1045.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1046) {
+  message = other1046.message;
+  __isset = other1046.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+InvalidInputException::InvalidInputException(const InvalidInputException& other1049) : TException() {
+  message = other1049.message;
+  __isset = other1049.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1050) {
+  message = other1050.message;
+  __isset = other1050.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidInputException::InvalidInputException(const InvalidInputException& other1045) : TException() {
+  message = other1045.message;
+  __isset = other1045.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1046) {
+  message = other1046.message;
+  __isset = other1046.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+InvalidInputException::InvalidInputException(const InvalidInputException& other1049) : TException() {
+  message = other1049.message;
+  __isset = other1049.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1050) {
+  message = other1050.message;
+  __isset = other1050.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+InvalidInputException::InvalidInputException(const InvalidInputException& other1091) : TException() {
+  message = other1091.message;
+  __isset = other1091.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1092) {
+  message = other1092.message;
+  __isset = other1092.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+InvalidInputException::InvalidInputException(const InvalidInputException& other1103) : TException() {
+  message = other1103.message;
+  __isset = other1103.__isset;
+}
+InvalidInputException& InvalidInputException::operator=(const InvalidInputException& other1104) {
+  message = other1104.message;
+  __isset = other1104.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void InvalidInputException::printTo(std::ostream& out) const {
@@ -28537,6 +42588,9 @@ void swap(NoSuchTxnException &a, NoSuchTxnException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1109) : TException() {
   message = other1109.message;
   __isset = other1109.__isset;
@@ -28544,6 +42598,76 @@ NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1109) : TE
 NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1110) {
   message = other1110.message;
   __isset = other1110.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1089) : TException() {
+  message = other1089.message;
+  __isset = other1089.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1090) {
+  message = other1090.message;
+  __isset = other1090.__isset;
+=======
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1047) : TException() {
+  message = other1047.message;
+  __isset = other1047.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1048) {
+  message = other1048.message;
+  __isset = other1048.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1051) : TException() {
+  message = other1051.message;
+  __isset = other1051.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1052) {
+  message = other1052.message;
+  __isset = other1052.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1047) : TException() {
+  message = other1047.message;
+  __isset = other1047.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1048) {
+  message = other1048.message;
+  __isset = other1048.__isset;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1051) : TException() {
+  message = other1051.message;
+  __isset = other1051.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1052) {
+  message = other1052.message;
+  __isset = other1052.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1093) : TException() {
+  message = other1093.message;
+  __isset = other1093.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1094) {
+  message = other1094.message;
+  __isset = other1094.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NoSuchTxnException::NoSuchTxnException(const NoSuchTxnException& other1105) : TException() {
+  message = other1105.message;
+  __isset = other1105.__isset;
+}
+NoSuchTxnException& NoSuchTxnException::operator=(const NoSuchTxnException& other1106) {
+  message = other1106.message;
+  __isset = other1106.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NoSuchTxnException::printTo(std::ostream& out) const {
@@ -28634,6 +42758,9 @@ void swap(TxnAbortedException &a, TxnAbortedException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1111) : TException() {
   message = other1111.message;
   __isset = other1111.__isset;
@@ -28641,6 +42768,72 @@ TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1111) :
 TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1112) {
   message = other1112.message;
   __isset = other1112.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1091) : TException() {
+  message = other1091.message;
+  __isset = other1091.__isset;
+}
+TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1092) {
+  message = other1092.message;
+  __isset = other1092.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1049) : TException() {
+  message = other1049.message;
+  __isset = other1049.__isset;
+}
+TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1050) {
+  message = other1050.message;
+  __isset = other1050.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1053) : TException() {
+  message = other1053.message;
+  __isset = other1053.__isset;
+}
+TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1054) {
+  message = other1054.message;
+  __isset = other1054.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1053) : TException() {
+  message = other1053.message;
+  __isset = other1053.__isset;
+}
+TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1054) {
+  message = other1054.message;
+  __isset = other1054.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1095) : TException() {
+  message = other1095.message;
+  __isset = other1095.__isset;
+}
+TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1096) {
+  message = other1096.message;
+  __isset = other1096.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+TxnAbortedException::TxnAbortedException(const TxnAbortedException& other1107) : TException() {
+  message = other1107.message;
+  __isset = other1107.__isset;
+}
+TxnAbortedException& TxnAbortedException::operator=(const TxnAbortedException& other1108) {
+  message = other1108.message;
+  __isset = other1108.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void TxnAbortedException::printTo(std::ostream& out) const {
@@ -28731,6 +42924,9 @@ void swap(TxnOpenException &a, TxnOpenException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 TxnOpenException::TxnOpenException(const TxnOpenException& other1113) : TException() {
   message = other1113.message;
   __isset = other1113.__isset;
@@ -28738,6 +42934,72 @@ TxnOpenException::TxnOpenException(const TxnOpenException& other1113) : TExcepti
 TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1114) {
   message = other1114.message;
   __isset = other1114.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+TxnOpenException::TxnOpenException(const TxnOpenException& other1093) : TException() {
+  message = other1093.message;
+  __isset = other1093.__isset;
+}
+TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1094) {
+  message = other1094.message;
+  __isset = other1094.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+TxnOpenException::TxnOpenException(const TxnOpenException& other1051) : TException() {
+  message = other1051.message;
+  __isset = other1051.__isset;
+}
+TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1052) {
+  message = other1052.message;
+  __isset = other1052.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+TxnOpenException::TxnOpenException(const TxnOpenException& other1055) : TException() {
+  message = other1055.message;
+  __isset = other1055.__isset;
+}
+TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1056) {
+  message = other1056.message;
+  __isset = other1056.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+TxnOpenException::TxnOpenException(const TxnOpenException& other1055) : TException() {
+  message = other1055.message;
+  __isset = other1055.__isset;
+}
+TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1056) {
+  message = other1056.message;
+  __isset = other1056.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+TxnOpenException::TxnOpenException(const TxnOpenException& other1097) : TException() {
+  message = other1097.message;
+  __isset = other1097.__isset;
+}
+TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1098) {
+  message = other1098.message;
+  __isset = other1098.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+TxnOpenException::TxnOpenException(const TxnOpenException& other1109) : TException() {
+  message = other1109.message;
+  __isset = other1109.__isset;
+}
+TxnOpenException& TxnOpenException::operator=(const TxnOpenException& other1110) {
+  message = other1110.message;
+  __isset = other1110.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void TxnOpenException::printTo(std::ostream& out) const {
@@ -28828,6 +43090,9 @@ void swap(NoSuchLockException &a, NoSuchLockException &b) {
   swap(a.__isset, b.__isset);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1115) : TException() {
   message = other1115.message;
   __isset = other1115.__isset;
@@ -28835,6 +43100,72 @@ NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1115) :
 NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1116) {
   message = other1116.message;
   __isset = other1116.__isset;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1095) : TException() {
+  message = other1095.message;
+  __isset = other1095.__isset;
+}
+NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1096) {
+  message = other1096.message;
+  __isset = other1096.__isset;
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1053) : TException() {
+  message = other1053.message;
+  __isset = other1053.__isset;
+}
+NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1054) {
+  message = other1054.message;
+  __isset = other1054.__isset;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1057) : TException() {
+  message = other1057.message;
+  __isset = other1057.__isset;
+}
+NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1058) {
+  message = other1058.message;
+  __isset = other1058.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+=======
+NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1057) : TException() {
+  message = other1057.message;
+  __isset = other1057.__isset;
+}
+NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1058) {
+  message = other1058.message;
+  __isset = other1058.__isset;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1099) : TException() {
+  message = other1099.message;
+  __isset = other1099.__isset;
+}
+NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1100) {
+  message = other1100.message;
+  __isset = other1100.__isset;
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+NoSuchLockException::NoSuchLockException(const NoSuchLockException& other1111) : TException() {
+  message = other1111.message;
+  __isset = other1111.__isset;
+}
+NoSuchLockException& NoSuchLockException::operator=(const NoSuchLockException& other1112) {
+  message = other1112.message;
+  __isset = other1112.__isset;
+>>>>>>> alloc write id event changes
   return *this;
 }
 void NoSuchLockException::printTo(std::ostream& out) const {

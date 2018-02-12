@@ -14406,7 +14406,11 @@ class OpenTxnRequest {
   /**
    * @var int[]
    */
+<<<<<<< HEAD
   public $replSrcTxnIds = null;
+=======
+  public $replSrcTxnId = null;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
@@ -14432,7 +14436,11 @@ class OpenTxnRequest {
           'type' => TType::STRING,
           ),
         6 => array(
+<<<<<<< HEAD
           'var' => 'replSrcTxnIds',
+=======
+          'var' => 'replSrcTxnId',
+>>>>>>> HIVE-18679 : create/replicate open transaction event
           'type' => TType::LST,
           'etype' => TType::I64,
           'elem' => array(
@@ -14457,8 +14465,13 @@ class OpenTxnRequest {
       if (isset($vals['replPolicy'])) {
         $this->replPolicy = $vals['replPolicy'];
       }
+<<<<<<< HEAD
       if (isset($vals['replSrcTxnIds'])) {
         $this->replSrcTxnIds = $vals['replSrcTxnIds'];
+=======
+      if (isset($vals['replSrcTxnId'])) {
+        $this->replSrcTxnId = $vals['replSrcTxnId'];
+>>>>>>> HIVE-18679 : create/replicate open transaction event
       }
     }
   }
@@ -14519,6 +14532,7 @@ class OpenTxnRequest {
           break;
         case 6:
           if ($ftype == TType::LST) {
+<<<<<<< HEAD
             $this->replSrcTxnIds = array();
             $_size490 = 0;
             $_etype493 = 0;
@@ -14528,6 +14542,17 @@ class OpenTxnRequest {
               $elem495 = null;
               $xfer += $input->readI64($elem495);
               $this->replSrcTxnIds []= $elem495;
+=======
+            $this->replSrcTxnId = array();
+            $_size476 = 0;
+            $_etype479 = 0;
+            $xfer += $input->readListBegin($_etype479, $_size476);
+            for ($_i480 = 0; $_i480 < $_size476; ++$_i480)
+            {
+              $elem481 = null;
+              $xfer += $input->readI64($elem481);
+              $this->replSrcTxnId []= $elem481;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -14572,6 +14597,7 @@ class OpenTxnRequest {
       $xfer += $output->writeString($this->replPolicy);
       $xfer += $output->writeFieldEnd();
     }
+<<<<<<< HEAD
     if ($this->replSrcTxnIds !== null) {
       if (!is_array($this->replSrcTxnIds)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
@@ -14583,6 +14609,19 @@ class OpenTxnRequest {
           foreach ($this->replSrcTxnIds as $iter496)
           {
             $xfer += $output->writeI64($iter496);
+=======
+    if ($this->replSrcTxnId !== null) {
+      if (!is_array($this->replSrcTxnId)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('replSrcTxnId', TType::LST, 6);
+      {
+        $output->writeListBegin(TType::I64, count($this->replSrcTxnId));
+        {
+          foreach ($this->replSrcTxnId as $iter482)
+          {
+            $xfer += $output->writeI64($iter482);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
           }
         }
         $output->writeListEnd();
@@ -14646,6 +14685,7 @@ class OpenTxnsResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->txn_ids = array();
+<<<<<<< HEAD
             $_size497 = 0;
             $_etype500 = 0;
             $xfer += $input->readListBegin($_etype500, $_size497);
@@ -14654,6 +14694,16 @@ class OpenTxnsResponse {
               $elem502 = null;
               $xfer += $input->readI64($elem502);
               $this->txn_ids []= $elem502;
+=======
+            $_size483 = 0;
+            $_etype486 = 0;
+            $xfer += $input->readListBegin($_etype486, $_size483);
+            for ($_i487 = 0; $_i487 < $_size483; ++$_i487)
+            {
+              $elem488 = null;
+              $xfer += $input->readI64($elem488);
+              $this->txn_ids []= $elem488;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -14681,9 +14731,15 @@ class OpenTxnsResponse {
       {
         $output->writeListBegin(TType::I64, count($this->txn_ids));
         {
+<<<<<<< HEAD
           foreach ($this->txn_ids as $iter503)
           {
             $xfer += $output->writeI64($iter503);
+=======
+          foreach ($this->txn_ids as $iter489)
+          {
+            $xfer += $output->writeI64($iter489);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
           }
         }
         $output->writeListEnd();
@@ -14845,6 +14901,7 @@ class AbortTxnsRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->txn_ids = array();
+<<<<<<< HEAD
             $_size504 = 0;
             $_etype507 = 0;
             $xfer += $input->readListBegin($_etype507, $_size504);
@@ -14853,6 +14910,16 @@ class AbortTxnsRequest {
               $elem509 = null;
               $xfer += $input->readI64($elem509);
               $this->txn_ids []= $elem509;
+=======
+            $_size490 = 0;
+            $_etype493 = 0;
+            $xfer += $input->readListBegin($_etype493, $_size490);
+            for ($_i494 = 0; $_i494 < $_size490; ++$_i494)
+            {
+              $elem495 = null;
+              $xfer += $input->readI64($elem495);
+              $this->txn_ids []= $elem495;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -14880,9 +14947,15 @@ class AbortTxnsRequest {
       {
         $output->writeListBegin(TType::I64, count($this->txn_ids));
         {
+<<<<<<< HEAD
           foreach ($this->txn_ids as $iter510)
           {
             $xfer += $output->writeI64($iter510);
+=======
+          foreach ($this->txn_ids as $iter496)
+          {
+            $xfer += $output->writeI64($iter496);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
           }
         }
         $output->writeListEnd();
@@ -14987,6 +15060,234 @@ class CommitTxnRequest {
       $xfer += $output->writeString($this->replPolicy);
       $xfer += $output->writeFieldEnd();
     }
+<<<<<<< HEAD
+=======
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class GetTargetTxnIdsRequest {
+  static $_TSPEC;
+
+  /**
+   * @var int[]
+   */
+  public $txnid = null;
+  /**
+   * @var string
+   */
+  public $replPolicy = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'txnid',
+          'type' => TType::LST,
+          'etype' => TType::I64,
+          'elem' => array(
+            'type' => TType::I64,
+            ),
+          ),
+        2 => array(
+          'var' => 'replPolicy',
+          'type' => TType::STRING,
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['txnid'])) {
+        $this->txnid = $vals['txnid'];
+      }
+      if (isset($vals['replPolicy'])) {
+        $this->replPolicy = $vals['replPolicy'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'GetTargetTxnIdsRequest';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::LST) {
+            $this->txnid = array();
+            $_size497 = 0;
+            $_etype500 = 0;
+            $xfer += $input->readListBegin($_etype500, $_size497);
+            for ($_i501 = 0; $_i501 < $_size497; ++$_i501)
+            {
+              $elem502 = null;
+              $xfer += $input->readI64($elem502);
+              $this->txnid []= $elem502;
+            }
+            $xfer += $input->readListEnd();
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 2:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->replPolicy);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('GetTargetTxnIdsRequest');
+    if ($this->txnid !== null) {
+      if (!is_array($this->txnid)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('txnid', TType::LST, 1);
+      {
+        $output->writeListBegin(TType::I64, count($this->txnid));
+        {
+          foreach ($this->txnid as $iter503)
+          {
+            $xfer += $output->writeI64($iter503);
+          }
+        }
+        $output->writeListEnd();
+      }
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->replPolicy !== null) {
+      $xfer += $output->writeFieldBegin('replPolicy', TType::STRING, 2);
+      $xfer += $output->writeString($this->replPolicy);
+      $xfer += $output->writeFieldEnd();
+    }
+    $xfer += $output->writeFieldStop();
+    $xfer += $output->writeStructEnd();
+    return $xfer;
+  }
+
+}
+
+class GetTargetTxnIdsResponse {
+  static $_TSPEC;
+
+  /**
+   * @var int[]
+   */
+  public $txnid = null;
+
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'txnid',
+          'type' => TType::LST,
+          'etype' => TType::I64,
+          'elem' => array(
+            'type' => TType::I64,
+            ),
+          ),
+        );
+    }
+    if (is_array($vals)) {
+      if (isset($vals['txnid'])) {
+        $this->txnid = $vals['txnid'];
+      }
+    }
+  }
+
+  public function getName() {
+    return 'GetTargetTxnIdsResponse';
+  }
+
+  public function read($input)
+  {
+    $xfer = 0;
+    $fname = null;
+    $ftype = 0;
+    $fid = 0;
+    $xfer += $input->readStructBegin($fname);
+    while (true)
+    {
+      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
+      if ($ftype == TType::STOP) {
+        break;
+      }
+      switch ($fid)
+      {
+        case 1:
+          if ($ftype == TType::LST) {
+            $this->txnid = array();
+            $_size504 = 0;
+            $_etype507 = 0;
+            $xfer += $input->readListBegin($_etype507, $_size504);
+            for ($_i508 = 0; $_i508 < $_size504; ++$_i508)
+            {
+              $elem509 = null;
+              $xfer += $input->readI64($elem509);
+              $this->txnid []= $elem509;
+            }
+            $xfer += $input->readListEnd();
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        default:
+          $xfer += $input->skip($ftype);
+          break;
+      }
+      $xfer += $input->readFieldEnd();
+    }
+    $xfer += $input->readStructEnd();
+    return $xfer;
+  }
+
+  public function write($output) {
+    $xfer = 0;
+    $xfer += $output->writeStructBegin('GetTargetTxnIdsResponse');
+    if ($this->txnid !== null) {
+      if (!is_array($this->txnid)) {
+        throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
+      }
+      $xfer += $output->writeFieldBegin('txnid', TType::LST, 1);
+      {
+        $output->writeListBegin(TType::I64, count($this->txnid));
+        {
+          foreach ($this->txnid as $iter510)
+          {
+            $xfer += $output->writeI64($iter510);
+          }
+        }
+        $output->writeListEnd();
+      }
+      $xfer += $output->writeFieldEnd();
+    }
+>>>>>>> HIVE-18679 : create/replicate open transaction event
     $xfer += $output->writeFieldStop();
     $xfer += $output->writeStructEnd();
     return $xfer;
@@ -15055,14 +15356,35 @@ class GetValidWriteIdsRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fullTableNames = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size511 = 0;
             $_etype514 = 0;
             $xfer += $input->readListBegin($_etype514, $_size511);
             for ($_i515 = 0; $_i515 < $_size511; ++$_i515)
+<<<<<<< HEAD
             {
               $elem516 = null;
               $xfer += $input->readString($elem516);
               $this->fullTableNames []= $elem516;
+=======
+            $_size497 = 0;
+            $_etype500 = 0;
+            $xfer += $input->readListBegin($_etype500, $_size497);
+            for ($_i501 = 0; $_i501 < $_size497; ++$_i501)
+            {
+              $elem502 = null;
+              $xfer += $input->readString($elem502);
+              $this->fullTableNames []= $elem502;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            {
+              $elem516 = null;
+              $xfer += $input->readString($elem516);
+              $this->fullTableNames []= $elem516;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -15097,9 +15419,21 @@ class GetValidWriteIdsRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->fullTableNames));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->fullTableNames as $iter517)
           {
             $xfer += $output->writeString($iter517);
+=======
+          foreach ($this->fullTableNames as $iter503)
+          {
+            $xfer += $output->writeString($iter503);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->fullTableNames as $iter517)
+          {
+            $xfer += $output->writeString($iter517);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -15226,14 +15560,35 @@ class TableValidWriteIds {
         case 3:
           if ($ftype == TType::LST) {
             $this->invalidWriteIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size518 = 0;
             $_etype521 = 0;
             $xfer += $input->readListBegin($_etype521, $_size518);
             for ($_i522 = 0; $_i522 < $_size518; ++$_i522)
+<<<<<<< HEAD
             {
               $elem523 = null;
               $xfer += $input->readI64($elem523);
               $this->invalidWriteIds []= $elem523;
+=======
+            $_size504 = 0;
+            $_etype507 = 0;
+            $xfer += $input->readListBegin($_etype507, $_size504);
+            for ($_i508 = 0; $_i508 < $_size504; ++$_i508)
+            {
+              $elem509 = null;
+              $xfer += $input->readI64($elem509);
+              $this->invalidWriteIds []= $elem509;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            {
+              $elem523 = null;
+              $xfer += $input->readI64($elem523);
+              $this->invalidWriteIds []= $elem523;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -15285,9 +15640,21 @@ class TableValidWriteIds {
       {
         $output->writeListBegin(TType::I64, count($this->invalidWriteIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->invalidWriteIds as $iter524)
           {
             $xfer += $output->writeI64($iter524);
+=======
+          foreach ($this->invalidWriteIds as $iter510)
+          {
+            $xfer += $output->writeI64($iter510);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->invalidWriteIds as $iter524)
+          {
+            $xfer += $output->writeI64($iter524);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -15362,15 +15729,52 @@ class GetValidWriteIdsResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->tblValidWriteIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size525 = 0;
             $_etype528 = 0;
             $xfer += $input->readListBegin($_etype528, $_size525);
             for ($_i529 = 0; $_i529 < $_size525; ++$_i529)
+<<<<<<< HEAD
             {
               $elem530 = null;
               $elem530 = new \metastore\TableValidWriteIds();
               $xfer += $elem530->read($input);
               $this->tblValidWriteIds []= $elem530;
+=======
+            $_size511 = 0;
+            $_etype514 = 0;
+            $xfer += $input->readListBegin($_etype514, $_size511);
+            for ($_i515 = 0; $_i515 < $_size511; ++$_i515)
+            {
+              $elem516 = null;
+              $elem516 = new \metastore\TableValidWriteIds();
+              $xfer += $elem516->read($input);
+              $this->tblValidWriteIds []= $elem516;
+<<<<<<< HEAD
+=======
+            $this->txn_ids = array();
+            $_size483 = 0;
+            $_etype486 = 0;
+            $xfer += $input->readListBegin($_etype486, $_size483);
+            for ($_i487 = 0; $_i487 < $_size483; ++$_i487)
+            {
+              $elem488 = null;
+              $xfer += $input->readI64($elem488);
+              $this->txn_ids []= $elem488;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem530 = null;
+              $elem530 = new \metastore\TableValidWriteIds();
+              $xfer += $elem530->read($input);
+              $this->tblValidWriteIds []= $elem530;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -15398,9 +15802,33 @@ class GetValidWriteIdsResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->tblValidWriteIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->tblValidWriteIds as $iter531)
           {
             $xfer += $iter531->write($output);
+=======
+<<<<<<< HEAD
+          foreach ($this->tblValidWriteIds as $iter517)
+          {
+            $xfer += $iter517->write($output);
+=======
+          foreach ($this->txn_ids as $iter489)
+          {
+            $xfer += $output->writeI64($iter489);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->tblValidWriteIds as $iter517)
+          {
+            $xfer += $iter517->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->tblValidWriteIds as $iter531)
+          {
+            $xfer += $iter531->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -15486,14 +15914,35 @@ class AllocateTableWriteIdsRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->txnIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size532 = 0;
             $_etype535 = 0;
             $xfer += $input->readListBegin($_etype535, $_size532);
             for ($_i536 = 0; $_i536 < $_size532; ++$_i536)
+<<<<<<< HEAD
             {
               $elem537 = null;
               $xfer += $input->readI64($elem537);
               $this->txnIds []= $elem537;
+=======
+            $_size518 = 0;
+            $_etype521 = 0;
+            $xfer += $input->readListBegin($_etype521, $_size518);
+            for ($_i522 = 0; $_i522 < $_size518; ++$_i522)
+            {
+              $elem523 = null;
+              $xfer += $input->readI64($elem523);
+              $this->txnIds []= $elem523;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            {
+              $elem537 = null;
+              $xfer += $input->readI64($elem537);
+              $this->txnIds []= $elem537;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -15535,9 +15984,21 @@ class AllocateTableWriteIdsRequest {
       {
         $output->writeListBegin(TType::I64, count($this->txnIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->txnIds as $iter538)
           {
             $xfer += $output->writeI64($iter538);
+=======
+          foreach ($this->txnIds as $iter524)
+          {
+            $xfer += $output->writeI64($iter524);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->txnIds as $iter538)
+          {
+            $xfer += $output->writeI64($iter538);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -15710,15 +16171,38 @@ class AllocateTableWriteIdsResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->txnToWriteIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size539 = 0;
             $_etype542 = 0;
             $xfer += $input->readListBegin($_etype542, $_size539);
             for ($_i543 = 0; $_i543 < $_size539; ++$_i543)
+<<<<<<< HEAD
             {
               $elem544 = null;
               $elem544 = new \metastore\TxnToWriteId();
               $xfer += $elem544->read($input);
               $this->txnToWriteIds []= $elem544;
+=======
+            $_size525 = 0;
+            $_etype528 = 0;
+            $xfer += $input->readListBegin($_etype528, $_size525);
+            for ($_i529 = 0; $_i529 < $_size525; ++$_i529)
+            {
+              $elem530 = null;
+              $elem530 = new \metastore\TxnToWriteId();
+              $xfer += $elem530->read($input);
+              $this->txnToWriteIds []= $elem530;
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+            {
+              $elem544 = null;
+              $elem544 = new \metastore\TxnToWriteId();
+              $xfer += $elem544->read($input);
+              $this->txnToWriteIds []= $elem544;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -15746,9 +16230,21 @@ class AllocateTableWriteIdsResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->txnToWriteIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->txnToWriteIds as $iter545)
           {
             $xfer += $iter545->write($output);
+=======
+          foreach ($this->txnToWriteIds as $iter531)
+          {
+            $xfer += $iter531->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->txnToWriteIds as $iter545)
+          {
+            $xfer += $iter545->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -16093,15 +16589,67 @@ class LockRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->component = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size546 = 0;
             $_etype549 = 0;
             $xfer += $input->readListBegin($_etype549, $_size546);
             for ($_i550 = 0; $_i550 < $_size546; ++$_i550)
+<<<<<<< HEAD
             {
               $elem551 = null;
               $elem551 = new \metastore\LockComponent();
               $xfer += $elem551->read($input);
               $this->component []= $elem551;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size532 = 0;
+            $_etype535 = 0;
+            $xfer += $input->readListBegin($_etype535, $_size532);
+            for ($_i536 = 0; $_i536 < $_size532; ++$_i536)
+            {
+              $elem537 = null;
+              $elem537 = new \metastore\LockComponent();
+              $xfer += $elem537->read($input);
+              $this->component []= $elem537;
+<<<<<<< HEAD
+=======
+            $_size497 = 0;
+            $_etype500 = 0;
+            $xfer += $input->readListBegin($_etype500, $_size497);
+            for ($_i501 = 0; $_i501 < $_size497; ++$_i501)
+            {
+=======
+            $_size497 = 0;
+            $_etype500 = 0;
+            $xfer += $input->readListBegin($_etype500, $_size497);
+            for ($_i501 = 0; $_i501 < $_size497; ++$_i501)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem502 = null;
+              $elem502 = new \metastore\LockComponent();
+              $xfer += $elem502->read($input);
+              $this->component []= $elem502;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem551 = null;
+              $elem551 = new \metastore\LockComponent();
+              $xfer += $elem551->read($input);
+              $this->component []= $elem551;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -16157,9 +16705,39 @@ class LockRequest {
       {
         $output->writeListBegin(TType::STRUCT, count($this->component));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->component as $iter552)
           {
             $xfer += $iter552->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->component as $iter538)
+          {
+            $xfer += $iter538->write($output);
+=======
+          foreach ($this->component as $iter503)
+          {
+            $xfer += $iter503->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->component as $iter503)
+          {
+            $xfer += $iter503->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->component as $iter538)
+          {
+            $xfer += $iter538->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->component as $iter552)
+          {
+            $xfer += $iter552->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -17102,15 +17680,67 @@ class ShowLocksResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->locks = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size553 = 0;
             $_etype556 = 0;
             $xfer += $input->readListBegin($_etype556, $_size553);
             for ($_i557 = 0; $_i557 < $_size553; ++$_i557)
+<<<<<<< HEAD
             {
               $elem558 = null;
               $elem558 = new \metastore\ShowLocksResponseElement();
               $xfer += $elem558->read($input);
               $this->locks []= $elem558;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size539 = 0;
+            $_etype542 = 0;
+            $xfer += $input->readListBegin($_etype542, $_size539);
+            for ($_i543 = 0; $_i543 < $_size539; ++$_i543)
+            {
+              $elem544 = null;
+              $elem544 = new \metastore\ShowLocksResponseElement();
+              $xfer += $elem544->read($input);
+              $this->locks []= $elem544;
+<<<<<<< HEAD
+=======
+            $_size504 = 0;
+            $_etype507 = 0;
+            $xfer += $input->readListBegin($_etype507, $_size504);
+            for ($_i508 = 0; $_i508 < $_size504; ++$_i508)
+            {
+=======
+            $_size504 = 0;
+            $_etype507 = 0;
+            $xfer += $input->readListBegin($_etype507, $_size504);
+            for ($_i508 = 0; $_i508 < $_size504; ++$_i508)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem509 = null;
+              $elem509 = new \metastore\ShowLocksResponseElement();
+              $xfer += $elem509->read($input);
+              $this->locks []= $elem509;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem558 = null;
+              $elem558 = new \metastore\ShowLocksResponseElement();
+              $xfer += $elem558->read($input);
+              $this->locks []= $elem558;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -17138,9 +17768,39 @@ class ShowLocksResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->locks));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->locks as $iter559)
           {
             $xfer += $iter559->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->locks as $iter545)
+          {
+            $xfer += $iter545->write($output);
+=======
+          foreach ($this->locks as $iter510)
+          {
+            $xfer += $iter510->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->locks as $iter510)
+          {
+            $xfer += $iter510->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->locks as $iter545)
+          {
+            $xfer += $iter545->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->locks as $iter559)
+          {
+            $xfer += $iter559->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -17415,10 +18075,16 @@ class HeartbeatTxnRangeResponse {
         case 1:
           if ($ftype == TType::SET) {
             $this->aborted = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size560 = 0;
             $_etype563 = 0;
             $xfer += $input->readSetBegin($_etype563, $_size560);
             for ($_i564 = 0; $_i564 < $_size560; ++$_i564)
+<<<<<<< HEAD
             {
               $elem565 = null;
               $xfer += $input->readI64($elem565);
@@ -17426,6 +18092,58 @@ class HeartbeatTxnRangeResponse {
                 $this->aborted[$elem565] = true;
               } else {
                 $this->aborted []= $elem565;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size546 = 0;
+            $_etype549 = 0;
+            $xfer += $input->readSetBegin($_etype549, $_size546);
+            for ($_i550 = 0; $_i550 < $_size546; ++$_i550)
+=======
+>>>>>>> alloc write id event changes
+            {
+              $elem565 = null;
+              $xfer += $input->readI64($elem565);
+              if (is_scalar($elem565)) {
+                $this->aborted[$elem565] = true;
+              } else {
+<<<<<<< HEAD
+                $this->aborted []= $elem551;
+<<<<<<< HEAD
+=======
+            $_size511 = 0;
+            $_etype514 = 0;
+            $xfer += $input->readSetBegin($_etype514, $_size511);
+            for ($_i515 = 0; $_i515 < $_size511; ++$_i515)
+            {
+              $elem516 = null;
+              $xfer += $input->readI64($elem516);
+              if (is_scalar($elem516)) {
+                $this->aborted[$elem516] = true;
+              } else {
+                $this->aborted []= $elem516;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size511 = 0;
+            $_etype514 = 0;
+            $xfer += $input->readSetBegin($_etype514, $_size511);
+            for ($_i515 = 0; $_i515 < $_size511; ++$_i515)
+            {
+              $elem516 = null;
+              $xfer += $input->readI64($elem516);
+              if (is_scalar($elem516)) {
+                $this->aborted[$elem516] = true;
+              } else {
+                $this->aborted []= $elem516;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                $this->aborted []= $elem565;
+>>>>>>> alloc write id event changes
               }
             }
             $xfer += $input->readSetEnd();
@@ -17436,10 +18154,16 @@ class HeartbeatTxnRangeResponse {
         case 2:
           if ($ftype == TType::SET) {
             $this->nosuch = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size566 = 0;
             $_etype569 = 0;
             $xfer += $input->readSetBegin($_etype569, $_size566);
             for ($_i570 = 0; $_i570 < $_size566; ++$_i570)
+<<<<<<< HEAD
             {
               $elem571 = null;
               $xfer += $input->readI64($elem571);
@@ -17447,6 +18171,50 @@ class HeartbeatTxnRangeResponse {
                 $this->nosuch[$elem571] = true;
               } else {
                 $this->nosuch []= $elem571;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size552 = 0;
+            $_etype555 = 0;
+            $xfer += $input->readSetBegin($_etype555, $_size552);
+            for ($_i556 = 0; $_i556 < $_size552; ++$_i556)
+=======
+>>>>>>> alloc write id event changes
+            {
+              $elem571 = null;
+              $xfer += $input->readI64($elem571);
+              if (is_scalar($elem571)) {
+                $this->nosuch[$elem571] = true;
+              } else {
+<<<<<<< HEAD
+                $this->nosuch []= $elem557;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size517 = 0;
+            $_etype520 = 0;
+            $xfer += $input->readSetBegin($_etype520, $_size517);
+            for ($_i521 = 0; $_i521 < $_size517; ++$_i521)
+            {
+              $elem522 = null;
+              $xfer += $input->readI64($elem522);
+              if (is_scalar($elem522)) {
+                $this->nosuch[$elem522] = true;
+              } else {
+                $this->nosuch []= $elem522;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                $this->nosuch []= $elem571;
+>>>>>>> alloc write id event changes
               }
             }
             $xfer += $input->readSetEnd();
@@ -17475,12 +18243,53 @@ class HeartbeatTxnRangeResponse {
       {
         $output->writeSetBegin(TType::I64, count($this->aborted));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->aborted as $iter572 => $iter573)
           {
             if (is_scalar($iter573)) {
             $xfer += $output->writeI64($iter572);
             } else {
             $xfer += $output->writeI64($iter573);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->aborted as $iter558 => $iter559)
+=======
+          foreach ($this->aborted as $iter572 => $iter573)
+>>>>>>> alloc write id event changes
+          {
+            if (is_scalar($iter573)) {
+            $xfer += $output->writeI64($iter572);
+            } else {
+<<<<<<< HEAD
+            $xfer += $output->writeI64($iter559);
+<<<<<<< HEAD
+=======
+          foreach ($this->aborted as $iter523 => $iter524)
+          {
+            if (is_scalar($iter524)) {
+            $xfer += $output->writeI64($iter523);
+            } else {
+            $xfer += $output->writeI64($iter524);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->aborted as $iter523 => $iter524)
+          {
+            if (is_scalar($iter524)) {
+            $xfer += $output->writeI64($iter523);
+            } else {
+            $xfer += $output->writeI64($iter524);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            $xfer += $output->writeI64($iter573);
+>>>>>>> alloc write id event changes
             }
           }
         }
@@ -17496,12 +18305,50 @@ class HeartbeatTxnRangeResponse {
       {
         $output->writeSetBegin(TType::I64, count($this->nosuch));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->nosuch as $iter574 => $iter575)
           {
             if (is_scalar($iter575)) {
             $xfer += $output->writeI64($iter574);
             } else {
             $xfer += $output->writeI64($iter575);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->nosuch as $iter560 => $iter561)
+=======
+          foreach ($this->nosuch as $iter574 => $iter575)
+>>>>>>> alloc write id event changes
+          {
+            if (is_scalar($iter575)) {
+            $xfer += $output->writeI64($iter574);
+            } else {
+<<<<<<< HEAD
+            $xfer += $output->writeI64($iter561);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          foreach ($this->nosuch as $iter525 => $iter526)
+          {
+            if (is_scalar($iter526)) {
+            $xfer += $output->writeI64($iter525);
+            } else {
+            $xfer += $output->writeI64($iter526);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            $xfer += $output->writeI64($iter575);
+>>>>>>> alloc write id event changes
             }
           }
         }
@@ -17660,17 +18507,75 @@ class CompactionRequest {
         case 6:
           if ($ftype == TType::MAP) {
             $this->properties = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size576 = 0;
             $_ktype577 = 0;
             $_vtype578 = 0;
             $xfer += $input->readMapBegin($_ktype577, $_vtype578, $_size576);
             for ($_i580 = 0; $_i580 < $_size576; ++$_i580)
+<<<<<<< HEAD
             {
               $key581 = '';
               $val582 = '';
               $xfer += $input->readString($key581);
               $xfer += $input->readString($val582);
               $this->properties[$key581] = $val582;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size562 = 0;
+            $_ktype563 = 0;
+            $_vtype564 = 0;
+            $xfer += $input->readMapBegin($_ktype563, $_vtype564, $_size562);
+            for ($_i566 = 0; $_i566 < $_size562; ++$_i566)
+            {
+              $key567 = '';
+              $val568 = '';
+              $xfer += $input->readString($key567);
+              $xfer += $input->readString($val568);
+              $this->properties[$key567] = $val568;
+<<<<<<< HEAD
+=======
+            $_size527 = 0;
+            $_ktype528 = 0;
+            $_vtype529 = 0;
+            $xfer += $input->readMapBegin($_ktype528, $_vtype529, $_size527);
+            for ($_i531 = 0; $_i531 < $_size527; ++$_i531)
+            {
+=======
+            $_size527 = 0;
+            $_ktype528 = 0;
+            $_vtype529 = 0;
+            $xfer += $input->readMapBegin($_ktype528, $_vtype529, $_size527);
+            for ($_i531 = 0; $_i531 < $_size527; ++$_i531)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $key532 = '';
+              $val533 = '';
+              $xfer += $input->readString($key532);
+              $xfer += $input->readString($val533);
+              $this->properties[$key532] = $val533;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $key581 = '';
+              $val582 = '';
+              $xfer += $input->readString($key581);
+              $xfer += $input->readString($val582);
+              $this->properties[$key581] = $val582;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readMapEnd();
           } else {
@@ -17723,10 +18628,43 @@ class CompactionRequest {
       {
         $output->writeMapBegin(TType::STRING, TType::STRING, count($this->properties));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->properties as $kiter583 => $viter584)
           {
             $xfer += $output->writeString($kiter583);
             $xfer += $output->writeString($viter584);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->properties as $kiter569 => $viter570)
+          {
+            $xfer += $output->writeString($kiter569);
+            $xfer += $output->writeString($viter570);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          foreach ($this->properties as $kiter534 => $viter535)
+          {
+            $xfer += $output->writeString($kiter534);
+            $xfer += $output->writeString($viter535);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->properties as $kiter583 => $viter584)
+          {
+            $xfer += $output->writeString($kiter583);
+            $xfer += $output->writeString($viter584);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeMapEnd();
@@ -18313,15 +19251,62 @@ class ShowCompactResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->compacts = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size585 = 0;
             $_etype588 = 0;
             $xfer += $input->readListBegin($_etype588, $_size585);
             for ($_i589 = 0; $_i589 < $_size585; ++$_i589)
+<<<<<<< HEAD
             {
               $elem590 = null;
               $elem590 = new \metastore\ShowCompactResponseElement();
               $xfer += $elem590->read($input);
               $this->compacts []= $elem590;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size571 = 0;
+            $_etype574 = 0;
+            $xfer += $input->readListBegin($_etype574, $_size571);
+            for ($_i575 = 0; $_i575 < $_size571; ++$_i575)
+            {
+              $elem576 = null;
+              $elem576 = new \metastore\ShowCompactResponseElement();
+              $xfer += $elem576->read($input);
+              $this->compacts []= $elem576;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size536 = 0;
+            $_etype539 = 0;
+            $xfer += $input->readListBegin($_etype539, $_size536);
+            for ($_i540 = 0; $_i540 < $_size536; ++$_i540)
+            {
+              $elem541 = null;
+              $elem541 = new \metastore\ShowCompactResponseElement();
+              $xfer += $elem541->read($input);
+              $this->compacts []= $elem541;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem590 = null;
+              $elem590 = new \metastore\ShowCompactResponseElement();
+              $xfer += $elem590->read($input);
+              $this->compacts []= $elem590;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -18349,9 +19334,39 @@ class ShowCompactResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->compacts));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->compacts as $iter591)
           {
             $xfer += $iter591->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->compacts as $iter577)
+          {
+            $xfer += $iter577->write($output);
+=======
+          foreach ($this->compacts as $iter542)
+          {
+            $xfer += $iter542->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->compacts as $iter542)
+          {
+            $xfer += $iter542->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->compacts as $iter577)
+          {
+            $xfer += $iter577->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->compacts as $iter591)
+          {
+            $xfer += $iter591->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -18498,14 +19513,63 @@ class AddDynamicPartitions {
         case 5:
           if ($ftype == TType::LST) {
             $this->partitionnames = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size592 = 0;
             $_etype595 = 0;
             $xfer += $input->readListBegin($_etype595, $_size592);
             for ($_i596 = 0; $_i596 < $_size592; ++$_i596)
+<<<<<<< HEAD
             {
               $elem597 = null;
               $xfer += $input->readString($elem597);
               $this->partitionnames []= $elem597;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size578 = 0;
+            $_etype581 = 0;
+            $xfer += $input->readListBegin($_etype581, $_size578);
+            for ($_i582 = 0; $_i582 < $_size578; ++$_i582)
+            {
+              $elem583 = null;
+              $xfer += $input->readString($elem583);
+              $this->partitionnames []= $elem583;
+<<<<<<< HEAD
+=======
+            $_size543 = 0;
+            $_etype546 = 0;
+            $xfer += $input->readListBegin($_etype546, $_size543);
+            for ($_i547 = 0; $_i547 < $_size543; ++$_i547)
+            {
+              $elem548 = null;
+              $xfer += $input->readString($elem548);
+              $this->partitionnames []= $elem548;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size543 = 0;
+            $_etype546 = 0;
+            $xfer += $input->readListBegin($_etype546, $_size543);
+            for ($_i547 = 0; $_i547 < $_size543; ++$_i547)
+            {
+              $elem548 = null;
+              $xfer += $input->readString($elem548);
+              $this->partitionnames []= $elem548;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem597 = null;
+              $xfer += $input->readString($elem597);
+              $this->partitionnames []= $elem597;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -18560,9 +19624,39 @@ class AddDynamicPartitions {
       {
         $output->writeListBegin(TType::STRING, count($this->partitionnames));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->partitionnames as $iter598)
           {
             $xfer += $output->writeString($iter598);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->partitionnames as $iter584)
+          {
+            $xfer += $output->writeString($iter584);
+=======
+          foreach ($this->partitionnames as $iter549)
+          {
+            $xfer += $output->writeString($iter549);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->partitionnames as $iter549)
+          {
+            $xfer += $output->writeString($iter549);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->partitionnames as $iter584)
+          {
+            $xfer += $output->writeString($iter584);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->partitionnames as $iter598)
+          {
+            $xfer += $output->writeString($iter598);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -18868,10 +19962,16 @@ class CreationMetadata {
         case 3:
           if ($ftype == TType::SET) {
             $this->tablesUsed = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size599 = 0;
             $_etype602 = 0;
             $xfer += $input->readSetBegin($_etype602, $_size599);
             for ($_i603 = 0; $_i603 < $_size599; ++$_i603)
+<<<<<<< HEAD
             {
               $elem604 = null;
               $xfer += $input->readString($elem604);
@@ -18879,6 +19979,55 @@ class CreationMetadata {
                 $this->tablesUsed[$elem604] = true;
               } else {
                 $this->tablesUsed []= $elem604;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size585 = 0;
+            $_etype588 = 0;
+            $xfer += $input->readSetBegin($_etype588, $_size585);
+            for ($_i589 = 0; $_i589 < $_size585; ++$_i589)
+=======
+>>>>>>> alloc write id event changes
+            {
+              $elem604 = null;
+              $xfer += $input->readString($elem604);
+              if (is_scalar($elem604)) {
+                $this->tablesUsed[$elem604] = true;
+              } else {
+<<<<<<< HEAD
+                $this->tablesUsed []= $elem590;
+<<<<<<< HEAD
+=======
+            $_size550 = 0;
+            $_etype553 = 0;
+            $xfer += $input->readSetBegin($_etype553, $_size550);
+            for ($_i554 = 0; $_i554 < $_size550; ++$_i554)
+            {
+=======
+            $_size550 = 0;
+            $_etype553 = 0;
+            $xfer += $input->readSetBegin($_etype553, $_size550);
+            for ($_i554 = 0; $_i554 < $_size550; ++$_i554)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem555 = null;
+              $xfer += $input->readString($elem555);
+              if (is_scalar($elem555)) {
+                $this->tablesUsed[$elem555] = true;
+              } else {
+                $this->tablesUsed []= $elem555;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                $this->tablesUsed []= $elem604;
+>>>>>>> alloc write id event changes
               }
             }
             $xfer += $input->readSetEnd();
@@ -18924,12 +20073,52 @@ class CreationMetadata {
       {
         $output->writeSetBegin(TType::STRING, count($this->tablesUsed));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->tablesUsed as $iter605 => $iter606)
           {
             if (is_scalar($iter606)) {
             $xfer += $output->writeString($iter605);
             } else {
             $xfer += $output->writeString($iter606);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->tablesUsed as $iter591 => $iter592)
+=======
+          foreach ($this->tablesUsed as $iter605 => $iter606)
+>>>>>>> alloc write id event changes
+          {
+            if (is_scalar($iter606)) {
+            $xfer += $output->writeString($iter605);
+            } else {
+<<<<<<< HEAD
+            $xfer += $output->writeString($iter592);
+<<<<<<< HEAD
+=======
+          foreach ($this->tablesUsed as $iter556 => $iter557)
+          {
+=======
+          foreach ($this->tablesUsed as $iter556 => $iter557)
+          {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            if (is_scalar($iter557)) {
+            $xfer += $output->writeString($iter556);
+            } else {
+            $xfer += $output->writeString($iter557);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            $xfer += $output->writeString($iter606);
+>>>>>>> alloc write id event changes
             }
           }
         }
@@ -19311,15 +20500,67 @@ class NotificationEventResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->events = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size607 = 0;
             $_etype610 = 0;
             $xfer += $input->readListBegin($_etype610, $_size607);
             for ($_i611 = 0; $_i611 < $_size607; ++$_i611)
+<<<<<<< HEAD
             {
               $elem612 = null;
               $elem612 = new \metastore\NotificationEvent();
               $xfer += $elem612->read($input);
               $this->events []= $elem612;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size593 = 0;
+            $_etype596 = 0;
+            $xfer += $input->readListBegin($_etype596, $_size593);
+            for ($_i597 = 0; $_i597 < $_size593; ++$_i597)
+            {
+              $elem598 = null;
+              $elem598 = new \metastore\NotificationEvent();
+              $xfer += $elem598->read($input);
+              $this->events []= $elem598;
+<<<<<<< HEAD
+=======
+            $_size558 = 0;
+            $_etype561 = 0;
+            $xfer += $input->readListBegin($_etype561, $_size558);
+            for ($_i562 = 0; $_i562 < $_size558; ++$_i562)
+            {
+=======
+            $_size558 = 0;
+            $_etype561 = 0;
+            $xfer += $input->readListBegin($_etype561, $_size558);
+            for ($_i562 = 0; $_i562 < $_size558; ++$_i562)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem563 = null;
+              $elem563 = new \metastore\NotificationEvent();
+              $xfer += $elem563->read($input);
+              $this->events []= $elem563;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem612 = null;
+              $elem612 = new \metastore\NotificationEvent();
+              $xfer += $elem612->read($input);
+              $this->events []= $elem612;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -19347,9 +20588,39 @@ class NotificationEventResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->events));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->events as $iter613)
           {
             $xfer += $iter613->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->events as $iter599)
+          {
+            $xfer += $iter599->write($output);
+=======
+          foreach ($this->events as $iter564)
+          {
+            $xfer += $iter564->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->events as $iter564)
+          {
+            $xfer += $iter564->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->events as $iter599)
+          {
+            $xfer += $iter599->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->events as $iter613)
+          {
+            $xfer += $iter613->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -19694,14 +20965,63 @@ class InsertEventRequestData {
         case 2:
           if ($ftype == TType::LST) {
             $this->filesAdded = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size614 = 0;
             $_etype617 = 0;
             $xfer += $input->readListBegin($_etype617, $_size614);
             for ($_i618 = 0; $_i618 < $_size614; ++$_i618)
+<<<<<<< HEAD
             {
               $elem619 = null;
               $xfer += $input->readString($elem619);
               $this->filesAdded []= $elem619;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size600 = 0;
+            $_etype603 = 0;
+            $xfer += $input->readListBegin($_etype603, $_size600);
+            for ($_i604 = 0; $_i604 < $_size600; ++$_i604)
+            {
+              $elem605 = null;
+              $xfer += $input->readString($elem605);
+              $this->filesAdded []= $elem605;
+<<<<<<< HEAD
+=======
+            $_size565 = 0;
+            $_etype568 = 0;
+            $xfer += $input->readListBegin($_etype568, $_size565);
+            for ($_i569 = 0; $_i569 < $_size565; ++$_i569)
+            {
+              $elem570 = null;
+              $xfer += $input->readString($elem570);
+              $this->filesAdded []= $elem570;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size565 = 0;
+            $_etype568 = 0;
+            $xfer += $input->readListBegin($_etype568, $_size565);
+            for ($_i569 = 0; $_i569 < $_size565; ++$_i569)
+            {
+              $elem570 = null;
+              $xfer += $input->readString($elem570);
+              $this->filesAdded []= $elem570;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem619 = null;
+              $xfer += $input->readString($elem619);
+              $this->filesAdded []= $elem619;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -19711,14 +21031,58 @@ class InsertEventRequestData {
         case 3:
           if ($ftype == TType::LST) {
             $this->filesAddedChecksum = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size620 = 0;
             $_etype623 = 0;
             $xfer += $input->readListBegin($_etype623, $_size620);
             for ($_i624 = 0; $_i624 < $_size620; ++$_i624)
+<<<<<<< HEAD
             {
               $elem625 = null;
               $xfer += $input->readString($elem625);
               $this->filesAddedChecksum []= $elem625;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size606 = 0;
+            $_etype609 = 0;
+            $xfer += $input->readListBegin($_etype609, $_size606);
+            for ($_i610 = 0; $_i610 < $_size606; ++$_i610)
+            {
+              $elem611 = null;
+              $xfer += $input->readString($elem611);
+              $this->filesAddedChecksum []= $elem611;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size571 = 0;
+            $_etype574 = 0;
+            $xfer += $input->readListBegin($_etype574, $_size571);
+            for ($_i575 = 0; $_i575 < $_size571; ++$_i575)
+            {
+              $elem576 = null;
+              $xfer += $input->readString($elem576);
+              $this->filesAddedChecksum []= $elem576;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem625 = null;
+              $xfer += $input->readString($elem625);
+              $this->filesAddedChecksum []= $elem625;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -19751,9 +21115,39 @@ class InsertEventRequestData {
       {
         $output->writeListBegin(TType::STRING, count($this->filesAdded));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->filesAdded as $iter626)
           {
             $xfer += $output->writeString($iter626);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->filesAdded as $iter612)
+          {
+            $xfer += $output->writeString($iter612);
+=======
+          foreach ($this->filesAdded as $iter577)
+          {
+            $xfer += $output->writeString($iter577);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->filesAdded as $iter577)
+          {
+            $xfer += $output->writeString($iter577);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->filesAdded as $iter612)
+          {
+            $xfer += $output->writeString($iter612);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->filesAdded as $iter626)
+          {
+            $xfer += $output->writeString($iter626);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -19768,9 +21162,39 @@ class InsertEventRequestData {
       {
         $output->writeListBegin(TType::STRING, count($this->filesAddedChecksum));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->filesAddedChecksum as $iter627)
           {
             $xfer += $output->writeString($iter627);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->filesAddedChecksum as $iter613)
+          {
+            $xfer += $output->writeString($iter613);
+=======
+          foreach ($this->filesAddedChecksum as $iter578)
+          {
+            $xfer += $output->writeString($iter578);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->filesAddedChecksum as $iter578)
+          {
+            $xfer += $output->writeString($iter578);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->filesAddedChecksum as $iter613)
+          {
+            $xfer += $output->writeString($iter613);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->filesAddedChecksum as $iter627)
+          {
+            $xfer += $output->writeString($iter627);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -19988,14 +21412,58 @@ class FireEventRequest {
         case 5:
           if ($ftype == TType::LST) {
             $this->partitionVals = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size628 = 0;
             $_etype631 = 0;
             $xfer += $input->readListBegin($_etype631, $_size628);
             for ($_i632 = 0; $_i632 < $_size628; ++$_i632)
+<<<<<<< HEAD
             {
               $elem633 = null;
               $xfer += $input->readString($elem633);
               $this->partitionVals []= $elem633;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size614 = 0;
+            $_etype617 = 0;
+            $xfer += $input->readListBegin($_etype617, $_size614);
+            for ($_i618 = 0; $_i618 < $_size614; ++$_i618)
+            {
+              $elem619 = null;
+              $xfer += $input->readString($elem619);
+              $this->partitionVals []= $elem619;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size579 = 0;
+            $_etype582 = 0;
+            $xfer += $input->readListBegin($_etype582, $_size579);
+            for ($_i583 = 0; $_i583 < $_size579; ++$_i583)
+            {
+              $elem584 = null;
+              $xfer += $input->readString($elem584);
+              $this->partitionVals []= $elem584;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem633 = null;
+              $xfer += $input->readString($elem633);
+              $this->partitionVals []= $elem633;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20046,9 +21514,39 @@ class FireEventRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->partitionVals));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->partitionVals as $iter634)
           {
             $xfer += $output->writeString($iter634);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->partitionVals as $iter620)
+          {
+            $xfer += $output->writeString($iter620);
+=======
+          foreach ($this->partitionVals as $iter585)
+          {
+            $xfer += $output->writeString($iter585);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->partitionVals as $iter585)
+          {
+            $xfer += $output->writeString($iter585);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->partitionVals as $iter620)
+          {
+            $xfer += $output->writeString($iter620);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->partitionVals as $iter634)
+          {
+            $xfer += $output->writeString($iter634);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -20276,11 +21774,17 @@ class GetFileMetadataByExprResult {
         case 1:
           if ($ftype == TType::MAP) {
             $this->metadata = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size635 = 0;
             $_ktype636 = 0;
             $_vtype637 = 0;
             $xfer += $input->readMapBegin($_ktype636, $_vtype637, $_size635);
             for ($_i639 = 0; $_i639 < $_size635; ++$_i639)
+<<<<<<< HEAD
             {
               $key640 = 0;
               $val641 = new \metastore\MetadataPpdResult();
@@ -20288,6 +21792,61 @@ class GetFileMetadataByExprResult {
               $val641 = new \metastore\MetadataPpdResult();
               $xfer += $val641->read($input);
               $this->metadata[$key640] = $val641;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size621 = 0;
+            $_ktype622 = 0;
+            $_vtype623 = 0;
+            $xfer += $input->readMapBegin($_ktype622, $_vtype623, $_size621);
+            for ($_i625 = 0; $_i625 < $_size621; ++$_i625)
+            {
+              $key626 = 0;
+              $val627 = new \metastore\MetadataPpdResult();
+              $xfer += $input->readI64($key626);
+              $val627 = new \metastore\MetadataPpdResult();
+              $xfer += $val627->read($input);
+              $this->metadata[$key626] = $val627;
+<<<<<<< HEAD
+=======
+            $_size586 = 0;
+            $_ktype587 = 0;
+            $_vtype588 = 0;
+            $xfer += $input->readMapBegin($_ktype587, $_vtype588, $_size586);
+            for ($_i590 = 0; $_i590 < $_size586; ++$_i590)
+            {
+=======
+            $_size586 = 0;
+            $_ktype587 = 0;
+            $_vtype588 = 0;
+            $xfer += $input->readMapBegin($_ktype587, $_vtype588, $_size586);
+            for ($_i590 = 0; $_i590 < $_size586; ++$_i590)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $key591 = 0;
+              $val592 = new \metastore\MetadataPpdResult();
+              $xfer += $input->readI64($key591);
+              $val592 = new \metastore\MetadataPpdResult();
+              $xfer += $val592->read($input);
+              $this->metadata[$key591] = $val592;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $key640 = 0;
+              $val641 = new \metastore\MetadataPpdResult();
+              $xfer += $input->readI64($key640);
+              $val641 = new \metastore\MetadataPpdResult();
+              $xfer += $val641->read($input);
+              $this->metadata[$key640] = $val641;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readMapEnd();
           } else {
@@ -20322,10 +21881,43 @@ class GetFileMetadataByExprResult {
       {
         $output->writeMapBegin(TType::I64, TType::STRUCT, count($this->metadata));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->metadata as $kiter642 => $viter643)
           {
             $xfer += $output->writeI64($kiter642);
             $xfer += $viter643->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->metadata as $kiter628 => $viter629)
+          {
+            $xfer += $output->writeI64($kiter628);
+            $xfer += $viter629->write($output);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          foreach ($this->metadata as $kiter593 => $viter594)
+          {
+            $xfer += $output->writeI64($kiter593);
+            $xfer += $viter594->write($output);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->metadata as $kiter642 => $viter643)
+          {
+            $xfer += $output->writeI64($kiter642);
+            $xfer += $viter643->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeMapEnd();
@@ -20427,14 +22019,58 @@ class GetFileMetadataByExprRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size644 = 0;
             $_etype647 = 0;
             $xfer += $input->readListBegin($_etype647, $_size644);
             for ($_i648 = 0; $_i648 < $_size644; ++$_i648)
+<<<<<<< HEAD
             {
               $elem649 = null;
               $xfer += $input->readI64($elem649);
               $this->fileIds []= $elem649;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size630 = 0;
+            $_etype633 = 0;
+            $xfer += $input->readListBegin($_etype633, $_size630);
+            for ($_i634 = 0; $_i634 < $_size630; ++$_i634)
+            {
+              $elem635 = null;
+              $xfer += $input->readI64($elem635);
+              $this->fileIds []= $elem635;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size595 = 0;
+            $_etype598 = 0;
+            $xfer += $input->readListBegin($_etype598, $_size595);
+            for ($_i599 = 0; $_i599 < $_size595; ++$_i599)
+            {
+              $elem600 = null;
+              $xfer += $input->readI64($elem600);
+              $this->fileIds []= $elem600;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem649 = null;
+              $xfer += $input->readI64($elem649);
+              $this->fileIds []= $elem649;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20483,9 +22119,39 @@ class GetFileMetadataByExprRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter650)
           {
             $xfer += $output->writeI64($iter650);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->fileIds as $iter636)
+          {
+            $xfer += $output->writeI64($iter636);
+=======
+          foreach ($this->fileIds as $iter601)
+          {
+            $xfer += $output->writeI64($iter601);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->fileIds as $iter601)
+          {
+            $xfer += $output->writeI64($iter601);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->fileIds as $iter636)
+          {
+            $xfer += $output->writeI64($iter636);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->fileIds as $iter650)
+          {
+            $xfer += $output->writeI64($iter650);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -20579,17 +22245,75 @@ class GetFileMetadataResult {
         case 1:
           if ($ftype == TType::MAP) {
             $this->metadata = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size651 = 0;
             $_ktype652 = 0;
             $_vtype653 = 0;
             $xfer += $input->readMapBegin($_ktype652, $_vtype653, $_size651);
             for ($_i655 = 0; $_i655 < $_size651; ++$_i655)
+<<<<<<< HEAD
             {
               $key656 = 0;
               $val657 = '';
               $xfer += $input->readI64($key656);
               $xfer += $input->readString($val657);
               $this->metadata[$key656] = $val657;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size637 = 0;
+            $_ktype638 = 0;
+            $_vtype639 = 0;
+            $xfer += $input->readMapBegin($_ktype638, $_vtype639, $_size637);
+            for ($_i641 = 0; $_i641 < $_size637; ++$_i641)
+            {
+              $key642 = 0;
+              $val643 = '';
+              $xfer += $input->readI64($key642);
+              $xfer += $input->readString($val643);
+              $this->metadata[$key642] = $val643;
+<<<<<<< HEAD
+=======
+            $_size602 = 0;
+            $_ktype603 = 0;
+            $_vtype604 = 0;
+            $xfer += $input->readMapBegin($_ktype603, $_vtype604, $_size602);
+            for ($_i606 = 0; $_i606 < $_size602; ++$_i606)
+            {
+=======
+            $_size602 = 0;
+            $_ktype603 = 0;
+            $_vtype604 = 0;
+            $xfer += $input->readMapBegin($_ktype603, $_vtype604, $_size602);
+            for ($_i606 = 0; $_i606 < $_size602; ++$_i606)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $key607 = 0;
+              $val608 = '';
+              $xfer += $input->readI64($key607);
+              $xfer += $input->readString($val608);
+              $this->metadata[$key607] = $val608;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $key656 = 0;
+              $val657 = '';
+              $xfer += $input->readI64($key656);
+              $xfer += $input->readString($val657);
+              $this->metadata[$key656] = $val657;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readMapEnd();
           } else {
@@ -20624,10 +22348,43 @@ class GetFileMetadataResult {
       {
         $output->writeMapBegin(TType::I64, TType::STRING, count($this->metadata));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->metadata as $kiter658 => $viter659)
           {
             $xfer += $output->writeI64($kiter658);
             $xfer += $output->writeString($viter659);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->metadata as $kiter644 => $viter645)
+          {
+            $xfer += $output->writeI64($kiter644);
+            $xfer += $output->writeString($viter645);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          foreach ($this->metadata as $kiter609 => $viter610)
+          {
+            $xfer += $output->writeI64($kiter609);
+            $xfer += $output->writeString($viter610);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->metadata as $kiter658 => $viter659)
+          {
+            $xfer += $output->writeI64($kiter658);
+            $xfer += $output->writeString($viter659);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeMapEnd();
@@ -20696,14 +22453,58 @@ class GetFileMetadataRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size660 = 0;
             $_etype663 = 0;
             $xfer += $input->readListBegin($_etype663, $_size660);
             for ($_i664 = 0; $_i664 < $_size660; ++$_i664)
+<<<<<<< HEAD
             {
               $elem665 = null;
               $xfer += $input->readI64($elem665);
               $this->fileIds []= $elem665;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size646 = 0;
+            $_etype649 = 0;
+            $xfer += $input->readListBegin($_etype649, $_size646);
+            for ($_i650 = 0; $_i650 < $_size646; ++$_i650)
+            {
+              $elem651 = null;
+              $xfer += $input->readI64($elem651);
+              $this->fileIds []= $elem651;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size611 = 0;
+            $_etype614 = 0;
+            $xfer += $input->readListBegin($_etype614, $_size611);
+            for ($_i615 = 0; $_i615 < $_size611; ++$_i615)
+            {
+              $elem616 = null;
+              $xfer += $input->readI64($elem616);
+              $this->fileIds []= $elem616;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem665 = null;
+              $xfer += $input->readI64($elem665);
+              $this->fileIds []= $elem665;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20731,9 +22532,39 @@ class GetFileMetadataRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter666)
           {
             $xfer += $output->writeI64($iter666);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->fileIds as $iter652)
+          {
+            $xfer += $output->writeI64($iter652);
+=======
+          foreach ($this->fileIds as $iter617)
+          {
+            $xfer += $output->writeI64($iter617);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->fileIds as $iter617)
+          {
+            $xfer += $output->writeI64($iter617);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->fileIds as $iter652)
+          {
+            $xfer += $output->writeI64($iter652);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->fileIds as $iter666)
+          {
+            $xfer += $output->writeI64($iter666);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -20873,14 +22704,63 @@ class PutFileMetadataRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size667 = 0;
             $_etype670 = 0;
             $xfer += $input->readListBegin($_etype670, $_size667);
             for ($_i671 = 0; $_i671 < $_size667; ++$_i671)
+<<<<<<< HEAD
             {
               $elem672 = null;
               $xfer += $input->readI64($elem672);
               $this->fileIds []= $elem672;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size653 = 0;
+            $_etype656 = 0;
+            $xfer += $input->readListBegin($_etype656, $_size653);
+            for ($_i657 = 0; $_i657 < $_size653; ++$_i657)
+            {
+              $elem658 = null;
+              $xfer += $input->readI64($elem658);
+              $this->fileIds []= $elem658;
+<<<<<<< HEAD
+=======
+            $_size618 = 0;
+            $_etype621 = 0;
+            $xfer += $input->readListBegin($_etype621, $_size618);
+            for ($_i622 = 0; $_i622 < $_size618; ++$_i622)
+            {
+              $elem623 = null;
+              $xfer += $input->readI64($elem623);
+              $this->fileIds []= $elem623;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size618 = 0;
+            $_etype621 = 0;
+            $xfer += $input->readListBegin($_etype621, $_size618);
+            for ($_i622 = 0; $_i622 < $_size618; ++$_i622)
+            {
+              $elem623 = null;
+              $xfer += $input->readI64($elem623);
+              $this->fileIds []= $elem623;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem672 = null;
+              $xfer += $input->readI64($elem672);
+              $this->fileIds []= $elem672;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20890,14 +22770,58 @@ class PutFileMetadataRequest {
         case 2:
           if ($ftype == TType::LST) {
             $this->metadata = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size673 = 0;
             $_etype676 = 0;
             $xfer += $input->readListBegin($_etype676, $_size673);
             for ($_i677 = 0; $_i677 < $_size673; ++$_i677)
+<<<<<<< HEAD
             {
               $elem678 = null;
               $xfer += $input->readString($elem678);
               $this->metadata []= $elem678;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size659 = 0;
+            $_etype662 = 0;
+            $xfer += $input->readListBegin($_etype662, $_size659);
+            for ($_i663 = 0; $_i663 < $_size659; ++$_i663)
+            {
+              $elem664 = null;
+              $xfer += $input->readString($elem664);
+              $this->metadata []= $elem664;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size624 = 0;
+            $_etype627 = 0;
+            $xfer += $input->readListBegin($_etype627, $_size624);
+            for ($_i628 = 0; $_i628 < $_size624; ++$_i628)
+            {
+              $elem629 = null;
+              $xfer += $input->readString($elem629);
+              $this->metadata []= $elem629;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem678 = null;
+              $xfer += $input->readString($elem678);
+              $this->metadata []= $elem678;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20932,9 +22856,39 @@ class PutFileMetadataRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter679)
           {
             $xfer += $output->writeI64($iter679);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->fileIds as $iter665)
+          {
+            $xfer += $output->writeI64($iter665);
+=======
+          foreach ($this->fileIds as $iter630)
+          {
+            $xfer += $output->writeI64($iter630);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->fileIds as $iter630)
+          {
+            $xfer += $output->writeI64($iter630);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->fileIds as $iter665)
+          {
+            $xfer += $output->writeI64($iter665);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->fileIds as $iter679)
+          {
+            $xfer += $output->writeI64($iter679);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -20949,9 +22903,39 @@ class PutFileMetadataRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->metadata));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->metadata as $iter680)
           {
             $xfer += $output->writeString($iter680);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->metadata as $iter666)
+          {
+            $xfer += $output->writeString($iter666);
+=======
+          foreach ($this->metadata as $iter631)
+          {
+            $xfer += $output->writeString($iter631);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->metadata as $iter631)
+          {
+            $xfer += $output->writeString($iter631);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->metadata as $iter666)
+          {
+            $xfer += $output->writeString($iter666);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->metadata as $iter680)
+          {
+            $xfer += $output->writeString($iter680);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -21070,14 +23054,58 @@ class ClearFileMetadataRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size681 = 0;
             $_etype684 = 0;
             $xfer += $input->readListBegin($_etype684, $_size681);
             for ($_i685 = 0; $_i685 < $_size681; ++$_i685)
+<<<<<<< HEAD
             {
               $elem686 = null;
               $xfer += $input->readI64($elem686);
               $this->fileIds []= $elem686;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size667 = 0;
+            $_etype670 = 0;
+            $xfer += $input->readListBegin($_etype670, $_size667);
+            for ($_i671 = 0; $_i671 < $_size667; ++$_i671)
+            {
+              $elem672 = null;
+              $xfer += $input->readI64($elem672);
+              $this->fileIds []= $elem672;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size632 = 0;
+            $_etype635 = 0;
+            $xfer += $input->readListBegin($_etype635, $_size632);
+            for ($_i636 = 0; $_i636 < $_size632; ++$_i636)
+            {
+              $elem637 = null;
+              $xfer += $input->readI64($elem637);
+              $this->fileIds []= $elem637;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem686 = null;
+              $xfer += $input->readI64($elem686);
+              $this->fileIds []= $elem686;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21105,9 +23133,39 @@ class ClearFileMetadataRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter687)
           {
             $xfer += $output->writeI64($iter687);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->fileIds as $iter673)
+          {
+            $xfer += $output->writeI64($iter673);
+=======
+          foreach ($this->fileIds as $iter638)
+          {
+            $xfer += $output->writeI64($iter638);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->fileIds as $iter638)
+          {
+            $xfer += $output->writeI64($iter638);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->fileIds as $iter673)
+          {
+            $xfer += $output->writeI64($iter673);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->fileIds as $iter687)
+          {
+            $xfer += $output->writeI64($iter687);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -21391,15 +23449,67 @@ class GetAllFunctionsResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->functions = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size688 = 0;
             $_etype691 = 0;
             $xfer += $input->readListBegin($_etype691, $_size688);
             for ($_i692 = 0; $_i692 < $_size688; ++$_i692)
+<<<<<<< HEAD
             {
               $elem693 = null;
               $elem693 = new \metastore\Function();
               $xfer += $elem693->read($input);
               $this->functions []= $elem693;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size674 = 0;
+            $_etype677 = 0;
+            $xfer += $input->readListBegin($_etype677, $_size674);
+            for ($_i678 = 0; $_i678 < $_size674; ++$_i678)
+            {
+              $elem679 = null;
+              $elem679 = new \metastore\Function();
+              $xfer += $elem679->read($input);
+              $this->functions []= $elem679;
+<<<<<<< HEAD
+=======
+            $_size639 = 0;
+            $_etype642 = 0;
+            $xfer += $input->readListBegin($_etype642, $_size639);
+            for ($_i643 = 0; $_i643 < $_size639; ++$_i643)
+            {
+=======
+            $_size639 = 0;
+            $_etype642 = 0;
+            $xfer += $input->readListBegin($_etype642, $_size639);
+            for ($_i643 = 0; $_i643 < $_size639; ++$_i643)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem644 = null;
+              $elem644 = new \metastore\Function();
+              $xfer += $elem644->read($input);
+              $this->functions []= $elem644;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem693 = null;
+              $elem693 = new \metastore\Function();
+              $xfer += $elem693->read($input);
+              $this->functions []= $elem693;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21427,9 +23537,39 @@ class GetAllFunctionsResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->functions));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->functions as $iter694)
           {
             $xfer += $iter694->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->functions as $iter680)
+          {
+            $xfer += $iter680->write($output);
+=======
+          foreach ($this->functions as $iter645)
+          {
+            $xfer += $iter645->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->functions as $iter645)
+          {
+            $xfer += $iter645->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->functions as $iter680)
+          {
+            $xfer += $iter680->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->functions as $iter694)
+          {
+            $xfer += $iter694->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -21493,14 +23633,63 @@ class ClientCapabilities {
         case 1:
           if ($ftype == TType::LST) {
             $this->values = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size695 = 0;
             $_etype698 = 0;
             $xfer += $input->readListBegin($_etype698, $_size695);
             for ($_i699 = 0; $_i699 < $_size695; ++$_i699)
+<<<<<<< HEAD
             {
               $elem700 = null;
               $xfer += $input->readI32($elem700);
               $this->values []= $elem700;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size681 = 0;
+            $_etype684 = 0;
+            $xfer += $input->readListBegin($_etype684, $_size681);
+            for ($_i685 = 0; $_i685 < $_size681; ++$_i685)
+            {
+              $elem686 = null;
+              $xfer += $input->readI32($elem686);
+              $this->values []= $elem686;
+<<<<<<< HEAD
+=======
+            $_size646 = 0;
+            $_etype649 = 0;
+            $xfer += $input->readListBegin($_etype649, $_size646);
+            for ($_i650 = 0; $_i650 < $_size646; ++$_i650)
+            {
+              $elem651 = null;
+              $xfer += $input->readI32($elem651);
+              $this->values []= $elem651;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size646 = 0;
+            $_etype649 = 0;
+            $xfer += $input->readListBegin($_etype649, $_size646);
+            for ($_i650 = 0; $_i650 < $_size646; ++$_i650)
+            {
+              $elem651 = null;
+              $xfer += $input->readI32($elem651);
+              $this->values []= $elem651;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem700 = null;
+              $xfer += $input->readI32($elem700);
+              $this->values []= $elem700;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21528,9 +23717,39 @@ class ClientCapabilities {
       {
         $output->writeListBegin(TType::I32, count($this->values));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->values as $iter701)
           {
             $xfer += $output->writeI32($iter701);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->values as $iter687)
+          {
+            $xfer += $output->writeI32($iter687);
+=======
+          foreach ($this->values as $iter652)
+          {
+            $xfer += $output->writeI32($iter652);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->values as $iter652)
+          {
+            $xfer += $output->writeI32($iter652);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->values as $iter687)
+          {
+            $xfer += $output->writeI32($iter687);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->values as $iter701)
+          {
+            $xfer += $output->writeI32($iter701);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -21830,14 +24049,63 @@ class GetTablesRequest {
         case 2:
           if ($ftype == TType::LST) {
             $this->tblNames = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size702 = 0;
             $_etype705 = 0;
             $xfer += $input->readListBegin($_etype705, $_size702);
             for ($_i706 = 0; $_i706 < $_size702; ++$_i706)
+<<<<<<< HEAD
             {
               $elem707 = null;
               $xfer += $input->readString($elem707);
               $this->tblNames []= $elem707;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size688 = 0;
+            $_etype691 = 0;
+            $xfer += $input->readListBegin($_etype691, $_size688);
+            for ($_i692 = 0; $_i692 < $_size688; ++$_i692)
+            {
+              $elem693 = null;
+              $xfer += $input->readString($elem693);
+              $this->tblNames []= $elem693;
+<<<<<<< HEAD
+=======
+            $_size653 = 0;
+            $_etype656 = 0;
+            $xfer += $input->readListBegin($_etype656, $_size653);
+            for ($_i657 = 0; $_i657 < $_size653; ++$_i657)
+            {
+              $elem658 = null;
+              $xfer += $input->readString($elem658);
+              $this->tblNames []= $elem658;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size653 = 0;
+            $_etype656 = 0;
+            $xfer += $input->readListBegin($_etype656, $_size653);
+            for ($_i657 = 0; $_i657 < $_size653; ++$_i657)
+            {
+              $elem658 = null;
+              $xfer += $input->readString($elem658);
+              $this->tblNames []= $elem658;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem707 = null;
+              $xfer += $input->readString($elem707);
+              $this->tblNames []= $elem707;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21878,9 +24146,39 @@ class GetTablesRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->tblNames));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->tblNames as $iter708)
           {
             $xfer += $output->writeString($iter708);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->tblNames as $iter694)
+          {
+            $xfer += $output->writeString($iter694);
+=======
+          foreach ($this->tblNames as $iter659)
+          {
+            $xfer += $output->writeString($iter659);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->tblNames as $iter659)
+          {
+            $xfer += $output->writeString($iter659);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->tblNames as $iter694)
+          {
+            $xfer += $output->writeString($iter694);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->tblNames as $iter708)
+          {
+            $xfer += $output->writeString($iter708);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -21953,15 +24251,67 @@ class GetTablesResult {
         case 1:
           if ($ftype == TType::LST) {
             $this->tables = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size709 = 0;
             $_etype712 = 0;
             $xfer += $input->readListBegin($_etype712, $_size709);
             for ($_i713 = 0; $_i713 < $_size709; ++$_i713)
+<<<<<<< HEAD
             {
               $elem714 = null;
               $elem714 = new \metastore\Table();
               $xfer += $elem714->read($input);
               $this->tables []= $elem714;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size695 = 0;
+            $_etype698 = 0;
+            $xfer += $input->readListBegin($_etype698, $_size695);
+            for ($_i699 = 0; $_i699 < $_size695; ++$_i699)
+            {
+              $elem700 = null;
+              $elem700 = new \metastore\Table();
+              $xfer += $elem700->read($input);
+              $this->tables []= $elem700;
+<<<<<<< HEAD
+=======
+            $_size660 = 0;
+            $_etype663 = 0;
+            $xfer += $input->readListBegin($_etype663, $_size660);
+            for ($_i664 = 0; $_i664 < $_size660; ++$_i664)
+            {
+=======
+            $_size660 = 0;
+            $_etype663 = 0;
+            $xfer += $input->readListBegin($_etype663, $_size660);
+            for ($_i664 = 0; $_i664 < $_size660; ++$_i664)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem665 = null;
+              $elem665 = new \metastore\Table();
+              $xfer += $elem665->read($input);
+              $this->tables []= $elem665;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem714 = null;
+              $elem714 = new \metastore\Table();
+              $xfer += $elem714->read($input);
+              $this->tables []= $elem714;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21989,9 +24339,39 @@ class GetTablesResult {
       {
         $output->writeListBegin(TType::STRUCT, count($this->tables));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->tables as $iter715)
           {
             $xfer += $iter715->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->tables as $iter701)
+          {
+            $xfer += $iter701->write($output);
+=======
+          foreach ($this->tables as $iter666)
+          {
+            $xfer += $iter666->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->tables as $iter666)
+          {
+            $xfer += $iter666->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->tables as $iter701)
+          {
+            $xfer += $iter701->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->tables as $iter715)
+          {
+            $xfer += $iter715->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -22369,10 +24749,16 @@ class Materialization {
         case 1:
           if ($ftype == TType::SET) {
             $this->tablesUsed = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size716 = 0;
             $_etype719 = 0;
             $xfer += $input->readSetBegin($_etype719, $_size716);
             for ($_i720 = 0; $_i720 < $_size716; ++$_i720)
+<<<<<<< HEAD
             {
               $elem721 = null;
               $xfer += $input->readString($elem721);
@@ -22380,6 +24766,55 @@ class Materialization {
                 $this->tablesUsed[$elem721] = true;
               } else {
                 $this->tablesUsed []= $elem721;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size702 = 0;
+            $_etype705 = 0;
+            $xfer += $input->readSetBegin($_etype705, $_size702);
+            for ($_i706 = 0; $_i706 < $_size702; ++$_i706)
+=======
+>>>>>>> alloc write id event changes
+            {
+              $elem721 = null;
+              $xfer += $input->readString($elem721);
+              if (is_scalar($elem721)) {
+                $this->tablesUsed[$elem721] = true;
+              } else {
+<<<<<<< HEAD
+                $this->tablesUsed []= $elem707;
+<<<<<<< HEAD
+=======
+            $_size667 = 0;
+            $_etype670 = 0;
+            $xfer += $input->readSetBegin($_etype670, $_size667);
+            for ($_i671 = 0; $_i671 < $_size667; ++$_i671)
+            {
+=======
+            $_size667 = 0;
+            $_etype670 = 0;
+            $xfer += $input->readSetBegin($_etype670, $_size667);
+            for ($_i671 = 0; $_i671 < $_size667; ++$_i671)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem672 = null;
+              $xfer += $input->readString($elem672);
+              if (is_scalar($elem672)) {
+                $this->tablesUsed[$elem672] = true;
+              } else {
+                $this->tablesUsed []= $elem672;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                $this->tablesUsed []= $elem721;
+>>>>>>> alloc write id event changes
               }
             }
             $xfer += $input->readSetEnd();
@@ -22422,12 +24857,53 @@ class Materialization {
       {
         $output->writeSetBegin(TType::STRING, count($this->tablesUsed));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->tablesUsed as $iter722 => $iter723)
           {
             if (is_scalar($iter723)) {
             $xfer += $output->writeString($iter722);
             } else {
             $xfer += $output->writeString($iter723);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          foreach ($this->tablesUsed as $iter708 => $iter709)
+=======
+          foreach ($this->tablesUsed as $iter722 => $iter723)
+>>>>>>> alloc write id event changes
+          {
+            if (is_scalar($iter723)) {
+            $xfer += $output->writeString($iter722);
+            } else {
+<<<<<<< HEAD
+            $xfer += $output->writeString($iter709);
+<<<<<<< HEAD
+=======
+          foreach ($this->tablesUsed as $iter673 => $iter674)
+          {
+            if (is_scalar($iter674)) {
+            $xfer += $output->writeString($iter673);
+            } else {
+            $xfer += $output->writeString($iter674);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->tablesUsed as $iter673 => $iter674)
+          {
+            if (is_scalar($iter674)) {
+            $xfer += $output->writeString($iter673);
+            } else {
+            $xfer += $output->writeString($iter674);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            $xfer += $output->writeString($iter723);
+>>>>>>> alloc write id event changes
             }
           }
         }
@@ -23694,15 +26170,67 @@ class WMFullResourcePlan {
         case 2:
           if ($ftype == TType::LST) {
             $this->pools = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size724 = 0;
             $_etype727 = 0;
             $xfer += $input->readListBegin($_etype727, $_size724);
             for ($_i728 = 0; $_i728 < $_size724; ++$_i728)
+<<<<<<< HEAD
             {
               $elem729 = null;
               $elem729 = new \metastore\WMPool();
               $xfer += $elem729->read($input);
               $this->pools []= $elem729;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size710 = 0;
+            $_etype713 = 0;
+            $xfer += $input->readListBegin($_etype713, $_size710);
+            for ($_i714 = 0; $_i714 < $_size710; ++$_i714)
+            {
+              $elem715 = null;
+              $elem715 = new \metastore\WMPool();
+              $xfer += $elem715->read($input);
+              $this->pools []= $elem715;
+<<<<<<< HEAD
+=======
+            $_size675 = 0;
+            $_etype678 = 0;
+            $xfer += $input->readListBegin($_etype678, $_size675);
+            for ($_i679 = 0; $_i679 < $_size675; ++$_i679)
+            {
+=======
+            $_size675 = 0;
+            $_etype678 = 0;
+            $xfer += $input->readListBegin($_etype678, $_size675);
+            for ($_i679 = 0; $_i679 < $_size675; ++$_i679)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem680 = null;
+              $elem680 = new \metastore\WMPool();
+              $xfer += $elem680->read($input);
+              $this->pools []= $elem680;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem729 = null;
+              $elem729 = new \metastore\WMPool();
+              $xfer += $elem729->read($input);
+              $this->pools []= $elem729;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -23712,15 +26240,67 @@ class WMFullResourcePlan {
         case 3:
           if ($ftype == TType::LST) {
             $this->mappings = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size730 = 0;
             $_etype733 = 0;
             $xfer += $input->readListBegin($_etype733, $_size730);
             for ($_i734 = 0; $_i734 < $_size730; ++$_i734)
+<<<<<<< HEAD
             {
               $elem735 = null;
               $elem735 = new \metastore\WMMapping();
               $xfer += $elem735->read($input);
               $this->mappings []= $elem735;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size716 = 0;
+            $_etype719 = 0;
+            $xfer += $input->readListBegin($_etype719, $_size716);
+            for ($_i720 = 0; $_i720 < $_size716; ++$_i720)
+            {
+              $elem721 = null;
+              $elem721 = new \metastore\WMMapping();
+              $xfer += $elem721->read($input);
+              $this->mappings []= $elem721;
+<<<<<<< HEAD
+=======
+            $_size681 = 0;
+            $_etype684 = 0;
+            $xfer += $input->readListBegin($_etype684, $_size681);
+            for ($_i685 = 0; $_i685 < $_size681; ++$_i685)
+            {
+=======
+            $_size681 = 0;
+            $_etype684 = 0;
+            $xfer += $input->readListBegin($_etype684, $_size681);
+            for ($_i685 = 0; $_i685 < $_size681; ++$_i685)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem686 = null;
+              $elem686 = new \metastore\WMMapping();
+              $xfer += $elem686->read($input);
+              $this->mappings []= $elem686;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem735 = null;
+              $elem735 = new \metastore\WMMapping();
+              $xfer += $elem735->read($input);
+              $this->mappings []= $elem735;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -23730,15 +26310,67 @@ class WMFullResourcePlan {
         case 4:
           if ($ftype == TType::LST) {
             $this->triggers = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size736 = 0;
             $_etype739 = 0;
             $xfer += $input->readListBegin($_etype739, $_size736);
             for ($_i740 = 0; $_i740 < $_size736; ++$_i740)
+<<<<<<< HEAD
             {
               $elem741 = null;
               $elem741 = new \metastore\WMTrigger();
               $xfer += $elem741->read($input);
               $this->triggers []= $elem741;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size722 = 0;
+            $_etype725 = 0;
+            $xfer += $input->readListBegin($_etype725, $_size722);
+            for ($_i726 = 0; $_i726 < $_size722; ++$_i726)
+            {
+              $elem727 = null;
+              $elem727 = new \metastore\WMTrigger();
+              $xfer += $elem727->read($input);
+              $this->triggers []= $elem727;
+<<<<<<< HEAD
+=======
+            $_size687 = 0;
+            $_etype690 = 0;
+            $xfer += $input->readListBegin($_etype690, $_size687);
+            for ($_i691 = 0; $_i691 < $_size687; ++$_i691)
+            {
+=======
+            $_size687 = 0;
+            $_etype690 = 0;
+            $xfer += $input->readListBegin($_etype690, $_size687);
+            for ($_i691 = 0; $_i691 < $_size687; ++$_i691)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem692 = null;
+              $elem692 = new \metastore\WMTrigger();
+              $xfer += $elem692->read($input);
+              $this->triggers []= $elem692;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem741 = null;
+              $elem741 = new \metastore\WMTrigger();
+              $xfer += $elem741->read($input);
+              $this->triggers []= $elem741;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -23748,15 +26380,62 @@ class WMFullResourcePlan {
         case 5:
           if ($ftype == TType::LST) {
             $this->poolTriggers = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size742 = 0;
             $_etype745 = 0;
             $xfer += $input->readListBegin($_etype745, $_size742);
             for ($_i746 = 0; $_i746 < $_size742; ++$_i746)
+<<<<<<< HEAD
             {
               $elem747 = null;
               $elem747 = new \metastore\WMPoolTrigger();
               $xfer += $elem747->read($input);
               $this->poolTriggers []= $elem747;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size728 = 0;
+            $_etype731 = 0;
+            $xfer += $input->readListBegin($_etype731, $_size728);
+            for ($_i732 = 0; $_i732 < $_size728; ++$_i732)
+            {
+              $elem733 = null;
+              $elem733 = new \metastore\WMPoolTrigger();
+              $xfer += $elem733->read($input);
+              $this->poolTriggers []= $elem733;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size693 = 0;
+            $_etype696 = 0;
+            $xfer += $input->readListBegin($_etype696, $_size693);
+            for ($_i697 = 0; $_i697 < $_size693; ++$_i697)
+            {
+              $elem698 = null;
+              $elem698 = new \metastore\WMPoolTrigger();
+              $xfer += $elem698->read($input);
+              $this->poolTriggers []= $elem698;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem747 = null;
+              $elem747 = new \metastore\WMPoolTrigger();
+              $xfer += $elem747->read($input);
+              $this->poolTriggers []= $elem747;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -23792,9 +26471,39 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->pools));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->pools as $iter748)
           {
             $xfer += $iter748->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->pools as $iter734)
+          {
+            $xfer += $iter734->write($output);
+=======
+          foreach ($this->pools as $iter699)
+          {
+            $xfer += $iter699->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->pools as $iter699)
+          {
+            $xfer += $iter699->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->pools as $iter734)
+          {
+            $xfer += $iter734->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->pools as $iter748)
+          {
+            $xfer += $iter748->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -23809,9 +26518,39 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->mappings));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->mappings as $iter749)
           {
             $xfer += $iter749->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->mappings as $iter735)
+          {
+            $xfer += $iter735->write($output);
+=======
+          foreach ($this->mappings as $iter700)
+          {
+            $xfer += $iter700->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->mappings as $iter700)
+          {
+            $xfer += $iter700->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->mappings as $iter735)
+          {
+            $xfer += $iter735->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->mappings as $iter749)
+          {
+            $xfer += $iter749->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -23826,9 +26565,39 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->triggers));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->triggers as $iter750)
           {
             $xfer += $iter750->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->triggers as $iter736)
+          {
+            $xfer += $iter736->write($output);
+=======
+          foreach ($this->triggers as $iter701)
+          {
+            $xfer += $iter701->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->triggers as $iter701)
+          {
+            $xfer += $iter701->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->triggers as $iter736)
+          {
+            $xfer += $iter736->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->triggers as $iter750)
+          {
+            $xfer += $iter750->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -23843,9 +26612,39 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->poolTriggers));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->poolTriggers as $iter751)
           {
             $xfer += $iter751->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->poolTriggers as $iter737)
+          {
+            $xfer += $iter737->write($output);
+=======
+          foreach ($this->poolTriggers as $iter702)
+          {
+            $xfer += $iter702->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->poolTriggers as $iter702)
+          {
+            $xfer += $iter702->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->poolTriggers as $iter737)
+          {
+            $xfer += $iter737->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->poolTriggers as $iter751)
+          {
+            $xfer += $iter751->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -24398,15 +27197,62 @@ class WMGetAllResourcePlanResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->resourcePlans = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size752 = 0;
             $_etype755 = 0;
             $xfer += $input->readListBegin($_etype755, $_size752);
             for ($_i756 = 0; $_i756 < $_size752; ++$_i756)
+<<<<<<< HEAD
             {
               $elem757 = null;
               $elem757 = new \metastore\WMResourcePlan();
               $xfer += $elem757->read($input);
               $this->resourcePlans []= $elem757;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size738 = 0;
+            $_etype741 = 0;
+            $xfer += $input->readListBegin($_etype741, $_size738);
+            for ($_i742 = 0; $_i742 < $_size738; ++$_i742)
+            {
+              $elem743 = null;
+              $elem743 = new \metastore\WMResourcePlan();
+              $xfer += $elem743->read($input);
+              $this->resourcePlans []= $elem743;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size703 = 0;
+            $_etype706 = 0;
+            $xfer += $input->readListBegin($_etype706, $_size703);
+            for ($_i707 = 0; $_i707 < $_size703; ++$_i707)
+            {
+              $elem708 = null;
+              $elem708 = new \metastore\WMResourcePlan();
+              $xfer += $elem708->read($input);
+              $this->resourcePlans []= $elem708;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem757 = null;
+              $elem757 = new \metastore\WMResourcePlan();
+              $xfer += $elem757->read($input);
+              $this->resourcePlans []= $elem757;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24434,9 +27280,39 @@ class WMGetAllResourcePlanResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->resourcePlans));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->resourcePlans as $iter758)
           {
             $xfer += $iter758->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->resourcePlans as $iter744)
+          {
+            $xfer += $iter744->write($output);
+=======
+          foreach ($this->resourcePlans as $iter709)
+          {
+            $xfer += $iter709->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->resourcePlans as $iter709)
+          {
+            $xfer += $iter709->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->resourcePlans as $iter744)
+          {
+            $xfer += $iter744->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->resourcePlans as $iter758)
+          {
+            $xfer += $iter758->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -24842,14 +27718,63 @@ class WMValidateResourcePlanResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->errors = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size759 = 0;
             $_etype762 = 0;
             $xfer += $input->readListBegin($_etype762, $_size759);
             for ($_i763 = 0; $_i763 < $_size759; ++$_i763)
+<<<<<<< HEAD
             {
               $elem764 = null;
               $xfer += $input->readString($elem764);
               $this->errors []= $elem764;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size745 = 0;
+            $_etype748 = 0;
+            $xfer += $input->readListBegin($_etype748, $_size745);
+            for ($_i749 = 0; $_i749 < $_size745; ++$_i749)
+            {
+              $elem750 = null;
+              $xfer += $input->readString($elem750);
+              $this->errors []= $elem750;
+<<<<<<< HEAD
+=======
+            $_size710 = 0;
+            $_etype713 = 0;
+            $xfer += $input->readListBegin($_etype713, $_size710);
+            for ($_i714 = 0; $_i714 < $_size710; ++$_i714)
+            {
+              $elem715 = null;
+              $xfer += $input->readString($elem715);
+              $this->errors []= $elem715;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+            $_size710 = 0;
+            $_etype713 = 0;
+            $xfer += $input->readListBegin($_etype713, $_size710);
+            for ($_i714 = 0; $_i714 < $_size710; ++$_i714)
+            {
+              $elem715 = null;
+              $xfer += $input->readString($elem715);
+              $this->errors []= $elem715;
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem764 = null;
+              $xfer += $input->readString($elem764);
+              $this->errors []= $elem764;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24859,14 +27784,58 @@ class WMValidateResourcePlanResponse {
         case 2:
           if ($ftype == TType::LST) {
             $this->warnings = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size765 = 0;
             $_etype768 = 0;
             $xfer += $input->readListBegin($_etype768, $_size765);
             for ($_i769 = 0; $_i769 < $_size765; ++$_i769)
+<<<<<<< HEAD
             {
               $elem770 = null;
               $xfer += $input->readString($elem770);
               $this->warnings []= $elem770;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size751 = 0;
+            $_etype754 = 0;
+            $xfer += $input->readListBegin($_etype754, $_size751);
+            for ($_i755 = 0; $_i755 < $_size751; ++$_i755)
+            {
+              $elem756 = null;
+              $xfer += $input->readString($elem756);
+              $this->warnings []= $elem756;
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            $_size716 = 0;
+            $_etype719 = 0;
+            $xfer += $input->readListBegin($_etype719, $_size716);
+            for ($_i720 = 0; $_i720 < $_size716; ++$_i720)
+            {
+              $elem721 = null;
+              $xfer += $input->readString($elem721);
+              $this->warnings []= $elem721;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem770 = null;
+              $xfer += $input->readString($elem770);
+              $this->warnings []= $elem770;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24894,9 +27863,39 @@ class WMValidateResourcePlanResponse {
       {
         $output->writeListBegin(TType::STRING, count($this->errors));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->errors as $iter771)
           {
             $xfer += $output->writeString($iter771);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->errors as $iter757)
+          {
+            $xfer += $output->writeString($iter757);
+=======
+          foreach ($this->errors as $iter722)
+          {
+            $xfer += $output->writeString($iter722);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->errors as $iter722)
+          {
+            $xfer += $output->writeString($iter722);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->errors as $iter757)
+          {
+            $xfer += $output->writeString($iter757);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->errors as $iter771)
+          {
+            $xfer += $output->writeString($iter771);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -24911,9 +27910,39 @@ class WMValidateResourcePlanResponse {
       {
         $output->writeListBegin(TType::STRING, count($this->warnings));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->warnings as $iter772)
           {
             $xfer += $output->writeString($iter772);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->warnings as $iter758)
+          {
+            $xfer += $output->writeString($iter758);
+=======
+          foreach ($this->warnings as $iter723)
+          {
+            $xfer += $output->writeString($iter723);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->warnings as $iter723)
+          {
+            $xfer += $output->writeString($iter723);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->warnings as $iter758)
+          {
+            $xfer += $output->writeString($iter758);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->warnings as $iter772)
+          {
+            $xfer += $output->writeString($iter772);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();
@@ -25586,15 +28615,67 @@ class WMGetTriggersForResourePlanResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->triggers = array();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
             $_size773 = 0;
             $_etype776 = 0;
             $xfer += $input->readListBegin($_etype776, $_size773);
             for ($_i777 = 0; $_i777 < $_size773; ++$_i777)
+<<<<<<< HEAD
             {
               $elem778 = null;
               $elem778 = new \metastore\WMTrigger();
               $xfer += $elem778->read($input);
               $this->triggers []= $elem778;
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            $_size759 = 0;
+            $_etype762 = 0;
+            $xfer += $input->readListBegin($_etype762, $_size759);
+            for ($_i763 = 0; $_i763 < $_size759; ++$_i763)
+            {
+              $elem764 = null;
+              $elem764 = new \metastore\WMTrigger();
+              $xfer += $elem764->read($input);
+              $this->triggers []= $elem764;
+<<<<<<< HEAD
+=======
+            $_size724 = 0;
+            $_etype727 = 0;
+            $xfer += $input->readListBegin($_etype727, $_size724);
+            for ($_i728 = 0; $_i728 < $_size724; ++$_i728)
+            {
+=======
+            $_size724 = 0;
+            $_etype727 = 0;
+            $xfer += $input->readListBegin($_etype727, $_size724);
+            for ($_i728 = 0; $_i728 < $_size724; ++$_i728)
+            {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+              $elem729 = null;
+              $elem729 = new \metastore\WMTrigger();
+              $xfer += $elem729->read($input);
+              $this->triggers []= $elem729;
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            {
+              $elem778 = null;
+              $elem778 = new \metastore\WMTrigger();
+              $xfer += $elem778->read($input);
+              $this->triggers []= $elem778;
+>>>>>>> alloc write id event changes
             }
             $xfer += $input->readListEnd();
           } else {
@@ -25622,9 +28703,39 @@ class WMGetTriggersForResourePlanResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->triggers));
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           foreach ($this->triggers as $iter779)
           {
             $xfer += $iter779->write($output);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          foreach ($this->triggers as $iter765)
+          {
+            $xfer += $iter765->write($output);
+=======
+          foreach ($this->triggers as $iter730)
+          {
+            $xfer += $iter730->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          foreach ($this->triggers as $iter730)
+          {
+            $xfer += $iter730->write($output);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          foreach ($this->triggers as $iter765)
+          {
+            $xfer += $iter765->write($output);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          foreach ($this->triggers as $iter779)
+          {
+            $xfer += $iter779->write($output);
+>>>>>>> alloc write id event changes
           }
         }
         $output->writeListEnd();

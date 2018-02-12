@@ -814,15 +814,67 @@ import org.slf4j.LoggerFactory;
           case 6: // PROPERTIES
             if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TMap _map652 = iprot.readMapBegin();
                 struct.properties = new HashMap<String,String>(2*_map652.size);
                 String _key653;
                 String _val654;
                 for (int _i655 = 0; _i655 < _map652.size; ++_i655)
+<<<<<<< HEAD
                 {
                   _key653 = iprot.readString();
                   _val654 = iprot.readString();
                   struct.properties.put(_key653, _val654);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TMap _map636 = iprot.readMapBegin();
+                struct.properties = new HashMap<String,String>(2*_map636.size);
+                String _key637;
+                String _val638;
+                for (int _i639 = 0; _i639 < _map636.size; ++_i639)
+                {
+                  _key637 = iprot.readString();
+                  _val638 = iprot.readString();
+                  struct.properties.put(_key637, _val638);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TMap _map596 = iprot.readMapBegin();
+                struct.properties = new HashMap<String,String>(2*_map596.size);
+                String _key597;
+                String _val598;
+                for (int _i599 = 0; _i599 < _map596.size; ++_i599)
+                {
+                  _key597 = iprot.readString();
+                  _val598 = iprot.readString();
+                  struct.properties.put(_key597, _val598);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+                org.apache.thrift.protocol.TMap _map596 = iprot.readMapBegin();
+                struct.properties = new HashMap<String,String>(2*_map596.size);
+                String _key597;
+                String _val598;
+                for (int _i599 = 0; _i599 < _map596.size; ++_i599)
+                {
+                  _key597 = iprot.readString();
+                  _val598 = iprot.readString();
+                  struct.properties.put(_key597, _val598);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _key653 = iprot.readString();
+                  _val654 = iprot.readString();
+                  struct.properties.put(_key653, _val654);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readMapEnd();
               }
@@ -878,10 +930,43 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(PROPERTIES_FIELD_DESC);
           {
             oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.properties.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             for (Map.Entry<String, String> _iter656 : struct.properties.entrySet())
             {
               oprot.writeString(_iter656.getKey());
               oprot.writeString(_iter656.getValue());
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+            for (Map.Entry<String, String> _iter640 : struct.properties.entrySet())
+            {
+              oprot.writeString(_iter640.getKey());
+              oprot.writeString(_iter640.getValue());
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+            for (Map.Entry<String, String> _iter600 : struct.properties.entrySet())
+            {
+              oprot.writeString(_iter600.getKey());
+              oprot.writeString(_iter600.getValue());
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+            for (Map.Entry<String, String> _iter656 : struct.properties.entrySet())
+            {
+              oprot.writeString(_iter656.getKey());
+              oprot.writeString(_iter656.getValue());
+>>>>>>> alloc write id event changes
             }
             oprot.writeMapEnd();
           }
@@ -928,10 +1013,44 @@ import org.slf4j.LoggerFactory;
       if (struct.isSetProperties()) {
         {
           oprot.writeI32(struct.properties.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (Map.Entry<String, String> _iter657 : struct.properties.entrySet())
           {
             oprot.writeString(_iter657.getKey());
             oprot.writeString(_iter657.getValue());
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          for (Map.Entry<String, String> _iter641 : struct.properties.entrySet())
+          {
+            oprot.writeString(_iter641.getKey());
+            oprot.writeString(_iter641.getValue());
+<<<<<<< HEAD
+=======
+          for (Map.Entry<String, String> _iter601 : struct.properties.entrySet())
+          {
+            oprot.writeString(_iter601.getKey());
+            oprot.writeString(_iter601.getValue());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (Map.Entry<String, String> _iter601 : struct.properties.entrySet())
+          {
+            oprot.writeString(_iter601.getKey());
+            oprot.writeString(_iter601.getValue());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (Map.Entry<String, String> _iter657 : struct.properties.entrySet())
+          {
+            oprot.writeString(_iter657.getKey());
+            oprot.writeString(_iter657.getValue());
+>>>>>>> alloc write id event changes
           }
         }
       }
@@ -957,15 +1076,61 @@ import org.slf4j.LoggerFactory;
       }
       if (incoming.get(2)) {
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
           org.apache.thrift.protocol.TMap _map658 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
           struct.properties = new HashMap<String,String>(2*_map658.size);
           String _key659;
           String _val660;
           for (int _i661 = 0; _i661 < _map658.size; ++_i661)
+<<<<<<< HEAD
           {
             _key659 = iprot.readString();
             _val660 = iprot.readString();
             struct.properties.put(_key659, _val660);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          org.apache.thrift.protocol.TMap _map642 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.properties = new HashMap<String,String>(2*_map642.size);
+          String _key643;
+          String _val644;
+          for (int _i645 = 0; _i645 < _map642.size; ++_i645)
+          {
+            _key643 = iprot.readString();
+            _val644 = iprot.readString();
+            struct.properties.put(_key643, _val644);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          org.apache.thrift.protocol.TMap _map602 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.properties = new HashMap<String,String>(2*_map602.size);
+          String _key603;
+          String _val604;
+          for (int _i605 = 0; _i605 < _map602.size; ++_i605)
+          {
+            _key603 = iprot.readString();
+            _val604 = iprot.readString();
+            struct.properties.put(_key603, _val604);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          {
+            _key659 = iprot.readString();
+            _val660 = iprot.readString();
+            struct.properties.put(_key659, _val660);
+>>>>>>> alloc write id event changes
           }
         }
         struct.setPropertiesIsSet(true);

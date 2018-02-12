@@ -354,13 +354,58 @@ import org.slf4j.LoggerFactory;
           case 1: // VALUES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list786 = iprot.readListBegin();
                 struct.values = new ArrayList<ClientCapability>(_list786.size);
                 ClientCapability _elem787;
                 for (int _i788 = 0; _i788 < _list786.size; ++_i788)
+<<<<<<< HEAD
                 {
                   _elem787 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
                   struct.values.add(_elem787);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TList _list770 = iprot.readListBegin();
+                struct.values = new ArrayList<ClientCapability>(_list770.size);
+                ClientCapability _elem771;
+                for (int _i772 = 0; _i772 < _list770.size; ++_i772)
+                {
+                  _elem771 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+                  struct.values.add(_elem771);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TList _list730 = iprot.readListBegin();
+                struct.values = new ArrayList<ClientCapability>(_list730.size);
+                ClientCapability _elem731;
+                for (int _i732 = 0; _i732 < _list730.size; ++_i732)
+                {
+                  _elem731 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+                  struct.values.add(_elem731);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+                org.apache.thrift.protocol.TList _list730 = iprot.readListBegin();
+                struct.values = new ArrayList<ClientCapability>(_list730.size);
+                ClientCapability _elem731;
+                for (int _i732 = 0; _i732 < _list730.size; ++_i732)
+                {
+                  _elem731 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+                  struct.values.add(_elem731);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem787 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+                  struct.values.add(_elem787);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -386,9 +431,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(VALUES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, struct.values.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (ClientCapability _iter789 : struct.values)
           {
             oprot.writeI32(_iter789.getValue());
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (ClientCapability _iter773 : struct.values)
+          {
+            oprot.writeI32(_iter773.getValue());
+=======
+          for (ClientCapability _iter733 : struct.values)
+          {
+            oprot.writeI32(_iter733.getValue());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (ClientCapability _iter733 : struct.values)
+          {
+            oprot.writeI32(_iter733.getValue());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (ClientCapability _iter773 : struct.values)
+          {
+            oprot.writeI32(_iter773.getValue());
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (ClientCapability _iter789 : struct.values)
+          {
+            oprot.writeI32(_iter789.getValue());
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -413,9 +488,39 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.values.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (ClientCapability _iter790 : struct.values)
         {
           oprot.writeI32(_iter790.getValue());
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for (ClientCapability _iter774 : struct.values)
+        {
+          oprot.writeI32(_iter774.getValue());
+=======
+        for (ClientCapability _iter734 : struct.values)
+        {
+          oprot.writeI32(_iter734.getValue());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (ClientCapability _iter734 : struct.values)
+        {
+          oprot.writeI32(_iter734.getValue());
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (ClientCapability _iter774 : struct.values)
+        {
+          oprot.writeI32(_iter774.getValue());
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (ClientCapability _iter790 : struct.values)
+        {
+          oprot.writeI32(_iter790.getValue());
+>>>>>>> alloc write id event changes
         }
       }
     }
@@ -424,13 +529,54 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, ClientCapabilities struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list791 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
         struct.values = new ArrayList<ClientCapability>(_list791.size);
         ClientCapability _elem792;
         for (int _i793 = 0; _i793 < _list791.size; ++_i793)
+<<<<<<< HEAD
         {
           _elem792 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
           struct.values.add(_elem792);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TList _list775 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
+        struct.values = new ArrayList<ClientCapability>(_list775.size);
+        ClientCapability _elem776;
+        for (int _i777 = 0; _i777 < _list775.size; ++_i777)
+        {
+          _elem776 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+          struct.values.add(_elem776);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        org.apache.thrift.protocol.TList _list735 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
+        struct.values = new ArrayList<ClientCapability>(_list735.size);
+        ClientCapability _elem736;
+        for (int _i737 = 0; _i737 < _list735.size; ++_i737)
+        {
+          _elem736 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+          struct.values.add(_elem736);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _elem792 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+          struct.values.add(_elem792);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setValuesIsSet(true);

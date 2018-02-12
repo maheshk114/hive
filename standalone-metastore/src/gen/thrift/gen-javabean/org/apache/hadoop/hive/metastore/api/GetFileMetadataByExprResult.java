@@ -444,16 +444,71 @@ import org.slf4j.LoggerFactory;
           case 1: // METADATA
             if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TMap _map718 = iprot.readMapBegin();
                 struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map718.size);
                 long _key719;
                 MetadataPpdResult _val720;
                 for (int _i721 = 0; _i721 < _map718.size; ++_i721)
+<<<<<<< HEAD
                 {
                   _key719 = iprot.readI64();
                   _val720 = new MetadataPpdResult();
                   _val720.read(iprot);
                   struct.metadata.put(_key719, _val720);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TMap _map702 = iprot.readMapBegin();
+                struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map702.size);
+                long _key703;
+                MetadataPpdResult _val704;
+                for (int _i705 = 0; _i705 < _map702.size; ++_i705)
+                {
+                  _key703 = iprot.readI64();
+                  _val704 = new MetadataPpdResult();
+                  _val704.read(iprot);
+                  struct.metadata.put(_key703, _val704);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TMap _map662 = iprot.readMapBegin();
+                struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map662.size);
+                long _key663;
+                MetadataPpdResult _val664;
+                for (int _i665 = 0; _i665 < _map662.size; ++_i665)
+                {
+=======
+                org.apache.thrift.protocol.TMap _map662 = iprot.readMapBegin();
+                struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map662.size);
+                long _key663;
+                MetadataPpdResult _val664;
+                for (int _i665 = 0; _i665 < _map662.size; ++_i665)
+                {
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+                  _key663 = iprot.readI64();
+                  _val664 = new MetadataPpdResult();
+                  _val664.read(iprot);
+                  struct.metadata.put(_key663, _val664);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _key719 = iprot.readI64();
+                  _val720 = new MetadataPpdResult();
+                  _val720.read(iprot);
+                  struct.metadata.put(_key719, _val720);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readMapEnd();
               }
@@ -487,10 +542,43 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(METADATA_FIELD_DESC);
         {
           oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, struct.metadata.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (Map.Entry<Long, MetadataPpdResult> _iter722 : struct.metadata.entrySet())
           {
             oprot.writeI64(_iter722.getKey());
             _iter722.getValue().write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          for (Map.Entry<Long, MetadataPpdResult> _iter706 : struct.metadata.entrySet())
+          {
+            oprot.writeI64(_iter706.getKey());
+            _iter706.getValue().write(oprot);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          for (Map.Entry<Long, MetadataPpdResult> _iter666 : struct.metadata.entrySet())
+          {
+            oprot.writeI64(_iter666.getKey());
+            _iter666.getValue().write(oprot);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (Map.Entry<Long, MetadataPpdResult> _iter722 : struct.metadata.entrySet())
+          {
+            oprot.writeI64(_iter722.getKey());
+            _iter722.getValue().write(oprot);
+>>>>>>> alloc write id event changes
           }
           oprot.writeMapEnd();
         }
@@ -518,10 +606,44 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.metadata.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (Map.Entry<Long, MetadataPpdResult> _iter723 : struct.metadata.entrySet())
         {
           oprot.writeI64(_iter723.getKey());
           _iter723.getValue().write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        for (Map.Entry<Long, MetadataPpdResult> _iter707 : struct.metadata.entrySet())
+        {
+          oprot.writeI64(_iter707.getKey());
+          _iter707.getValue().write(oprot);
+<<<<<<< HEAD
+=======
+        for (Map.Entry<Long, MetadataPpdResult> _iter667 : struct.metadata.entrySet())
+        {
+          oprot.writeI64(_iter667.getKey());
+          _iter667.getValue().write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (Map.Entry<Long, MetadataPpdResult> _iter667 : struct.metadata.entrySet())
+        {
+          oprot.writeI64(_iter667.getKey());
+          _iter667.getValue().write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (Map.Entry<Long, MetadataPpdResult> _iter723 : struct.metadata.entrySet())
+        {
+          oprot.writeI64(_iter723.getKey());
+          _iter723.getValue().write(oprot);
+>>>>>>> alloc write id event changes
         }
       }
       oprot.writeBool(struct.isSupported);
@@ -531,16 +653,65 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, GetFileMetadataByExprResult struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TMap _map724 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
         struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map724.size);
         long _key725;
         MetadataPpdResult _val726;
         for (int _i727 = 0; _i727 < _map724.size; ++_i727)
+<<<<<<< HEAD
         {
           _key725 = iprot.readI64();
           _val726 = new MetadataPpdResult();
           _val726.read(iprot);
           struct.metadata.put(_key725, _val726);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TMap _map708 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map708.size);
+        long _key709;
+        MetadataPpdResult _val710;
+        for (int _i711 = 0; _i711 < _map708.size; ++_i711)
+        {
+          _key709 = iprot.readI64();
+          _val710 = new MetadataPpdResult();
+          _val710.read(iprot);
+          struct.metadata.put(_key709, _val710);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        org.apache.thrift.protocol.TMap _map668 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map668.size);
+        long _key669;
+        MetadataPpdResult _val670;
+        for (int _i671 = 0; _i671 < _map668.size; ++_i671)
+        {
+          _key669 = iprot.readI64();
+          _val670 = new MetadataPpdResult();
+          _val670.read(iprot);
+          struct.metadata.put(_key669, _val670);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _key725 = iprot.readI64();
+          _val726 = new MetadataPpdResult();
+          _val726.read(iprot);
+          struct.metadata.put(_key725, _val726);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setMetadataIsSet(true);

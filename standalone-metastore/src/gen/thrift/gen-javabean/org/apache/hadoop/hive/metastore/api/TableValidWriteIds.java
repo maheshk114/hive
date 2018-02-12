@@ -708,13 +708,32 @@ import org.slf4j.LoggerFactory;
           case 3: // INVALID_WRITE_IDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list588 = iprot.readListBegin();
                 struct.invalidWriteIds = new ArrayList<Long>(_list588.size);
                 long _elem589;
                 for (int _i590 = 0; _i590 < _list588.size; ++_i590)
+<<<<<<< HEAD
                 {
                   _elem589 = iprot.readI64();
                   struct.invalidWriteIds.add(_elem589);
+=======
+                org.apache.thrift.protocol.TList _list572 = iprot.readListBegin();
+                struct.invalidWriteIds = new ArrayList<Long>(_list572.size);
+                long _elem573;
+                for (int _i574 = 0; _i574 < _list572.size; ++_i574)
+                {
+                  _elem573 = iprot.readI64();
+                  struct.invalidWriteIds.add(_elem573);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+                {
+                  _elem589 = iprot.readI64();
+                  struct.invalidWriteIds.add(_elem589);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -764,9 +783,21 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(INVALID_WRITE_IDS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.invalidWriteIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (long _iter591 : struct.invalidWriteIds)
           {
             oprot.writeI64(_iter591);
+=======
+          for (long _iter575 : struct.invalidWriteIds)
+          {
+            oprot.writeI64(_iter575);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (long _iter591 : struct.invalidWriteIds)
+          {
+            oprot.writeI64(_iter591);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -803,9 +834,21 @@ import org.slf4j.LoggerFactory;
       oprot.writeI64(struct.writeIdHighWaterMark);
       {
         oprot.writeI32(struct.invalidWriteIds.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (long _iter592 : struct.invalidWriteIds)
         {
           oprot.writeI64(_iter592);
+=======
+        for (long _iter576 : struct.invalidWriteIds)
+        {
+          oprot.writeI64(_iter576);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (long _iter592 : struct.invalidWriteIds)
+        {
+          oprot.writeI64(_iter592);
+>>>>>>> alloc write id event changes
         }
       }
       oprot.writeBinary(struct.abortedBits);
@@ -827,13 +870,32 @@ import org.slf4j.LoggerFactory;
       struct.writeIdHighWaterMark = iprot.readI64();
       struct.setWriteIdHighWaterMarkIsSet(true);
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list593 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.invalidWriteIds = new ArrayList<Long>(_list593.size);
         long _elem594;
         for (int _i595 = 0; _i595 < _list593.size; ++_i595)
+<<<<<<< HEAD
         {
           _elem594 = iprot.readI64();
           struct.invalidWriteIds.add(_elem594);
+=======
+        org.apache.thrift.protocol.TList _list577 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.invalidWriteIds = new ArrayList<Long>(_list577.size);
+        long _elem578;
+        for (int _i579 = 0; _i579 < _list577.size; ++_i579)
+        {
+          _elem578 = iprot.readI64();
+          struct.invalidWriteIds.add(_elem578);
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        {
+          _elem594 = iprot.readI64();
+          struct.invalidWriteIds.add(_elem594);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setInvalidWriteIdsIsSet(true);

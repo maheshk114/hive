@@ -350,14 +350,63 @@ import org.slf4j.LoggerFactory;
           case 1: // LOCKS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list628 = iprot.readListBegin();
                 struct.locks = new ArrayList<ShowLocksResponseElement>(_list628.size);
                 ShowLocksResponseElement _elem629;
                 for (int _i630 = 0; _i630 < _list628.size; ++_i630)
+<<<<<<< HEAD
                 {
                   _elem629 = new ShowLocksResponseElement();
                   _elem629.read(iprot);
                   struct.locks.add(_elem629);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TList _list612 = iprot.readListBegin();
+                struct.locks = new ArrayList<ShowLocksResponseElement>(_list612.size);
+                ShowLocksResponseElement _elem613;
+                for (int _i614 = 0; _i614 < _list612.size; ++_i614)
+                {
+                  _elem613 = new ShowLocksResponseElement();
+                  _elem613.read(iprot);
+                  struct.locks.add(_elem613);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TList _list572 = iprot.readListBegin();
+                struct.locks = new ArrayList<ShowLocksResponseElement>(_list572.size);
+                ShowLocksResponseElement _elem573;
+                for (int _i574 = 0; _i574 < _list572.size; ++_i574)
+                {
+                  _elem573 = new ShowLocksResponseElement();
+                  _elem573.read(iprot);
+                  struct.locks.add(_elem573);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+                org.apache.thrift.protocol.TList _list572 = iprot.readListBegin();
+                struct.locks = new ArrayList<ShowLocksResponseElement>(_list572.size);
+                ShowLocksResponseElement _elem573;
+                for (int _i574 = 0; _i574 < _list572.size; ++_i574)
+                {
+                  _elem573 = new ShowLocksResponseElement();
+                  _elem573.read(iprot);
+                  struct.locks.add(_elem573);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem629 = new ShowLocksResponseElement();
+                  _elem629.read(iprot);
+                  struct.locks.add(_elem629);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -383,9 +432,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(LOCKS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.locks.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (ShowLocksResponseElement _iter631 : struct.locks)
           {
             _iter631.write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (ShowLocksResponseElement _iter615 : struct.locks)
+          {
+            _iter615.write(oprot);
+=======
+          for (ShowLocksResponseElement _iter575 : struct.locks)
+          {
+            _iter575.write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (ShowLocksResponseElement _iter575 : struct.locks)
+          {
+            _iter575.write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (ShowLocksResponseElement _iter615 : struct.locks)
+          {
+            _iter615.write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (ShowLocksResponseElement _iter631 : struct.locks)
+          {
+            _iter631.write(oprot);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -416,9 +495,39 @@ import org.slf4j.LoggerFactory;
       if (struct.isSetLocks()) {
         {
           oprot.writeI32(struct.locks.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (ShowLocksResponseElement _iter632 : struct.locks)
           {
             _iter632.write(oprot);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (ShowLocksResponseElement _iter616 : struct.locks)
+          {
+            _iter616.write(oprot);
+=======
+          for (ShowLocksResponseElement _iter576 : struct.locks)
+          {
+            _iter576.write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (ShowLocksResponseElement _iter576 : struct.locks)
+          {
+            _iter576.write(oprot);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (ShowLocksResponseElement _iter616 : struct.locks)
+          {
+            _iter616.write(oprot);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (ShowLocksResponseElement _iter632 : struct.locks)
+          {
+            _iter632.write(oprot);
+>>>>>>> alloc write id event changes
           }
         }
       }
@@ -430,14 +539,58 @@ import org.slf4j.LoggerFactory;
       BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {
         {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
           org.apache.thrift.protocol.TList _list633 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.locks = new ArrayList<ShowLocksResponseElement>(_list633.size);
           ShowLocksResponseElement _elem634;
           for (int _i635 = 0; _i635 < _list633.size; ++_i635)
+<<<<<<< HEAD
           {
             _elem634 = new ShowLocksResponseElement();
             _elem634.read(iprot);
             struct.locks.add(_elem634);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+          org.apache.thrift.protocol.TList _list617 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.locks = new ArrayList<ShowLocksResponseElement>(_list617.size);
+          ShowLocksResponseElement _elem618;
+          for (int _i619 = 0; _i619 < _list617.size; ++_i619)
+          {
+            _elem618 = new ShowLocksResponseElement();
+            _elem618.read(iprot);
+            struct.locks.add(_elem618);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+          org.apache.thrift.protocol.TList _list577 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.locks = new ArrayList<ShowLocksResponseElement>(_list577.size);
+          ShowLocksResponseElement _elem578;
+          for (int _i579 = 0; _i579 < _list577.size; ++_i579)
+          {
+            _elem578 = new ShowLocksResponseElement();
+            _elem578.read(iprot);
+            struct.locks.add(_elem578);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          {
+            _elem634 = new ShowLocksResponseElement();
+            _elem634.read(iprot);
+            struct.locks.add(_elem634);
+>>>>>>> alloc write id event changes
           }
         }
         struct.setLocksIsSet(true);

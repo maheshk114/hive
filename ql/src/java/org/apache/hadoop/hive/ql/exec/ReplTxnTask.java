@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.hive.ql.exec;
 
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsRequest;
 import org.apache.hadoop.hive.ql.DriverContext;
 import org.apache.hadoop.hive.ql.lockmgr.HiveTxnManager;
 import org.apache.hadoop.hive.ql.plan.api.StageType;
@@ -65,9 +66,17 @@ public class ReplTxnTask extends Task<ReplTxnWork> {
           LOG.info("Replayed CommitTxn Event for policy " + ReplPolicy +
                   " with srcTxn " + work.getTxnId(0) + " and target txn id " + work.getTxnId(0));
           return 0;
+        case REPL_ALLOC_WRITE_ID:
+          GetTargetTxnIdsRequest rqst = new GetTargetTxnIdsRequest(work.getTxnIdsList(), work.getReplPolicy());
+          List<Long> targetTxnIds =
+                driverContext.getCtx().getHiveTxnManager().replGetTargetTxnIds(rqst).getTxnid();
+                  driverContext.getCtx().getHiveTxnManager()
+                .getTableWriteIdBatch(targetTxnIds, work.getDbName(), work.getTableName());
+          return 0;
         default:
           LOG.error("Operation Type " + work.getOperationType() + " is not supported ");
           return 1;
+        LOG.info("Replayed AbortTxn Event for policy " + work.getReplPolicy() + " with srcTxn " + work.getTxnId(0));
       }
     } catch (Exception e) {
       console.printError("Failed with exception " + e.getMessage(), "\n"

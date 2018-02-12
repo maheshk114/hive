@@ -2218,7 +2218,11 @@ class OpenTxnRequest
   HOSTNAME = 3
   AGENTINFO = 4
   REPLPOLICY = 5
+<<<<<<< HEAD
   REPLSRCTXNIDS = 6
+=======
+  REPLSRCTXNID = 6
+>>>>>>> HIVE-18679 : create/replicate open transaction event
 
   FIELDS = {
     NUM_TXNS => {:type => ::Thrift::Types::I32, :name => 'num_txns'},
@@ -2226,7 +2230,11 @@ class OpenTxnRequest
     HOSTNAME => {:type => ::Thrift::Types::STRING, :name => 'hostname'},
     AGENTINFO => {:type => ::Thrift::Types::STRING, :name => 'agentInfo', :default => %q"Unknown", :optional => true},
     REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy', :optional => true},
+<<<<<<< HEAD
     REPLSRCTXNIDS => {:type => ::Thrift::Types::LIST, :name => 'replSrcTxnIds', :element => {:type => ::Thrift::Types::I64}, :optional => true}
+=======
+    REPLSRCTXNID => {:type => ::Thrift::Types::LIST, :name => 'replSrcTxnId', :element => {:type => ::Thrift::Types::I64}, :optional => true}
+>>>>>>> HIVE-18679 : create/replicate open transaction event
   }
 
   def struct_fields; FIELDS; end
@@ -2297,10 +2305,55 @@ class CommitTxnRequest
   include ::Thrift::Struct, ::Thrift::Struct_Union
   TXNID = 1
   REPLPOLICY = 2
+<<<<<<< HEAD
+=======
 
   FIELDS = {
     TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'},
     REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy', :optional => true}
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field txnid is unset!') unless @txnid
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class GetTargetTxnIdsRequest
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+  TXNID = 1
+  REPLPOLICY = 2
+
+  FIELDS = {
+    TXNID => {:type => ::Thrift::Types::LIST, :name => 'txnid', :element => {:type => ::Thrift::Types::I64}},
+    REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy'}
+  }
+
+  def struct_fields; FIELDS; end
+
+  def validate
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field txnid is unset!') unless @txnid
+    raise ::Thrift::ProtocolException.new(::Thrift::ProtocolException::UNKNOWN, 'Required field replPolicy is unset!') unless @replPolicy
+  end
+
+  ::Thrift::Struct.generate_accessors self
+end
+
+class GetTargetTxnIdsResponse
+  include ::Thrift::Struct, ::Thrift::Struct_Union
+  TXNID = 1
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+
+  FIELDS = {
+<<<<<<< HEAD
+    TXNID => {:type => ::Thrift::Types::I64, :name => 'txnid'},
+    REPLPOLICY => {:type => ::Thrift::Types::STRING, :name => 'replPolicy', :optional => true}
+=======
+    TXNID => {:type => ::Thrift::Types::LIST, :name => 'txnid', :element => {:type => ::Thrift::Types::I64}}
+>>>>>>> alloc write id event changes
   }
 
   def struct_fields; FIELDS; end

@@ -66,6 +66,7 @@ public abstract class MessageFactory {
   public static final String OPEN_TXN_EVENT = "OPEN_TXN";
   public static final String COMMIT_TXN_EVENT = "COMMIT_TXN";
   public static final String ABORT_TXN_EVENT = "ABORT_TXN";
+  public static final String ALLOC_WRITE_ID_EVENT = "ALLOC_WRITE_ID_EVENT";
 
   private static MessageFactory instance = null;
 
@@ -322,4 +323,11 @@ public abstract class MessageFactory {
    */
   public abstract DropConstraintMessage buildDropConstraintMessage(String dbName, String tableName,
       String constraintName);
+
+  /***
+   * Factory method for building alloc write id message
+   * @param txnIds
+   * @return
+   */
+  public abstract AllocWriteIdMessage buildAllocWriteIdMessage(List<Long> txnIds, String tableName);
 }

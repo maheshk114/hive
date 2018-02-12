@@ -1457,6 +1457,15 @@ public interface IMetaStoreClient {
   void rollbackTxn(long txnid, String replPolicy) throws NoSuchTxnException, TException;
 
   /**
+   * replGetTargetTxnIds - Get the set of target txn ids from txn map table
+   * this transaction.
+   * @param rqst request with list of source txn ids.
+   * @throws TException if not able to get the txn ids from metastore.
+   * @throws TException
+   */
+  GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws TException;
+
+  /**
    * Commit a transaction.  This will also unlock any locks associated with
    * this transaction.
    * @param txnid id of transaction to be committed.

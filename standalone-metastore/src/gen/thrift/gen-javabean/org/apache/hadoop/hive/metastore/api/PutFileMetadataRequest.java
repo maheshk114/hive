@@ -547,13 +547,58 @@ import org.slf4j.LoggerFactory;
           case 1: // FILE_IDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list754 = iprot.readListBegin();
                 struct.fileIds = new ArrayList<Long>(_list754.size);
                 long _elem755;
                 for (int _i756 = 0; _i756 < _list754.size; ++_i756)
+<<<<<<< HEAD
                 {
                   _elem755 = iprot.readI64();
                   struct.fileIds.add(_elem755);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TList _list738 = iprot.readListBegin();
+                struct.fileIds = new ArrayList<Long>(_list738.size);
+                long _elem739;
+                for (int _i740 = 0; _i740 < _list738.size; ++_i740)
+                {
+                  _elem739 = iprot.readI64();
+                  struct.fileIds.add(_elem739);
+<<<<<<< HEAD
+=======
+                org.apache.thrift.protocol.TList _list698 = iprot.readListBegin();
+                struct.fileIds = new ArrayList<Long>(_list698.size);
+                long _elem699;
+                for (int _i700 = 0; _i700 < _list698.size; ++_i700)
+                {
+                  _elem699 = iprot.readI64();
+                  struct.fileIds.add(_elem699);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+                org.apache.thrift.protocol.TList _list698 = iprot.readListBegin();
+                struct.fileIds = new ArrayList<Long>(_list698.size);
+                long _elem699;
+                for (int _i700 = 0; _i700 < _list698.size; ++_i700)
+                {
+                  _elem699 = iprot.readI64();
+                  struct.fileIds.add(_elem699);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem755 = iprot.readI64();
+                  struct.fileIds.add(_elem755);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -565,13 +610,54 @@ import org.slf4j.LoggerFactory;
           case 2: // METADATA
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
                 org.apache.thrift.protocol.TList _list757 = iprot.readListBegin();
                 struct.metadata = new ArrayList<ByteBuffer>(_list757.size);
                 ByteBuffer _elem758;
                 for (int _i759 = 0; _i759 < _list757.size; ++_i759)
+<<<<<<< HEAD
                 {
                   _elem758 = iprot.readBinary();
                   struct.metadata.add(_elem758);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+                org.apache.thrift.protocol.TList _list741 = iprot.readListBegin();
+                struct.metadata = new ArrayList<ByteBuffer>(_list741.size);
+                ByteBuffer _elem742;
+                for (int _i743 = 0; _i743 < _list741.size; ++_i743)
+                {
+                  _elem742 = iprot.readBinary();
+                  struct.metadata.add(_elem742);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+                org.apache.thrift.protocol.TList _list701 = iprot.readListBegin();
+                struct.metadata = new ArrayList<ByteBuffer>(_list701.size);
+                ByteBuffer _elem702;
+                for (int _i703 = 0; _i703 < _list701.size; ++_i703)
+                {
+                  _elem702 = iprot.readBinary();
+                  struct.metadata.add(_elem702);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+                {
+                  _elem758 = iprot.readBinary();
+                  struct.metadata.add(_elem758);
+>>>>>>> alloc write id event changes
                 }
                 iprot.readListEnd();
               }
@@ -605,9 +691,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(FILE_IDS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.fileIds.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (long _iter760 : struct.fileIds)
           {
             oprot.writeI64(_iter760);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (long _iter744 : struct.fileIds)
+          {
+            oprot.writeI64(_iter744);
+=======
+          for (long _iter704 : struct.fileIds)
+          {
+            oprot.writeI64(_iter704);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (long _iter704 : struct.fileIds)
+          {
+            oprot.writeI64(_iter704);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (long _iter744 : struct.fileIds)
+          {
+            oprot.writeI64(_iter744);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (long _iter760 : struct.fileIds)
+          {
+            oprot.writeI64(_iter760);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -617,9 +733,39 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(METADATA_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.metadata.size()));
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
           for (ByteBuffer _iter761 : struct.metadata)
           {
             oprot.writeBinary(_iter761);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+          for (ByteBuffer _iter745 : struct.metadata)
+          {
+            oprot.writeBinary(_iter745);
+=======
+          for (ByteBuffer _iter705 : struct.metadata)
+          {
+            oprot.writeBinary(_iter705);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+          for (ByteBuffer _iter705 : struct.metadata)
+          {
+            oprot.writeBinary(_iter705);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+          for (ByteBuffer _iter745 : struct.metadata)
+          {
+            oprot.writeBinary(_iter745);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+          for (ByteBuffer _iter761 : struct.metadata)
+          {
+            oprot.writeBinary(_iter761);
+>>>>>>> alloc write id event changes
           }
           oprot.writeListEnd();
         }
@@ -651,16 +797,76 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.fileIds.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (long _iter762 : struct.fileIds)
         {
           oprot.writeI64(_iter762);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for (long _iter746 : struct.fileIds)
+        {
+          oprot.writeI64(_iter746);
+=======
+        for (long _iter706 : struct.fileIds)
+        {
+          oprot.writeI64(_iter706);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (long _iter706 : struct.fileIds)
+        {
+          oprot.writeI64(_iter706);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (long _iter746 : struct.fileIds)
+        {
+          oprot.writeI64(_iter746);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (long _iter762 : struct.fileIds)
+        {
+          oprot.writeI64(_iter762);
+>>>>>>> alloc write id event changes
         }
       }
       {
         oprot.writeI32(struct.metadata.size());
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
         for (ByteBuffer _iter763 : struct.metadata)
         {
           oprot.writeBinary(_iter763);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+        for (ByteBuffer _iter747 : struct.metadata)
+        {
+          oprot.writeBinary(_iter747);
+=======
+        for (ByteBuffer _iter707 : struct.metadata)
+        {
+          oprot.writeBinary(_iter707);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        for (ByteBuffer _iter707 : struct.metadata)
+        {
+          oprot.writeBinary(_iter707);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+        for (ByteBuffer _iter747 : struct.metadata)
+        {
+          oprot.writeBinary(_iter747);
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        for (ByteBuffer _iter763 : struct.metadata)
+        {
+          oprot.writeBinary(_iter763);
+>>>>>>> alloc write id event changes
         }
       }
       BitSet optionals = new BitSet();
@@ -677,24 +883,110 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, PutFileMetadataRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list764 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.fileIds = new ArrayList<Long>(_list764.size);
         long _elem765;
         for (int _i766 = 0; _i766 < _list764.size; ++_i766)
+<<<<<<< HEAD
         {
           _elem765 = iprot.readI64();
           struct.fileIds.add(_elem765);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TList _list748 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.fileIds = new ArrayList<Long>(_list748.size);
+        long _elem749;
+        for (int _i750 = 0; _i750 < _list748.size; ++_i750)
+        {
+          _elem749 = iprot.readI64();
+          struct.fileIds.add(_elem749);
+<<<<<<< HEAD
+=======
+        org.apache.thrift.protocol.TList _list708 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.fileIds = new ArrayList<Long>(_list708.size);
+        long _elem709;
+        for (int _i710 = 0; _i710 < _list708.size; ++_i710)
+        {
+          _elem709 = iprot.readI64();
+          struct.fileIds.add(_elem709);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+        org.apache.thrift.protocol.TList _list708 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.fileIds = new ArrayList<Long>(_list708.size);
+        long _elem709;
+        for (int _i710 = 0; _i710 < _list708.size; ++_i710)
+        {
+          _elem709 = iprot.readI64();
+          struct.fileIds.add(_elem709);
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _elem765 = iprot.readI64();
+          struct.fileIds.add(_elem765);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setFileIdsIsSet(true);
       {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> alloc write id event changes
         org.apache.thrift.protocol.TList _list767 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
         struct.metadata = new ArrayList<ByteBuffer>(_list767.size);
         ByteBuffer _elem768;
         for (int _i769 = 0; _i769 < _list767.size; ++_i769)
+<<<<<<< HEAD
         {
           _elem768 = iprot.readBinary();
           struct.metadata.add(_elem768);
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+        org.apache.thrift.protocol.TList _list751 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.metadata = new ArrayList<ByteBuffer>(_list751.size);
+        ByteBuffer _elem752;
+        for (int _i753 = 0; _i753 < _list751.size; ++_i753)
+        {
+          _elem752 = iprot.readBinary();
+          struct.metadata.add(_elem752);
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+        org.apache.thrift.protocol.TList _list711 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.metadata = new ArrayList<ByteBuffer>(_list711.size);
+        ByteBuffer _elem712;
+        for (int _i713 = 0; _i713 < _list711.size; ++_i713)
+        {
+          _elem712 = iprot.readBinary();
+          struct.metadata.add(_elem712);
+<<<<<<< HEAD
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+=======
+>>>>>>> HIVE-18679 : create/replicate open transaction event : After Sankar's review comment fix
+>>>>>>> HIVE-18679 : create/replicate open transaction event
+=======
+>>>>>>> HIVE-18781: Create/Replicate Abort Txn event
+=======
+        {
+          _elem768 = iprot.readBinary();
+          struct.metadata.add(_elem768);
+>>>>>>> alloc write id event changes
         }
       }
       struct.setMetadataIsSet(true);

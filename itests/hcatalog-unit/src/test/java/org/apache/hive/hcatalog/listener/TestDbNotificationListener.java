@@ -80,6 +80,7 @@ import org.apache.hadoop.hive.metastore.events.OpenTxnEvent;
 import org.apache.hadoop.hive.metastore.events.CommitTxnEvent;
 import org.apache.hadoop.hive.metastore.events.AbortTxnEvent;
 import org.apache.hadoop.hive.metastore.events.ListenerEvent;
+import org.apache.hadoop.hive.metastore.events.AllocWriteIdEvent;
 import org.apache.hadoop.hive.metastore.messaging.AddPartitionMessage;
 import org.apache.hadoop.hive.metastore.messaging.AlterIndexMessage;
 import org.apache.hadoop.hive.metastore.messaging.AlterPartitionMessage;
@@ -111,6 +112,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.hadoop.hive.metastore.events.allocWriteIdEvent;
 
 /**
  * Tests DbNotificationListener when used as a transactional event listener
@@ -243,6 +245,10 @@ public class TestDbNotificationListener {
 
     public void onAbortTxn(AbortTxnEvent abortTxnEvent) throws MetaException {
       pushEventId(EventType.ABORT_TXN, abortTxnEvent);
+    }
+
+    public void onAllocWriteId(AllocWriteIdEvent allocWriteIdEvent) throws MetaException {
+      pushEventId(EventType.ALLOC_WRITE_ID, allocWriteIdEvent);
     }
   }
 
