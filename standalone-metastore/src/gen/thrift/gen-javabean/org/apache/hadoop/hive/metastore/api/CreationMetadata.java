@@ -619,13 +619,13 @@ import org.slf4j.LoggerFactory;
           case 3: // TABLES_USED
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
-                org.apache.thrift.protocol.TSet _set670 = iprot.readSetBegin();
-                struct.tablesUsed = new HashSet<String>(2*_set670.size);
-                String _elem671;
-                for (int _i672 = 0; _i672 < _set670.size; ++_i672)
+                org.apache.thrift.protocol.TSet _set678 = iprot.readSetBegin();
+                struct.tablesUsed = new HashSet<String>(2*_set678.size);
+                String _elem679;
+                for (int _i680 = 0; _i680 < _set678.size; ++_i680)
                 {
-                  _elem671 = iprot.readString();
-                  struct.tablesUsed.add(_elem671);
+                  _elem679 = iprot.readString();
+                  struct.tablesUsed.add(_elem679);
                 }
                 iprot.readSetEnd();
               }
@@ -669,9 +669,9 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(TABLES_USED_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRING, struct.tablesUsed.size()));
-          for (String _iter673 : struct.tablesUsed)
+          for (String _iter681 : struct.tablesUsed)
           {
-            oprot.writeString(_iter673);
+            oprot.writeString(_iter681);
           }
           oprot.writeSetEnd();
         }
@@ -705,9 +705,9 @@ import org.slf4j.LoggerFactory;
       oprot.writeString(struct.tblName);
       {
         oprot.writeI32(struct.tablesUsed.size());
-        for (String _iter674 : struct.tablesUsed)
+        for (String _iter682 : struct.tablesUsed)
         {
-          oprot.writeString(_iter674);
+          oprot.writeString(_iter682);
         }
       }
       BitSet optionals = new BitSet();
@@ -728,13 +728,13 @@ import org.slf4j.LoggerFactory;
       struct.tblName = iprot.readString();
       struct.setTblNameIsSet(true);
       {
-        org.apache.thrift.protocol.TSet _set675 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-        struct.tablesUsed = new HashSet<String>(2*_set675.size);
-        String _elem676;
-        for (int _i677 = 0; _i677 < _set675.size; ++_i677)
+        org.apache.thrift.protocol.TSet _set683 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.tablesUsed = new HashSet<String>(2*_set683.size);
+        String _elem684;
+        for (int _i685 = 0; _i685 < _set683.size; ++_i685)
         {
-          _elem676 = iprot.readString();
-          struct.tablesUsed.add(_elem676);
+          _elem684 = iprot.readString();
+          struct.tablesUsed.add(_elem684);
         }
       }
       struct.setTablesUsedIsSet(true);

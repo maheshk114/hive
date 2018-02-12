@@ -44,6 +44,8 @@ import org.apache.hadoop.hive.metastore.events.DropPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.DropTableEvent;
 import org.apache.hadoop.hive.metastore.events.InsertEvent;
 import org.apache.hadoop.hive.metastore.events.ListenerEvent;
+import org.apache.hadoop.hive.metastore.events.OpenTxnEvent;
+import org.apache.hadoop.hive.metastore.events.CommitTxnEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -177,6 +179,18 @@ public class MetaStoreListenerNotifier {
             @Override
             public void notify(MetaStoreEventListener listener, ListenerEvent event) throws MetaException {
               listener.onAddNotNullConstraint((AddNotNullConstraintEvent)event);
+            }
+          })
+          .put(EventType.OPEN_TXN, new EventNotifier() {
+            @Override
+            public void notify(MetaStoreEventListener listener, ListenerEvent event) throws MetaException {
+              listener.onOpenTxn((OpenTxnEvent)event);
+            }
+          })
+          .put(EventType.COMMIT_TXN, new EventNotifier() {
+            @Override
+            public void notify(MetaStoreEventListener listener, ListenerEvent event) throws MetaException {
+              listener.onCommitTxn((CommitTxnEvent) event);
             }
           })
           .build()

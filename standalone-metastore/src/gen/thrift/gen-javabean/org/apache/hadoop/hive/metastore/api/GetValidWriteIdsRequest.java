@@ -436,13 +436,13 @@ import org.slf4j.LoggerFactory;
           case 1: // FULL_TABLE_NAMES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list572 = iprot.readListBegin();
-                struct.fullTableNames = new ArrayList<String>(_list572.size);
-                String _elem573;
-                for (int _i574 = 0; _i574 < _list572.size; ++_i574)
+                org.apache.thrift.protocol.TList _list580 = iprot.readListBegin();
+                struct.fullTableNames = new ArrayList<String>(_list580.size);
+                String _elem581;
+                for (int _i582 = 0; _i582 < _list580.size; ++_i582)
                 {
-                  _elem573 = iprot.readString();
-                  struct.fullTableNames.add(_elem573);
+                  _elem581 = iprot.readString();
+                  struct.fullTableNames.add(_elem581);
                 }
                 iprot.readListEnd();
               }
@@ -476,9 +476,9 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(FULL_TABLE_NAMES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.fullTableNames.size()));
-          for (String _iter575 : struct.fullTableNames)
+          for (String _iter583 : struct.fullTableNames)
           {
-            oprot.writeString(_iter575);
+            oprot.writeString(_iter583);
           }
           oprot.writeListEnd();
         }
@@ -508,9 +508,9 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.fullTableNames.size());
-        for (String _iter576 : struct.fullTableNames)
+        for (String _iter584 : struct.fullTableNames)
         {
-          oprot.writeString(_iter576);
+          oprot.writeString(_iter584);
         }
       }
       oprot.writeString(struct.validTxnList);
@@ -520,13 +520,13 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, GetValidWriteIdsRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
-        org.apache.thrift.protocol.TList _list577 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
-        struct.fullTableNames = new ArrayList<String>(_list577.size);
-        String _elem578;
-        for (int _i579 = 0; _i579 < _list577.size; ++_i579)
+        org.apache.thrift.protocol.TList _list585 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.fullTableNames = new ArrayList<String>(_list585.size);
+        String _elem586;
+        for (int _i587 = 0; _i587 < _list585.size; ++_i587)
         {
-          _elem578 = iprot.readString();
-          struct.fullTableNames.add(_elem578);
+          _elem586 = iprot.readString();
+          struct.fullTableNames.add(_elem586);
         }
       }
       struct.setFullTableNamesIsSet(true);

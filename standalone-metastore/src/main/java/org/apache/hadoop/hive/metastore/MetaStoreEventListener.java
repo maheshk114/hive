@@ -45,6 +45,8 @@ import org.apache.hadoop.hive.metastore.events.DropPartitionEvent;
 import org.apache.hadoop.hive.metastore.events.DropTableEvent;
 import org.apache.hadoop.hive.metastore.events.InsertEvent;
 import org.apache.hadoop.hive.metastore.events.LoadPartitionDoneEvent;
+import org.apache.hadoop.hive.metastore.events.OpenTxnEvent;
+import org.apache.hadoop.hive.metastore.events.CommitTxnEvent;
 
 /**
  * This abstract class needs to be extended to  provide implementation of actions that needs
@@ -218,6 +220,24 @@ public abstract class MetaStoreEventListener implements Configurable {
    * @throws MetaException
    */
   public void onDropConstraint(DropConstraintEvent dropConstraintEvent) throws MetaException {
+  }
+
+  /**
+   * This will be called when a new transaction is started.
+   * @param openTxnEvent
+   * @throws MetaException
+   */
+  public void onOpenTxn(OpenTxnEvent openTxnEvent) throws MetaException {
+
+  }
+
+  /**
+   * This will be called to commit a transaction.
+   * @param commitTxnEvent
+   * @throws MetaException
+   */
+  public void onCommitTxn(CommitTxnEvent commitTxnEvent) throws MetaException {
+
   }
 
   @Override

@@ -63,6 +63,8 @@ public abstract class MessageFactory {
   public static final String ADD_UNIQUECONSTRAINT_EVENT = "ADD_UNIQUECONSTRAINT";
   public static final String ADD_NOTNULLCONSTRAINT_EVENT = "ADD_NOTNULLCONSTRAINT";
   public static final String DROP_CONSTRAINT_EVENT = "DROP_CONSTRAINT";
+  public static final String OPEN_TXN_EVENT = "OPEN_TXN";
+  public static final String COMMIT_TXN_EVENT = "COMMIT_TXN";
 
   private static MessageFactory instance = null;
 
@@ -253,6 +255,22 @@ public abstract class MessageFactory {
    */
   public abstract InsertMessage buildInsertMessage(Table tableObj, Partition ptnObj,
                                                    boolean replace, Iterator<String> files);
+
+  /**
+   * Factory method for building open txn message
+   *
+   * @param txnIdsItr List of ids of the newly opened transactions
+   * @return instance of OpenTxnMessage
+   */
+  public abstract OpenTxnMessage buildOpenTxnMessage(Iterator<Long> txnIdsItr);
+
+  /**
+   * Factory method for building commit txn message
+   *
+   * @param txnId Id of the transaction to be committed
+   * @return instance of OpenTxnMessage
+   */
+  public abstract CommitTxnMessage buildCommitTxnMessage(Long txnId);
 
   /***
    * Factory method for building add primary key message

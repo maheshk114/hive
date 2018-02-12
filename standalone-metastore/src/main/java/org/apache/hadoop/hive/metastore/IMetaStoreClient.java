@@ -120,6 +120,8 @@ import org.apache.hadoop.hive.metastore.api.WMValidateResourcePlanResponse;
 import org.apache.hadoop.hive.metastore.partition.spec.PartitionSpecProxy;
 import org.apache.hadoop.hive.metastore.utils.ObjectPair;
 import org.apache.thrift.TException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Wrapper around hive metastore thrift api
@@ -1396,6 +1398,16 @@ public interface IMetaStoreClient {
   long openTxn(String user) throws TException;
 
   /**
+   * Initiate a transaction at the target cluster.
+   * @param replPolicy The replication policy to uniquely identify the source cluster.
+   * @param srcTxnIds The list of transaction ids at the source cluster
+   * @param numTxns Number of transaction ids in the iterator
+   * @return transaction identifiers
+   * @throws TException
+   */
+  List<Long> replOpenTxn(String replPolicy, Iterator<Long> srcTxnIds, int numTxns) throws TException;
+
+  /**
    * Initiate a batch of transactions.  It is not guaranteed that the
    * requested number of transactions will be instantiated.  The system has a
    * maximum number instantiated per request, controlled by hive.txn.max
@@ -1446,6 +1458,21 @@ public interface IMetaStoreClient {
    */
   void commitTxn(long txnid)
       throws NoSuchTxnException, TxnAbortedException, TException;
+
+  /**
+   * Commit a transaction.  This will also unlock any locks associated with
+   * this transaction.
+   * @param txnid id of transaction to be committed.
+   * @param replPolicy the replication policy to identify the source cluster
+   * @throws NoSuchTxnException if the requested transaction does not exist.
+   * This can result fro the transaction having timed out and been deleted by
+   * the compactor.
+   * @throws TxnAbortedException if the requested transaction has been
+   * aborted.  This can result from the transaction timing out.
+   * @throws TException
+   */
+  void commitTxn(long txnid, String replPolicy)
+          throws NoSuchTxnException, TxnAbortedException, TException;
 
   /**
    * Abort a list of transactions. This is for use by "ABORT TRANSACTIONS" in the grammar.
