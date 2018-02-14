@@ -372,10 +372,15 @@ class AbortTxnsRequest;
 
 class CommitTxnRequest;
 
+<<<<<<< HEAD
 class GetTargetTxnIdRequest;
 
 class GetTargetTxnIdResponse;
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 class GetValidWriteIdsRequest;
 
 class TableValidWriteIds;
@@ -387,6 +392,19 @@ class AllocateTableWriteIdsRequest;
 class TxnToWriteId;
 
 class AllocateTableWriteIdsResponse;
+<<<<<<< HEAD
+=======
+=======
+class GetTargetTxnIdRequest;
+
+class GetTargetTxnIdResponse;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+class GetTargetTxnIdRequest;
+
+class GetTargetTxnIdResponse;
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 
 class LockComponent;
 
@@ -6234,6 +6252,7 @@ inline std::ostream& operator<<(std::ostream& out, const CommitTxnRequest& obj)
 }
 
 
+<<<<<<< HEAD
 class GetTargetTxnIdRequest {
  public:
 
@@ -6314,6 +6333,10 @@ inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdResponse&
 }
 
 
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 class GetValidWriteIdsRequest {
  public:
 
@@ -6546,6 +6569,40 @@ class TxnToWriteId {
   }
 
   bool operator < (const TxnToWriteId & ) const;
+<<<<<<< HEAD
+=======
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+class GetTargetTxnIdRequest {
+ public:
+
+  GetTargetTxnIdRequest(const GetTargetTxnIdRequest&);
+  GetTargetTxnIdRequest& operator=(const GetTargetTxnIdRequest&);
+  GetTargetTxnIdRequest() : txnid(0) {
+  }
+
+  virtual ~GetTargetTxnIdRequest() throw();
+  int64_t txnid;
+
+  void __set_txnid(const int64_t val);
+
+  bool operator == (const GetTargetTxnIdRequest & rhs) const
+  {
+    if (!(txnid == rhs.txnid))
+      return false;
+    return true;
+  }
+  bool operator != (const GetTargetTxnIdRequest &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GetTargetTxnIdRequest & ) const;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -6553,15 +6610,38 @@ class TxnToWriteId {
   virtual void printTo(std::ostream& out) const;
 };
 
+<<<<<<< HEAD
 void swap(TxnToWriteId &a, TxnToWriteId &b);
 
 inline std::ostream& operator<<(std::ostream& out, const TxnToWriteId& obj)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+void swap(TxnToWriteId &a, TxnToWriteId &b);
+
+inline std::ostream& operator<<(std::ostream& out, const TxnToWriteId& obj)
+=======
+void swap(GetTargetTxnIdRequest &a, GetTargetTxnIdRequest &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdRequest& obj)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+void swap(GetTargetTxnIdRequest &a, GetTargetTxnIdRequest &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdRequest& obj)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 {
   obj.printTo(out);
   return out;
 }
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 class AllocateTableWriteIdsResponse {
  public:
 
@@ -6586,6 +6666,40 @@ class AllocateTableWriteIdsResponse {
   }
 
   bool operator < (const AllocateTableWriteIdsResponse & ) const;
+<<<<<<< HEAD
+=======
+=======
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+class GetTargetTxnIdResponse {
+ public:
+
+  GetTargetTxnIdResponse(const GetTargetTxnIdResponse&);
+  GetTargetTxnIdResponse& operator=(const GetTargetTxnIdResponse&);
+  GetTargetTxnIdResponse() : txnid(0) {
+  }
+
+  virtual ~GetTargetTxnIdResponse() throw();
+  int64_t txnid;
+
+  void __set_txnid(const int64_t val);
+
+  bool operator == (const GetTargetTxnIdResponse & rhs) const
+  {
+    if (!(txnid == rhs.txnid))
+      return false;
+    return true;
+  }
+  bool operator != (const GetTargetTxnIdResponse &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GetTargetTxnIdResponse & ) const;
+<<<<<<< HEAD
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -6593,9 +6707,27 @@ class AllocateTableWriteIdsResponse {
   virtual void printTo(std::ostream& out) const;
 };
 
+<<<<<<< HEAD
 void swap(AllocateTableWriteIdsResponse &a, AllocateTableWriteIdsResponse &b);
 
 inline std::ostream& operator<<(std::ostream& out, const AllocateTableWriteIdsResponse& obj)
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+void swap(AllocateTableWriteIdsResponse &a, AllocateTableWriteIdsResponse &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AllocateTableWriteIdsResponse& obj)
+=======
+void swap(GetTargetTxnIdResponse &a, GetTargetTxnIdResponse &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdResponse& obj)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+=======
+void swap(GetTargetTxnIdResponse &a, GetTargetTxnIdResponse &b);
+
+inline std::ostream& operator<<(std::ostream& out, const GetTargetTxnIdResponse& obj)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
+>>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 {
   obj.printTo(out);
   return out;

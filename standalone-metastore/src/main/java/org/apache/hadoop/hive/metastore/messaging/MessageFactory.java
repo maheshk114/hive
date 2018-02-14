@@ -272,6 +272,7 @@ public abstract class MessageFactory {
    */
   public abstract CommitTxnMessage buildCommitTxnMessage(Long txnId);
 
+
   /***
    * Factory method for building add primary key message
    *
