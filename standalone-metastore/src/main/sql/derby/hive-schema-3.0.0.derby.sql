@@ -480,7 +480,7 @@ CREATE TABLE COMPACTION_QUEUE (
   CQ_WORKER_ID varchar(128),
   CQ_START bigint,
   CQ_RUN_AS varchar(128),
-  CQ_HIGHEST_TXN_ID bigint,
+  CQ_HIGHEST_WRITE_ID bigint,
   CQ_META_INFO varchar(2048) for bit data,
   CQ_HADOOP_JOB_ID varchar(32)
 );
@@ -502,7 +502,7 @@ CREATE TABLE COMPLETED_COMPACTIONS (
   CC_START bigint,
   CC_END bigint,
   CC_RUN_AS varchar(128),
-  CC_HIGHEST_TXN_ID bigint,
+  CC_HIGHEST_WRITE_ID bigint,
   CC_META_INFO varchar(2048) for bit data,
   CC_HADOOP_JOB_ID varchar(32)
 );
@@ -524,6 +524,23 @@ CREATE TABLE WRITE_SET (
   WS_COMMIT_ID bigint NOT NULL,
   WS_OPERATION_TYPE char(1) NOT NULL
 );
+
+CREATE TABLE TXN_TO_WRITE_ID (
+  T2W_TXNID bigint,
+  T2W_DATABASE varchar(128) NOT NULL,
+  T2W_TABLE varchar(256) NOT NULL,
+  T2W_WRITEID bigint NOT NULL
+);
+
+CREATE INDEX TXN_TO_WRITE_ID_IDX ON TXN_TO_WRITE_ID (T2W_TXNID);
+
+CREATE TABLE NEXT_WRITE_ID (
+  NWI_DATABASE varchar(128) NOT NULL,
+  NWI_TABLE varchar(256) NOT NULL,
+  NWI_NEXT bigint NOT NULL
+);
+
+CREATE UNIQUE INDEX NEXT_WRITE_ID_IDX ON NEXT_WRITE_ID (NWI_DATABASE, NWI_TABLE);
 
 -- -----------------------------------------------------------------
 -- Record schema version. Should be the last step in the init script
