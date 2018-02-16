@@ -14708,7 +14708,6 @@ class AbortTxnRequest {
    * @var string
    */
   public $replPolicy = null;
-<<<<<<< HEAD
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
@@ -14908,8 +14907,6 @@ class CommitTxnRequest {
    * @var string
    */
   public $replPolicy = null;
-=======
->>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
@@ -14931,7 +14928,6 @@ class CommitTxnRequest {
       if (isset($vals['replPolicy'])) {
         $this->replPolicy = $vals['replPolicy'];
       }
-<<<<<<< HEAD
     }
   }
 
@@ -15516,6 +15512,7 @@ class GetValidWriteIdsResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->tblValidWriteIds = array();
+<<<<<<< HEAD
             $_size525 = 0;
             $_etype528 = 0;
             $xfer += $input->readListBegin($_etype528, $_size525);
@@ -15525,6 +15522,17 @@ class GetValidWriteIdsResponse {
               $elem530 = new \metastore\TableValidWriteIds();
               $xfer += $elem530->read($input);
               $this->tblValidWriteIds []= $elem530;
+=======
+            $_size511 = 0;
+            $_etype514 = 0;
+            $xfer += $input->readListBegin($_etype514, $_size511);
+            for ($_i515 = 0; $_i515 < $_size511; ++$_i515)
+            {
+              $elem516 = null;
+              $elem516 = new \metastore\TableValidWriteIds();
+              $xfer += $elem516->read($input);
+              $this->tblValidWriteIds []= $elem516;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -15552,9 +15560,15 @@ class GetValidWriteIdsResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->tblValidWriteIds));
         {
+<<<<<<< HEAD
           foreach ($this->tblValidWriteIds as $iter531)
           {
             $xfer += $iter531->write($output);
+=======
+          foreach ($this->tblValidWriteIds as $iter517)
+          {
+            $xfer += $iter517->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -15615,8 +15629,6 @@ class AllocateTableWriteIdsRequest {
       if (isset($vals['tableName'])) {
         $this->tableName = $vals['tableName'];
       }
-=======
->>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
     }
   }
 
@@ -15670,13 +15682,6 @@ class AllocateTableWriteIdsRequest {
             $xfer += $input->skip($ftype);
           }
           break;
-        case 2:
-          if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->replPolicy);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
         default:
           $xfer += $input->skip($ftype);
           break;
@@ -15715,11 +15720,6 @@ class AllocateTableWriteIdsRequest {
     if ($this->tableName !== null) {
       $xfer += $output->writeFieldBegin('tableName', TType::STRING, 3);
       $xfer += $output->writeString($this->tableName);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->replPolicy !== null) {
-      $xfer += $output->writeFieldBegin('replPolicy', TType::STRING, 2);
-      $xfer += $output->writeString($this->replPolicy);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -15833,15 +15833,7 @@ class AllocateTableWriteIdsResponse {
   /**
    * @var \metastore\TxnToWriteId[]
    */
-<<<<<<< HEAD
   public $txnToWriteIds = null;
-=======
-  public $txnid = null;
-  /**
-   * @var string
-   */
-  public $replPolicy = null;
->>>>>>> HIVE-18720 : Replicate Commit Txn operation (without writes)
 
   public function __construct($vals=null) {
     if (!isset(self::$_TSPEC)) {
@@ -15855,18 +15847,11 @@ class AllocateTableWriteIdsResponse {
             'class' => '\metastore\TxnToWriteId',
             ),
           ),
-        2 => array(
-          'var' => 'replPolicy',
-          'type' => TType::STRING,
-          ),
         );
     }
     if (is_array($vals)) {
       if (isset($vals['txnToWriteIds'])) {
         $this->txnToWriteIds = $vals['txnToWriteIds'];
-      }
-      if (isset($vals['replPolicy'])) {
-        $this->replPolicy = $vals['replPolicy'];
       }
     }
   }
@@ -15908,13 +15893,6 @@ class AllocateTableWriteIdsResponse {
             $xfer += $input->skip($ftype);
           }
           break;
-        case 2:
-          if ($ftype == TType::STRING) {
-            $xfer += $input->readString($this->replPolicy);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
         default:
           $xfer += $input->skip($ftype);
           break;
@@ -15943,161 +15921,6 @@ class AllocateTableWriteIdsResponse {
         }
         $output->writeListEnd();
       }
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->replPolicy !== null) {
-      $xfer += $output->writeFieldBegin('replPolicy', TType::STRING, 2);
-      $xfer += $output->writeString($this->replPolicy);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
-  }
-
-}
-
-class GetTargetTxnIdRequest {
-  static $_TSPEC;
-
-  /**
-   * @var int
-   */
-  public $txnid = null;
-
-  public function __construct($vals=null) {
-    if (!isset(self::$_TSPEC)) {
-      self::$_TSPEC = array(
-        1 => array(
-          'var' => 'txnid',
-          'type' => TType::I64,
-          ),
-        );
-    }
-    if (is_array($vals)) {
-      if (isset($vals['txnid'])) {
-        $this->txnid = $vals['txnid'];
-      }
-    }
-  }
-
-  public function getName() {
-    return 'GetTargetTxnIdRequest';
-  }
-
-  public function read($input)
-  {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 1:
-          if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->txnid);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
-  }
-
-  public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('GetTargetTxnIdRequest');
-    if ($this->txnid !== null) {
-      $xfer += $output->writeFieldBegin('txnid', TType::I64, 1);
-      $xfer += $output->writeI64($this->txnid);
-      $xfer += $output->writeFieldEnd();
-    }
-    $xfer += $output->writeFieldStop();
-    $xfer += $output->writeStructEnd();
-    return $xfer;
-  }
-
-}
-
-class GetTargetTxnIdResponse {
-  static $_TSPEC;
-
-  /**
-   * @var int
-   */
-  public $txnid = null;
-
-  public function __construct($vals=null) {
-    if (!isset(self::$_TSPEC)) {
-      self::$_TSPEC = array(
-        1 => array(
-          'var' => 'txnid',
-          'type' => TType::I64,
-          ),
-        );
-    }
-    if (is_array($vals)) {
-      if (isset($vals['txnid'])) {
-        $this->txnid = $vals['txnid'];
-      }
-    }
-  }
-
-  public function getName() {
-    return 'GetTargetTxnIdResponse';
-  }
-
-  public function read($input)
-  {
-    $xfer = 0;
-    $fname = null;
-    $ftype = 0;
-    $fid = 0;
-    $xfer += $input->readStructBegin($fname);
-    while (true)
-    {
-      $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-      if ($ftype == TType::STOP) {
-        break;
-      }
-      switch ($fid)
-      {
-        case 1:
-          if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->txnid);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        default:
-          $xfer += $input->skip($ftype);
-          break;
-      }
-      $xfer += $input->readFieldEnd();
-    }
-    $xfer += $input->readStructEnd();
-    return $xfer;
-  }
-
-  public function write($output) {
-    $xfer = 0;
-    $xfer += $output->writeStructBegin('GetTargetTxnIdResponse');
-    if ($this->txnid !== null) {
-      $xfer += $output->writeFieldBegin('txnid', TType::I64, 1);
-      $xfer += $output->writeI64($this->txnid);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
@@ -16438,6 +16261,7 @@ class LockRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->component = array();
+<<<<<<< HEAD
             $_size546 = 0;
             $_etype549 = 0;
             $xfer += $input->readListBegin($_etype549, $_size546);
@@ -16447,6 +16271,17 @@ class LockRequest {
               $elem551 = new \metastore\LockComponent();
               $xfer += $elem551->read($input);
               $this->component []= $elem551;
+=======
+            $_size532 = 0;
+            $_etype535 = 0;
+            $xfer += $input->readListBegin($_etype535, $_size532);
+            for ($_i536 = 0; $_i536 < $_size532; ++$_i536)
+            {
+              $elem537 = null;
+              $elem537 = new \metastore\LockComponent();
+              $xfer += $elem537->read($input);
+              $this->component []= $elem537;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -16502,9 +16337,15 @@ class LockRequest {
       {
         $output->writeListBegin(TType::STRUCT, count($this->component));
         {
+<<<<<<< HEAD
           foreach ($this->component as $iter552)
           {
             $xfer += $iter552->write($output);
+=======
+          foreach ($this->component as $iter538)
+          {
+            $xfer += $iter538->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -17447,6 +17288,7 @@ class ShowLocksResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->locks = array();
+<<<<<<< HEAD
             $_size553 = 0;
             $_etype556 = 0;
             $xfer += $input->readListBegin($_etype556, $_size553);
@@ -17456,6 +17298,17 @@ class ShowLocksResponse {
               $elem558 = new \metastore\ShowLocksResponseElement();
               $xfer += $elem558->read($input);
               $this->locks []= $elem558;
+=======
+            $_size539 = 0;
+            $_etype542 = 0;
+            $xfer += $input->readListBegin($_etype542, $_size539);
+            for ($_i543 = 0; $_i543 < $_size539; ++$_i543)
+            {
+              $elem544 = null;
+              $elem544 = new \metastore\ShowLocksResponseElement();
+              $xfer += $elem544->read($input);
+              $this->locks []= $elem544;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -17483,9 +17336,15 @@ class ShowLocksResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->locks));
         {
+<<<<<<< HEAD
           foreach ($this->locks as $iter559)
           {
             $xfer += $iter559->write($output);
+=======
+          foreach ($this->locks as $iter545)
+          {
+            $xfer += $iter545->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -17760,6 +17619,7 @@ class HeartbeatTxnRangeResponse {
         case 1:
           if ($ftype == TType::SET) {
             $this->aborted = array();
+<<<<<<< HEAD
             $_size560 = 0;
             $_etype563 = 0;
             $xfer += $input->readSetBegin($_etype563, $_size560);
@@ -17771,6 +17631,19 @@ class HeartbeatTxnRangeResponse {
                 $this->aborted[$elem565] = true;
               } else {
                 $this->aborted []= $elem565;
+=======
+            $_size546 = 0;
+            $_etype549 = 0;
+            $xfer += $input->readSetBegin($_etype549, $_size546);
+            for ($_i550 = 0; $_i550 < $_size546; ++$_i550)
+            {
+              $elem551 = null;
+              $xfer += $input->readI64($elem551);
+              if (is_scalar($elem551)) {
+                $this->aborted[$elem551] = true;
+              } else {
+                $this->aborted []= $elem551;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
               }
             }
             $xfer += $input->readSetEnd();
@@ -17781,6 +17654,7 @@ class HeartbeatTxnRangeResponse {
         case 2:
           if ($ftype == TType::SET) {
             $this->nosuch = array();
+<<<<<<< HEAD
             $_size566 = 0;
             $_etype569 = 0;
             $xfer += $input->readSetBegin($_etype569, $_size566);
@@ -17792,6 +17666,19 @@ class HeartbeatTxnRangeResponse {
                 $this->nosuch[$elem571] = true;
               } else {
                 $this->nosuch []= $elem571;
+=======
+            $_size552 = 0;
+            $_etype555 = 0;
+            $xfer += $input->readSetBegin($_etype555, $_size552);
+            for ($_i556 = 0; $_i556 < $_size552; ++$_i556)
+            {
+              $elem557 = null;
+              $xfer += $input->readI64($elem557);
+              if (is_scalar($elem557)) {
+                $this->nosuch[$elem557] = true;
+              } else {
+                $this->nosuch []= $elem557;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
               }
             }
             $xfer += $input->readSetEnd();
@@ -17820,12 +17707,21 @@ class HeartbeatTxnRangeResponse {
       {
         $output->writeSetBegin(TType::I64, count($this->aborted));
         {
+<<<<<<< HEAD
           foreach ($this->aborted as $iter572 => $iter573)
           {
             if (is_scalar($iter573)) {
             $xfer += $output->writeI64($iter572);
             } else {
             $xfer += $output->writeI64($iter573);
+=======
+          foreach ($this->aborted as $iter558 => $iter559)
+          {
+            if (is_scalar($iter559)) {
+            $xfer += $output->writeI64($iter558);
+            } else {
+            $xfer += $output->writeI64($iter559);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
           }
         }
@@ -17841,12 +17737,20 @@ class HeartbeatTxnRangeResponse {
       {
         $output->writeSetBegin(TType::I64, count($this->nosuch));
         {
+<<<<<<< HEAD
           foreach ($this->nosuch as $iter574 => $iter575)
+=======
+          foreach ($this->nosuch as $iter560 => $iter561)
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           {
             if (is_scalar($iter575)) {
             $xfer += $output->writeI64($iter574);
             } else {
+<<<<<<< HEAD
             $xfer += $output->writeI64($iter575);
+=======
+            $xfer += $output->writeI64($iter561);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
           }
         }
@@ -18005,6 +17909,7 @@ class CompactionRequest {
         case 6:
           if ($ftype == TType::MAP) {
             $this->properties = array();
+<<<<<<< HEAD
             $_size576 = 0;
             $_ktype577 = 0;
             $_vtype578 = 0;
@@ -18016,6 +17921,19 @@ class CompactionRequest {
               $xfer += $input->readString($key581);
               $xfer += $input->readString($val582);
               $this->properties[$key581] = $val582;
+=======
+            $_size562 = 0;
+            $_ktype563 = 0;
+            $_vtype564 = 0;
+            $xfer += $input->readMapBegin($_ktype563, $_vtype564, $_size562);
+            for ($_i566 = 0; $_i566 < $_size562; ++$_i566)
+            {
+              $key567 = '';
+              $val568 = '';
+              $xfer += $input->readString($key567);
+              $xfer += $input->readString($val568);
+              $this->properties[$key567] = $val568;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readMapEnd();
           } else {
@@ -18068,10 +17986,17 @@ class CompactionRequest {
       {
         $output->writeMapBegin(TType::STRING, TType::STRING, count($this->properties));
         {
+<<<<<<< HEAD
           foreach ($this->properties as $kiter583 => $viter584)
           {
             $xfer += $output->writeString($kiter583);
             $xfer += $output->writeString($viter584);
+=======
+          foreach ($this->properties as $kiter569 => $viter570)
+          {
+            $xfer += $output->writeString($kiter569);
+            $xfer += $output->writeString($viter570);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeMapEnd();
@@ -18658,6 +18583,7 @@ class ShowCompactResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->compacts = array();
+<<<<<<< HEAD
             $_size585 = 0;
             $_etype588 = 0;
             $xfer += $input->readListBegin($_etype588, $_size585);
@@ -18667,6 +18593,17 @@ class ShowCompactResponse {
               $elem590 = new \metastore\ShowCompactResponseElement();
               $xfer += $elem590->read($input);
               $this->compacts []= $elem590;
+=======
+            $_size571 = 0;
+            $_etype574 = 0;
+            $xfer += $input->readListBegin($_etype574, $_size571);
+            for ($_i575 = 0; $_i575 < $_size571; ++$_i575)
+            {
+              $elem576 = null;
+              $elem576 = new \metastore\ShowCompactResponseElement();
+              $xfer += $elem576->read($input);
+              $this->compacts []= $elem576;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -18694,9 +18631,15 @@ class ShowCompactResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->compacts));
         {
+<<<<<<< HEAD
           foreach ($this->compacts as $iter591)
           {
             $xfer += $iter591->write($output);
+=======
+          foreach ($this->compacts as $iter577)
+          {
+            $xfer += $iter577->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -18843,6 +18786,7 @@ class AddDynamicPartitions {
         case 5:
           if ($ftype == TType::LST) {
             $this->partitionnames = array();
+<<<<<<< HEAD
             $_size592 = 0;
             $_etype595 = 0;
             $xfer += $input->readListBegin($_etype595, $_size592);
@@ -18851,6 +18795,16 @@ class AddDynamicPartitions {
               $elem597 = null;
               $xfer += $input->readString($elem597);
               $this->partitionnames []= $elem597;
+=======
+            $_size578 = 0;
+            $_etype581 = 0;
+            $xfer += $input->readListBegin($_etype581, $_size578);
+            for ($_i582 = 0; $_i582 < $_size578; ++$_i582)
+            {
+              $elem583 = null;
+              $xfer += $input->readString($elem583);
+              $this->partitionnames []= $elem583;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -18905,9 +18859,15 @@ class AddDynamicPartitions {
       {
         $output->writeListBegin(TType::STRING, count($this->partitionnames));
         {
+<<<<<<< HEAD
           foreach ($this->partitionnames as $iter598)
           {
             $xfer += $output->writeString($iter598);
+=======
+          foreach ($this->partitionnames as $iter584)
+          {
+            $xfer += $output->writeString($iter584);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -19213,6 +19173,7 @@ class CreationMetadata {
         case 3:
           if ($ftype == TType::SET) {
             $this->tablesUsed = array();
+<<<<<<< HEAD
             $_size599 = 0;
             $_etype602 = 0;
             $xfer += $input->readSetBegin($_etype602, $_size599);
@@ -19224,6 +19185,19 @@ class CreationMetadata {
                 $this->tablesUsed[$elem604] = true;
               } else {
                 $this->tablesUsed []= $elem604;
+=======
+            $_size585 = 0;
+            $_etype588 = 0;
+            $xfer += $input->readSetBegin($_etype588, $_size585);
+            for ($_i589 = 0; $_i589 < $_size585; ++$_i589)
+            {
+              $elem590 = null;
+              $xfer += $input->readString($elem590);
+              if (is_scalar($elem590)) {
+                $this->tablesUsed[$elem590] = true;
+              } else {
+                $this->tablesUsed []= $elem590;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
               }
             }
             $xfer += $input->readSetEnd();
@@ -19269,12 +19243,21 @@ class CreationMetadata {
       {
         $output->writeSetBegin(TType::STRING, count($this->tablesUsed));
         {
+<<<<<<< HEAD
           foreach ($this->tablesUsed as $iter605 => $iter606)
           {
             if (is_scalar($iter606)) {
             $xfer += $output->writeString($iter605);
             } else {
             $xfer += $output->writeString($iter606);
+=======
+          foreach ($this->tablesUsed as $iter591 => $iter592)
+          {
+            if (is_scalar($iter592)) {
+            $xfer += $output->writeString($iter591);
+            } else {
+            $xfer += $output->writeString($iter592);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
           }
         }
@@ -19656,6 +19639,7 @@ class NotificationEventResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->events = array();
+<<<<<<< HEAD
             $_size607 = 0;
             $_etype610 = 0;
             $xfer += $input->readListBegin($_etype610, $_size607);
@@ -19665,6 +19649,17 @@ class NotificationEventResponse {
               $elem612 = new \metastore\NotificationEvent();
               $xfer += $elem612->read($input);
               $this->events []= $elem612;
+=======
+            $_size593 = 0;
+            $_etype596 = 0;
+            $xfer += $input->readListBegin($_etype596, $_size593);
+            for ($_i597 = 0; $_i597 < $_size593; ++$_i597)
+            {
+              $elem598 = null;
+              $elem598 = new \metastore\NotificationEvent();
+              $xfer += $elem598->read($input);
+              $this->events []= $elem598;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -19692,9 +19687,15 @@ class NotificationEventResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->events));
         {
+<<<<<<< HEAD
           foreach ($this->events as $iter613)
           {
             $xfer += $iter613->write($output);
+=======
+          foreach ($this->events as $iter599)
+          {
+            $xfer += $iter599->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -20039,6 +20040,7 @@ class InsertEventRequestData {
         case 2:
           if ($ftype == TType::LST) {
             $this->filesAdded = array();
+<<<<<<< HEAD
             $_size614 = 0;
             $_etype617 = 0;
             $xfer += $input->readListBegin($_etype617, $_size614);
@@ -20047,6 +20049,16 @@ class InsertEventRequestData {
               $elem619 = null;
               $xfer += $input->readString($elem619);
               $this->filesAdded []= $elem619;
+=======
+            $_size600 = 0;
+            $_etype603 = 0;
+            $xfer += $input->readListBegin($_etype603, $_size600);
+            for ($_i604 = 0; $_i604 < $_size600; ++$_i604)
+            {
+              $elem605 = null;
+              $xfer += $input->readString($elem605);
+              $this->filesAdded []= $elem605;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20056,6 +20068,7 @@ class InsertEventRequestData {
         case 3:
           if ($ftype == TType::LST) {
             $this->filesAddedChecksum = array();
+<<<<<<< HEAD
             $_size620 = 0;
             $_etype623 = 0;
             $xfer += $input->readListBegin($_etype623, $_size620);
@@ -20064,6 +20077,16 @@ class InsertEventRequestData {
               $elem625 = null;
               $xfer += $input->readString($elem625);
               $this->filesAddedChecksum []= $elem625;
+=======
+            $_size606 = 0;
+            $_etype609 = 0;
+            $xfer += $input->readListBegin($_etype609, $_size606);
+            for ($_i610 = 0; $_i610 < $_size606; ++$_i610)
+            {
+              $elem611 = null;
+              $xfer += $input->readString($elem611);
+              $this->filesAddedChecksum []= $elem611;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20096,9 +20119,15 @@ class InsertEventRequestData {
       {
         $output->writeListBegin(TType::STRING, count($this->filesAdded));
         {
+<<<<<<< HEAD
           foreach ($this->filesAdded as $iter626)
           {
             $xfer += $output->writeString($iter626);
+=======
+          foreach ($this->filesAdded as $iter612)
+          {
+            $xfer += $output->writeString($iter612);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -20113,9 +20142,15 @@ class InsertEventRequestData {
       {
         $output->writeListBegin(TType::STRING, count($this->filesAddedChecksum));
         {
+<<<<<<< HEAD
           foreach ($this->filesAddedChecksum as $iter627)
           {
             $xfer += $output->writeString($iter627);
+=======
+          foreach ($this->filesAddedChecksum as $iter613)
+          {
+            $xfer += $output->writeString($iter613);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -20333,6 +20368,7 @@ class FireEventRequest {
         case 5:
           if ($ftype == TType::LST) {
             $this->partitionVals = array();
+<<<<<<< HEAD
             $_size628 = 0;
             $_etype631 = 0;
             $xfer += $input->readListBegin($_etype631, $_size628);
@@ -20341,6 +20377,16 @@ class FireEventRequest {
               $elem633 = null;
               $xfer += $input->readString($elem633);
               $this->partitionVals []= $elem633;
+=======
+            $_size614 = 0;
+            $_etype617 = 0;
+            $xfer += $input->readListBegin($_etype617, $_size614);
+            for ($_i618 = 0; $_i618 < $_size614; ++$_i618)
+            {
+              $elem619 = null;
+              $xfer += $input->readString($elem619);
+              $this->partitionVals []= $elem619;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20391,9 +20437,15 @@ class FireEventRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->partitionVals));
         {
+<<<<<<< HEAD
           foreach ($this->partitionVals as $iter634)
           {
             $xfer += $output->writeString($iter634);
+=======
+          foreach ($this->partitionVals as $iter620)
+          {
+            $xfer += $output->writeString($iter620);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -20621,6 +20673,7 @@ class GetFileMetadataByExprResult {
         case 1:
           if ($ftype == TType::MAP) {
             $this->metadata = array();
+<<<<<<< HEAD
             $_size635 = 0;
             $_ktype636 = 0;
             $_vtype637 = 0;
@@ -20633,6 +20686,20 @@ class GetFileMetadataByExprResult {
               $val641 = new \metastore\MetadataPpdResult();
               $xfer += $val641->read($input);
               $this->metadata[$key640] = $val641;
+=======
+            $_size621 = 0;
+            $_ktype622 = 0;
+            $_vtype623 = 0;
+            $xfer += $input->readMapBegin($_ktype622, $_vtype623, $_size621);
+            for ($_i625 = 0; $_i625 < $_size621; ++$_i625)
+            {
+              $key626 = 0;
+              $val627 = new \metastore\MetadataPpdResult();
+              $xfer += $input->readI64($key626);
+              $val627 = new \metastore\MetadataPpdResult();
+              $xfer += $val627->read($input);
+              $this->metadata[$key626] = $val627;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readMapEnd();
           } else {
@@ -20667,10 +20734,17 @@ class GetFileMetadataByExprResult {
       {
         $output->writeMapBegin(TType::I64, TType::STRUCT, count($this->metadata));
         {
+<<<<<<< HEAD
           foreach ($this->metadata as $kiter642 => $viter643)
           {
             $xfer += $output->writeI64($kiter642);
             $xfer += $viter643->write($output);
+=======
+          foreach ($this->metadata as $kiter628 => $viter629)
+          {
+            $xfer += $output->writeI64($kiter628);
+            $xfer += $viter629->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeMapEnd();
@@ -20772,6 +20846,7 @@ class GetFileMetadataByExprRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
             $_size644 = 0;
             $_etype647 = 0;
             $xfer += $input->readListBegin($_etype647, $_size644);
@@ -20780,6 +20855,16 @@ class GetFileMetadataByExprRequest {
               $elem649 = null;
               $xfer += $input->readI64($elem649);
               $this->fileIds []= $elem649;
+=======
+            $_size630 = 0;
+            $_etype633 = 0;
+            $xfer += $input->readListBegin($_etype633, $_size630);
+            for ($_i634 = 0; $_i634 < $_size630; ++$_i634)
+            {
+              $elem635 = null;
+              $xfer += $input->readI64($elem635);
+              $this->fileIds []= $elem635;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -20828,9 +20913,15 @@ class GetFileMetadataByExprRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter650)
           {
             $xfer += $output->writeI64($iter650);
+=======
+          foreach ($this->fileIds as $iter636)
+          {
+            $xfer += $output->writeI64($iter636);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -20924,6 +21015,7 @@ class GetFileMetadataResult {
         case 1:
           if ($ftype == TType::MAP) {
             $this->metadata = array();
+<<<<<<< HEAD
             $_size651 = 0;
             $_ktype652 = 0;
             $_vtype653 = 0;
@@ -20935,6 +21027,19 @@ class GetFileMetadataResult {
               $xfer += $input->readI64($key656);
               $xfer += $input->readString($val657);
               $this->metadata[$key656] = $val657;
+=======
+            $_size637 = 0;
+            $_ktype638 = 0;
+            $_vtype639 = 0;
+            $xfer += $input->readMapBegin($_ktype638, $_vtype639, $_size637);
+            for ($_i641 = 0; $_i641 < $_size637; ++$_i641)
+            {
+              $key642 = 0;
+              $val643 = '';
+              $xfer += $input->readI64($key642);
+              $xfer += $input->readString($val643);
+              $this->metadata[$key642] = $val643;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readMapEnd();
           } else {
@@ -20969,10 +21074,17 @@ class GetFileMetadataResult {
       {
         $output->writeMapBegin(TType::I64, TType::STRING, count($this->metadata));
         {
+<<<<<<< HEAD
           foreach ($this->metadata as $kiter658 => $viter659)
           {
             $xfer += $output->writeI64($kiter658);
             $xfer += $output->writeString($viter659);
+=======
+          foreach ($this->metadata as $kiter644 => $viter645)
+          {
+            $xfer += $output->writeI64($kiter644);
+            $xfer += $output->writeString($viter645);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeMapEnd();
@@ -21041,6 +21153,7 @@ class GetFileMetadataRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
             $_size660 = 0;
             $_etype663 = 0;
             $xfer += $input->readListBegin($_etype663, $_size660);
@@ -21049,6 +21162,16 @@ class GetFileMetadataRequest {
               $elem665 = null;
               $xfer += $input->readI64($elem665);
               $this->fileIds []= $elem665;
+=======
+            $_size646 = 0;
+            $_etype649 = 0;
+            $xfer += $input->readListBegin($_etype649, $_size646);
+            for ($_i650 = 0; $_i650 < $_size646; ++$_i650)
+            {
+              $elem651 = null;
+              $xfer += $input->readI64($elem651);
+              $this->fileIds []= $elem651;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21076,9 +21199,15 @@ class GetFileMetadataRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter666)
           {
             $xfer += $output->writeI64($iter666);
+=======
+          foreach ($this->fileIds as $iter652)
+          {
+            $xfer += $output->writeI64($iter652);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -21218,6 +21347,7 @@ class PutFileMetadataRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
             $_size667 = 0;
             $_etype670 = 0;
             $xfer += $input->readListBegin($_etype670, $_size667);
@@ -21226,6 +21356,16 @@ class PutFileMetadataRequest {
               $elem672 = null;
               $xfer += $input->readI64($elem672);
               $this->fileIds []= $elem672;
+=======
+            $_size653 = 0;
+            $_etype656 = 0;
+            $xfer += $input->readListBegin($_etype656, $_size653);
+            for ($_i657 = 0; $_i657 < $_size653; ++$_i657)
+            {
+              $elem658 = null;
+              $xfer += $input->readI64($elem658);
+              $this->fileIds []= $elem658;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21235,6 +21375,7 @@ class PutFileMetadataRequest {
         case 2:
           if ($ftype == TType::LST) {
             $this->metadata = array();
+<<<<<<< HEAD
             $_size673 = 0;
             $_etype676 = 0;
             $xfer += $input->readListBegin($_etype676, $_size673);
@@ -21243,6 +21384,16 @@ class PutFileMetadataRequest {
               $elem678 = null;
               $xfer += $input->readString($elem678);
               $this->metadata []= $elem678;
+=======
+            $_size659 = 0;
+            $_etype662 = 0;
+            $xfer += $input->readListBegin($_etype662, $_size659);
+            for ($_i663 = 0; $_i663 < $_size659; ++$_i663)
+            {
+              $elem664 = null;
+              $xfer += $input->readString($elem664);
+              $this->metadata []= $elem664;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21277,9 +21428,15 @@ class PutFileMetadataRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter679)
           {
             $xfer += $output->writeI64($iter679);
+=======
+          foreach ($this->fileIds as $iter665)
+          {
+            $xfer += $output->writeI64($iter665);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -21294,9 +21451,15 @@ class PutFileMetadataRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->metadata));
         {
+<<<<<<< HEAD
           foreach ($this->metadata as $iter680)
           {
             $xfer += $output->writeString($iter680);
+=======
+          foreach ($this->metadata as $iter666)
+          {
+            $xfer += $output->writeString($iter666);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -21415,6 +21578,7 @@ class ClearFileMetadataRequest {
         case 1:
           if ($ftype == TType::LST) {
             $this->fileIds = array();
+<<<<<<< HEAD
             $_size681 = 0;
             $_etype684 = 0;
             $xfer += $input->readListBegin($_etype684, $_size681);
@@ -21423,6 +21587,16 @@ class ClearFileMetadataRequest {
               $elem686 = null;
               $xfer += $input->readI64($elem686);
               $this->fileIds []= $elem686;
+=======
+            $_size667 = 0;
+            $_etype670 = 0;
+            $xfer += $input->readListBegin($_etype670, $_size667);
+            for ($_i671 = 0; $_i671 < $_size667; ++$_i671)
+            {
+              $elem672 = null;
+              $xfer += $input->readI64($elem672);
+              $this->fileIds []= $elem672;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21450,9 +21624,15 @@ class ClearFileMetadataRequest {
       {
         $output->writeListBegin(TType::I64, count($this->fileIds));
         {
+<<<<<<< HEAD
           foreach ($this->fileIds as $iter687)
           {
             $xfer += $output->writeI64($iter687);
+=======
+          foreach ($this->fileIds as $iter673)
+          {
+            $xfer += $output->writeI64($iter673);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -21736,6 +21916,7 @@ class GetAllFunctionsResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->functions = array();
+<<<<<<< HEAD
             $_size688 = 0;
             $_etype691 = 0;
             $xfer += $input->readListBegin($_etype691, $_size688);
@@ -21745,6 +21926,17 @@ class GetAllFunctionsResponse {
               $elem693 = new \metastore\Function();
               $xfer += $elem693->read($input);
               $this->functions []= $elem693;
+=======
+            $_size674 = 0;
+            $_etype677 = 0;
+            $xfer += $input->readListBegin($_etype677, $_size674);
+            for ($_i678 = 0; $_i678 < $_size674; ++$_i678)
+            {
+              $elem679 = null;
+              $elem679 = new \metastore\Function();
+              $xfer += $elem679->read($input);
+              $this->functions []= $elem679;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21772,9 +21964,15 @@ class GetAllFunctionsResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->functions));
         {
+<<<<<<< HEAD
           foreach ($this->functions as $iter694)
           {
             $xfer += $iter694->write($output);
+=======
+          foreach ($this->functions as $iter680)
+          {
+            $xfer += $iter680->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -21838,6 +22036,7 @@ class ClientCapabilities {
         case 1:
           if ($ftype == TType::LST) {
             $this->values = array();
+<<<<<<< HEAD
             $_size695 = 0;
             $_etype698 = 0;
             $xfer += $input->readListBegin($_etype698, $_size695);
@@ -21846,6 +22045,16 @@ class ClientCapabilities {
               $elem700 = null;
               $xfer += $input->readI32($elem700);
               $this->values []= $elem700;
+=======
+            $_size681 = 0;
+            $_etype684 = 0;
+            $xfer += $input->readListBegin($_etype684, $_size681);
+            for ($_i685 = 0; $_i685 < $_size681; ++$_i685)
+            {
+              $elem686 = null;
+              $xfer += $input->readI32($elem686);
+              $this->values []= $elem686;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -21873,9 +22082,15 @@ class ClientCapabilities {
       {
         $output->writeListBegin(TType::I32, count($this->values));
         {
+<<<<<<< HEAD
           foreach ($this->values as $iter701)
           {
             $xfer += $output->writeI32($iter701);
+=======
+          foreach ($this->values as $iter687)
+          {
+            $xfer += $output->writeI32($iter687);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -22175,6 +22390,7 @@ class GetTablesRequest {
         case 2:
           if ($ftype == TType::LST) {
             $this->tblNames = array();
+<<<<<<< HEAD
             $_size702 = 0;
             $_etype705 = 0;
             $xfer += $input->readListBegin($_etype705, $_size702);
@@ -22183,6 +22399,16 @@ class GetTablesRequest {
               $elem707 = null;
               $xfer += $input->readString($elem707);
               $this->tblNames []= $elem707;
+=======
+            $_size688 = 0;
+            $_etype691 = 0;
+            $xfer += $input->readListBegin($_etype691, $_size688);
+            for ($_i692 = 0; $_i692 < $_size688; ++$_i692)
+            {
+              $elem693 = null;
+              $xfer += $input->readString($elem693);
+              $this->tblNames []= $elem693;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -22223,9 +22449,15 @@ class GetTablesRequest {
       {
         $output->writeListBegin(TType::STRING, count($this->tblNames));
         {
+<<<<<<< HEAD
           foreach ($this->tblNames as $iter708)
           {
             $xfer += $output->writeString($iter708);
+=======
+          foreach ($this->tblNames as $iter694)
+          {
+            $xfer += $output->writeString($iter694);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -22298,6 +22530,7 @@ class GetTablesResult {
         case 1:
           if ($ftype == TType::LST) {
             $this->tables = array();
+<<<<<<< HEAD
             $_size709 = 0;
             $_etype712 = 0;
             $xfer += $input->readListBegin($_etype712, $_size709);
@@ -22307,6 +22540,17 @@ class GetTablesResult {
               $elem714 = new \metastore\Table();
               $xfer += $elem714->read($input);
               $this->tables []= $elem714;
+=======
+            $_size695 = 0;
+            $_etype698 = 0;
+            $xfer += $input->readListBegin($_etype698, $_size695);
+            for ($_i699 = 0; $_i699 < $_size695; ++$_i699)
+            {
+              $elem700 = null;
+              $elem700 = new \metastore\Table();
+              $xfer += $elem700->read($input);
+              $this->tables []= $elem700;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -22334,9 +22578,15 @@ class GetTablesResult {
       {
         $output->writeListBegin(TType::STRUCT, count($this->tables));
         {
+<<<<<<< HEAD
           foreach ($this->tables as $iter715)
           {
             $xfer += $iter715->write($output);
+=======
+          foreach ($this->tables as $iter701)
+          {
+            $xfer += $iter701->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -22714,6 +22964,7 @@ class Materialization {
         case 1:
           if ($ftype == TType::SET) {
             $this->tablesUsed = array();
+<<<<<<< HEAD
             $_size716 = 0;
             $_etype719 = 0;
             $xfer += $input->readSetBegin($_etype719, $_size716);
@@ -22725,6 +22976,19 @@ class Materialization {
                 $this->tablesUsed[$elem721] = true;
               } else {
                 $this->tablesUsed []= $elem721;
+=======
+            $_size702 = 0;
+            $_etype705 = 0;
+            $xfer += $input->readSetBegin($_etype705, $_size702);
+            for ($_i706 = 0; $_i706 < $_size702; ++$_i706)
+            {
+              $elem707 = null;
+              $xfer += $input->readString($elem707);
+              if (is_scalar($elem707)) {
+                $this->tablesUsed[$elem707] = true;
+              } else {
+                $this->tablesUsed []= $elem707;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
               }
             }
             $xfer += $input->readSetEnd();
@@ -22767,12 +23031,21 @@ class Materialization {
       {
         $output->writeSetBegin(TType::STRING, count($this->tablesUsed));
         {
+<<<<<<< HEAD
           foreach ($this->tablesUsed as $iter722 => $iter723)
           {
             if (is_scalar($iter723)) {
             $xfer += $output->writeString($iter722);
             } else {
             $xfer += $output->writeString($iter723);
+=======
+          foreach ($this->tablesUsed as $iter708 => $iter709)
+          {
+            if (is_scalar($iter709)) {
+            $xfer += $output->writeString($iter708);
+            } else {
+            $xfer += $output->writeString($iter709);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
           }
         }
@@ -24039,6 +24312,7 @@ class WMFullResourcePlan {
         case 2:
           if ($ftype == TType::LST) {
             $this->pools = array();
+<<<<<<< HEAD
             $_size724 = 0;
             $_etype727 = 0;
             $xfer += $input->readListBegin($_etype727, $_size724);
@@ -24048,6 +24322,17 @@ class WMFullResourcePlan {
               $elem729 = new \metastore\WMPool();
               $xfer += $elem729->read($input);
               $this->pools []= $elem729;
+=======
+            $_size710 = 0;
+            $_etype713 = 0;
+            $xfer += $input->readListBegin($_etype713, $_size710);
+            for ($_i714 = 0; $_i714 < $_size710; ++$_i714)
+            {
+              $elem715 = null;
+              $elem715 = new \metastore\WMPool();
+              $xfer += $elem715->read($input);
+              $this->pools []= $elem715;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24057,6 +24342,7 @@ class WMFullResourcePlan {
         case 3:
           if ($ftype == TType::LST) {
             $this->mappings = array();
+<<<<<<< HEAD
             $_size730 = 0;
             $_etype733 = 0;
             $xfer += $input->readListBegin($_etype733, $_size730);
@@ -24066,6 +24352,17 @@ class WMFullResourcePlan {
               $elem735 = new \metastore\WMMapping();
               $xfer += $elem735->read($input);
               $this->mappings []= $elem735;
+=======
+            $_size716 = 0;
+            $_etype719 = 0;
+            $xfer += $input->readListBegin($_etype719, $_size716);
+            for ($_i720 = 0; $_i720 < $_size716; ++$_i720)
+            {
+              $elem721 = null;
+              $elem721 = new \metastore\WMMapping();
+              $xfer += $elem721->read($input);
+              $this->mappings []= $elem721;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24075,6 +24372,7 @@ class WMFullResourcePlan {
         case 4:
           if ($ftype == TType::LST) {
             $this->triggers = array();
+<<<<<<< HEAD
             $_size736 = 0;
             $_etype739 = 0;
             $xfer += $input->readListBegin($_etype739, $_size736);
@@ -24084,6 +24382,17 @@ class WMFullResourcePlan {
               $elem741 = new \metastore\WMTrigger();
               $xfer += $elem741->read($input);
               $this->triggers []= $elem741;
+=======
+            $_size722 = 0;
+            $_etype725 = 0;
+            $xfer += $input->readListBegin($_etype725, $_size722);
+            for ($_i726 = 0; $_i726 < $_size722; ++$_i726)
+            {
+              $elem727 = null;
+              $elem727 = new \metastore\WMTrigger();
+              $xfer += $elem727->read($input);
+              $this->triggers []= $elem727;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24093,6 +24402,7 @@ class WMFullResourcePlan {
         case 5:
           if ($ftype == TType::LST) {
             $this->poolTriggers = array();
+<<<<<<< HEAD
             $_size742 = 0;
             $_etype745 = 0;
             $xfer += $input->readListBegin($_etype745, $_size742);
@@ -24102,6 +24412,17 @@ class WMFullResourcePlan {
               $elem747 = new \metastore\WMPoolTrigger();
               $xfer += $elem747->read($input);
               $this->poolTriggers []= $elem747;
+=======
+            $_size728 = 0;
+            $_etype731 = 0;
+            $xfer += $input->readListBegin($_etype731, $_size728);
+            for ($_i732 = 0; $_i732 < $_size728; ++$_i732)
+            {
+              $elem733 = null;
+              $elem733 = new \metastore\WMPoolTrigger();
+              $xfer += $elem733->read($input);
+              $this->poolTriggers []= $elem733;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24137,9 +24458,15 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->pools));
         {
+<<<<<<< HEAD
           foreach ($this->pools as $iter748)
           {
             $xfer += $iter748->write($output);
+=======
+          foreach ($this->pools as $iter734)
+          {
+            $xfer += $iter734->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -24154,9 +24481,15 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->mappings));
         {
+<<<<<<< HEAD
           foreach ($this->mappings as $iter749)
           {
             $xfer += $iter749->write($output);
+=======
+          foreach ($this->mappings as $iter735)
+          {
+            $xfer += $iter735->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -24171,9 +24504,15 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->triggers));
         {
+<<<<<<< HEAD
           foreach ($this->triggers as $iter750)
           {
             $xfer += $iter750->write($output);
+=======
+          foreach ($this->triggers as $iter736)
+          {
+            $xfer += $iter736->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -24188,9 +24527,15 @@ class WMFullResourcePlan {
       {
         $output->writeListBegin(TType::STRUCT, count($this->poolTriggers));
         {
+<<<<<<< HEAD
           foreach ($this->poolTriggers as $iter751)
           {
             $xfer += $iter751->write($output);
+=======
+          foreach ($this->poolTriggers as $iter737)
+          {
+            $xfer += $iter737->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -24743,6 +25088,7 @@ class WMGetAllResourcePlanResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->resourcePlans = array();
+<<<<<<< HEAD
             $_size752 = 0;
             $_etype755 = 0;
             $xfer += $input->readListBegin($_etype755, $_size752);
@@ -24752,6 +25098,17 @@ class WMGetAllResourcePlanResponse {
               $elem757 = new \metastore\WMResourcePlan();
               $xfer += $elem757->read($input);
               $this->resourcePlans []= $elem757;
+=======
+            $_size738 = 0;
+            $_etype741 = 0;
+            $xfer += $input->readListBegin($_etype741, $_size738);
+            for ($_i742 = 0; $_i742 < $_size738; ++$_i742)
+            {
+              $elem743 = null;
+              $elem743 = new \metastore\WMResourcePlan();
+              $xfer += $elem743->read($input);
+              $this->resourcePlans []= $elem743;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -24779,9 +25136,15 @@ class WMGetAllResourcePlanResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->resourcePlans));
         {
+<<<<<<< HEAD
           foreach ($this->resourcePlans as $iter758)
           {
             $xfer += $iter758->write($output);
+=======
+          foreach ($this->resourcePlans as $iter744)
+          {
+            $xfer += $iter744->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -25187,6 +25550,7 @@ class WMValidateResourcePlanResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->errors = array();
+<<<<<<< HEAD
             $_size759 = 0;
             $_etype762 = 0;
             $xfer += $input->readListBegin($_etype762, $_size759);
@@ -25195,6 +25559,16 @@ class WMValidateResourcePlanResponse {
               $elem764 = null;
               $xfer += $input->readString($elem764);
               $this->errors []= $elem764;
+=======
+            $_size745 = 0;
+            $_etype748 = 0;
+            $xfer += $input->readListBegin($_etype748, $_size745);
+            for ($_i749 = 0; $_i749 < $_size745; ++$_i749)
+            {
+              $elem750 = null;
+              $xfer += $input->readString($elem750);
+              $this->errors []= $elem750;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -25204,6 +25578,7 @@ class WMValidateResourcePlanResponse {
         case 2:
           if ($ftype == TType::LST) {
             $this->warnings = array();
+<<<<<<< HEAD
             $_size765 = 0;
             $_etype768 = 0;
             $xfer += $input->readListBegin($_etype768, $_size765);
@@ -25212,6 +25587,16 @@ class WMValidateResourcePlanResponse {
               $elem770 = null;
               $xfer += $input->readString($elem770);
               $this->warnings []= $elem770;
+=======
+            $_size751 = 0;
+            $_etype754 = 0;
+            $xfer += $input->readListBegin($_etype754, $_size751);
+            for ($_i755 = 0; $_i755 < $_size751; ++$_i755)
+            {
+              $elem756 = null;
+              $xfer += $input->readString($elem756);
+              $this->warnings []= $elem756;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -25239,9 +25624,15 @@ class WMValidateResourcePlanResponse {
       {
         $output->writeListBegin(TType::STRING, count($this->errors));
         {
+<<<<<<< HEAD
           foreach ($this->errors as $iter771)
           {
             $xfer += $output->writeString($iter771);
+=======
+          foreach ($this->errors as $iter757)
+          {
+            $xfer += $output->writeString($iter757);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -25256,9 +25647,15 @@ class WMValidateResourcePlanResponse {
       {
         $output->writeListBegin(TType::STRING, count($this->warnings));
         {
+<<<<<<< HEAD
           foreach ($this->warnings as $iter772)
           {
             $xfer += $output->writeString($iter772);
+=======
+          foreach ($this->warnings as $iter758)
+          {
+            $xfer += $output->writeString($iter758);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();
@@ -25931,6 +26328,7 @@ class WMGetTriggersForResourePlanResponse {
         case 1:
           if ($ftype == TType::LST) {
             $this->triggers = array();
+<<<<<<< HEAD
             $_size773 = 0;
             $_etype776 = 0;
             $xfer += $input->readListBegin($_etype776, $_size773);
@@ -25940,6 +26338,17 @@ class WMGetTriggersForResourePlanResponse {
               $elem778 = new \metastore\WMTrigger();
               $xfer += $elem778->read($input);
               $this->triggers []= $elem778;
+=======
+            $_size759 = 0;
+            $_etype762 = 0;
+            $xfer += $input->readListBegin($_etype762, $_size759);
+            for ($_i763 = 0; $_i763 < $_size759; ++$_i763)
+            {
+              $elem764 = null;
+              $elem764 = new \metastore\WMTrigger();
+              $xfer += $elem764->read($input);
+              $this->triggers []= $elem764;
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             $xfer += $input->readListEnd();
           } else {
@@ -25967,9 +26376,15 @@ class WMGetTriggersForResourePlanResponse {
       {
         $output->writeListBegin(TType::STRUCT, count($this->triggers));
         {
+<<<<<<< HEAD
           foreach ($this->triggers as $iter779)
           {
             $xfer += $iter779->write($output);
+=======
+          foreach ($this->triggers as $iter765)
+          {
+            $xfer += $iter765->write($output);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         $output->writeListEnd();

@@ -453,6 +453,7 @@ import org.slf4j.LoggerFactory;
           case 1: // ABORTED
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TSet _set636 = iprot.readSetBegin();
                 struct.aborted = new HashSet<Long>(2*_set636.size);
                 long _elem637;
@@ -460,6 +461,15 @@ import org.slf4j.LoggerFactory;
                 {
                   _elem637 = iprot.readI64();
                   struct.aborted.add(_elem637);
+=======
+                org.apache.thrift.protocol.TSet _set620 = iprot.readSetBegin();
+                struct.aborted = new HashSet<Long>(2*_set620.size);
+                long _elem621;
+                for (int _i622 = 0; _i622 < _set620.size; ++_i622)
+                {
+                  _elem621 = iprot.readI64();
+                  struct.aborted.add(_elem621);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readSetEnd();
               }
@@ -471,6 +481,7 @@ import org.slf4j.LoggerFactory;
           case 2: // NOSUCH
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TSet _set639 = iprot.readSetBegin();
                 struct.nosuch = new HashSet<Long>(2*_set639.size);
                 long _elem640;
@@ -478,6 +489,15 @@ import org.slf4j.LoggerFactory;
                 {
                   _elem640 = iprot.readI64();
                   struct.nosuch.add(_elem640);
+=======
+                org.apache.thrift.protocol.TSet _set623 = iprot.readSetBegin();
+                struct.nosuch = new HashSet<Long>(2*_set623.size);
+                long _elem624;
+                for (int _i625 = 0; _i625 < _set623.size; ++_i625)
+                {
+                  _elem624 = iprot.readI64();
+                  struct.nosuch.add(_elem624);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readSetEnd();
               }
@@ -503,9 +523,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(ABORTED_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, struct.aborted.size()));
+<<<<<<< HEAD
           for (long _iter642 : struct.aborted)
           {
             oprot.writeI64(_iter642);
+=======
+          for (long _iter626 : struct.aborted)
+          {
+            oprot.writeI64(_iter626);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeSetEnd();
         }
@@ -515,9 +541,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(NOSUCH_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, struct.nosuch.size()));
+<<<<<<< HEAD
           for (long _iter643 : struct.nosuch)
           {
             oprot.writeI64(_iter643);
+=======
+          for (long _iter627 : struct.nosuch)
+          {
+            oprot.writeI64(_iter627);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeSetEnd();
         }
@@ -542,16 +574,28 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.aborted.size());
+<<<<<<< HEAD
         for (long _iter644 : struct.aborted)
         {
           oprot.writeI64(_iter644);
+=======
+        for (long _iter628 : struct.aborted)
+        {
+          oprot.writeI64(_iter628);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       {
         oprot.writeI32(struct.nosuch.size());
+<<<<<<< HEAD
         for (long _iter645 : struct.nosuch)
         {
           oprot.writeI64(_iter645);
+=======
+        for (long _iter629 : struct.nosuch)
+        {
+          oprot.writeI64(_iter629);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
     }
@@ -560,6 +604,7 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, HeartbeatTxnRangeResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TSet _set646 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.aborted = new HashSet<Long>(2*_set646.size);
         long _elem647;
@@ -567,10 +612,20 @@ import org.slf4j.LoggerFactory;
         {
           _elem647 = iprot.readI64();
           struct.aborted.add(_elem647);
+=======
+        org.apache.thrift.protocol.TSet _set630 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.aborted = new HashSet<Long>(2*_set630.size);
+        long _elem631;
+        for (int _i632 = 0; _i632 < _set630.size; ++_i632)
+        {
+          _elem631 = iprot.readI64();
+          struct.aborted.add(_elem631);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setAbortedIsSet(true);
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TSet _set649 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.nosuch = new HashSet<Long>(2*_set649.size);
         long _elem650;
@@ -578,6 +633,15 @@ import org.slf4j.LoggerFactory;
         {
           _elem650 = iprot.readI64();
           struct.nosuch.add(_elem650);
+=======
+        org.apache.thrift.protocol.TSet _set633 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.I64, iprot.readI32());
+        struct.nosuch = new HashSet<Long>(2*_set633.size);
+        long _elem634;
+        for (int _i635 = 0; _i635 < _set633.size; ++_i635)
+        {
+          _elem634 = iprot.readI64();
+          struct.nosuch.add(_elem634);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setNosuchIsSet(true);

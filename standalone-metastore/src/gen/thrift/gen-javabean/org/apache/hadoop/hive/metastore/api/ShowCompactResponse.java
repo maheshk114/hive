@@ -354,6 +354,7 @@ import org.slf4j.LoggerFactory;
           case 1: // COMPACTS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list662 = iprot.readListBegin();
                 struct.compacts = new ArrayList<ShowCompactResponseElement>(_list662.size);
                 ShowCompactResponseElement _elem663;
@@ -362,6 +363,16 @@ import org.slf4j.LoggerFactory;
                   _elem663 = new ShowCompactResponseElement();
                   _elem663.read(iprot);
                   struct.compacts.add(_elem663);
+=======
+                org.apache.thrift.protocol.TList _list646 = iprot.readListBegin();
+                struct.compacts = new ArrayList<ShowCompactResponseElement>(_list646.size);
+                ShowCompactResponseElement _elem647;
+                for (int _i648 = 0; _i648 < _list646.size; ++_i648)
+                {
+                  _elem647 = new ShowCompactResponseElement();
+                  _elem647.read(iprot);
+                  struct.compacts.add(_elem647);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -387,9 +398,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(COMPACTS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.compacts.size()));
+<<<<<<< HEAD
           for (ShowCompactResponseElement _iter665 : struct.compacts)
           {
             _iter665.write(oprot);
+=======
+          for (ShowCompactResponseElement _iter649 : struct.compacts)
+          {
+            _iter649.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeListEnd();
         }
@@ -414,9 +431,15 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.compacts.size());
+<<<<<<< HEAD
         for (ShowCompactResponseElement _iter666 : struct.compacts)
         {
           _iter666.write(oprot);
+=======
+        for (ShowCompactResponseElement _iter650 : struct.compacts)
+        {
+          _iter650.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
     }
@@ -425,6 +448,7 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, ShowCompactResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TList _list667 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
         struct.compacts = new ArrayList<ShowCompactResponseElement>(_list667.size);
         ShowCompactResponseElement _elem668;
@@ -433,6 +457,16 @@ import org.slf4j.LoggerFactory;
           _elem668 = new ShowCompactResponseElement();
           _elem668.read(iprot);
           struct.compacts.add(_elem668);
+=======
+        org.apache.thrift.protocol.TList _list651 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.compacts = new ArrayList<ShowCompactResponseElement>(_list651.size);
+        ShowCompactResponseElement _elem652;
+        for (int _i653 = 0; _i653 < _list651.size; ++_i653)
+        {
+          _elem652 = new ShowCompactResponseElement();
+          _elem652.read(iprot);
+          struct.compacts.add(_elem652);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setCompactsIsSet(true);

@@ -354,6 +354,7 @@ import org.slf4j.LoggerFactory;
           case 1: // EVENTS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list686 = iprot.readListBegin();
                 struct.events = new ArrayList<NotificationEvent>(_list686.size);
                 NotificationEvent _elem687;
@@ -362,6 +363,16 @@ import org.slf4j.LoggerFactory;
                   _elem687 = new NotificationEvent();
                   _elem687.read(iprot);
                   struct.events.add(_elem687);
+=======
+                org.apache.thrift.protocol.TList _list670 = iprot.readListBegin();
+                struct.events = new ArrayList<NotificationEvent>(_list670.size);
+                NotificationEvent _elem671;
+                for (int _i672 = 0; _i672 < _list670.size; ++_i672)
+                {
+                  _elem671 = new NotificationEvent();
+                  _elem671.read(iprot);
+                  struct.events.add(_elem671);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -387,9 +398,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(EVENTS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.events.size()));
+<<<<<<< HEAD
           for (NotificationEvent _iter689 : struct.events)
           {
             _iter689.write(oprot);
+=======
+          for (NotificationEvent _iter673 : struct.events)
+          {
+            _iter673.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeListEnd();
         }
@@ -414,9 +431,15 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.events.size());
+<<<<<<< HEAD
         for (NotificationEvent _iter690 : struct.events)
         {
           _iter690.write(oprot);
+=======
+        for (NotificationEvent _iter674 : struct.events)
+        {
+          _iter674.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
     }
@@ -425,6 +448,7 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, NotificationEventResponse struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TList _list691 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
         struct.events = new ArrayList<NotificationEvent>(_list691.size);
         NotificationEvent _elem692;
@@ -433,6 +457,16 @@ import org.slf4j.LoggerFactory;
           _elem692 = new NotificationEvent();
           _elem692.read(iprot);
           struct.events.add(_elem692);
+=======
+        org.apache.thrift.protocol.TList _list675 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.events = new ArrayList<NotificationEvent>(_list675.size);
+        NotificationEvent _elem676;
+        for (int _i677 = 0; _i677 < _list675.size; ++_i677)
+        {
+          _elem676 = new NotificationEvent();
+          _elem676.read(iprot);
+          struct.events.add(_elem676);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setEventsIsSet(true);

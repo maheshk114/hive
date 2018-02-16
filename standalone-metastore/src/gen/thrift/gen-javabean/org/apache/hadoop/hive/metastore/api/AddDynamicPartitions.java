@@ -816,6 +816,7 @@ import org.slf4j.LoggerFactory;
           case 5: // PARTITIONNAMES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list670 = iprot.readListBegin();
                 struct.partitionnames = new ArrayList<String>(_list670.size);
                 String _elem671;
@@ -823,6 +824,15 @@ import org.slf4j.LoggerFactory;
                 {
                   _elem671 = iprot.readString();
                   struct.partitionnames.add(_elem671);
+=======
+                org.apache.thrift.protocol.TList _list654 = iprot.readListBegin();
+                struct.partitionnames = new ArrayList<String>(_list654.size);
+                String _elem655;
+                for (int _i656 = 0; _i656 < _list654.size; ++_i656)
+                {
+                  _elem655 = iprot.readString();
+                  struct.partitionnames.add(_elem655);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -872,9 +882,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(PARTITIONNAMES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.partitionnames.size()));
+<<<<<<< HEAD
           for (String _iter673 : struct.partitionnames)
           {
             oprot.writeString(_iter673);
+=======
+          for (String _iter657 : struct.partitionnames)
+          {
+            oprot.writeString(_iter657);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeListEnd();
         }
@@ -910,9 +926,15 @@ import org.slf4j.LoggerFactory;
       oprot.writeString(struct.tablename);
       {
         oprot.writeI32(struct.partitionnames.size());
+<<<<<<< HEAD
         for (String _iter674 : struct.partitionnames)
         {
           oprot.writeString(_iter674);
+=======
+        for (String _iter658 : struct.partitionnames)
+        {
+          oprot.writeString(_iter658);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       BitSet optionals = new BitSet();
@@ -937,6 +959,7 @@ import org.slf4j.LoggerFactory;
       struct.tablename = iprot.readString();
       struct.setTablenameIsSet(true);
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TList _list675 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
         struct.partitionnames = new ArrayList<String>(_list675.size);
         String _elem676;
@@ -944,6 +967,15 @@ import org.slf4j.LoggerFactory;
         {
           _elem676 = iprot.readString();
           struct.partitionnames.add(_elem676);
+=======
+        org.apache.thrift.protocol.TList _list659 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.partitionnames = new ArrayList<String>(_list659.size);
+        String _elem660;
+        for (int _i661 = 0; _i661 < _list659.size; ++_i661)
+        {
+          _elem660 = iprot.readString();
+          struct.partitionnames.add(_elem660);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setPartitionnamesIsSet(true);

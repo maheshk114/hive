@@ -619,6 +619,7 @@ import org.slf4j.LoggerFactory;
           case 3: // TABLES_USED
             if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TSet _set678 = iprot.readSetBegin();
                 struct.tablesUsed = new HashSet<String>(2*_set678.size);
                 String _elem679;
@@ -626,6 +627,15 @@ import org.slf4j.LoggerFactory;
                 {
                   _elem679 = iprot.readString();
                   struct.tablesUsed.add(_elem679);
+=======
+                org.apache.thrift.protocol.TSet _set662 = iprot.readSetBegin();
+                struct.tablesUsed = new HashSet<String>(2*_set662.size);
+                String _elem663;
+                for (int _i664 = 0; _i664 < _set662.size; ++_i664)
+                {
+                  _elem663 = iprot.readString();
+                  struct.tablesUsed.add(_elem663);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readSetEnd();
               }
@@ -669,9 +679,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(TABLES_USED_FIELD_DESC);
         {
           oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRING, struct.tablesUsed.size()));
+<<<<<<< HEAD
           for (String _iter681 : struct.tablesUsed)
           {
             oprot.writeString(_iter681);
+=======
+          for (String _iter665 : struct.tablesUsed)
+          {
+            oprot.writeString(_iter665);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeSetEnd();
         }
@@ -705,9 +721,15 @@ import org.slf4j.LoggerFactory;
       oprot.writeString(struct.tblName);
       {
         oprot.writeI32(struct.tablesUsed.size());
+<<<<<<< HEAD
         for (String _iter682 : struct.tablesUsed)
         {
           oprot.writeString(_iter682);
+=======
+        for (String _iter666 : struct.tablesUsed)
+        {
+          oprot.writeString(_iter666);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       BitSet optionals = new BitSet();
@@ -728,6 +750,7 @@ import org.slf4j.LoggerFactory;
       struct.tblName = iprot.readString();
       struct.setTblNameIsSet(true);
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TSet _set683 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
         struct.tablesUsed = new HashSet<String>(2*_set683.size);
         String _elem684;
@@ -735,6 +758,15 @@ import org.slf4j.LoggerFactory;
         {
           _elem684 = iprot.readString();
           struct.tablesUsed.add(_elem684);
+=======
+        org.apache.thrift.protocol.TSet _set667 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+        struct.tablesUsed = new HashSet<String>(2*_set667.size);
+        String _elem668;
+        for (int _i669 = 0; _i669 < _set667.size; ++_i669)
+        {
+          _elem668 = iprot.readString();
+          struct.tablesUsed.add(_elem668);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setTablesUsedIsSet(true);

@@ -444,6 +444,7 @@ import org.slf4j.LoggerFactory;
           case 1: // METADATA
             if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TMap _map718 = iprot.readMapBegin();
                 struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map718.size);
                 long _key719;
@@ -454,6 +455,18 @@ import org.slf4j.LoggerFactory;
                   _val720 = new MetadataPpdResult();
                   _val720.read(iprot);
                   struct.metadata.put(_key719, _val720);
+=======
+                org.apache.thrift.protocol.TMap _map702 = iprot.readMapBegin();
+                struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map702.size);
+                long _key703;
+                MetadataPpdResult _val704;
+                for (int _i705 = 0; _i705 < _map702.size; ++_i705)
+                {
+                  _key703 = iprot.readI64();
+                  _val704 = new MetadataPpdResult();
+                  _val704.read(iprot);
+                  struct.metadata.put(_key703, _val704);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readMapEnd();
               }
@@ -487,10 +500,17 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(METADATA_FIELD_DESC);
         {
           oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, struct.metadata.size()));
+<<<<<<< HEAD
           for (Map.Entry<Long, MetadataPpdResult> _iter722 : struct.metadata.entrySet())
           {
             oprot.writeI64(_iter722.getKey());
             _iter722.getValue().write(oprot);
+=======
+          for (Map.Entry<Long, MetadataPpdResult> _iter706 : struct.metadata.entrySet())
+          {
+            oprot.writeI64(_iter706.getKey());
+            _iter706.getValue().write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeMapEnd();
         }
@@ -518,10 +538,17 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.metadata.size());
+<<<<<<< HEAD
         for (Map.Entry<Long, MetadataPpdResult> _iter723 : struct.metadata.entrySet())
         {
           oprot.writeI64(_iter723.getKey());
           _iter723.getValue().write(oprot);
+=======
+        for (Map.Entry<Long, MetadataPpdResult> _iter707 : struct.metadata.entrySet())
+        {
+          oprot.writeI64(_iter707.getKey());
+          _iter707.getValue().write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       oprot.writeBool(struct.isSupported);
@@ -531,6 +558,7 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, GetFileMetadataByExprResult struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
+<<<<<<< HEAD
         org.apache.thrift.protocol.TMap _map724 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
         struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map724.size);
         long _key725;
@@ -541,6 +569,18 @@ import org.slf4j.LoggerFactory;
           _val726 = new MetadataPpdResult();
           _val726.read(iprot);
           struct.metadata.put(_key725, _val726);
+=======
+        org.apache.thrift.protocol.TMap _map708 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.I64, org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+        struct.metadata = new HashMap<Long,MetadataPpdResult>(2*_map708.size);
+        long _key709;
+        MetadataPpdResult _val710;
+        for (int _i711 = 0; _i711 < _map708.size; ++_i711)
+        {
+          _key709 = iprot.readI64();
+          _val710 = new MetadataPpdResult();
+          _val710.read(iprot);
+          struct.metadata.put(_key709, _val710);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setMetadataIsSet(true);

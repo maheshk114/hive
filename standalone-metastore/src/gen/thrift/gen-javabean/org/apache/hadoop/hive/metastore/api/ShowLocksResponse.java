@@ -350,6 +350,7 @@ import org.slf4j.LoggerFactory;
           case 1: // LOCKS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list628 = iprot.readListBegin();
                 struct.locks = new ArrayList<ShowLocksResponseElement>(_list628.size);
                 ShowLocksResponseElement _elem629;
@@ -358,6 +359,16 @@ import org.slf4j.LoggerFactory;
                   _elem629 = new ShowLocksResponseElement();
                   _elem629.read(iprot);
                   struct.locks.add(_elem629);
+=======
+                org.apache.thrift.protocol.TList _list612 = iprot.readListBegin();
+                struct.locks = new ArrayList<ShowLocksResponseElement>(_list612.size);
+                ShowLocksResponseElement _elem613;
+                for (int _i614 = 0; _i614 < _list612.size; ++_i614)
+                {
+                  _elem613 = new ShowLocksResponseElement();
+                  _elem613.read(iprot);
+                  struct.locks.add(_elem613);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -383,9 +394,15 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(LOCKS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.locks.size()));
+<<<<<<< HEAD
           for (ShowLocksResponseElement _iter631 : struct.locks)
           {
             _iter631.write(oprot);
+=======
+          for (ShowLocksResponseElement _iter615 : struct.locks)
+          {
+            _iter615.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeListEnd();
         }
@@ -416,9 +433,15 @@ import org.slf4j.LoggerFactory;
       if (struct.isSetLocks()) {
         {
           oprot.writeI32(struct.locks.size());
+<<<<<<< HEAD
           for (ShowLocksResponseElement _iter632 : struct.locks)
           {
             _iter632.write(oprot);
+=======
+          for (ShowLocksResponseElement _iter616 : struct.locks)
+          {
+            _iter616.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
       }
@@ -430,6 +453,7 @@ import org.slf4j.LoggerFactory;
       BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {
         {
+<<<<<<< HEAD
           org.apache.thrift.protocol.TList _list633 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.locks = new ArrayList<ShowLocksResponseElement>(_list633.size);
           ShowLocksResponseElement _elem634;
@@ -438,6 +462,16 @@ import org.slf4j.LoggerFactory;
             _elem634 = new ShowLocksResponseElement();
             _elem634.read(iprot);
             struct.locks.add(_elem634);
+=======
+          org.apache.thrift.protocol.TList _list617 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.locks = new ArrayList<ShowLocksResponseElement>(_list617.size);
+          ShowLocksResponseElement _elem618;
+          for (int _i619 = 0; _i619 < _list617.size; ++_i619)
+          {
+            _elem618 = new ShowLocksResponseElement();
+            _elem618.read(iprot);
+            struct.locks.add(_elem618);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         struct.setLocksIsSet(true);

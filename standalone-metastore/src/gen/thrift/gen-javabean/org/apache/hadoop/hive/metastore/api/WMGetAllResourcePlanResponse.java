@@ -346,6 +346,7 @@ import org.slf4j.LoggerFactory;
           case 1: // RESOURCE_PLANS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list850 = iprot.readListBegin();
                 struct.resourcePlans = new ArrayList<WMResourcePlan>(_list850.size);
                 WMResourcePlan _elem851;
@@ -354,6 +355,16 @@ import org.slf4j.LoggerFactory;
                   _elem851 = new WMResourcePlan();
                   _elem851.read(iprot);
                   struct.resourcePlans.add(_elem851);
+=======
+                org.apache.thrift.protocol.TList _list834 = iprot.readListBegin();
+                struct.resourcePlans = new ArrayList<WMResourcePlan>(_list834.size);
+                WMResourcePlan _elem835;
+                for (int _i836 = 0; _i836 < _list834.size; ++_i836)
+                {
+                  _elem835 = new WMResourcePlan();
+                  _elem835.read(iprot);
+                  struct.resourcePlans.add(_elem835);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -380,9 +391,15 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(RESOURCE_PLANS_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.resourcePlans.size()));
+<<<<<<< HEAD
             for (WMResourcePlan _iter853 : struct.resourcePlans)
             {
               _iter853.write(oprot);
+=======
+            for (WMResourcePlan _iter837 : struct.resourcePlans)
+            {
+              _iter837.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             oprot.writeListEnd();
           }
@@ -414,9 +431,15 @@ import org.slf4j.LoggerFactory;
       if (struct.isSetResourcePlans()) {
         {
           oprot.writeI32(struct.resourcePlans.size());
+<<<<<<< HEAD
           for (WMResourcePlan _iter854 : struct.resourcePlans)
           {
             _iter854.write(oprot);
+=======
+          for (WMResourcePlan _iter838 : struct.resourcePlans)
+          {
+            _iter838.write(oprot);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
       }
@@ -428,6 +451,7 @@ import org.slf4j.LoggerFactory;
       BitSet incoming = iprot.readBitSet(1);
       if (incoming.get(0)) {
         {
+<<<<<<< HEAD
           org.apache.thrift.protocol.TList _list855 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
           struct.resourcePlans = new ArrayList<WMResourcePlan>(_list855.size);
           WMResourcePlan _elem856;
@@ -436,6 +460,16 @@ import org.slf4j.LoggerFactory;
             _elem856 = new WMResourcePlan();
             _elem856.read(iprot);
             struct.resourcePlans.add(_elem856);
+=======
+          org.apache.thrift.protocol.TList _list839 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.resourcePlans = new ArrayList<WMResourcePlan>(_list839.size);
+          WMResourcePlan _elem840;
+          for (int _i841 = 0; _i841 < _list839.size; ++_i841)
+          {
+            _elem840 = new WMResourcePlan();
+            _elem840.read(iprot);
+            struct.resourcePlans.add(_elem840);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         struct.setResourcePlansIsSet(true);

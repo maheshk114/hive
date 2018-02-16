@@ -525,6 +525,7 @@ import org.slf4j.LoggerFactory;
           case 2: // TBL_NAMES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
+<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list794 = iprot.readListBegin();
                 struct.tblNames = new ArrayList<String>(_list794.size);
                 String _elem795;
@@ -532,6 +533,15 @@ import org.slf4j.LoggerFactory;
                 {
                   _elem795 = iprot.readString();
                   struct.tblNames.add(_elem795);
+=======
+                org.apache.thrift.protocol.TList _list778 = iprot.readListBegin();
+                struct.tblNames = new ArrayList<String>(_list778.size);
+                String _elem779;
+                for (int _i780 = 0; _i780 < _list778.size; ++_i780)
+                {
+                  _elem779 = iprot.readString();
+                  struct.tblNames.add(_elem779);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -572,9 +582,15 @@ import org.slf4j.LoggerFactory;
           oprot.writeFieldBegin(TBL_NAMES_FIELD_DESC);
           {
             oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, struct.tblNames.size()));
+<<<<<<< HEAD
             for (String _iter797 : struct.tblNames)
             {
               oprot.writeString(_iter797);
+=======
+            for (String _iter781 : struct.tblNames)
+            {
+              oprot.writeString(_iter781);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
             }
             oprot.writeListEnd();
           }
@@ -617,9 +633,15 @@ import org.slf4j.LoggerFactory;
       if (struct.isSetTblNames()) {
         {
           oprot.writeI32(struct.tblNames.size());
+<<<<<<< HEAD
           for (String _iter798 : struct.tblNames)
           {
             oprot.writeString(_iter798);
+=======
+          for (String _iter782 : struct.tblNames)
+          {
+            oprot.writeString(_iter782);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
       }
@@ -636,6 +658,7 @@ import org.slf4j.LoggerFactory;
       BitSet incoming = iprot.readBitSet(2);
       if (incoming.get(0)) {
         {
+<<<<<<< HEAD
           org.apache.thrift.protocol.TList _list799 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
           struct.tblNames = new ArrayList<String>(_list799.size);
           String _elem800;
@@ -643,6 +666,15 @@ import org.slf4j.LoggerFactory;
           {
             _elem800 = iprot.readString();
             struct.tblNames.add(_elem800);
+=======
+          org.apache.thrift.protocol.TList _list783 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.tblNames = new ArrayList<String>(_list783.size);
+          String _elem784;
+          for (int _i785 = 0; _i785 < _list783.size; ++_i785)
+          {
+            _elem784 = iprot.readString();
+            struct.tblNames.add(_elem784);
+>>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
         }
         struct.setTblNamesIsSet(true);
