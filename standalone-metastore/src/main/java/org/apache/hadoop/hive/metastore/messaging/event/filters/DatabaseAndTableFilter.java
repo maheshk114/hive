@@ -41,10 +41,10 @@ public class DatabaseAndTableFilter extends BasicFilter {
 
   @Override
   boolean shouldAccept(final NotificationEvent event) {
-    if (dbPattern == null) {
+    //if (dbPattern == null) {
       return true; // if our dbName is null, we're interested in all wh events
-    }
-    if (dbPattern.matcher(event.getDbName()).matches()) {
+    //}
+    /*if (dbPattern.matcher(event.getDbName()).matches()) {
       if ((tableName == null)
           // if our dbName is equal, but tableName is blank, we're interested in this db-level event
           || (tableName.equalsIgnoreCase(event.getTableName()))
@@ -53,6 +53,6 @@ public class DatabaseAndTableFilter extends BasicFilter {
         return true;
       }
     }
-    return false;
+    return false;*/
   }
 }

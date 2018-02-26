@@ -63,6 +63,7 @@ public abstract class MessageFactory {
   public static final String ADD_UNIQUECONSTRAINT_EVENT = "ADD_UNIQUECONSTRAINT";
   public static final String ADD_NOTNULLCONSTRAINT_EVENT = "ADD_NOTNULLCONSTRAINT";
   public static final String DROP_CONSTRAINT_EVENT = "DROP_CONSTRAINT";
+  public static final String ALLOC_WRITE_ID_EVENT = "DROP_CONSTRAINT";
 
   private static MessageFactory instance = null;
 
@@ -295,4 +296,11 @@ public abstract class MessageFactory {
    */
   public abstract DropConstraintMessage buildDropConstraintMessage(String dbName, String tableName,
       String constraintName);
+
+  /***
+   * Factory method for building alloc write id message
+   * @param txnIds
+   * @return
+   */
+  public abstract AllocWriteIdMessage buildAllocWriteIdMessage(List<Long> txnIds);
 }

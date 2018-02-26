@@ -37,6 +37,7 @@ import org.apache.hadoop.hive.ql.parse.repl.load.message.RenameTableHandler;
 import org.apache.hadoop.hive.ql.parse.repl.load.message.TableHandler;
 import org.apache.hadoop.hive.ql.parse.repl.load.message.TruncatePartitionHandler;
 import org.apache.hadoop.hive.ql.parse.repl.load.message.TruncateTableHandler;
+//import org.apache.hadoop.hive.ql.parse.repl.load.message.AllocWriteIdHandler;
 
 public enum DumpType {
 
@@ -183,8 +184,13 @@ public enum DumpType {
     public MessageHandler handler() {
       return new DropDatabaseHandler();
     }
+  },
+  EVENT_ALLOC_WRITE_ID("EVENT_ALLOC_WRITE_ID") {
+    @Override
+    public MessageHandler handler() {
+      return new DropDatabaseHandler();/*AllocWriteIdHandler();*/
+    }
   };
-
   String type = null;
   DumpType(String type) {
     this.type = type;

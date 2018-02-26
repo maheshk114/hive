@@ -936,6 +936,16 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
     }
   }
 
+  @Override
+  public  List<TxnToWriteId> getTableWriteIdBatch(List<Long> txnIds, String dbName, String tableName)
+          throws LockException {
+    try {
+      return getMS().allocateTableWriteIdsBatch(txnIds, dbName, tableName);
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
+    }
+  }
+
   private static long getHeartbeatInterval(Configuration conf) throws LockException {
     // Retrieve HIVE_TXN_TIMEOUT in MILLISECONDS (it's defined as SECONDS),
     // then divide it by 2 to give us a safety factor.

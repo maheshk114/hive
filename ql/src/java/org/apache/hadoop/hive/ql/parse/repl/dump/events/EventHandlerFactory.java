@@ -50,6 +50,7 @@ public class EventHandlerFactory {
     register(MessageFactory.DROP_CONSTRAINT_EVENT, DropConstraintHandler.class);
     register(MessageFactory.CREATE_DATABASE_EVENT, CreateDatabaseHandler.class);
     register(MessageFactory.DROP_DATABASE_EVENT, DropDatabaseHandler.class);
+    register(MessageFactory.ALLOC_WRITE_ID_EVENT, AllocWriteIdHandler.class);
   }
 
   static void register(String event, Class<? extends EventHandler> handlerClazz) {
