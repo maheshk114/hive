@@ -213,8 +213,8 @@ public class JSONMessageFactory extends MessageFactory {
   }
 
   @Override
-  public OpenTxnMessage buildOpenTxnMessage(Iterator<Long> txnIdsItr) {
-    return new JSONOpenTxnMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, txnIdsItr, now());
+  public OpenTxnMessage buildOpenTxnMessage(List<Long> txnIds) {
+    return new JSONOpenTxnMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, txnIds, now());
   }
 
   @Override

@@ -260,10 +260,10 @@ public abstract class MessageFactory {
   /**
    * Factory method for building open txn message
    *
-   * @param txnIdsItr List of ids of the newly opened transactions
+   * @param txnIds List of ids of the newly opened transactions
    * @return instance of OpenTxnMessage
    */
-  public abstract OpenTxnMessage buildOpenTxnMessage(Iterator<Long> txnIdsItr);
+  public abstract OpenTxnMessage buildOpenTxnMessage(List<Long> txnIds);
 
   /**
    * Factory method for building commit txn message

@@ -32,16 +32,16 @@ import java.util.List;
 public class JSONOpenTxnMessage extends OpenTxnMessage {
 
   @JsonProperty
-  List<Long> txnIds;
+  private List<Long> txnIds;
 
   @JsonProperty
-  Long timestamp;
+  private Long timestamp;
 
   @JsonProperty
-  String server;
+  private String server;
 
   @JsonProperty
-  String servicePrincipal;
+  private String servicePrincipal;
 
   /**
    * Default constructor, needed for Jackson.
@@ -49,15 +49,17 @@ public class JSONOpenTxnMessage extends OpenTxnMessage {
   public JSONOpenTxnMessage() {
   }
 
-  public JSONOpenTxnMessage(String server, String servicePrincipal, Iterator<Long> txnIdsItr, Long timestamp) {
+  public JSONOpenTxnMessage(String server, String servicePrincipal, List<Long> txnIds, Long timestamp) {
     this.timestamp = timestamp;
-    this.txnIds = Lists.newArrayList(txnIdsItr);
+    this.txnIds = txnIds;
     this.server = server;
     this.servicePrincipal = servicePrincipal;
   }
 
   @Override
-  public Iterator<Long> getTxnIdItr() { return txnIds.iterator(); }
+  public List<Long> getTxnIds() {
+    return txnIds;
+  }
 
   @Override
   public Long getTimestamp() {
@@ -88,3 +90,4 @@ public class JSONOpenTxnMessage extends OpenTxnMessage {
     }
   }
 }
+

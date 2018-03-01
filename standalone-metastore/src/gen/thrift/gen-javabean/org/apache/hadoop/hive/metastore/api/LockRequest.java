@@ -689,7 +689,6 @@ import org.slf4j.LoggerFactory;
           case 1: // COMPONENT
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list620 = iprot.readListBegin();
                 struct.component = new ArrayList<LockComponent>(_list620.size);
                 LockComponent _elem621;
@@ -698,16 +697,6 @@ import org.slf4j.LoggerFactory;
                   _elem621 = new LockComponent();
                   _elem621.read(iprot);
                   struct.component.add(_elem621);
-=======
-                org.apache.thrift.protocol.TList _list604 = iprot.readListBegin();
-                struct.component = new ArrayList<LockComponent>(_list604.size);
-                LockComponent _elem605;
-                for (int _i606 = 0; _i606 < _list604.size; ++_i606)
-                {
-                  _elem605 = new LockComponent();
-                  _elem605.read(iprot);
-                  struct.component.add(_elem605);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -765,15 +754,9 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(COMPONENT_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.component.size()));
-<<<<<<< HEAD
           for (LockComponent _iter623 : struct.component)
           {
             _iter623.write(oprot);
-=======
-          for (LockComponent _iter607 : struct.component)
-          {
-            _iter607.write(oprot);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeListEnd();
         }
@@ -820,15 +803,9 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.component.size());
-<<<<<<< HEAD
         for (LockComponent _iter624 : struct.component)
         {
           _iter624.write(oprot);
-=======
-        for (LockComponent _iter608 : struct.component)
-        {
-          _iter608.write(oprot);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       oprot.writeString(struct.user);
@@ -853,7 +830,6 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, LockRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
-<<<<<<< HEAD
         org.apache.thrift.protocol.TList _list625 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
         struct.component = new ArrayList<LockComponent>(_list625.size);
         LockComponent _elem626;
@@ -862,16 +838,6 @@ import org.slf4j.LoggerFactory;
           _elem626 = new LockComponent();
           _elem626.read(iprot);
           struct.component.add(_elem626);
-=======
-        org.apache.thrift.protocol.TList _list609 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-        struct.component = new ArrayList<LockComponent>(_list609.size);
-        LockComponent _elem610;
-        for (int _i611 = 0; _i611 < _list609.size; ++_i611)
-        {
-          _elem610 = new LockComponent();
-          _elem610.read(iprot);
-          struct.component.add(_elem610);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setComponentIsSet(true);

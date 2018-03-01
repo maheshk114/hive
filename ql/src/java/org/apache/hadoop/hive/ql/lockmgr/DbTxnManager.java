@@ -62,10 +62,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.google.common.collect.Lists;
-
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * An implementation of HiveTxnManager that stores the transactions in the metastore database.
@@ -208,9 +205,9 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
   }
 
   @Override
-  public List<Long> replOpenTxn(String replPolicy, Iterator<Long> srcTxnIds, int numTxns)  throws LockException {
+  public List<Long> replOpenTxn(String replPolicy, List<Long> srcTxnIds, String user)  throws LockException {
     try {
-      return getMS().replOpenTxn(replPolicy, srcTxnIds, numTxns);
+      return getMS().replOpenTxn(replPolicy, srcTxnIds, user);
     } catch (TException e) {
       throw new LockException(e, ErrorMsg.METASTORE_COMMUNICATION_FAILED);
     }

@@ -121,7 +121,6 @@ import org.apache.hadoop.hive.metastore.partition.spec.PartitionSpecProxy;
 import org.apache.hadoop.hive.metastore.utils.ObjectPair;
 import org.apache.thrift.TException;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Wrapper around hive metastore thrift api
@@ -1401,11 +1400,11 @@ public interface IMetaStoreClient {
    * Initiate a transaction at the target cluster.
    * @param replPolicy The replication policy to uniquely identify the source cluster.
    * @param srcTxnIds The list of transaction ids at the source cluster
-   * @param numTxns Number of transaction ids in the iterator
+   * @param user The user who has fired the repl oad command.
    * @return transaction identifiers
    * @throws TException
    */
-  List<Long> replOpenTxn(String replPolicy, Iterator<Long> srcTxnIds, int numTxns) throws TException;
+  List<Long> replOpenTxn(String replPolicy, List<Long> srcTxnIds, String user) throws TException;
 
   /**
    * Initiate a batch of transactions.  It is not guaranteed that the

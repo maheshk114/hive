@@ -351,7 +351,6 @@ import org.slf4j.LoggerFactory;
           case 1: // FILE_IDS
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-<<<<<<< HEAD
                 org.apache.thrift.protocol.TList _list746 = iprot.readListBegin();
                 struct.fileIds = new ArrayList<Long>(_list746.size);
                 long _elem747;
@@ -359,15 +358,6 @@ import org.slf4j.LoggerFactory;
                 {
                   _elem747 = iprot.readI64();
                   struct.fileIds.add(_elem747);
-=======
-                org.apache.thrift.protocol.TList _list730 = iprot.readListBegin();
-                struct.fileIds = new ArrayList<Long>(_list730.size);
-                long _elem731;
-                for (int _i732 = 0; _i732 < _list730.size; ++_i732)
-                {
-                  _elem731 = iprot.readI64();
-                  struct.fileIds.add(_elem731);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
                 }
                 iprot.readListEnd();
               }
@@ -393,15 +383,9 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(FILE_IDS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, struct.fileIds.size()));
-<<<<<<< HEAD
           for (long _iter749 : struct.fileIds)
           {
             oprot.writeI64(_iter749);
-=======
-          for (long _iter733 : struct.fileIds)
-          {
-            oprot.writeI64(_iter733);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
           }
           oprot.writeListEnd();
         }
@@ -426,15 +410,9 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.fileIds.size());
-<<<<<<< HEAD
         for (long _iter750 : struct.fileIds)
         {
           oprot.writeI64(_iter750);
-=======
-        for (long _iter734 : struct.fileIds)
-        {
-          oprot.writeI64(_iter734);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
     }
@@ -443,7 +421,6 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, GetFileMetadataRequest struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
-<<<<<<< HEAD
         org.apache.thrift.protocol.TList _list751 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
         struct.fileIds = new ArrayList<Long>(_list751.size);
         long _elem752;
@@ -451,15 +428,6 @@ import org.slf4j.LoggerFactory;
         {
           _elem752 = iprot.readI64();
           struct.fileIds.add(_elem752);
-=======
-        org.apache.thrift.protocol.TList _list735 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I64, iprot.readI32());
-        struct.fileIds = new ArrayList<Long>(_list735.size);
-        long _elem736;
-        for (int _i737 = 0; _i737 < _list735.size; ++_i737)
-        {
-          _elem736 = iprot.readI64();
-          struct.fileIds.add(_elem736);
->>>>>>> HIVE-18781 : Create/Replicate Abort Txn event
         }
       }
       struct.setFileIdsIsSet(true);
