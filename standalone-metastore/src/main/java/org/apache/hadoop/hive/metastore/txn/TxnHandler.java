@@ -684,7 +684,8 @@ abstract class TxnHandler implements TxnStore, TxnStore.MutexAPI {
 
     long nextNLId = rs.getLong(1);
     long updatedNLId = nextNLId + 1;
-    s = "update \"SEQUENCE_TABLE\" set \"NEXT_VAL\" = " + updatedNLId;
+    s = "update \"SEQUENCE_TABLE\" set \"NEXT_VAL\" = " + updatedNLId + " where \"SEQUENCE_NAME\" = " +
+            " 'org.apache.hadoop.hive.metastore.model.MNotificationLog'";
     LOG.debug("Going to execute update <" + s + ">");
     stmt.executeUpdate(s);
 
