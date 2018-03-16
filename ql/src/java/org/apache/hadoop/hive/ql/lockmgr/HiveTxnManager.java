@@ -19,6 +19,8 @@ package org.apache.hadoop.hive.ql.lockmgr;
 
 import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsRequest;
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsResponse;
 import org.apache.hadoop.hive.ql.Context;
 import org.apache.hadoop.hive.ql.Driver.LockedDriverState;
 import org.apache.hadoop.hive.ql.QueryPlan;
@@ -73,6 +75,13 @@ public interface HiveTxnManager {
    * @throws LockException in case of failure to abort the transaction.
    */
   void replRollbackTxn(String replPolicy, long srcTxnId)  throws LockException;
+
+  /**
+  * Get the list of mapping target txn ids.
+  * @param rqst Request message having the list of source transaction ids.
+  * @throws LockException in case of failure to start the trasnaction.
+  */
+  GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws LockException ;
 
   /**
    * Get the lock manager.  This must be used rather than instantiating an
@@ -264,6 +273,11 @@ public interface HiveTxnManager {
    * if {@code isTxnOpen()}, returns the table write ID associated with current active transaction.
    */
   long getTableWriteId(String dbName, String tableName) throws LockException;
+
+  /**
+   * Allocates write id for each transaction in the list.
+   */
+  void allocateTableWriteIdsBatch(List<Long> txnIds, String dbName, String tableName) throws LockException;
 
   /**
    * Should be though of more as a unique write operation ID in a given txn (at QueryPlan level).

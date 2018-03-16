@@ -47,6 +47,7 @@ import org.apache.hadoop.hive.metastore.events.ListenerEvent;
 import org.apache.hadoop.hive.metastore.events.OpenTxnEvent;
 import org.apache.hadoop.hive.metastore.events.CommitTxnEvent;
 import org.apache.hadoop.hive.metastore.events.AbortTxnEvent;
+import org.apache.hadoop.hive.metastore.events.AllocWriteIdEvent;
 
 import java.util.List;
 import java.util.Map;
@@ -200,6 +201,12 @@ public class MetaStoreListenerNotifier {
             public void notify(MetaStoreEventListener listener, ListenerEvent event)
                 throws MetaException {
               listener.onAbortTxn((AbortTxnEvent) event);
+            }
+          })
+          .put(EventType.ALLOC_WRITE_ID, new EventNotifier() {
+            @Override
+            public void notify(MetaStoreEventListener listener, ListenerEvent event) throws MetaException {
+              listener.onAllocWriteId((AllocWriteIdEvent) event);
             }
           })
           .build()

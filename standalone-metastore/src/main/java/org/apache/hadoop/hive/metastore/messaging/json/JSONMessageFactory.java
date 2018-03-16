@@ -64,6 +64,7 @@ import org.apache.hadoop.hive.metastore.messaging.PartitionFiles;
 import org.apache.hadoop.hive.metastore.messaging.OpenTxnMessage;
 import org.apache.hadoop.hive.metastore.messaging.CommitTxnMessage;
 import org.apache.hadoop.hive.metastore.messaging.AbortTxnMessage;
+import org.apache.hadoop.hive.metastore.messaging.AllocWriteIdMessage;
 import org.apache.thrift.TBase;
 import org.apache.thrift.TDeserializer;
 import org.apache.thrift.TException;
@@ -225,6 +226,10 @@ public class JSONMessageFactory extends MessageFactory {
   @Override
   public AbortTxnMessage buildAbortTxnMessage(Long txnId) {
     return new JSONAbortTxnMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, txnId, now());
+  }
+
+  public AllocWriteIdMessage buildAllocWriteIdMessage(List<Long> txnIds, String tableName) {
+    return new JSONAllocWriteIdMessage(MS_SERVER_URL, MS_SERVICE_PRINCIPAL, txnIds, tableName, now());
   }
 
   private long now() {

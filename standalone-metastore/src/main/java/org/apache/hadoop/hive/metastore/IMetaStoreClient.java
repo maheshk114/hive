@@ -120,7 +120,8 @@ import org.apache.hadoop.hive.metastore.api.WMValidateResourcePlanResponse;
 import org.apache.hadoop.hive.metastore.partition.spec.PartitionSpecProxy;
 import org.apache.hadoop.hive.metastore.utils.ObjectPair;
 import org.apache.thrift.TException;
-import java.util.Iterator;
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsRequest;
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsResponse;
 
 /**
  * Wrapper around hive metastore thrift api
@@ -1455,6 +1456,13 @@ public interface IMetaStoreClient {
    * @throws TException
    */
   void rollbackTxn(long txnid, String replPolicy) throws NoSuchTxnException, TException;
+
+  /**
+   * replGetTargetTxnIds - Get the set of target txn ids from txn map table
+   * @param rqst request with list of source txn ids.
+   * @throws TException if not able to get the txn ids from metastore.
+   */
+  GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws TException;
 
   /**
    * Commit a transaction.  This will also unlock any locks associated with
