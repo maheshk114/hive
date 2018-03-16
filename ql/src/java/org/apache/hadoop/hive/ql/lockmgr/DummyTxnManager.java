@@ -18,6 +18,8 @@
 package org.apache.hadoop.hive.ql.lockmgr;
 
 import org.apache.hadoop.hive.common.ValidTxnWriteIdList;
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsRequest;
+import org.apache.hadoop.hive.metastore.api.GetTargetTxnIdsResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.hadoop.hive.common.ValidTxnList;
@@ -75,6 +77,10 @@ class DummyTxnManager extends HiveTxnManagerImpl {
   @Override
   public long getTableWriteId(String dbName, String tableName) throws LockException {
     return 0L;
+  }
+  @Override
+  public void allocateTableWriteIdsBatch(List<Long> txnIds, String dbName, String tableName)  throws LockException {
+    return;
   }
   @Override
   public HiveLockManager getLockManager() throws LockException {
@@ -226,6 +232,11 @@ class DummyTxnManager extends HiveTxnManagerImpl {
   @Override
   public void replRollbackTxn(String replPolicy, long srcTxnId) throws LockException {
     // No-op
+  }
+
+  @Override
+  public GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws LockException {
+    return null;
   }
 
   @Override

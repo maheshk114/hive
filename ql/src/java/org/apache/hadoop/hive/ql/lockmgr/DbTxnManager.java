@@ -661,6 +661,20 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
   }
 
   @Override
+  public GetTargetTxnIdsResponse replGetTargetTxnIds(GetTargetTxnIdsRequest rqst) throws LockException {
+    try {
+      return getMS().replGetTargetTxnIds(rqst);
+    } catch (NoSuchTxnException e) {
+      LOG.error("Metastore could not find " + JavaUtils.txnIdToString(txnId));
+      throw new LockException(e, ErrorMsg.TXN_NO_SUCH_TRANSACTION, JavaUtils.txnIdToString(txnId));
+    } catch(TxnAbortedException e) {
+      throw new LockException(e, ErrorMsg.TXN_ABORTED, JavaUtils.txnIdToString(txnId));
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
+    }
+  }
+
+  @Override
   public void rollbackTxn() throws LockException {
     if (!isTxnOpen()) {
       throw new RuntimeException("Attempt to rollback before opening a transaction");
@@ -973,6 +987,16 @@ public final class DbTxnManager extends HiveTxnManagerImpl {
       long writeId = getMS().allocateTableWriteId(txnId, dbName, tableName);
       tableWriteIds.put(fullTableName, writeId);
       return writeId;
+    } catch (TException e) {
+      throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
+    }
+  }
+
+  @Override
+  public void allocateTableWriteIdsBatch(List<Long> txnIds, String dbName, String tableName)
+          throws LockException {
+    try {
+      getMS().allocateTableWriteIdsBatch(txnIds, dbName, tableName);
     } catch (TException e) {
       throw new LockException(ErrorMsg.METASTORE_COMMUNICATION_FAILED.getMsg(), e);
     }

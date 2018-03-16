@@ -76,6 +76,7 @@ import org.apache.hadoop.hive.metastore.events.ListenerEvent;
 import org.apache.hadoop.hive.metastore.messaging.EventMessage.EventType;
 import org.apache.hadoop.hive.metastore.messaging.MessageFactory;
 import org.apache.hadoop.hive.metastore.messaging.PartitionFiles;
+import org.apache.hadoop.hive.metastore.events.AllocWriteIdEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -596,6 +597,20 @@ public class DbNotificationListener extends TransactionalMetaStoreEventListener 
     event.setDbName(dbName);
     event.setTableName(tableName);
     process(event, dropConstraintEvent);
+  }
+
+  /***
+   * @param allocWriteIdEvent Alloc write id event
+   * @throws MetaException
+   */
+  @Override
+  public void onAllocWriteId(AllocWriteIdEvent allocWriteIdEvent) throws MetaException {
+    String tableName = allocWriteIdEvent.getTableName();
+    NotificationEvent event =
+            new NotificationEvent(0, now(), EventType.ALLOC_WRITE_ID.toString(), msgFactory
+                    .buildAllocWriteIdMessage(allocWriteIdEvent.getTxnIds(), tableName).toString());
+    event.setTableName(tableName);
+    process(event, allocWriteIdEvent);
   }
 
   private int now() {

@@ -354,13 +354,13 @@ import org.slf4j.LoggerFactory;
           case 1: // VALUES
             if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
               {
-                org.apache.thrift.protocol.TList _list786 = iprot.readListBegin();
-                struct.values = new ArrayList<ClientCapability>(_list786.size);
-                ClientCapability _elem787;
-                for (int _i788 = 0; _i788 < _list786.size; ++_i788)
+                org.apache.thrift.protocol.TList _list802 = iprot.readListBegin();
+                struct.values = new ArrayList<ClientCapability>(_list802.size);
+                ClientCapability _elem803;
+                for (int _i804 = 0; _i804 < _list802.size; ++_i804)
                 {
-                  _elem787 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
-                  struct.values.add(_elem787);
+                  _elem803 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+                  struct.values.add(_elem803);
                 }
                 iprot.readListEnd();
               }
@@ -386,9 +386,9 @@ import org.slf4j.LoggerFactory;
         oprot.writeFieldBegin(VALUES_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, struct.values.size()));
-          for (ClientCapability _iter789 : struct.values)
+          for (ClientCapability _iter805 : struct.values)
           {
-            oprot.writeI32(_iter789.getValue());
+            oprot.writeI32(_iter805.getValue());
           }
           oprot.writeListEnd();
         }
@@ -413,9 +413,9 @@ import org.slf4j.LoggerFactory;
       TTupleProtocol oprot = (TTupleProtocol) prot;
       {
         oprot.writeI32(struct.values.size());
-        for (ClientCapability _iter790 : struct.values)
+        for (ClientCapability _iter806 : struct.values)
         {
-          oprot.writeI32(_iter790.getValue());
+          oprot.writeI32(_iter806.getValue());
         }
       }
     }
@@ -424,13 +424,13 @@ import org.slf4j.LoggerFactory;
     public void read(org.apache.thrift.protocol.TProtocol prot, ClientCapabilities struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
       {
-        org.apache.thrift.protocol.TList _list791 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
-        struct.values = new ArrayList<ClientCapability>(_list791.size);
-        ClientCapability _elem792;
-        for (int _i793 = 0; _i793 < _list791.size; ++_i793)
+        org.apache.thrift.protocol.TList _list807 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.I32, iprot.readI32());
+        struct.values = new ArrayList<ClientCapability>(_list807.size);
+        ClientCapability _elem808;
+        for (int _i809 = 0; _i809 < _list807.size; ++_i809)
         {
-          _elem792 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
-          struct.values.add(_elem792);
+          _elem808 = org.apache.hadoop.hive.metastore.api.ClientCapability.findByValue(iprot.readI32());
+          struct.values.add(_elem808);
         }
       }
       struct.setValuesIsSet(true);
