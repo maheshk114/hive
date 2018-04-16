@@ -21,6 +21,7 @@ import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.TableType;
 import org.apache.hadoop.hive.metastore.api.Table;
 import org.apache.hadoop.hive.ql.ErrorMsg;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.metadata.Partition;
 import org.apache.hadoop.hive.ql.parse.ReplicationSpec;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
@@ -50,6 +51,12 @@ public class TableSerializer implements JsonWriter.Serializer {
       throws SemanticException, IOException {
     if (!Utils.shouldReplicate(additionalPropertiesProvider, tableHandle, hiveConf)) {
       return;
+    }
+
+    boolean isAcidTable = AcidUtils.isTransactionalTable(tableHandle);
+    if (isAcidTable) {
+      //TODO: Need to check the handling
+      //return;
     }
 
     Table tTable = tableHandle.getTTable();

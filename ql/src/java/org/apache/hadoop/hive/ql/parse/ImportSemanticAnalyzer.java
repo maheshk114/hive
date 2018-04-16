@@ -325,7 +325,7 @@ public class ImportSemanticAnalyzer extends BaseSemanticAnalyzer {
     }
 
     // for ACID table replication, valid write id is passed. We should not allocate it here.
-    if (writeId == 0) {
+    if (writeId == 0 && !replicationSpec.isMetadataOnly()) {
       // Initialize with 0 for non-ACID and non-MM tables.
       if (((table != null) && AcidUtils.isTransactionalTable(table))
               || AcidUtils.isTablePropertyTransactional(tblDesc.getTblProps())) {

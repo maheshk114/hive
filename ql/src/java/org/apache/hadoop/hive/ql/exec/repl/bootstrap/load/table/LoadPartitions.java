@@ -43,12 +43,8 @@ import org.apache.hadoop.hive.ql.parse.ImportSemanticAnalyzer;
 import org.apache.hadoop.hive.ql.parse.ReplicationSpec;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.parse.repl.ReplLogger;
-import org.apache.hadoop.hive.ql.plan.AddPartitionDesc;
-import org.apache.hadoop.hive.ql.plan.DDLWork;
-import org.apache.hadoop.hive.ql.plan.ImportTableDesc;
-import org.apache.hadoop.hive.ql.plan.LoadTableDesc;
+import org.apache.hadoop.hive.ql.plan.*;
 import org.apache.hadoop.hive.ql.plan.LoadTableDesc.LoadFileType;
-import org.apache.hadoop.hive.ql.plan.MoveWork;
 import org.apache.hadoop.hive.ql.session.SessionState;
 import org.datanucleus.util.StringUtils;
 import org.slf4j.Logger;
@@ -56,11 +52,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.apache.hadoop.hive.ql.exec.repl.bootstrap.load.ReplicationState.PartitionState;
 import static org.apache.hadoop.hive.ql.parse.ImportSemanticAnalyzer.isPartitioned;
@@ -240,20 +232,24 @@ public class LoadPartitions {
   /**
    * This will create the move of partition data from temp path to actual path
    */
-  private Task<?> movePartitionTask(Table table, AddPartitionDesc.OnePartitionDesc partSpec,
-      Path tmpPath) throws LockException {
-    Long writeId = 0L; // Initialize with 0 for non-ACID and non-MM tables.
-    if (((table != null) && AcidUtils.isTransactionalTable(table))) {
-      writeId = SessionState.get().getTxnMgr().getTableWriteId(table.getDbName(), table.getTableName());
+  private Task<?> movePartitionTask(Table table, AddPartitionDesc.OnePartitionDesc partSpec, Path tmpPath) {
+    MoveWork moveWork = new MoveWork(new HashSet<>(), new HashSet<>(), null, null, false);
+    if (AcidUtils.isTransactionalTable(table)) {
+      LoadMultiFilesDesc loadFilesWork = new LoadMultiFilesDesc(
+              Collections.singletonList(tmpPath),
+              Collections.singletonList(new Path(partSpec.getLocation())),
+              true, null, null);
+      moveWork.setMultiFilesDesc(loadFilesWork);
+    } else {
+      LoadTableDesc loadTableWork = new LoadTableDesc(
+              tmpPath, Utilities.getTableDesc(table), partSpec.getPartSpec(),
+              event.replicationSpec().isReplace() ? LoadFileType.REPLACE_ALL : LoadFileType.OVERWRITE_EXISTING, 0L
+      );
+      loadTableWork.setInheritTableSpecs(false);
+      moveWork.setLoadTableWork(loadTableWork);
     }
-    LoadTableDesc loadTableWork = new LoadTableDesc(
-        tmpPath, Utilities.getTableDesc(table), partSpec.getPartSpec(),
-        event.replicationSpec().isReplace() ? LoadFileType.REPLACE_ALL : LoadFileType.OVERWRITE_EXISTING,
-            writeId
-    );
-    loadTableWork.setInheritTableSpecs(false);
-    MoveWork work = new MoveWork(new HashSet<>(), new HashSet<>(), loadTableWork, null, false);
-    return TaskFactory.get(work, context.hiveConf, true);
+
+    return TaskFactory.get(moveWork, context.hiveConf);
   }
 
   private Path locationOnReplicaWarehouse(Table table, AddPartitionDesc.OnePartitionDesc partSpec)

@@ -20,6 +20,7 @@ package org.apache.hadoop.hive.ql.parse.repl.dump.events;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.metastore.api.NotificationEvent;
 import org.apache.hadoop.hive.metastore.messaging.AlterTableMessage;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.metadata.Table;
 import org.apache.hadoop.hive.ql.parse.EximUtil;
 
@@ -84,6 +85,11 @@ class AlterTableHandler extends AbstractEventHandler {
     if (!Utils
         .shouldReplicate(withinContext.replicationSpec, qlMdTableBefore, withinContext.hiveConf)) {
       return;
+    }
+
+    boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTableBefore);
+    if (isAcidTable) {
+      withinContext.replicationSpec.setIsMetadataOnly(true);
     }
 
     if (Scenario.ALTER == scenario) {

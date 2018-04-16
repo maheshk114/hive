@@ -97,7 +97,6 @@ class AlterPartitionHandler extends AbstractEventHandler {
 
     boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTable);
     if (isAcidTable) {
-      LOG.info("Ignoring alter partition for acid tables");
       withinContext.replicationSpec.setIsMetadataOnly(true);
     }
 

@@ -21,6 +21,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.metastore.api.NotificationEvent;
 import org.apache.hadoop.hive.metastore.messaging.CreateTableMessage;
+import org.apache.hadoop.hive.ql.io.AcidUtils;
 import org.apache.hadoop.hive.ql.metadata.Table;
 import org.apache.hadoop.hive.ql.parse.EximUtil;
 import org.apache.hadoop.hive.ql.parse.repl.DumpType;
@@ -51,6 +52,11 @@ class CreateTableHandler extends AbstractEventHandler {
 
     if (!Utils.shouldReplicate(withinContext.replicationSpec, qlMdTable, withinContext.hiveConf)) {
       return;
+    }
+
+    boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTable);
+    if (isAcidTable) {
+      withinContext.replicationSpec.setIsMetadataOnly(true);
     }
 
     if (qlMdTable.isView()) {

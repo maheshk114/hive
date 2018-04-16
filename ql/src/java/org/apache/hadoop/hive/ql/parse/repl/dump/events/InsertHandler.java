@@ -99,11 +99,9 @@ class InsertHandler extends AbstractEventHandler {
       return;
     }
 
+    // insert event should not be generated for ACID tables. ACID tables should generate ACID_WRITE events.
     boolean isAcidTable = AcidUtils.isTransactionalTable(qlMdTable);
-    if (isAcidTable && !withinContext.hiveConf.getBoolVar(ConfVars.REPL_DUMP_INCLUDE_ACID_TABLES)) {
-      LOG.info("Ignoring insert event for ACID tables");
-      return;
-    }
+    assert (isAcidTable != true);
 
     List<Partition> qlPtns = null;
     if (qlMdTable.isPartitioned() && (null != insertMsg.getPtnObj())) {
