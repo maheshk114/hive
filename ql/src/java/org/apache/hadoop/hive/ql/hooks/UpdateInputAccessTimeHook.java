@@ -54,33 +54,38 @@ public class UpdateInputAccessTimeHook {
       for(ReadEntity re: inputs) {
         // Set the last query time
         ReadEntity.Type typ = re.getType();
-        switch(typ) {
-        // It is possible that read and write entities contain a old version
-        // of the object, before it was modified by StatsTask.
-        // Get the latest versions of the object
-        case TABLE: {
-          String dbName = re.getTable().getDbName();
-          String tblName = re.getTable().getTableName();
-          Table t = db.getTable(dbName, tblName);
-          t.setLastAccessTime(lastAccessTime);
-          db.alterTable(dbName + "." + tblName, t, null);
-          break;
-        }
-        case PARTITION: {
-          String dbName = re.getTable().getDbName();
-          String tblName = re.getTable().getTableName();
-          Partition p = re.getPartition();
-          Table t = db.getTable(dbName, tblName);
-          p = db.getPartition(t, p.getSpec(), false);
-          p.setLastAccessTime(lastAccessTime);
-          db.alterPartition(dbName, tblName, p, null);
-          t.setLastAccessTime(lastAccessTime);
-          db.alterTable(dbName + "." + tblName, t, null);
-          break;
-        }
-        default:
-          // ignore dummy inputs
-          break;
+        try {
+          switch(typ) {
+          // It is possible that read and write entities contain a old version
+          // of the object, before it was modified by StatsTask.
+          // Get the latest versions of the object
+          case TABLE: {
+            String dbName = re.getTable().getDbName();
+            String tblName = re.getTable().getTableName();
+            Table t = db.getTable(dbName, tblName);
+            t.setLastAccessTime(lastAccessTime);
+            db.alterTable(dbName + "." + tblName, t, null);
+            break;
+          }
+          case PARTITION: {
+            String dbName = re.getTable().getDbName();
+            String tblName = re.getTable().getTableName();
+            Partition p = re.getPartition();
+            Table t = db.getTable(dbName, tblName);
+            p = db.getPartition(t, p.getSpec(), false);
+            p.setLastAccessTime(lastAccessTime);
+            db.alterPartition(dbName, tblName, p, null);
+            t.setLastAccessTime(lastAccessTime);
+            db.alterTable(dbName + "." + tblName, t, null);
+            break;
+          }
+          default:
+            // ignore dummy inputs
+            break;
+          }
+        } catch (HiveException e) {
+          // ignore this table alter, as the user might not have write access on the table.
+          continue;
         }
       }
     }
