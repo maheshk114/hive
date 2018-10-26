@@ -210,7 +210,7 @@ public class SharedCache {
       }
     }
 
-    boolean cachePartitions(List<Partition> parts, SharedCache sharedCache) {
+    boolean cachePartitions(Iterable<Partition> parts, SharedCache sharedCache) {
       try {
         tableLock.writeLock().lock();
         for (Partition part : parts) {
@@ -1171,6 +1171,10 @@ public class SharedCache {
       }
       TableWrapper tblWrapper =
           tableCache.remove(CacheUtils.buildTableKey(catName, dbName, tblName));
+      if (tblWrapper == null) {
+        //in case of retry, ignore second try.
+        return;
+      }
       byte[] sdHash = tblWrapper.getSdHash();
       if (sdHash != null) {
         decrSd(sdHash);
@@ -1408,7 +1412,7 @@ public class SharedCache {
   }
 
   public void addPartitionsToCache(String catName, String dbName, String tblName,
-      List<Partition> parts) {
+      Iterable<Partition> parts) {
     try {
       cacheLock.readLock().lock();
       TableWrapper tblWrapper = tableCache.get(CacheUtils.buildTableKey(catName, dbName, tblName));

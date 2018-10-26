@@ -10008,20 +10008,37 @@ public class ObjectStore implements RawStore, Configurable {
   public NotificationEventResponse getNextNotification(NotificationEventRequest rqst) {
     boolean commited = false;
     Query query = null;
+    LOG.info("[Mahesh] request is  " + rqst);
 
     NotificationEventResponse result = new NotificationEventResponse();
     result.setEvents(new ArrayList<>());
     try {
       openTransaction();
       long lastEvent = rqst.getLastEvent();
-      query = pm.newQuery(MNotificationLog.class, "eventId > lastEvent");
-      query.declareParameters("java.lang.Long lastEvent");
+      LOG.info("[Mahesh] last event is  " + lastEvent);
+      List<Object> parameterVals = new ArrayList<>();
+      parameterVals.add(lastEvent);
+      StringBuilder filterBuilder = new StringBuilder("eventId > para" + parameterVals.size());
+      StringBuilder parameterBuilder = new StringBuilder("java.lang.Long para" + parameterVals.size());
+      /*if (rqst.isSetEventTypeSkipList()) {
+        for (String eventType : rqst.getEventTypeSkipList()) {
+          parameterVals.add(eventType);test
+          parameterBuilder.append(", java.lang.String para" + parameterVals.size());
+          filterBuilder.append(" && eventType != para" + parameterVals.size());
+        }
+      }*/
+      query = pm.newQuery(MNotificationLog.class, filterBuilder.toString());
+      query.declareParameters(parameterBuilder.toString());
       query.setOrdering("eventId ascending");
       int maxEventResponse = MetastoreConf.getIntVar(conf, ConfVars.METASTORE_MAX_EVENT_RESPONSE);
       int maxEvents = (rqst.getMaxEvents() < maxEventResponse && rqst.getMaxEvents() > 0) ? rqst.getMaxEvents() : maxEventResponse;
       query.setRange(0, maxEvents);
-      Collection<MNotificationLog> events = (Collection) query.execute(lastEvent);
+      LOG.info("[Mahesh] query is " + query);
+      Collection<MNotificationLog> events =
+              (Collection) query.executeWithArray(parameterVals.toArray(new Object[parameterVals.size()]));
+      LOG.info("[Mahesh] events " + events);
       commited = commitTransaction();
+      LOG.info("[Mahesh] committed " + commited);
       if (events == null) {
         return result;
       }
@@ -10031,6 +10048,7 @@ public class ObjectStore implements RawStore, Configurable {
       }
       return result;
     } finally {
+      LOG.info("[Mahesh] committed " + commited + " query " + query);
       rollbackAndCleanup(commited, query);
     }
   }

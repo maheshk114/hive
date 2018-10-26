@@ -17,11 +17,7 @@
  */
 package org.apache.hadoop.hive.metastore.cache;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,25 +30,16 @@ import org.apache.hadoop.hive.metastore.ObjectStore;
 import org.apache.hadoop.hive.metastore.TableType;
 import org.apache.hadoop.hive.metastore.Warehouse;
 import org.apache.hadoop.hive.metastore.annotation.MetastoreCheckinTest;
-import org.apache.hadoop.hive.metastore.api.AggrStats;
-import org.apache.hadoop.hive.metastore.api.BooleanColumnStatsData;
-import org.apache.hadoop.hive.metastore.api.ColumnStatistics;
-import org.apache.hadoop.hive.metastore.api.ColumnStatisticsData;
-import org.apache.hadoop.hive.metastore.api.ColumnStatisticsDesc;
-import org.apache.hadoop.hive.metastore.api.ColumnStatisticsObj;
-import org.apache.hadoop.hive.metastore.api.Database;
-import org.apache.hadoop.hive.metastore.api.FieldSchema;
-import org.apache.hadoop.hive.metastore.api.NoSuchObjectException;
-import org.apache.hadoop.hive.metastore.api.Partition;
-import org.apache.hadoop.hive.metastore.api.PrincipalType;
-import org.apache.hadoop.hive.metastore.api.SerDeInfo;
-import org.apache.hadoop.hive.metastore.api.StorageDescriptor;
-import org.apache.hadoop.hive.metastore.api.Table;
+import org.apache.hadoop.hive.metastore.api.*;
 import org.apache.hadoop.hive.metastore.client.builder.DatabaseBuilder;
 import org.apache.hadoop.hive.metastore.columnstats.cache.LongColumnStatsDataInspector;
 import org.apache.hadoop.hive.metastore.columnstats.cache.StringColumnStatsDataInspector;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf.ConfVars;
+import org.apache.hadoop.hive.metastore.events.CreateTableEvent;
+import org.apache.hadoop.hive.metastore.messaging.*;
+import org.apache.hadoop.hive.metastore.utils.MetaStoreUtils;
+//import org.apache.hive.hcatalog.listener.DbNotificationListener;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -179,6 +166,118 @@ public class TestCachedStore {
   }
 
   @Test
+  public void testDatabaseOpsForUpdateUsingEvents() throws Exception {
+    long lastEventId = -1;
+
+    // Prewarm CachedStore
+    CachedStore.setCachePrewarmedState(false);
+    CachedStore.prewarm(objectStore);
+
+    // Add a db via ObjectStore
+    String dbName = "testDatabaseOps";
+    String dbOwner = "user1";
+    Database db = createTestDb(dbName, dbOwner);
+    objectStore.createDatabase(db);
+    db = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+
+    // Add event for create database
+    NotificationEvent event = getCreateDatabaseEvent(db);
+    objectStore.addNotificationEvent(event);
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read database via CachedStore
+    Database dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+    Assert.assertEquals(db, dbRead);
+
+    // Add another db via ObjectStore
+    final String dbName1 = "testDatabaseOps1";
+    Database db1 = createTestDb(dbName1, dbOwner);
+    objectStore.createDatabase(db1);
+    db1 = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName1);
+
+    // Add event for create database
+    event = getCreateDatabaseEvent(db1);
+    objectStore.addNotificationEvent(event);
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read database via CachedStore
+    dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName1);
+    Assert.assertEquals(db1, dbRead);
+
+    // Alter the db via ObjectStore (can only alter owner or parameters)
+    dbOwner = "user2";
+    Database newdb = new Database(db);
+    newdb.setOwnerName(dbOwner);
+    objectStore.alterDatabase(DEFAULT_CATALOG_NAME, dbName, newdb);
+    newdb = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+
+    // Add event for alter database
+    event = getAlterDatabaseEvent(db1, newdb);
+    objectStore.addNotificationEvent(event);
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read db via cachedStore
+    dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+    Assert.assertEquals(db, dbRead);
+
+    // Add another db via ObjectStore
+    final String dbName2 = "testDatabaseOps2";
+    Database db2 = createTestDb(dbName2, dbOwner);
+    objectStore.createDatabase(db2);
+    db2 = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName2);
+
+    // Add event for create database
+    event = getCreateDatabaseEvent(db2);
+    objectStore.addNotificationEvent(event);
+
+    // Alter db "testDatabaseOps" via ObjectStore
+    dbOwner = "user1";
+    newdb = new Database(db);
+    newdb.setOwnerName(dbOwner);
+    objectStore.alterDatabase(DEFAULT_CATALOG_NAME, dbName, newdb);
+    newdb = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+
+    // Add event for alter database
+    event = getAlterDatabaseEvent(db, newdb);
+    objectStore.addNotificationEvent(event);
+
+    db2 = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName2);
+    // Drop db "testDatabaseOps1" via ObjectStore
+    objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName1);
+
+    // Add event for drop database
+    event = getDropDatabaseEvent(db2);
+    objectStore.addNotificationEvent(event);
+
+    // update cache using events generated so far
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read the newly added db via CachedStore
+    dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName2);
+    Assert.assertEquals(db2, dbRead);
+
+    // Read the altered db via CachedStore (altered user from "user2" to "user1")
+    dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+    Assert.assertEquals(db, dbRead);
+
+    // Try to read the dropped db after cache update
+    try {
+      dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName1);
+      Assert.fail("The database: " + dbName1
+          + " should have been removed from the cache after running the update service");
+    } catch (NoSuchObjectException e) {
+      // Expected
+    }
+
+    // Clean up
+    objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName);
+    objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName2);
+    sharedCache.getDatabaseCache().clear();
+    sharedCache.getTableCache().clear();
+    sharedCache.getSdCache().clear();
+  }
+
+  @Test
   public void testTableOps() throws Exception {
     // Add a db via ObjectStore
     String dbName = "testTableOps";
@@ -267,6 +366,114 @@ public class TestCachedStore {
     objectStore.dropTable(DEFAULT_CATALOG_NAME, dbName, tblName);
     objectStore.dropTable(DEFAULT_CATALOG_NAME, dbName, tblName2);
     objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName);
+    sharedCache.getDatabaseCache().clear();
+    sharedCache.getTableCache().clear();
+    sharedCache.getSdCache().clear();
+  }
+
+  @Test
+  public void testTableOpsForUpdateUsingEvents() throws Exception {
+    // Add a db via ObjectStore
+    long lastEventId = -1;
+    String dbName = "testTableOps";
+    String dbOwner = "user1";
+    Database db = createTestDb(dbName, dbOwner);
+    objectStore.createDatabase(db);
+    db = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+
+    // Prewarm CachedStore
+    CachedStore.setCachePrewarmedState(false);
+    CachedStore.prewarm(objectStore);
+
+    // Add a table via ObjectStore
+    String tblName = "tbl";
+    String tblOwner = "user1";
+    FieldSchema col1 = new FieldSchema("col1", "int", "integer column");
+    FieldSchema col2 = new FieldSchema("col2", "string", "string column");
+    List<FieldSchema> cols = new ArrayList<FieldSchema>();
+    cols.add(col1);
+    cols.add(col2);
+    List<FieldSchema> ptnCols = new ArrayList<FieldSchema>();
+    Table tbl = createTestTbl(dbName, tblName, tblOwner, cols, ptnCols);
+    objectStore.createTable(tbl);
+    tbl = objectStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+
+    // Add event for create table
+    NotificationEvent event = getCreateTableEvent(tbl);
+    objectStore.addNotificationEvent(event);
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read database, table via CachedStore
+    Database dbRead= cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+    Assert.assertEquals(db, dbRead);
+    Table tblRead = cachedStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+    Assert.assertEquals(tbl, tblRead);
+
+    // Add a new table via ObjectStore
+    String tblName2 = "tbl2";
+    Table tbl2 = new Table(tbl);
+    tbl2.setTableName(tblName2);
+    objectStore.createTable(tbl2);
+    tbl2 = objectStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName2);
+
+    // Add event for create table
+    event = getCreateTableEvent(tbl2);
+    objectStore.addNotificationEvent(event);
+
+    // Alter table "tbl" via ObjectStore
+    tblOwner = "role1";
+    Table newTable = new Table(tbl);
+    newTable.setOwner(tblOwner);
+    newTable.setOwnerType(PrincipalType.ROLE);
+    objectStore.alterTable(DEFAULT_CATALOG_NAME, dbName, tblName, newTable, null);
+    newTable = objectStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+
+    Assert.assertEquals("Owner of the table did not change.", tblOwner, newTable.getOwner());
+    Assert.assertEquals("Owner type of the table did not change", PrincipalType.ROLE, newTable.getOwnerType());
+
+    // Add event for alter table
+    event = getAlterTableEvent(tbl, newTable);
+    objectStore.addNotificationEvent(event);
+
+    // Drop table "tbl2" via ObjectStore
+    objectStore.dropTable(DEFAULT_CATALOG_NAME, dbName, tblName2);
+
+    // Add event for drop table
+    event = getDropTableEvent(tbl2);
+    objectStore.addNotificationEvent(event);
+
+    // update cache using events
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read the altered "tbl" via CachedStore
+    tblRead = cachedStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+    Assert.assertEquals(tbl, tblRead);
+
+    // Try to read the dropped "tbl2" via CachedStore (should throw exception)
+    tblRead = cachedStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName2);
+    Assert.assertNull(tblRead);
+
+    // Should return "tbl"
+    List<String> tblNames = cachedStore.getTables(DEFAULT_CATALOG_NAME, dbName, "*");
+    Assert.assertTrue(tblNames.contains(tblName));
+    Assert.assertTrue(!tblNames.contains(tblName2));
+
+    Database db2 = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+    // Drop db "testDatabaseOps1" via ObjectStore
+    objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName);
+
+    // Add event for drop database
+    event = getDropDatabaseEvent(db2);
+    objectStore.addNotificationEvent(event);
+
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Try to read the dropped "tbl" via CachedStore (should throw exception)
+    tblRead = cachedStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+    Assert.assertNull(tblRead);
+
+    // Clean up
+    objectStore.dropTable(DEFAULT_CATALOG_NAME, dbName, tblName);
     sharedCache.getDatabaseCache().clear();
     sharedCache.getTableCache().clear();
     sharedCache.getSdCache().clear();
@@ -368,6 +575,153 @@ public class TestCachedStore {
     objectStore.dropPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1Alt));
     objectStore.dropPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal3));
     objectStore.dropTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+    objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName);
+    sharedCache.getDatabaseCache().clear();
+    sharedCache.getTableCache().clear();
+    sharedCache.getSdCache().clear();
+  }
+
+  @Test
+  public void testPartitionOpsForUpdateUsingEvents() throws Exception {
+    long lastEventId = -1;
+    // Add a db via ObjectStore
+    String dbName = "testPartitionOps";
+    String dbOwner = "user1";
+    Database db = createTestDb(dbName, dbOwner);
+    objectStore.createDatabase(db);
+    db = objectStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+
+    // Add a table via ObjectStore
+    String tblName = "tbl";
+    String tblOwner = "user1";
+    FieldSchema col1 = new FieldSchema("col1", "int", "integer column");
+    FieldSchema col2 = new FieldSchema("col2", "string", "string column");
+    List<FieldSchema> cols = new ArrayList<FieldSchema>();
+    cols.add(col1);
+    cols.add(col2);
+    FieldSchema ptnCol1 = new FieldSchema("part1", "string", "string partition column");
+    List<FieldSchema> ptnCols = new ArrayList<FieldSchema>();
+    ptnCols.add(ptnCol1);
+    Table tbl = createTestTbl(dbName, tblName, tblOwner, cols, ptnCols);
+    objectStore.createTable(tbl);
+    tbl = objectStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+
+    // Prewarm CachedStore
+    CachedStore.setCachePrewarmedState(false);
+    CachedStore.prewarm(objectStore);
+
+    final String ptnColVal1 = "aaa";
+    Map<String, String> partParams = new HashMap<String, String>();
+    Partition ptn1 =
+            new Partition(Arrays.asList(ptnColVal1), dbName, tblName, 0, 0, tbl.getSd(), partParams);
+    ptn1.setCatName(DEFAULT_CATALOG_NAME);
+    objectStore.addPartition(ptn1);
+    ptn1 = objectStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1));
+
+    // Add event for add partition
+    NotificationEvent event = getAddPartitionEvent(tbl, Collections.singletonList(ptn1));
+    objectStore.addNotificationEvent(event);
+
+    ptn1.setCatName(DEFAULT_CATALOG_NAME);
+    final String ptnColVal2 = "bbb";
+    Partition ptn2 =
+            new Partition(Arrays.asList(ptnColVal2), dbName, tblName, 0, 0, tbl.getSd(), partParams);
+    ptn2.setCatName(DEFAULT_CATALOG_NAME);
+    objectStore.addPartition(ptn2);
+    ptn2 = objectStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal2));
+
+    // Add event for add partition
+    event = getAddPartitionEvent(tbl, Collections.singletonList(ptn2));
+    objectStore.addNotificationEvent(event);
+
+    // update cache using events
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read database, table, partition via CachedStore
+    Database dbRead = cachedStore.getDatabase(DEFAULT_CATALOG_NAME, dbName);
+    Assert.assertEquals(db, dbRead);
+    Table tblRead = cachedStore.getTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+    Assert.assertEquals(tbl, tblRead);
+    Partition ptn1Read = cachedStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1));
+    Assert.assertEquals(ptn1, ptn1Read);
+    Partition ptn2Read = cachedStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal2));
+    Assert.assertEquals(ptn2, ptn2Read);
+
+    // Add a new partition via ObjectStore
+    final String ptnColVal3 = "ccc";
+    Partition ptn3 =
+            new Partition(Arrays.asList(ptnColVal3), dbName, tblName, 0, 0, tbl.getSd(), partParams);
+    ptn3.setCatName(DEFAULT_CATALOG_NAME);
+    objectStore.addPartition(ptn3);
+    ptn3 = objectStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal3));
+
+    // Add event for add partition
+    event = getAddPartitionEvent(tbl, Collections.singletonList(ptn3));
+    objectStore.addNotificationEvent(event);
+
+    // Alter an existing partition ("aaa") via ObjectStore
+    ptn1 = objectStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1));
+    final String ptnColVal1Alt = "aaaAlt";
+    Partition ptn1Atl =
+            new Partition(Arrays.asList(ptnColVal1Alt), dbName, tblName, 0, 0, tbl.getSd(), partParams);
+    ptn1Atl.setCatName(DEFAULT_CATALOG_NAME);
+    objectStore.alterPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1), ptn1Atl, null);
+    ptn1Atl = objectStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1Alt));
+
+    // Add event for alter partition
+    event = getAlterPartitionEvent(tbl, ptn1, ptn1Atl);
+    objectStore.addNotificationEvent(event);
+
+    // Drop an existing partition ("bbb") via ObjectStore
+    Partition ptnDrop = objectStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal2));
+    objectStore.dropPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal2));
+
+    // Add event for drop partition
+    event = getDropPartitionEvent(tbl, Collections.singletonList(ptnDrop));
+    objectStore.addNotificationEvent(event);
+
+    // update cache using events
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Read the newly added partition via CachedStore
+    Partition ptnRead = cachedStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal3));
+    Assert.assertEquals(ptn3, ptnRead);
+
+    // Read the altered partition via CachedStore
+    ptnRead = cachedStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1Alt));
+    Assert.assertEquals(ptn1Atl, ptnRead);
+
+    // Try to read the dropped partition via CachedStore
+    try {
+      ptnRead = cachedStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal2));
+      Assert.fail("The partition: " + ptnColVal2
+              + " should have been removed from the cache after running the update service");
+    } catch (NoSuchObjectException e) {
+      // Expected
+    }
+
+    // Drop table "tbl" via ObjectStore, it should remove the partition also
+    objectStore.dropTable(DEFAULT_CATALOG_NAME, dbName, tblName);
+
+    // Add event for drop table
+    event = getDropTableEvent(tbl);
+    objectStore.addNotificationEvent(event);
+
+    // update cache using events
+    lastEventId = CachedStore.CacheUpdateMasterWork.updateUsingNotificationEvents(objectStore, lastEventId);
+
+    // Try to read the dropped partition via CachedStore
+    try {
+      ptnRead = cachedStore.getPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1Alt));
+      Assert.fail("The partition: " + ptnColVal1Alt
+              + " should have been removed from the cache after running the update service");
+    } catch (NoSuchObjectException e) {
+      // Expected
+    }
+
+    // Clean up
+    objectStore.dropPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal1Alt));
+    objectStore.dropPartition(DEFAULT_CATALOG_NAME, dbName, tblName, Arrays.asList(ptnColVal3));
     objectStore.dropDatabase(DEFAULT_CATALOG_NAME, dbName);
     sharedCache.getDatabaseCache().clear();
     sharedCache.getTableCache().clear();
@@ -1071,5 +1425,115 @@ public class TestCachedStore {
       Thread.sleep(1000);
     }
     CachedStore.stopCacheUpdateService(100);
+  }
+
+  private NotificationEvent getCreateTableEvent(Table tbl) {
+    CreateTableEvent tableEvent = new CreateTableEvent(tbl, true, null);
+    Table t = tableEvent.getTable();
+    CreateTableMessage msg =
+            MessageBuilder.getInstance().buildCreateTableMessage(t, null);
+    NotificationEvent event =
+            new NotificationEvent(0, 0, EventMessage.EventType.CREATE_TABLE.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg));
+    event.setCatName(t.isSetCatName() ? t.getCatName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(t.getDbName());
+    event.setTableName(t.getTableName());
+    return event;
+  }
+
+  private NotificationEvent getAlterTableEvent(Table before, Table after) {
+    AlterTableMessage msg =
+            MessageBuilder.getInstance().buildAlterTableMessage(before, after, false, 0L);
+    NotificationEvent event =
+            new NotificationEvent(0, 0, EventMessage.EventType.ALTER_TABLE.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg)
+            );
+    event.setCatName(after.isSetCatName() ? after.getCatName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(after.getDbName());
+    event.setTableName(after.getTableName());
+    return event;
+  }
+
+  private NotificationEvent getDropTableEvent(Table tbl) {
+    DropTableMessage msg = MessageBuilder.getInstance().buildDropTableMessage(tbl);
+    NotificationEvent event =
+            new NotificationEvent(0, 0, EventMessage.EventType.DROP_TABLE.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg));
+    event.setCatName(tbl.isSetCatName() ? tbl.getCatName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(tbl.getDbName());
+    event.setTableName(tbl.getTableName());
+    return event;
+  }
+
+  private NotificationEvent getCreateDatabaseEvent(Database db) {
+    CreateDatabaseMessage msg = MessageBuilder.getInstance()
+            .buildCreateDatabaseMessage(db);
+    NotificationEvent event =
+            new NotificationEvent(0, 0,  EventMessage.EventType.CREATE_DATABASE.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg));
+    event.setCatName(db.isSetCatalogName() ? db.getCatalogName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(db.getName());
+    return event;
+  }
+
+  private NotificationEvent getDropDatabaseEvent(Database db) {
+    DropDatabaseMessage msg = MessageBuilder.getInstance()
+            .buildDropDatabaseMessage(db);
+    NotificationEvent event =
+            new NotificationEvent(0, 0, EventMessage.EventType.DROP_DATABASE.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg));
+    event.setCatName(db.isSetCatalogName() ? db.getCatalogName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(db.getName());
+    return event;
+  }
+
+  private NotificationEvent getAlterDatabaseEvent(Database oldDb, Database newDb) {
+    AlterDatabaseMessage msg = MessageBuilder.getInstance()
+            .buildAlterDatabaseMessage(oldDb, newDb);
+    NotificationEvent event =
+            new NotificationEvent(0, 0, EventMessage.EventType.ALTER_DATABASE.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg)
+            );
+    event.setCatName(oldDb.isSetCatalogName() ? oldDb.getCatalogName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(oldDb.getName());
+    return event;
+  }
+
+  private NotificationEvent getAddPartitionEvent(Table t, List<Partition> partitions) {
+    EventMessage msg = MessageBuilder.getInstance()
+            .buildAddPartitionMessage(t, partitions.iterator(), null);
+    MessageSerializer serializer =  MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer();
+
+    NotificationEvent event = new NotificationEvent(0, 0,
+            EventMessage.EventType.ADD_PARTITION.toString(), serializer.serialize(msg));
+    event.setCatName(t.isSetCatName() ? t.getCatName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(t.getDbName());
+    event.setTableName(t.getTableName());
+    return event;
+  }
+
+  private NotificationEvent getAlterPartitionEvent(Table t, Partition before, Partition after) {
+    AlterPartitionMessage msg = MessageBuilder.getInstance()
+            .buildAlterPartitionMessage(t, before, after, false, 0L);
+    NotificationEvent event =
+            new NotificationEvent(0, 0, EventMessage.EventType.ALTER_PARTITION.toString(),
+                    MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg));
+    event.setCatName(before.isSetCatName() ? before.getCatName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(before.getDbName());
+    event.setTableName(before.getTableName());
+    return event;
+  }
+
+  private NotificationEvent getDropPartitionEvent(Table t, List<Partition> partitions) {
+    DropPartitionMessage msg =
+            MessageBuilder.getInstance()
+                    .buildDropPartitionMessage(t, partitions.iterator());
+    NotificationEvent event = new NotificationEvent(0,0,
+            EventMessage.EventType.DROP_PARTITION.toString(),
+            MessageFactory.getDefaultInstance(objectStore.getConf()).getSerializer().serialize(msg));
+    event.setCatName(t.isSetCatName() ? t.getCatName() : DEFAULT_CATALOG_NAME);
+    event.setDbName(t.getDbName());
+    event.setTableName(t.getTableName());
+    return event;
   }
 }

@@ -36,25 +36,21 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.common.DatabaseName;
 import org.apache.hadoop.hive.common.StatsSetupConst;
 import org.apache.hadoop.hive.common.TableName;
-import org.apache.hadoop.hive.metastore.Deadline;
-import org.apache.hadoop.hive.metastore.FileMetadataHandler;
-import org.apache.hadoop.hive.metastore.ObjectStore;
-import org.apache.hadoop.hive.metastore.PartFilterExprUtil;
-import org.apache.hadoop.hive.metastore.PartitionExpressionProxy;
-import org.apache.hadoop.hive.metastore.RawStore;
-import org.apache.hadoop.hive.metastore.TableType;
-import org.apache.hadoop.hive.metastore.Warehouse;
+import org.apache.hadoop.hive.metastore.*;
 import org.apache.hadoop.hive.metastore.api.*;
 import org.apache.hadoop.hive.metastore.cache.SharedCache.StatsType;
 import org.apache.hadoop.hive.metastore.columnstats.aggr.ColumnStatsAggregator;
 import org.apache.hadoop.hive.metastore.columnstats.aggr.ColumnStatsAggregatorFactory;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf;
 import org.apache.hadoop.hive.metastore.conf.MetastoreConf.ConfVars;
+import org.apache.hadoop.hive.metastore.messaging.*;
+import org.apache.hadoop.hive.metastore.messaging.MessageBuilder;
 import org.apache.hadoop.hive.metastore.partition.spec.PartitionSpecProxy;
 import org.apache.hadoop.hive.metastore.txn.TxnUtils;
 import org.apache.hadoop.hive.metastore.utils.FileUtils;
@@ -63,6 +59,7 @@ import org.apache.hadoop.hive.metastore.utils.MetaStoreServerUtils;
 import org.apache.hadoop.hive.metastore.utils.MetaStoreUtils;
 import org.apache.hadoop.hive.metastore.utils.MetaStoreServerUtils.ColStatsObjWithSourceInfo;
 import org.apache.hadoop.hive.metastore.utils.StringUtils;
+//import org.apache.hive.hcatalog.listener.DbNotificationListener;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -438,6 +435,8 @@ public class CachedStore implements RawStore, Configurable {
   static class CacheUpdateMasterWork implements Runnable {
     private boolean shouldRunPrewarm = true;
     private final RawStore rawStore;
+    boolean canUseEvents = false;
+    long lastEventId;
 
     CacheUpdateMasterWork(Configuration conf, boolean shouldRunPrewarm) {
       this.shouldRunPrewarm = shouldRunPrewarm;
@@ -451,21 +450,145 @@ public class CachedStore implements RawStore, Configurable {
         // So, if any of these happen, that means we can never succeed.
         throw new RuntimeException("Cannot instantiate " + rawStoreClassName, e);
       }
+
+      List<TransactionalMetaStoreEventListener> transactionalListeners = null;
+      try {
+        transactionalListeners = MetaStoreServerUtils.getMetaStoreListeners(TransactionalMetaStoreEventListener.class,
+                conf, MetastoreConf.getVar(conf, ConfVars.TRANSACTIONAL_EVENT_LISTENERS));
+      } catch (MetaException e) {
+        throw new RuntimeException("Failed getting notification listeners", e);
+      }
+
+      for (TransactionalMetaStoreEventListener listener : transactionalListeners) {
+        //if (listener instanceof DbNotificationListener) {
+          canUseEvents = true;
+          //break;
+        //}
+      }
     }
 
     @Override
     public void run() {
       if (!shouldRunPrewarm) {
-        // TODO: prewarm and update can probably be merged.
-        update();
+        if (canUseEvents) {
+          try {
+            lastEventId = updateUsingNotificationEvents(rawStore, lastEventId);
+          } catch (Exception e) {
+            LOG.error("failed to update cache using events ", e);
+          }
+        } else {
+          // TODO: prewarm and update can probably be merged.
+          update();
+        }
       } else {
         try {
+          lastEventId = rawStore.getCurrentNotificationEventId().getEventId();
           prewarm(rawStore);
         } catch (Exception e) {
           LOG.error("Prewarm failure", e);
           return;
         }
       }
+    }
+
+    @VisibleForTesting
+    public static long updateUsingNotificationEvents(RawStore rawStore, long lastEventId) throws Exception {
+      LOG.info("updating cache using notification events starting from event id " + lastEventId);
+      NotificationEventRequest rqst = new NotificationEventRequest(lastEventId);
+
+      //Add the events which are not related to metadata update
+      /*rqst.addEventTypeSkipList(MessageBuilder.INSERT_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.OPEN_TXN_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.COMMIT_TXN_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ABORT_TXN_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ALLOC_WRITE_ID_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ACID_WRITE_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.CREATE_FUNCTION_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.DROP_FUNCTION_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ADD_PRIMARYKEY_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ADD_FOREIGNKEY_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ADD_UNIQUECONSTRAINT_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ADD_NOTNULLCONSTRAINT_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.DROP_CONSTRAINT_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.CREATE_ISCHEMA_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ALTER_ISCHEMA_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.DROP_ISCHEMA_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ADD_SCHEMA_VERSION_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.ALTER_SCHEMA_VERSION_EVENT);
+      rqst.addEventTypeSkipList(MessageBuilder.DROP_SCHEMA_VERSION_EVENT);*/
+
+      NotificationEventResponse resp = rawStore.getNextNotification(rqst);
+      List<NotificationEvent> eventList = resp.getEvents();
+      if (eventList == null) {
+        LOG.info("no events to process");
+        return lastEventId;
+      }
+
+      LOG.info("num events to process" + eventList.size());
+
+      MessageDeserializer deserializer = MessageFactory.getDefaultInstance(rawStore.getConf()).getDeserializer();
+      for (NotificationEvent event : eventList) {
+        long eventId = event.getEventId();
+        if (eventId <= lastEventId) {
+          LOG.error("Event id is not valid " + lastEventId + " : " + eventId);
+          throw new RuntimeException(" event id is not valid " + lastEventId + " : " + eventId);
+        }
+        lastEventId = eventId;
+        String message = event.getMessage();
+        LOG.info(" event to process " + event);
+        switch (event.getEventType()) {
+          case MessageBuilder.ADD_PARTITION_EVENT:
+            AddPartitionMessage addPartMessage = deserializer.getAddPartitionMessage(message);
+            sharedCache.addPartitionsToCache(event.getCatName(),
+                    event.getDbName(), event.getTableName(), addPartMessage.getPartitionObjs());
+            break;
+          case MessageBuilder.ALTER_PARTITION_EVENT:
+            AlterPartitionMessage alterPartitionMessage = deserializer.getAlterPartitionMessage(message);
+            sharedCache.alterPartitionInCache(event.getCatName(), event.getDbName(), event.getTableName(),
+                    alterPartitionMessage.getPtnObjBefore().getValues(), alterPartitionMessage.getPtnObjAfter());
+            break;
+          case MessageBuilder.DROP_PARTITION_EVENT:
+            DropPartitionMessage dropPartitionMessage = deserializer.getDropPartitionMessage(message);
+            sharedCache.removePartitionFromCache(event.getCatName(), event.getDbName(), event.getTableName(),
+                    new ArrayList<>(dropPartitionMessage.getPartitions().get(0).keySet()));
+            break;
+          case MessageBuilder.CREATE_TABLE_EVENT:
+            CreateTableMessage createTableMessage = deserializer.getCreateTableMessage(message);
+            LOG.info("Create table event is " + createTableMessage);
+            sharedCache.addTableToCache(event.getCatName(), event.getDbName(),
+                    event.getTableName(), createTableMessage.getTableObj());
+            break;
+          case MessageBuilder.ALTER_TABLE_EVENT:
+            AlterTableMessage alterTableMessage = deserializer.getAlterTableMessage(message);
+            sharedCache.alterTableInCache(event.getCatName(), event.getDbName(), event.getTableName(),
+                    alterTableMessage.getTableObjAfter());
+            break;
+          case MessageBuilder.DROP_TABLE_EVENT:
+            DropTableMessage dropTableMessage = deserializer.getDropTableMessage(message);
+            sharedCache.removeTableFromCache(event.getCatName(), event.getDbName(), event.getTableName());
+            break;
+          case MessageBuilder.CREATE_DATABASE_EVENT:
+            CreateDatabaseMessage createDatabaseMessage = deserializer.getCreateDatabaseMessage(message);
+            sharedCache.addDatabaseToCache(createDatabaseMessage.getDatabaseObject());
+            break;
+          case MessageBuilder.ALTER_DATABASE_EVENT:
+            AlterDatabaseMessage alterDatabaseMessage = deserializer.getAlterDatabaseMessage(message);
+            sharedCache.alterDatabaseInCache(event.getCatName(), event.getDbName(), alterDatabaseMessage.getDbObjAfter());
+            break;
+          case MessageBuilder.DROP_DATABASE_EVENT:
+            sharedCache.removeDatabaseFromCache(event.getCatName(), event.getDbName());
+            break;
+          case MessageBuilder.CREATE_CATALOG_EVENT:
+          case MessageBuilder.DROP_CATALOG_EVENT:
+          case MessageBuilder.ALTER_CATALOG_EVENT:
+            // TODO : Need to add cache invalidation for catalog events
+            LOG.error("catalog Events are not supported for cache invalidation : " + event.getEventType());
+            break;
+          default:
+            LOG.error("Event is not supported for cache invalidation : " + event.getEventType());
+        }
+      }
+      return lastEventId;
     }
 
     void update() {
