@@ -63,9 +63,10 @@ public class TableExport {
   private final HiveConf conf;
   private final Paths paths;
   private final MmContext mmCtx;
+  private final String partitionFilter;
 
   public TableExport(Paths paths, TableSpec tableSpec, ReplicationSpec replicationSpec, Hive db,
-      String distCpDoAsUser, HiveConf conf, MmContext mmCtx) {
+      String distCpDoAsUser, HiveConf conf, MmContext mmCtx, String partitionFilter) {
     this.tableSpec = (tableSpec != null
         && tableSpec.tableHandle.isTemporary()
         && replicationSpec.isInReplicationScope())
@@ -83,6 +84,7 @@ public class TableExport {
     this.conf = conf;
     this.paths = paths;
     this.mmCtx = mmCtx;
+    this.partitionFilter = partitionFilter;
   }
 
   public boolean write() throws SemanticException {
@@ -108,6 +110,9 @@ public class TableExport {
           if (replicationSpec.isMetadataOnly()) {
             return null;
           } else {
+            if (partitionFilter != null) {
+              return new PartitionIterable(db, tableSpec.tableHandle, partitionFilter);
+            }
             return new PartitionIterable(db, tableSpec.tableHandle, null, conf.getIntVar(
                 HiveConf.ConfVars.METASTORE_BATCH_RETRIEVE_MAX), true);
           }

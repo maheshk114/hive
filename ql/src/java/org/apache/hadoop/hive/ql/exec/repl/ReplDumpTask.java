@@ -438,8 +438,8 @@ public class ReplDumpTask extends Task<ReplDumpWork> implements Serializable {
       tuple.replicationSpec.setCurrentReplicationState(String.valueOf(lastReplId));
     }
     MmContext mmCtx = MmContext.createIfNeeded(tableSpec.tableHandle);
-    new TableExport(
-        exportPaths, tableSpec, tuple.replicationSpec, hiveDb, distCpDoAsUser, conf, mmCtx).write();
+    new TableExport(exportPaths, tableSpec, tuple.replicationSpec, hiveDb, distCpDoAsUser, conf,
+            mmCtx, work.getPartitionFilter(tblName)).write();
 
     replLogger.tableLog(tblName, tableSpec.tableHandle.getTableType());
   }

@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import static org.apache.hadoop.hive.ql.exec.repl.ReplExternalTables.Reader;
 import static org.apache.hadoop.hive.ql.exec.repl.ExternalTableCopyTaskBuilder.DirCopyWork;
@@ -63,6 +64,10 @@ import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_REPL_LOAD;
 import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_REPL_STATUS;
 import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_TABNAME;
 import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_TO;
+import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_WHERE;
+import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_TABREF;
+import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_TABLE_OR_COL;
+import static org.apache.hadoop.hive.ql.parse.HiveParser.TOK_REPL_COND_LIST;
 
 public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
   // Database name or pattern
@@ -77,6 +82,8 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
   // Added conf member to set the REPL command specific config entries without affecting the configs
   // of any other queries running in the session
   private HiveConf conf;
+
+  private Map<String, String> partFilter = null;
 
   // By default, this will be same as that of super class BaseSemanticAnalyzer. But need to obtain again
   // if the Hive configs are received from WITH clause in REPL LOAD or REPL STATUS commands.
@@ -134,6 +141,73 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
     }
   }
 
+  private void buildFilterString(Tree node, StringBuilder builder) {
+    if (node.getType() == TOK_TABLE_OR_COL) {
+      builder.append(node.getChild(0).getText());
+    } else {
+      if (node.getChildCount() == 2) {
+        Tree child = node.getChild(0);
+        int grandChildCount = child.getChildCount();
+        if (grandChildCount >= 2) {
+          builder.append(" ( ");
+        }
+        buildFilterString(child, builder);
+        if (grandChildCount >= 2) {
+          builder.append(" ) ");
+        }
+        builder.append(node.getText());
+        child = node.getChild(1);
+        grandChildCount = child.getChildCount();
+        if (grandChildCount >= 2) {
+          builder.append(" ( ");
+        }
+        buildFilterString(node.getChild(1), builder);
+        if (grandChildCount >= 2) {
+          builder.append(" ) ");
+        }
+      } else {
+        assert node.getChildCount() == 0;
+        builder.append(node.getText());
+      }
+    }
+  }
+
+  private void extractPartitionFilter(Tree condNode) throws Exception {
+    partFilter = new HashMap<>();
+    for (int i = 0; i < condNode.getChildCount(); i++) {
+      Tree node = condNode.getChild(i);
+      List<String> tblNames = new ArrayList<>();
+      for (int idx = 0; idx < node.getChildCount(); idx++) {
+        Tree tabNode = node.getChild(idx);
+        switch(tabNode.getType()) {
+          case TOK_TABNAME:
+            String tblName = tabNode.getChild(0).getText();
+            tblNames.add(tblName);
+            break;
+          case TOK_TABREF:
+            String tblNameRef = tabNode.getChild(0).getText();
+            //TODO:Currently only * is supported.
+            for (String tbl : db.getMSC().getTables(dbNameOrPattern, tblNameRef+"*")) {
+              tblNames.add(tbl);
+            }
+            break;
+          case TOK_WHERE:
+            Tree filter = tabNode.getChild(0);
+            StringBuilder builder = new StringBuilder();
+            buildFilterString(filter, builder);
+            String filterString = builder.toString();
+            for (String tbl : tblNames) {
+              LOG.info("Added partition filter " + filterString + " to table " + tbl);
+              partFilter.put(tbl, filterString);
+            }
+            break;
+          default:
+            throw new RuntimeException("Invalid token type" + tabNode);
+        }
+      }
+    }
+  }
+
   private void initReplDump(ASTNode ast) throws HiveException {
     int numChildren = ast.getChildCount();
     boolean isMetaDataOnly = false;
@@ -154,6 +228,13 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
       } else if (ast.getChild(currNode).getType() == TOK_TABNAME) {
         // optional tblName was specified.
         tblNameOrPattern = PlanUtils.stripQuotes(ast.getChild(currNode).getChild(0).getText());
+      } else if (ast.getChild(currNode).getType() == TOK_REPL_COND_LIST) {
+        try {
+          extractPartitionFilter(ast.getChild(currNode));
+        } catch (Exception e) {
+          LOG.error("Failed to extract partition filter.", e);
+          throw new HiveException(e.getMessage());
+        }
       } else {
         // TOK_FROM subtree
         Tree fromNode = ast.getChild(currNode);
@@ -209,7 +290,8 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
               eventTo,
               ErrorMsg.INVALID_PATH.getMsg(ast),
               maxEventLimit,
-              ctx.getResFile().toUri().toString()
+              ctx.getResFile().toUri().toString(),
+              partFilter
       ), conf);
       rootTasks.add(replDumpWorkTask);
       if (dbNameOrPattern != null) {

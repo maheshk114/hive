@@ -393,6 +393,8 @@ TOK_REPL_LOAD;
 TOK_REPL_STATUS;
 TOK_REPL_CONFIG;
 TOK_REPL_CONFIG_LIST;
+TOK_REPL_COND;
+TOK_REPL_COND_LIST;
 TOK_TO;
 TOK_ONLY;
 TOK_SUMMARY;
@@ -897,7 +899,37 @@ replDumpStatement
           (KW_LIMIT (batchSize=Number))?
         )?
         (KW_WITH replConf=replConfigs)?
-    -> ^(TOK_REPL_DUMP $dbName ^(TOK_TABNAME $tblName)? ^(TOK_FROM $eventId (TOK_TO $rangeEnd)? (TOK_LIMIT $batchSize)?)? $replConf?)
+        (KW_WHERE tblwh=tableWhereClauseList)?
+    -> ^(TOK_REPL_DUMP $dbName ^(TOK_TABNAME $tblName)? ^(TOK_FROM $eventId (TOK_TO $rangeEnd)? (TOK_LIMIT $batchSize)?)? $replConf? $tblwh? )
+    ;
+
+tableWhereClauseList
+@init { pushMsg("repl configurations list", state); }
+@after { popMsg(state); }
+    :
+      tableWhereClause (COMMA tableWhereClause)* -> ^(TOK_REPL_COND_LIST tableWhereClause+)
+    ;
+
+tableWhereClause
+@init { pushMsg("where clasue for each table ", state); }
+@after { popMsg(state); }
+    :
+      tblName=tableList (wh=whereClause)? -> ^(TOK_REPL_COND $tblName $wh?)
+    ;
+
+tableList
+@init { pushMsg("list of table ", state); }
+@after { popMsg(state); }
+    :
+      (LSQUARE)? tableNames (COMMA tableNames)* (RSQUARE)? -> tableNames+
+    ;
+
+tableNames
+@init { pushMsg("table name format ", state); }
+@after { popMsg(state); }
+    :
+        tblName=identifier -> ^(TOK_TABNAME $tblName)
+      | tblName=identifier STAR -> ^(TOK_TABREF $tblName)
     ;
 
 replLoadStatement

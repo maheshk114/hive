@@ -494,6 +494,74 @@ public class TestReplicationScenarios {
   }
 
   @Test
+  public void testPartLevelReplBootstrapbasic() throws Exception {
+    String name = testName.getMethodName();
+    String dbName = createDB(name, driver);
+    String replDbName = dbName + "_dupe";
+    run("CREATE TABLE " + dbName + ".t0(a int) partitioned by (key0 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t1(a int) partitioned by (key1 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t13(a int) partitioned by (key1 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t2(a int) partitioned by (key2 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t23(a int) partitioned by (key2 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t3(a int) partitioned by (key2 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t4(a int) partitioned by (key4 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t5(a int) partitioned by (key5 int) STORED AS TEXTFILE", driver);
+    run("CREATE TABLE " + dbName + ".t6(a int) STORED AS TEXTFILE", driver);
+
+    run("INSERT INTO " + dbName + ".t0 partition (key0 = 1) values (1) ", driver);
+    run("INSERT INTO " + dbName + ".t0 partition (key0 = 2) values (2) ", driver);
+    run("INSERT INTO " + dbName + ".t0 partition (key0 = 3) values (3) ", driver);
+    run("INSERT INTO " + dbName + ".t0 partition (key0 = 5) values (5) ", driver);
+    run("INSERT INTO " + dbName + ".t0 partition (key0 = 100) values (100) ", driver);
+
+    run("INSERT INTO " + dbName + ".t1 partition (key1 = 1) values (1) ", driver);
+    run("INSERT INTO " + dbName + ".t1 partition (key1 = 2) values (2) ", driver);
+    run("INSERT INTO " + dbName + ".t13 partition (key1 = 1) values (1) ", driver);
+
+    run("INSERT INTO " + dbName + ".t2 partition (key2 = 3) values (3) ", driver);
+    run("INSERT INTO " + dbName + ".t23 partition (key2 = 3) values (3) ", driver);
+    run("INSERT INTO " + dbName + ".t2 partition (key2 = 2) values (2) ", driver);
+    run("INSERT INTO " + dbName + ".t23 partition (key2 = 1) values (4) ", driver);
+    run("INSERT INTO " + dbName + ".t23 partition (key2 = 4) values (5) ", driver);
+    run("INSERT INTO " + dbName + ".t3 partition (key2 = 3) values (3) ", driver);
+
+    run("INSERT INTO " + dbName + ".t4 partition (key4 = 1) values (3) ", driver);
+    run("INSERT INTO " + dbName + ".t5 partition (key5 = 1) values (3) ", driver);
+    run("INSERT INTO " + dbName + ".t6 values (3) ", driver);
+
+    advanceDumpDir();
+    //t4 does not have key2 as partition column, so repl dump should fail.
+    verifyFail("REPL DUMP " + dbName + " where t0 where key0 < 5 and key0 > 0 or key0 = 100, t1* where key1 = 1," +
+            " [t2*,t3,t4] where key2 > 2", driver);
+
+    advanceDumpDir();
+    run("REPL DUMP " + dbName + " where t0 where key0 < 5 and key0 > 0 or key0 = 100, t1* where key1 = 1," +
+            " [t2*,t3] where key2 > 2", driver);
+    String replDumpLocn = getResult(0,0, driver);
+    String replDumpId = getResult(0,1,true, driver);
+
+    run("REPL LOAD " + replDbName + " FROM '" + replDumpLocn + "'", driverMirror);
+    verifyRun("REPL STATUS " + replDbName, new String[] {replDumpId}, driverMirror);
+
+    //For table t0, partition 5 is not satisfying the filter condition, thus not replicated.
+    verifyRun("SELECT a from " + replDbName + ".t0 order by a", new String[] {"1", "2", "3", "100"}, driverMirror);
+
+    //For t1*, both t1 and t13 are filtered
+    verifyRun("SELECT a from " + replDbName + ".t1", new String[] {"1"}, driverMirror);
+    verifyRun("SELECT a from " + replDbName + ".t13", new String[] {"1"}, driverMirror);
+
+    //For [t2*,t30], t2, t23 and t3 are filtered.
+    verifyRun("SELECT a from " + replDbName + ".t2", new String[] {"3"}, driverMirror);
+    verifyRun("SELECT a from " + replDbName + ".t23", new String[] {"3", "5"}, driverMirror);
+    verifyRun("SELECT a from " + replDbName + ".t3", new String[] {"3"}, driverMirror);
+
+    //t4, t5 and t6 are not part of the filter string, thus are not filtered.
+    verifyRun("SELECT a from " + replDbName + ".t4", new String[] {"3"}, driverMirror);
+    verifyRun("SELECT a from " + replDbName + ".t5", new String[] {"3"}, driverMirror);
+    verifyRun("SELECT a from " + replDbName + ".t6", new String[] {"3"}, driverMirror);
+  }
+
+  @Test
   public void testBootstrapLoadOnExistingDb() throws IOException {
     String testName = "bootstrapLoadOnExistingDb";
     String dbName = createDB(testName, driver);

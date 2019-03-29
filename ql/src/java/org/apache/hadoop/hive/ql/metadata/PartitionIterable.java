@@ -18,6 +18,13 @@
 
 package org.apache.hadoop.hive.ql.metadata;
 
+import org.apache.hadoop.hive.metastore.api.MetaException;
+import org.apache.hadoop.hive.metastore.api.NoSuchObjectException;
+import org.apache.hadoop.hive.metastore.partition.spec.PartitionSpecProxy;
+import org.apache.thrift.TException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -45,6 +52,7 @@ import java.util.Map;
  * IllegalStateException.
  */
 public class PartitionIterable implements Iterable<Partition> {
+  private static final Logger LOG = LoggerFactory.getLogger(PartitionIterable.class);
 
   @Override
   public Iterator<Partition> iterator() {
@@ -56,10 +64,24 @@ public class PartitionIterable implements Iterable<Partition> {
       private Iterator<String> partitionNamesIter = null;
       private Iterator<Partition> batchIter = null;
 
+      private PartitionSpecProxy.PartitionIterator partitionFilterIter;
+
       private void initialize(){
         if(!initialized){
           if (currType == Type.LIST_PROVIDED){
             ptnsIterator = ptnsProvided.iterator();
+          } else if (currType == Type.FILTER_PROVIDED) {
+            try {
+              partitionFilterIter = db.getMSC().listPartitionSpecsByFilter(table.getDbName(),
+                      table.getTableName(), partitionFilter, -1).getPartitionIterator();
+            } catch (NoSuchObjectException e) {
+              //TODO : Need to check what is the best way to handle it.
+              LOG.info("Failed to extract partitions for " + table.getDbName() + "." + table.getTableName());
+              partitionFilterIter = null;
+            } catch (TException e) {
+              LOG.error("Failed to extract partitions for " + table.getDbName() + "." + table.getTableName(), e);
+              throw new RuntimeException(e.getMessage());
+            }
           } else {
             partitionNamesIter = partitionNames.iterator();
           }
@@ -72,6 +94,8 @@ public class PartitionIterable implements Iterable<Partition> {
         initialize();
         if (currType == Type.LIST_PROVIDED){
           return ptnsIterator.hasNext();
+        } else if (currType == Type.FILTER_PROVIDED) {
+          return partitionFilterIter == null ? false : partitionFilterIter.hasNext();
         } else {
           return ((batchIter != null) && batchIter.hasNext()) || partitionNamesIter.hasNext();
         }
@@ -82,6 +106,14 @@ public class PartitionIterable implements Iterable<Partition> {
         initialize();
         if (currType == Type.LIST_PROVIDED){
           return ptnsIterator.next();
+        }
+
+        if (currType == Type.FILTER_PROVIDED) {
+          try {
+            return new Partition(table, partitionFilterIter.next());
+          } catch (HiveException e) {
+            throw new RuntimeException(e.getMessage());
+          }
         }
 
         if ((batchIter == null) || !batchIter.hasNext()){
@@ -115,7 +147,8 @@ public class PartitionIterable implements Iterable<Partition> {
 
   enum Type {
     LIST_PROVIDED,  // Where a List<Partitions is already provided
-    LAZY_FETCH_PARTITIONS // Where we want to fetch Partitions lazily when they're needed.
+    LAZY_FETCH_PARTITIONS, // Where we want to fetch Partitions lazily when they're needed.
+    FILTER_PROVIDED // for partition level replication.
   };
 
   final Type currType;
@@ -130,6 +163,14 @@ public class PartitionIterable implements Iterable<Partition> {
   private List<String> partitionNames = null;
   private int batch_size;
   private boolean getColStats = false;
+  String partitionFilter;
+
+  public PartitionIterable(Hive db, Table tbl, String filter) {
+    this.currType = Type.FILTER_PROVIDED;
+    this.table = tbl;
+    this.partitionFilter = filter;
+    this.db = db;
+  }
 
   /**
    * Dummy constructor, which simply acts as an iterator on an already-present

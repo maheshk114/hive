@@ -23,6 +23,7 @@ import org.apache.hadoop.hive.ql.plan.Explain;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.Map;
 
 @Explain(displayName = "Replication Dump Operator", explainLevels = { Explain.Level.USER,
     Explain.Level.DEFAULT,
@@ -33,6 +34,7 @@ public class ReplDumpWork implements Serializable {
   Long eventTo;
   private Integer maxEventLimit;
   static String testInjectDumpDir = null;
+  private Map<String, String> partitionFilter;
 
   public static void injectNextDumpDirForTest(String dumpDir) {
     testInjectDumpDir = dumpDir;
@@ -40,7 +42,7 @@ public class ReplDumpWork implements Serializable {
 
   public ReplDumpWork(String dbNameOrPattern, String tableNameOrPattern,
                       Long eventFrom, Long eventTo, String astRepresentationForErrorMsg, Integer maxEventLimit,
-                      String resultTempPath) {
+                      String resultTempPath, Map<String, String> partitionFilter) {
     this.dbNameOrPattern = dbNameOrPattern;
     this.tableNameOrPattern = tableNameOrPattern;
     this.eventFrom = eventFrom;
@@ -48,6 +50,7 @@ public class ReplDumpWork implements Serializable {
     this.astRepresentationForErrorMsg = astRepresentationForErrorMsg;
     this.maxEventLimit = maxEventLimit;
     this.resultTempPath = resultTempPath;
+    this.partitionFilter = partitionFilter;
   }
 
   boolean isBootStrapDump() {
@@ -86,5 +89,9 @@ public class ReplDumpWork implements Serializable {
       LoggerFactory.getLogger(this.getClass())
           .debug("eventTo not specified, using current event id : {}", eventTo);
     }
+  }
+
+  public String getPartitionFilter(String tblName) {
+    return (tblName == null || partitionFilter == null) ? null : partitionFilter.get(tblName);
   }
 }

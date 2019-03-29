@@ -140,7 +140,7 @@ public class TestReplDumpTask {
     task.setWork(
         new ReplDumpWork("default", "",
             Long.MAX_VALUE, Long.MAX_VALUE, "",
-            Integer.MAX_VALUE, "")
+            Integer.MAX_VALUE, "", null)
     );
 
     try {
