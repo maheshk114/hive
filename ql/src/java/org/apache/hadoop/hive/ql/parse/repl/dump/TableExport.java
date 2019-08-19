@@ -42,6 +42,9 @@ import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.parse.repl.dump.io.FileOperations;
 import org.apache.hadoop.hive.ql.plan.ExportWork.MmContext;
 import org.apache.hadoop.hive.ql.plan.ExprNodeDesc;
+import org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc;
+import org.apache.hadoop.hive.ql.udf.generic.GenericUDFOPNot;
+import org.apache.hadoop.hive.serde2.typeinfo.TypeInfoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,9 +73,11 @@ public class TableExport {
   private final Paths paths;
   private final MmContext mmCtx;
   private ExprNodeDesc partitionFilter = null;
+  private ExprNodeDesc modifiedPartFilter = null;
 
   public TableExport(Paths paths, TableSpec tableSpec, ReplicationSpec replicationSpec, Hive db,
-      String distCpDoAsUser, HiveConf conf, MmContext mmCtx, ReplScope replScope) throws SemanticException {
+      String distCpDoAsUser, HiveConf conf, MmContext mmCtx, ReplScope replScope, ReplScope oldReplScope)
+          throws SemanticException {
     this.tableSpec = (tableSpec != null
         && tableSpec.tableHandle.isTemporary()
         && replicationSpec.isInReplicationScope())
@@ -91,18 +96,31 @@ public class TableExport {
     this.paths = paths;
     this.mmCtx = mmCtx;
     if (replScope != null) {
-      ASTNode filterNode = (ASTNode) replScope.getPartFilter(tableSpec.tableHandle.getTableName());
-      if (filterNode == null) {
-        logger.info("Partition filter is not set for table " + tableSpec.tableHandle.getTableName());
-      } else {
-        partitionFilter = TypeCheckProcFactory.genExprNode(filterNode,
-                new TypeCheckCtx(SemanticAnalyzer.getRowResolverFromTable(tableSpec.tableHandle))).get(filterNode);
-        logger.info("Partition filter " + filterNode.toStringTree() + " is set for table " +
-                tableSpec.tableHandle.getTableName());
+      partitionFilter =  getPartitionFilter(replScope, "New");
+      if (oldReplScope != null) {
+        ExprNodeDesc oldPartitionFilter = getPartitionFilter(oldReplScope, "Old");
+        //Modified filter is (new policy) and (not old policy).
+        modifiedPartFilter = TypeCheckProcFactory.combineExpressionWithAnd(partitionFilter,
+                TypeCheckProcFactory.getInversion(oldPartitionFilter));
       }
+    } else {
+      assert oldReplScope == null;
     }
   }
 
+  private ExprNodeDesc getPartitionFilter(ReplScope replScope, String prefix) throws SemanticException {
+    ASTNode filterNode = (ASTNode) replScope.getPartFilter(tableSpec.tableHandle.getTableName());
+    if (filterNode == null) {
+      logger.debug(prefix  + " partition filter is not set for table " + tableSpec.tableHandle.getTableName());
+      return null;
+    } else {
+      ExprNodeDesc partitionFilter = TypeCheckProcFactory.genExprNode(filterNode,
+              new TypeCheckCtx(SemanticAnalyzer.getRowResolverFromTable(tableSpec.tableHandle))).get(filterNode);
+      logger.debug(prefix + " partition filter " + filterNode.toStringTree() + " is set for table " +
+              tableSpec.tableHandle.getTableName());
+      return partitionFilter;
+    }
+  }
   public boolean write() throws SemanticException {
     if (tableSpec == null) {
       writeMetaData(null);
@@ -126,8 +144,9 @@ public class TableExport {
           if (replicationSpec.isMetadataOnly()) {
             return null;
           } else {
-            if (partitionFilter != null) {
-              return new PartitionIterable(db, tableSpec.tableHandle, partitionFilter);
+            ExprNodeDesc filter = modifiedPartFilter != null ? modifiedPartFilter : partitionFilter;
+            if (filter != null) {
+              return new PartitionIterable(db, tableSpec.tableHandle, filter);
             }
             return new PartitionIterable(db, tableSpec.tableHandle, null, conf.getIntVar(
                 HiveConf.ConfVars.METASTORE_BATCH_RETRIEVE_MAX), true);

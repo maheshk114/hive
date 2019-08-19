@@ -157,8 +157,8 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
     oldReplScope = new ReplScope();
     int childCount = oldReplPolicyTree.getChildCount();
 
-    // First child is DB name and optional second child is tables list.
-    assert(childCount <= 2);
+    // First child is DB name, optional second child is tables list and optional third is partition filter.
+    assert(childCount <= 3);
 
     // First child is always the DB name. So set it.
     oldReplScope.setDbName(oldReplPolicyTree.getChild(0).getText());
@@ -169,19 +169,19 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
       throw new SemanticException("DB name cannot be replaced in the replication policy.");
     }
 
-    // If the old policy is just <db_name>, then tables list won't be there.
-    if (childCount <= 1) {
-      return;
+    // Either table, partition or both filter is present.
+    for (int idx = 1 ; idx < childCount; idx++) {
+      Tree childNode = oldReplPolicyTree.getChild(idx);
+      if (childNode.getType() == TOK_REPL_TABLES) {
+        setReplDumpTablesList(childNode, oldReplScope);
+      } else {
+        assert(childNode.getType() == TOK_REPL_COND_LIST);
+        extractPartitionFilter(childNode, oldReplScope);
+      }
     }
-
-    // Traverse the children which can be either just include tables list or both include
-    // and exclude tables lists.
-    Tree oldPolicyTablesListNode = oldReplPolicyTree.getChild(1);
-    assert(oldPolicyTablesListNode.getType() == TOK_REPL_TABLES);
-    setReplDumpTablesList(oldPolicyTablesListNode, oldReplScope);
   }
 
-  private void extractPartitionFilter(Tree condNode, ReplScope replScope) throws Exception {
+  private void extractPartitionFilter(Tree condNode, ReplScope replScope) throws HiveException {
     for (int i = 0; i < condNode.getChildCount(); i++) {
       Tree node = condNode.getChild(i);
       // Table pattern node
@@ -254,12 +254,7 @@ public class ReplicationSemanticAnalyzer extends BaseSemanticAnalyzer {
           break;
         }
         case TOK_REPL_COND_LIST: {
-          try {
-            extractPartitionFilter(currNode, replScope);
-          } catch (Exception e) {
-            LOG.error("Failed to extract partition filter.", e);
-            throw new HiveException(e.getMessage());
-          }
+          extractPartitionFilter(currNode, replScope);
           break;
         }
         default: {

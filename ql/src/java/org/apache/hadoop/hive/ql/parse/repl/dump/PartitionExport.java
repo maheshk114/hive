@@ -20,12 +20,15 @@ package org.apache.hadoop.hive.ql.parse.repl.dump;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.metastore.api.MetaException;
+import org.apache.hadoop.hive.ql.exec.repl.util.ReplUtils;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
 import org.apache.hadoop.hive.ql.metadata.Partition;
 import org.apache.hadoop.hive.ql.metadata.PartitionIterable;
 import org.apache.hadoop.hive.ql.parse.ReplicationSpec;
 import org.apache.hadoop.hive.ql.parse.repl.dump.io.FileOperations;
 import org.apache.hadoop.hive.ql.plan.ExportWork.MmContext;
+import org.apache.hadoop.hive.ql.plan.ExprNodeDesc;
 import org.apache.hadoop.hive.ql.session.SessionState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +76,8 @@ class PartitionExport {
     this.callersSession = SessionState.get();
   }
 
-  void write(final ReplicationSpec forReplicationSpec) throws InterruptedException, HiveException {
+  void write(final ReplicationSpec forReplicationSpecr)
+          throws InterruptedException, HiveException {
     List<Future<?>> futures = new LinkedList<>();
     ExecutorService producer = Executors.newFixedThreadPool(1,
         new ThreadFactoryBuilder().setNameFormat("partition-submitter-thread-%d").build());

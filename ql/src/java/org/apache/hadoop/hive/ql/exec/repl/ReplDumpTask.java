@@ -23,6 +23,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.FileUtils;
 import org.apache.hadoop.hive.common.ValidTxnList;
 import org.apache.hadoop.hive.common.ValidWriteIdList;
+import org.apache.hadoop.hive.common.repl.ReplScope;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.metastore.IMetaStoreClient;
 import org.apache.hadoop.hive.metastore.TableType;
@@ -221,6 +222,10 @@ public class ReplDumpTask extends Task<ReplDumpWork> implements Serializable {
     // If the table is renamed and the new name satisfies the filter but the old name does not then the table needs to
     // be bootstrapped.
     if (tablesForBootstrap.contains(table.getTableName().toLowerCase())) {
+      return true;
+    }
+
+    if (work.oldReplScope.getPartFilter(table.getTableName()) != null) {
       return true;
     }
 
@@ -613,8 +618,16 @@ public class ReplDumpTask extends Task<ReplDumpWork> implements Serializable {
       tuple.replicationSpec.setCurrentReplicationState(String.valueOf(lastReplId));
     }
     MmContext mmCtx = MmContext.createIfNeeded(tableSpec.tableHandle);
+    ReplScope oldReplScope = null;
+
+    // If tablesForBootstrap contains the table then whole table will be bootstrapped. If only partitionsForBootstrap
+    // contains the table, then only those partitions which are not present at target will be bootstrapped.
+    if (!tablesForBootstrap.contains(tblName)) {
+      oldReplScope =  work.oldReplScope;
+    }
+
     new TableExport(exportPaths, tableSpec, tuple.replicationSpec, hiveDb, distCpDoAsUser, conf,
-            mmCtx, work.replScope).write();
+            mmCtx, work.replScope, oldReplScope).write();
     replLogger.tableLog(tblName, tableSpec.tableHandle.getTableType());
   }
 

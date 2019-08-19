@@ -303,23 +303,27 @@ public class ReplUtils {
   }
 
   public static boolean isPartSatisfiesFilter(Table tbl, List<String> partValues, ExprNodeDesc partitionFilter,
-                                              HiveConf conf) throws HiveException, MetaException {
+                                              HiveConf conf) throws HiveException {
     // Pass the table name as a linked list (single node) to partition pruner. If the table is pruned that means
     // it's not passing the filter. Linked list is used as pruner expect a list
     // so that it is easy to remove node from it.
     List<String> partColumnNames = new ArrayList<>();
     List<PrimitiveTypeInfo> partColumnTypeInfos = new ArrayList<>();
-    String partName = Warehouse.makePartName(tbl.getPartCols(), partValues);
-    for (FieldSchema fs : tbl.getPartCols()) {
-      partColumnNames.add(fs.getName());
-      partColumnTypeInfos.add(TypeInfoFactory.getPrimitiveTypeInfo(fs.getType()));
+    try {
+      String partName = Warehouse.makePartName(tbl.getPartCols(), partValues);
+      for (FieldSchema fs : tbl.getPartCols()) {
+        partColumnNames.add(fs.getName());
+        partColumnTypeInfos.add(TypeInfoFactory.getPrimitiveTypeInfo(fs.getType()));
+      }
+      LinkedList linkedList = new LinkedList<>(Collections.singletonList(partName));
+      PartitionPruner.prunePartitionNames(partColumnNames, partColumnTypeInfos,
+              (ExprNodeGenericFuncDesc) partitionFilter,
+              conf.getVar(HiveConf.ConfVars.DEFAULTPARTITIONNAME),
+              linkedList);
+      // If linked list is empty means the partition does not satisfies the filter.
+      return !linkedList.isEmpty();
+    } catch (MetaException e) {
+      throw new HiveException(e.getMessage());
     }
-    LinkedList linkedList = new LinkedList<>(Collections.singletonList(partName));
-    PartitionPruner.prunePartitionNames(partColumnNames, partColumnTypeInfos,
-            (ExprNodeGenericFuncDesc) partitionFilter,
-            conf.getVar(HiveConf.ConfVars.DEFAULTPARTITIONNAME),
-            linkedList);
-    // If linked list is empty means the partition does not satisfies the filter.
-    return !linkedList.isEmpty();
   }
 }

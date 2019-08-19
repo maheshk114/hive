@@ -175,18 +175,6 @@ public class TestPartitionLevelReplication extends BaseReplicationScenariosAcidT
   }
 
   @Test
-  public void testPartLevelReplictionBootstrapAcidTable() throws Throwable {
-    createTables(null);
-    insertRecords(false);
-    WarehouseInstance.Tuple bootStrapDump =
-            primary.dump(basicReplPolicy, null);
-    replica.loadWithoutExplain(replicatedDbName, bootStrapDump.dumpLocation)
-            .run("REPL STATUS " + replicatedDbName)
-            .verifyResult(bootStrapDump.lastReplicationId);
-    verifyTableContent();
-  }
-
-  @Test
   public void testPartLevelReplictionBootstrapNonAcidTable() throws Throwable {
     createTables("'transactional'='false'");
     insertRecords(false);
@@ -217,54 +205,6 @@ public class TestPartitionLevelReplication extends BaseReplicationScenariosAcidT
   }
 
   @Test
-  public void testPartLevelReplictionBootstrapDateTypeField() throws Throwable {
-    String filter = " PARTITIONS 'acid_table' where year(dt) >= 2019 and month(dt) >= 6";
-    WarehouseInstance.Tuple tuple = primary.run("use " + primaryDbName)
-            .run("create table acid_table (a int) partitioned by (dt string) STORED AS " +
-                    " ORC TBLPROPERTIES ('transactional'='true')")
-            .run("insert into acid_table partition(dt='1970-01-01') values (1)")
-            .run("insert into acid_table partition(dt='2019-06-01') values (2)")
-            .run("insert into acid_table partition(dt='2018-12-01') values (3)")
-            .run("insert into acid_table partition(dt='2019-01-01') values (4)")
-            .dump(primaryDbName + filter, null);
-    replica.load(replicatedDbName, tuple.dumpLocation)
-            .run("use " + replicatedDbName)
-            .run("select a from acid_table")
-            .verifyResults(new String[] {"2"});
-  }
-
-  @Test
-  public void testPartLevelReplictionBootstrapPatterns() throws Throwable {
-    String filter = " PARTITIONS '(a[0-9]+)|(b)' where (year(dt) >= 2019 and month(dt) >= 6) or (year(dt) == 1947)";
-    WarehouseInstance.Tuple tuple = primary.run("use " + primaryDbName)
-            .run("create table a1 (a int) partitioned by (dt string) STORED AS " +
-                    " ORC TBLPROPERTIES ('transactional'='true')")
-            .run("insert into a1 partition(dt='1970-01-01') values (1)")
-            .run("insert into a1 partition(dt='2019-05-01') values (2)")
-            .run("insert into a1 partition(dt='2019-07-01') values (3)")
-            .run("insert into a1 partition(dt='1900-08-01') values (4)")
-            .run("create table b (a int) partitioned by (dt string) STORED AS " +
-                    " ORC TBLPROPERTIES ('transactional'='true')")
-            .run("insert into b partition(dt='1983-01-01') values (1)")
-            .run("insert into b partition(dt='1947-05-01') values (2)")
-            .run("insert into b partition(dt='1947-07-01') values (3)")
-            .run("create table b1 (a int) partitioned by (dt string) STORED AS " +
-                    " ORC TBLPROPERTIES ('transactional'='true')")
-            .run("insert into b1 partition(dt='1983-01-01') values (1)")
-            .run("insert into b1 partition(dt='1947-05-01') values (2)")
-            .run("insert into b1 partition(dt='2019-06-01') values (3)")
-            .dump(primaryDbName + filter, null);
-    replica.load(replicatedDbName, tuple.dumpLocation)
-            .run("use " + replicatedDbName)
-            .run("select a from a1") // a1 is filtered as per 'a[0-9]+'
-            .verifyResults(new String[] {"3"})
-            .run("select a from b") // b is filtered as per 'b'
-            .verifyResults(new String[] {"2", "3"})
-            .run("select a from b1") // b1 is not filtered
-            .verifyResults(new String[] {"1", "2", "3"});
-  }
-
-  @Test
   public void testPartLevelReplictionBootstrapExternalTable() throws Throwable {
     List<String> loadWithClause = ReplicationTestUtils.externalTableBasePathWithClause(REPLICA_EXTERNAL_BASE, replica);
     List<String> dumpWithClause = Collections.singletonList(
@@ -282,22 +222,6 @@ public class TestPartitionLevelReplication extends BaseReplicationScenariosAcidT
             .run("use " + replicatedDbName)
             .run("select a from a1")
             .verifyResults(new String[] {"2", "3"});
-  }
-
-  @Test
-  public void testPartLevelReplictionIncrAcidTable() throws Throwable {
-    createTables(null);
-    WarehouseInstance.Tuple dump =
-            primary.dump(basicReplPolicy, null);
-    replica.loadWithoutExplain(replicatedDbName, dump.dumpLocation)
-            .run("REPL STATUS " + replicatedDbName)
-            .verifyResult(dump.lastReplicationId);
-    insertRecords(false);
-    dump = primary.dump(basicReplPolicy, dump.lastReplicationId);
-    replica.loadWithoutExplain(replicatedDbName, dump.dumpLocation)
-            .run("REPL STATUS " + replicatedDbName)
-            .verifyResult(dump.lastReplicationId);
-    verifyTableContent();
   }
 
   @Test
@@ -387,32 +311,6 @@ public class TestPartitionLevelReplication extends BaseReplicationScenariosAcidT
   }
 
   @Test
-  public void testPartLevelReplictionWithClause() throws Throwable {
-    String filter = "'acid_table' where key0 > 10";
-    String replPolicy = primaryDbName + " PARTITIONS " + filter;
-    WarehouseInstance.Tuple tuple = primary.run("use " + primaryDbName)
-            .run("create table acid_table (a int) partitioned by (key0 int) STORED AS " +
-                    " ORC TBLPROPERTIES ('transactional'='true')")
-            .dump(replPolicy, null,
-                    Collections.singletonList("'hive.repl.dump.include.acid.tables' = 'true'"));
-    replica.load(replicatedDbName, tuple.dumpLocation)
-            .run("use " + replicatedDbName)
-            .run("show tables")
-            .verifyResult("acid_table");
-
-    tuple = primary.run("use " + primaryDbName)
-            .run("insert into acid_table partition(key0=11) values (11)")
-            .run("insert into acid_table partition(key0=10) values (10)")
-            .dump(replPolicy, tuple.lastReplicationId,
-                    Collections.singletonList("'hive.repl.dump.include.acid.tables' = 'true'"));
-    replica.load(replicatedDbName, tuple.dumpLocation)
-            .run("use " + replicatedDbName)
-            .run("select a from acid_table")
-            .verifyResult("11");
-
-  }
-
-  @Test
   public void testPartLevelReplictionMulitColPartition() throws Throwable {
     String filter = " 'acid_table' where key0 > 10 and (key1 < 10 or key2 = '2019')";
     String replPolicy = primaryDbName + " PARTITIONS " + filter;
@@ -450,48 +348,47 @@ public class TestPartitionLevelReplication extends BaseReplicationScenariosAcidT
   }
 
   @Test
-  public void testPartLevelReplictionMultiConditions() throws Throwable {
-    String replPolicy = primaryDbName + " PARTITIONS  'acid_table' where key0 > 10 and (key1 < 10 or key2 = '2019')" +
-            " or (key0 = 10 and key1 >= 12)";
+  public void testPartLevelReplictionWithReplace() throws Throwable {
+    String oldPolicy = primaryDbName +
+            " PARTITIONS '(a[0-9]+)|(b)' where (year(dt) >= 2019 and month(dt) >= 6) or (year(dt) == 1947)";
     WarehouseInstance.Tuple tuple = primary.run("use " + primaryDbName)
-            .run("create table acid_table (a int) partitioned by (key0 int, key1 int, key2 string) STORED AS " +
+            .run("create table a1 (a int) partitioned by (dt string) STORED AS " +
                     " ORC TBLPROPERTIES ('transactional'='true')")
-            .dump(replPolicy, null,
-                    Collections.singletonList("'hive.repl.dump.include.acid.tables' = 'true'"));
+            .run("insert into a1 partition(dt='1970-01-01') values (1)")
+            .run("insert into a1 partition(dt='2019-05-01') values (2)")
+            .run("insert into a1 partition(dt='2019-07-01') values (3)")
+            .run("insert into a1 partition(dt='1900-08-01') values (4)")
+            .run("create table b (a int) partitioned by (dt string) STORED AS " +
+                    " ORC TBLPROPERTIES ('transactional'='true')")
+            .run("insert into b partition(dt='1983-01-01') values (1)")
+            .run("insert into b partition(dt='1947-05-01') values (2)")
+            .run("insert into b partition(dt='1947-07-01') values (3)")
+            .run("create table b1 (a int) partitioned by (dt string) STORED AS " +
+                    " ORC TBLPROPERTIES ('transactional'='true')")
+            .run("insert into b1 partition(dt='1983-01-01') values (1)")
+            .run("insert into b1 partition(dt='1947-05-01') values (2)")
+            .run("insert into b1 partition(dt='2019-06-01') values (3)")
+            .dump(oldPolicy, null);
     replica.load(replicatedDbName, tuple.dumpLocation)
             .run("use " + replicatedDbName)
-            .run("show tables")
-            .verifyResult("acid_table");
+            .run("select a from a1") // a1 is filtered as per 'a[0-9]+'
+            .verifyResults(new String[] {"3"})
+            .run("select a from b") // b is filtered as per 'b'
+            .verifyResults(new String[] {"2", "3"})
+            .run("select a from b1") // b1 is not filtered
+            .verifyResults(new String[] {"1", "2", "3"});
 
+    String newPolicy = primaryDbName + ".'(a[0-9]+)|(b)'" +
+            " PARTITIONS '(a[0-9]+)|(b)' where (year(dt) >= 2019 and month(dt) >= 5)";
     tuple = primary.run("use " + primaryDbName)
-            .run("insert into acid_table partition(key0=11, key1=11, key2 = '2019') values (1)")
-            .run("insert into acid_table partition(key0=11, key1=11, key2 = '2018') values (2)")
-            .run("insert into acid_table partition(key0=10, key1=12, key2 = '2019') values (3)")
-            .run("insert into acid_table partition(key0=10, key1=12, key2 = '2018') values (4)")
-            .dump(replPolicy, tuple.lastReplicationId,
-                    Collections.singletonList("'hive.repl.dump.include.acid.tables' = 'true'"));
+            .run("insert into a1 partition(dt='2019-05-01') values (4)")
+            .run("insert into b partition(dt='2019-05-01') values (4)")
+            .dump(newPolicy, oldPolicy, tuple.lastReplicationId, null);
     replica.load(replicatedDbName, tuple.dumpLocation)
             .run("use " + replicatedDbName)
-            .run("select a from acid_table")
-            .verifyResults(new String[] {"1", "3", "4"});
-
-  }
-
-  @Test
-  public void testPartLevelReplictionDateTypeField() throws Throwable {
-    String filter = " 'acid_table' where year(dt) >= 2019 and month(dt) >= 6";
-    WarehouseInstance.Tuple tuple = primary.run("use " + primaryDbName)
-            .run("create table acid_table (a int) partitioned by (dt string) STORED AS " +
-                    " ORC TBLPROPERTIES ('transactional'='true')")
-            .run("insert into acid_table partition(dt='1970-01-01') values (1)")
-            .run("insert into acid_table partition(dt='2019-06-01') values (2)")
-            .run("insert into acid_table partition(dt='2018-12-01') values (3)")
-            .run("insert into acid_table partition(dt='2019-01-01') values (4)")
-            .dump(primaryDbName + " PARTITIONS " + filter, null);
-    replica.load(replicatedDbName, tuple.dumpLocation)
-            .run("use " + replicatedDbName)
-            .run("select a from acid_table")
-            .verifyResults(new String[] {"2"});
-
+            .run("select a from a1") // a1 is filtered as per 'a[0-9]+'
+            .verifyResults(new String[] {"2", "3", "4"})
+            .run("select a from b") // b is filtered as per 'b'
+            .verifyResults(new String[] {"4"});
   }
 }

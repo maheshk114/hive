@@ -21,10 +21,13 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.common.repl.ReplScope;
 import org.apache.hadoop.hive.conf.HiveConf;
+import org.apache.hadoop.hive.ql.exec.SerializationUtilities;
 import org.apache.hadoop.hive.ql.exec.Utilities;
+import org.apache.hadoop.hive.ql.parse.ASTNode;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 import org.apache.hadoop.hive.ql.parse.repl.dump.Utils;
 import org.apache.hadoop.hive.ql.parse.repl.DumpType;
+import org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,12 +37,18 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class DumpMetaData {
   // wrapper class for reading and writing metadata about a dump
   // responsible for _dumpmetadata files
   private static final String DUMP_METADATA = "_dumpmetadata";
   private static final Logger LOG = LoggerFactory.getLogger(DumpMetaData.class);
+  private static final String DMD_DB_NAME = "_db_name";
+  private static final String DMD_TABLE_INCLUDE_LIST = "_table_include_list";
+  private static final String DMD_TABLE_EXCLUDE_LIST = "_table_exclude_list";
+  private static final String DMD_PARTITION_FILTER = "_partition_filter";
 
   private DumpType dumpType;
   private Long eventFrom = null;
@@ -87,22 +96,29 @@ public class DumpMetaData {
     String[] lineContents = line.split("\t");
     replScope = new ReplScope();
     for (int idx = 0; idx < lineContents.length; idx++) {
-      String value = lineContents[idx];
-      switch (idx) {
-      case 0:
+      String key = lineContents[idx];
+      String value = lineContents[++idx];
+      switch (key) {
+      case DMD_DB_NAME:
         LOG.info("Read ReplScope: Set Db Name: {}.", value);
         replScope.setDbName(value);
         break;
-      case 1:
+      case DMD_TABLE_INCLUDE_LIST:
         LOG.info("Read ReplScope: Include table name list: {}.", value);
         replScope.setIncludedTablePatterns(value);
         break;
-      case 2:
+      case DMD_TABLE_EXCLUDE_LIST:
         LOG.info("Read ReplScope: Exclude table name list: {}.", value);
         replScope.setExcludedTablePatterns(value);
         break;
+      case DMD_PARTITION_FILTER:
+        ASTNode filter = SerializationUtilities.deserializeObject(lineContents[++idx], ASTNode.class);
+        Pattern pattern = SerializationUtilities.deserializeObject(value, Pattern.class);
+        LOG.info("Read ReplScope: table name pattern {} for partition filter: {}.", pattern, filter.toStringTree());
+        replScope.setPartFilter(pattern, filter);
+        break;
       default:
-        throw new IOException("Invalid repl tables list data in dump metadata file");
+        throw new IOException("Invalid repl tables list data in dump metadata file " + key);
       }
     }
   }
@@ -181,15 +197,27 @@ public class DumpMetaData {
     assert(replScope != null);
 
     List<String> values = new ArrayList<>();
+    values.add(DMD_DB_NAME);
     values.add(replScope.getDbName());
 
     String includedTableNames = replScope.getIncludedTableNames();
     String excludedTableNames = replScope.getExcludedTableNames();
     if (includedTableNames != null) {
+      values.add(DMD_TABLE_INCLUDE_LIST);
       values.add(includedTableNames);
     }
     if (excludedTableNames != null) {
+      values.add(DMD_TABLE_EXCLUDE_LIST);
       values.add(excludedTableNames);
+    }
+
+    Map<Pattern, Object> partFilter = replScope.getPartFilter();
+    if (partFilter != null && !partFilter.isEmpty()) {
+      for (Map.Entry<Pattern, Object> keySet : partFilter.entrySet()) {
+        values.add(DMD_PARTITION_FILTER);
+        values.add(SerializationUtilities.serializeObject(keySet.getKey()));
+        values.add(SerializationUtilities.serializeObject((ASTNode)keySet.getValue()));
+      }
     }
     LOG.info("Preparing ReplScope {} to dump.", values);
     return values;

@@ -55,6 +55,7 @@ public interface EventHandler {
     final ReplScope replScope;
     final ReplScope oldReplScope;
     private Set<String> tablesForBootstrap;
+    private Set<String> partitionsForBootstrap;
 
     public Context(Path eventRoot, Path cmRoot, Hive db, HiveConf hiveConf, ReplicationSpec replicationSpec,
                    ReplScope replScope, ReplScope oldReplScope, Set<String> tablesForBootstrap) {
@@ -107,19 +108,30 @@ public interface EventHandler {
       return tablesForBootstrap.remove(tableName.toLowerCase());
     }
 
+    private boolean isPartSatisfiesFilter(ReplScope replicationScope, Table tbl, HiveConf conf,
+                                          List<String> partValues) throws HiveException {
+      ASTNode filterNode = (ASTNode)replicationScope.getPartFilter(tbl.getTableName());
+      if (filterNode == null) {
+        // Table has no filter, means all partitions are part of dump.
+        return true;
+      }
+      ExprNodeDesc partitionFilter = TypeCheckProcFactory.genExprNode(filterNode,
+              new TypeCheckCtx(SemanticAnalyzer.getRowResolverFromTable(tbl))).get(filterNode);
+      return ReplUtils.isPartSatisfiesFilter(tbl, partValues, partitionFilter, conf);
+    }
+
     public boolean isPartitionIncludedInDump(Table tbl, HiveConf conf, List<String> partValues) {
       try {
-        ASTNode filterNode = (ASTNode)replScope.getPartFilter(tbl.getTableName());
-        if (filterNode == null) {
-          // Table has no filter, means all partitions are part of dump.
-          return true;
+        if (isPartSatisfiesFilter(replScope, tbl, conf, partValues)) {
+          // If partition satisfies the new filter but does not satisfies the old, then need to bootstrap the partition.
+          // So the event dump should be skipped.
+          if (isPartSatisfiesFilter(replScope, tbl, conf, partValues)) {
+            return true;
+          }
+          partitionsForBootstrap.add(tbl.getTableName().toLowerCase());
         }
-        ExprNodeDesc partitionFilter = TypeCheckProcFactory.genExprNode(filterNode,
-                new TypeCheckCtx(SemanticAnalyzer.getRowResolverFromTable(tbl))).get(filterNode);
-        return ReplUtils.isPartSatisfiesFilter(tbl, partValues, partitionFilter, conf);
+        return false;
       } catch (HiveException e) {
-        throw new RuntimeException(e.getMessage());
-      } catch (MetaException e) {
         throw new RuntimeException(e.getMessage());
       }
     }

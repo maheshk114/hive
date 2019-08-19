@@ -190,6 +190,29 @@ public class TypeCheckProcFactory {
     return genExprNode(expr, tcCtx, new TypeCheckProcFactory());
   }
 
+  public static ExprNodeDesc getInversion(ExprNodeDesc exprNodeDesc) {
+    ExprNodeGenericFuncDesc notExpr = new ExprNodeGenericFuncDesc();
+    notExpr.setTypeInfo(TypeInfoFactory.booleanTypeInfo);
+    GenericUDFOPNot notUdf = new GenericUDFOPNot();
+    notExpr.setGenericUDF(notUdf);
+    List<ExprNodeDesc> childOfNot = new ArrayList<ExprNodeDesc>();
+    childOfNot.add(exprNodeDesc);
+    notExpr.setChildren(childOfNot);
+    return notExpr;
+  }
+
+  public static ExprNodeDesc combineExpressionWithAnd(ExprNodeDesc exprNodeDesc1, ExprNodeDesc exprNodeDesc2) {
+    GenericUDFOPAnd andUdf = new GenericUDFOPAnd();
+    ExprNodeGenericFuncDesc andExprDesc = new ExprNodeGenericFuncDesc();
+    andExprDesc.setTypeInfo(TypeInfoFactory.booleanTypeInfo);
+    andExprDesc.setGenericUDF(andUdf);
+    List<ExprNodeDesc> children = new ArrayList<ExprNodeDesc>(2);
+    children.add(exprNodeDesc1);
+    children.add(exprNodeDesc2);
+    andExprDesc.setChildren(children);
+    return andExprDesc;
+  }
+
   protected static Map<ASTNode, ExprNodeDesc> genExprNode(ASTNode expr,
       TypeCheckCtx tcCtx, TypeCheckProcFactory tf) throws SemanticException {
     // Create the walker, the rules dispatcher and the context.

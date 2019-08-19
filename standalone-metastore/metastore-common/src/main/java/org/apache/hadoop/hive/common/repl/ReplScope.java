@@ -122,8 +122,9 @@ public class ReplScope implements Serializable {
   }
 
   public Object getPartFilter(String tableName) {
+    tableName = tableName.toLowerCase();
     // This will make sure that for each table partFilter is scanned only once.
-    if (partFilterTableMap.containsKey(tableName.toLowerCase())) {
+    if (partFilterTableMap.containsKey(tableName)) {
       return partFilterTableMap.get(tableName);
     }
     Object filter = null;
@@ -144,5 +145,13 @@ public class ReplScope implements Serializable {
 
   public void setPartFilter(String patternString, Object filter) {
     partFilter.put(Pattern.compile(patternString, Pattern.CASE_INSENSITIVE), filter);
+  }
+
+  public void setPartFilter(Pattern pattern, Object filter) {
+    partFilter.put(pattern, filter);
+  }
+
+  public Map<Pattern, Object> getPartFilter() {
+    return partFilter;
   }
 }

@@ -101,7 +101,7 @@ public class LoadPartitions {
     this.table = ImportSemanticAnalyzer.tableIfExists(tableDesc, context.hiveDb);
   }
 
-  public TaskTracker tasks() throws Exception {
+  public TaskTracker tasks(boolean isBootstrapDuringInc) throws Exception {
     /*
     We are doing this both in load table and load partitions
      */
@@ -129,7 +129,7 @@ public class LoadPartitions {
         List<AlterTableAddPartitionDesc> partitionDescs = event.partitionDescriptions(tableDesc);
         if (!event.replicationSpec().isMetadataOnly() && !partitionDescs.isEmpty()) {
           updateReplicationState(initialReplicationState());
-          if (!forExistingTable(lastReplicatedPartition).hasReplicationState()) {
+          if (!forExistingTable(lastReplicatedPartition, isBootstrapDuringInc).hasReplicationState()) {
             // Add ReplStateLogTask only if no pending table load tasks left for next cycle
             Task<? extends Serializable> replLogTask
                     = ReplUtils.getTableReplLogTask(tableDesc, replLogger, context.hiveConf);
@@ -358,7 +358,8 @@ public class LoadPartitions {
     return dropPtnTask;
   }
 
-  private TaskTracker forExistingTable(AlterTableAddPartitionDesc lastPartitionReplicated) throws Exception {
+  private TaskTracker forExistingTable(AlterTableAddPartitionDesc lastPartitionReplicated,
+                                       boolean isBootstrapDuringInc) throws Exception {
     boolean encounteredTheLastReplicatedPartition = (lastPartitionReplicated == null);
     Map<String, String> lastReplicatedPartSpec = null;
     if (!encounteredTheLastReplicatedPartition) {
@@ -378,7 +379,7 @@ public class LoadPartitions {
       AlterTableAddPartitionDesc addPartitionDesc = partitionIterator.next();
       Map<String, String> partSpec = addPartitionDesc.getPartition(0).getPartSpec();
       Task<?> ptnRootTask = null;
-      ReplLoadOpType loadPtnType = getLoadPartitionType(partSpec);
+      ReplLoadOpType loadPtnType = getLoadPartitionType(partSpec, isBootstrapDuringInc);
       switch (loadPtnType) {
         case LOAD_NEW:
           break;
@@ -395,11 +396,18 @@ public class LoadPartitions {
     return tracker;
   }
 
-  private ReplLoadOpType getLoadPartitionType(Map<String, String> partSpec) throws InvalidOperationException, HiveException {
+  private ReplLoadOpType getLoadPartitionType(Map<String, String> partSpec, boolean isBootstrapDuringInc)
+          throws InvalidOperationException, HiveException {
     Partition ptn = context.hiveDb.getPartition(table, partSpec, false);
     if (ptn == null) {
       return ReplLoadOpType.LOAD_NEW;
     }
+
+    if (isBootstrapDuringInc) {
+      LOG.info("Partition " + partSpec + " will be replaced as bootstrap is requested during incremental load");
+      return ReplLoadOpType.LOAD_REPLACE;
+    }
+
     if (ReplUtils.replCkptStatus(tableContext.dbNameToLoadIn, ptn.getParameters(), context.dumpDirectory)) {
       return ReplLoadOpType.LOAD_SKIP;
     }

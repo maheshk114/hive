@@ -28,6 +28,7 @@ import org.apache.hadoop.hive.metastore.api.Database;
 import org.apache.hadoop.hive.metastore.api.InvalidInputException;
 import org.apache.hadoop.hive.ql.DriverContext;
 import org.apache.hadoop.hive.ql.ErrorMsg;
+import org.apache.hadoop.hive.ql.ddl.table.partition.AlterTableDropPartitionDesc;
 import org.apache.hadoop.hive.ql.exec.Task;
 import org.apache.hadoop.hive.ql.exec.TaskFactory;
 import org.apache.hadoop.hive.ql.exec.repl.bootstrap.events.BootstrapEvent;
@@ -53,12 +54,18 @@ import org.apache.hadoop.hive.ql.exec.repl.util.TaskTracker;
 import org.apache.hadoop.hive.ql.exec.util.DAGTraversal;
 import org.apache.hadoop.hive.ql.metadata.Hive;
 import org.apache.hadoop.hive.ql.metadata.HiveException;
+import org.apache.hadoop.hive.ql.metadata.Table;
+import org.apache.hadoop.hive.ql.parse.ASTNode;
 import org.apache.hadoop.hive.ql.parse.EximUtil;
 import org.apache.hadoop.hive.ql.parse.ReplicationSpec;
 import org.apache.hadoop.hive.ql.parse.SemanticAnalyzer;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
+import org.apache.hadoop.hive.ql.parse.TypeCheckCtx;
+import org.apache.hadoop.hive.ql.parse.TypeCheckProcFactory;
 import org.apache.hadoop.hive.ql.parse.repl.PathBuilder;
 import org.apache.hadoop.hive.ql.parse.repl.ReplLogger;
+import org.apache.hadoop.hive.ql.plan.ExprNodeDesc;
+import org.apache.hadoop.hive.ql.plan.ExprNodeGenericFuncDesc;
 import org.apache.hadoop.hive.ql.plan.api.StageType;
 
 import java.io.IOException;
@@ -202,7 +209,7 @@ public class ReplLoadTask extends Task<ReplLoadWork> implements Serializable {
           LoadPartitions loadPartitions =
               new LoadPartitions(context, iterator.replLogger(), loadTaskTracker, tableEvent,
                       work.dbNameToLoadIn, tableContext);
-          TaskTracker partitionsTracker = loadPartitions.tasks();
+          TaskTracker partitionsTracker = loadPartitions.tasks(work.isIncrementalLoad());
           partitionsPostProcessing(iterator, scope, loadTaskTracker, tableTracker,
               partitionsTracker);
           tableTracker.debugLog("table");
@@ -223,7 +230,7 @@ public class ReplLoadTask extends Task<ReplLoadWork> implements Serializable {
                the tableTracker here should be a new instance and not an existing one as this can
                only happen when we break in between loading partitions.
            */
-          TaskTracker partitionsTracker = loadPartitions.tasks();
+          TaskTracker partitionsTracker = loadPartitions.tasks(work.isIncrementalLoad());
           partitionsPostProcessing(iterator, scope, loadTaskTracker, tableTracker,
               partitionsTracker);
           partitionsTracker.debugLog("partitions");
@@ -382,17 +389,27 @@ public class ReplLoadTask extends Task<ReplLoadWork> implements Serializable {
     String dbName = replScope.getDbName();
 
     // List all the tables that are excluded in the current repl scope.
-    Iterable<String> tableNames = Collections2.filter(db.getAllTables(dbName),
-        tableName -> {
-          assert(tableName != null);
-          return !tableName.toLowerCase().startsWith(
-                  SemanticAnalyzer.VALUES_TMP_TABLE_NAME_PREFIX.toLowerCase())
-                  && !replScope.tableIncludedInReplScope(tableName);
-        });
-    for (String table : tableNames) {
-      db.dropTable(dbName + "." + table, true);
+    for (String tableName : db.getAllTables(dbName)) {
+      if (tableName.toLowerCase().startsWith(
+              SemanticAnalyzer.VALUES_TMP_TABLE_NAME_PREFIX.toLowerCase())) {
+        continue;
+      }
+
+      if (!replScope.tableIncludedInReplScope(tableName)) {
+        db.dropTable(dbName + "." + tableName, true);
+      } else if (replScope.getPartFilter(tableName) != null) {
+        Table tbl = db.getTable(dbName, tableName);
+        ASTNode filterNode = (ASTNode)replScope.getPartFilter(tableName);
+        ExprNodeDesc partitionFilter = TypeCheckProcFactory.genExprNode(filterNode,
+                new TypeCheckCtx(SemanticAnalyzer.getRowResolverFromTable(tbl))).get(filterNode);
+        // Use the inversion of the filter to get the list of partitions not satisfying the condition.
+        partitionFilter = TypeCheckProcFactory.getInversion(partitionFilter);
+        List<AlterTableDropPartitionDesc.PartitionDesc> partSpecs = Collections.singletonList(
+                new AlterTableDropPartitionDesc.PartitionDesc((ExprNodeGenericFuncDesc)partitionFilter, 0));
+        db.dropPartitions(dbName, tableName, partSpecs, true, true);
+      }
     }
-    LOG.info("Tables in the Database: {} that are excluded in the replication scope are dropped.",
+    LOG.info("Tables and partitions in the Database: {} that are excluded in the replication scope are dropped.",
             dbName);
   }
 
